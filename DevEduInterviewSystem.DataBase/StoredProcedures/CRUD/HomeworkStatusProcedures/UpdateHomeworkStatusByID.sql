@@ -1,2 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[UpdateHomeworkStatusByID](@param1 int, @param2 int OUTPUT)
-AS EXTERNAL NAME SomeAssembly.SomeType.SomeMethod
+﻿CREATE PROCEDURE [dbo].[UpdateHomeworkStatusByID]
+@ID int,
+@Name nvarchar(30)
+as
+begin
+Update [dbo].[HomeworkStatus] 
+
+set Name = @Name 
+where (ID = @ID)
+end

@@ -1,2 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[DeleteHomeworkStatusByID](@param1 int, @param2 int OUTPUT)
-AS EXTERNAL NAME SomeAssembly.SomeType.SomeMethod
+﻿CREATE PROCEDURE [dbo].[DeleteHomeworkStatusByID]
+@ID int 
+as
+begin
+DELETE from  [dbo].[HomeworkStatus] where (@ID = ID)
+end

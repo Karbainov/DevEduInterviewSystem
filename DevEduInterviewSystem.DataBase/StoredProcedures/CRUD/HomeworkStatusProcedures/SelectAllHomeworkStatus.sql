@@ -1,2 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[SelectAllHomeworkStatus](@param1 int, @param2 int OUTPUT)
-AS EXTERNAL NAME SomeAssembly.SomeType.SomeMethod
+﻿CREATE PROCEDURE [dbo].[SelectAllHomeworkStatus] as
+begin
+select * From [dbo].[HomeworkStatus]
+end

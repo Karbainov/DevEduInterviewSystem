@@ -1,2 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[AddHomeworkStatus](@param1 int, @param2 int OUTPUT)
-AS EXTERNAL NAME SomeAssembly.SomeType.SomeMethod
+﻿CREATE PROCEDURE [dbo].[AddHomeworkStatus]
+@Name nvarchar(30)
+as
+begin
+INSERT INTO [dbo].[HomeworkStatus]
+VALUES (@Name )
+end

@@ -1,4 +1,5 @@
 ﻿CREATE TABLE [dbo].[HomeworkStatus]
 (
-	[Id] INT NOT NULL PRIMARY KEY
+	ID int Primary key Identity,
+	Name nvarchar(30) NULL
 )
