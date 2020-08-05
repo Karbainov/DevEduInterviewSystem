@@ -59,9 +59,23 @@
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
     <Folder Include="StoredProcedures\CRUD" />
+    <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
+    <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Table1.sql" />
     <Build Include="StoredProcedures\CRUD\Procedure1.sql" />
+    <Build Include="Tables\HomeworkStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\SelectAllHomeworkStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\AddHomeworkStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\SelectHomeworkStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\DeleteHomeworkStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\UpdateHomeworkStatusByID.sql" />
+    <Build Include="Tables\Feedback.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\SelectAllFeedback.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\AddFeedback.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\SelectFeedbackByID.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\DeleteFeedbackByID.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\UpdateFeedbackByID.sql" />
   </ItemGroup>
 </Project>
