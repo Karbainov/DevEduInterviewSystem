@@ -59,23 +59,9 @@
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
     <Folder Include="StoredProcedures\CRUD" />
-    <Folder Include="StoredProcedures\CRUD\StageProcedures" />
-    <Folder Include="StoredProcedures\CRUD\User_InterviewProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Table1.sql" />
     <Build Include="StoredProcedures\CRUD\Procedure1.sql" />
-    <Build Include="Tables\Stage.sql" />
-    <Build Include="StoredProcedures\CRUD\StageProcedures\AddStage.sql" />
-    <Build Include="StoredProcedures\CRUD\StageProcedures\SelectAllStage.sql" />
-    <Build Include="StoredProcedures\CRUD\StageProcedures\SelectStageByID.sql" />
-    <Build Include="StoredProcedures\CRUD\StageProcedures\DeleteStageByID.sql" />
-    <Build Include="StoredProcedures\CRUD\StageProcedures\UpdateStageByID.sql" />
-    <Build Include="Tables\User_Interview.sql" />
-    <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\AddUser_Interview.sql" />
-    <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\SelectAllUser_Interview.sql" />
-    <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\SelectUser_InterviewByID.sql" />
-    <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\DeleteUser_InterviewByID.sql" />
-    <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\UpdateUser_InterviewByID.sql" />
   </ItemGroup>
 </Project>

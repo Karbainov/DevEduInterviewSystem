@@ -360,3 +360,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 DevEduInterviewSystem/obj/Debug/netcoreapp3.1/DevEduInterviewSystem.csprojAssemblyReference.cache
+
+DevEduInterviewSystem.DataBase/

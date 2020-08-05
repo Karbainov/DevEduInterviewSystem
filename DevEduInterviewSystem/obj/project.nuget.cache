@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "PYh3LVlhQvAac8cZBk2j3gzGi7xe15iAThE3ptLq/AqVh6maUg/xy4DCM0BB/4g+XLtWtthJ46OYTEnnizXGsg==",
   "success": true,
   "projectFilePath": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
+=======
+  "dgSpecHash": "18TT+5XEBR52DQpFdPNdjlRb14czMuRPJGZQp+UnnPiR5f5oxxodnJzXxF5JkNUBML2DrqHiUqQGs2ipQqePpA==",
+  "success": true,
+  "projectFilePath": "C:\\work\\С#\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
+>>>>>>> parent of 62ffd4a... fix
   "expectedPackageFiles": [],
   "logs": []
 }
