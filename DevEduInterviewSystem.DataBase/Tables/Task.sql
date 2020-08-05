@@ -1,20 +1,9 @@
 ﻿CREATE TABLE [dbo].[Task]
 (
-	[Id] INT NOT NULL PRIMARY KEY
-	UserID int NULL,
-	CandidateID int NULL,
+	[Id] INT NOT NULL PRIMARY KEY,
+	UserID int NULL, --FOREIGN KEY ([UserID]) REFERENCES [User]([ID])
+	CandidateID int NULL, -- FOREIGN KEY ([CandidateID]) REFERENCES [Candidate]([ID])
 	Message nvarchar(2500) NULL,
-	IsCompleted bit NULL,
+	IsComplited bit NULL,
 )	
-GO
-ALTER TABLE [dbo].[Task] WITH CHECK ADD CONSTRAINT [dbo].[Task_fk0] FOREIGN KEY ([UserID]) REFERENCES [User]([ID])
-ON UPDATE CASCADE
-GO
-ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [Task_fk0]
-GO
-ALTER TABLE [dbo].[Task] WITH CHECK ADD CONSTRAINT [Task_fk1] FOREIGN KEY ([CandidateID]) REFERENCES [Candidate]([ID])
-ON UPDATE CASCADE
-GO
-ALTER TABLE [dbo].[Task] CHECK CONSTRAINT [Task_fk1]
-GO
 
