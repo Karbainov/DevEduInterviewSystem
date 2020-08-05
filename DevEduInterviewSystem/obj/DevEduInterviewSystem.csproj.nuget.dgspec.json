@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\work\\С#\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj": {}
+    "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj": {}
   },
   "projects": {
-    "C:\\work\\С#\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj": {
+    "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\work\\С#\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
+        "projectUniqueName": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
         "projectName": "DevEduInterviewSystem",
-        "projectPath": "C:\\work\\С#\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\work\\С#\\DevEduInterviewSystem\\DevEduInterviewSystem\\obj\\",
+        "projectPath": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
+        "packagesPath": "C:\\Users\\Roman\\.nuget\\packages\\",
+        "outputPath": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Roman\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,7 +52,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
