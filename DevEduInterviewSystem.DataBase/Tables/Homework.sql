@@ -2,8 +2,8 @@
 (
 
 	ID int Primary key Identity,
-	CandidateID int NULL, 
-	HomeworkStatusID int NULL,
+	CandidateID int FOREIGN KEY ([CandidateID]) REFERENCES [Candidate]([ID]) NULL,
+	HomeworkStatusID int FOREIGN KEY ([HomeworkStatusID]) REFERENCES [HomeworkStatus]([ID]) NULL,
 	TestStatusID int NULL,
 	HomeworkDate datetime2 NULL
 	
