@@ -268,3 +268,7 @@ __pycache__/
 # tools/
 
 DevEduInterviewSystem/obj/
+
+DevEduInterviewSystem.DataBase/obj/
+
+*.cache
