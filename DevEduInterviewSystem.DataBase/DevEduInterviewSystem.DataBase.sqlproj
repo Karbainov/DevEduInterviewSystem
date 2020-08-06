@@ -80,6 +80,7 @@
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
+    <Folder Include="StoredProcedures\CRUD\OneTimePasswordProcedures" />
     <Folder Include="StoredProcedures\CRUD\TestStatus\" />
     <Folder Include="StoredProcedures\CRUD\CourceProcedures" />
     <Folder Include="StoredProcedures\CRUD\CityProcedures" />
@@ -212,6 +213,12 @@
     <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
     <Build Include="Tables\StageChanged.sql" />
     <Build Include="Tables\Task.sql" />
+    <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\AddOneTimePassword.sql" />
+    <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\DeleteOneTimePasswordByID.sql" />
+    <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\SelectAllOneTimePassword.sql" />
+    <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\SelectOneTimePasswordByID.sql" />
+    <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\UpdateOneTimePasswordByID.sql" />
+    <Build Include="Tables\OneTimePassword.sql" />
     <Build Include="Tables\TestStatus.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\AddTestStatus.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\SelectAllTestStatus.sql" />
