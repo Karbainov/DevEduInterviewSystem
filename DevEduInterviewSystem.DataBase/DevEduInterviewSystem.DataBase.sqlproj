@@ -68,13 +68,14 @@
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
+    <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
+    <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
     <Folder Include="StoredProcedures\CRUD\Group_CandidateProcedures" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
     <Folder Include="StoredProcedures\CRUD\InterviewStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
-    <Folder Include="StoredProcedures\CRUD\NewFolder1\" />
     <Folder Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD" />
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
@@ -138,6 +139,18 @@
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
     <Build Include="Tables\Interview.sql" />
+    <Build Include="Tables\Task.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\AddTask.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectAllTask.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\DeleteTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\UpdateTaskByID.sql" />
+    <Build Include="Tables\StageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\AddStageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\SelectAllStageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\SelectStageChangedByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\DeleteStageChangedByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
     <Build Include="Tables\Group_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\AddGroup_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\DeleteGroup_CandidateByID.sql" />
@@ -204,7 +217,6 @@
     <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectAllCourse.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectCourseByID.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\UpdateCourseByID.sql" />
-    <Build Include="Tables\Sity.sql" />
     <Build Include="StoredProcedures\CRUD\CityProcedures\UpdateCityByID.sql" />
     <Build Include="StoredProcedures\CRUD\CityProcedures\SelectCityByID.sql" />
     <Build Include="StoredProcedures\CRUD\CityProcedures\SelectAllCity.sql" />
@@ -217,5 +229,6 @@
     <Build Include="StoredProcedures\CRUD\Course_CandidatProcedures\SelectCourse_CandidateByID.sql" />
     <Build Include="StoredProcedures\CRUD\Course_CandidatProcedures\SelectAllCourse_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Course_CandidatProcedures\DeleteCourse_CandidateByID.sql" />
+    <Build Include="Tables\City.sql" />
   </ItemGroup>
 </Project>
