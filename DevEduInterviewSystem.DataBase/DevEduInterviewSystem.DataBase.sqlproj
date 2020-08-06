@@ -80,6 +80,7 @@
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
+    <Folder Include="StoredProcedures\CRUD\TestStatus\" />
     <Folder Include="StoredProcedures\CRUD\CourceProcedures" />
     <Folder Include="StoredProcedures\CRUD\CityProcedures" />
     <Folder Include="StoredProcedures\CRUD\Course_CandidatProcedures" />
@@ -211,6 +212,12 @@
     <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
     <Build Include="Tables\StageChanged.sql" />
     <Build Include="Tables\Task.sql" />
+    <Build Include="Tables\TestStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\AddTestStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\SelectAllTestStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\SelectTestStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\DeleteTestStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\UpdateTestStatusByID.sql" />
     <Build Include="Tables\Course.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\AddCource.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\DeleteCourse.sql" />
