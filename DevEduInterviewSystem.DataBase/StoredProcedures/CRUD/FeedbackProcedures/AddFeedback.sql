@@ -2,9 +2,9 @@
 @StageChangedID int,
 @UserID int,
 @Message nvarchar(2500),
-@DateTime datetime2 
+@TimeFeedback datetime2 
 as
 begin
 INSERT INTO [dbo].[Feedback]
-VALUES (@StageChangedID, @UserID, @Message, @DateTime)
+VALUES (@StageChangedID, @UserID, @Message, @TimeFeedback)
 end
