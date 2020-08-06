@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[AddTask]
-	@param1 int = 0,
-	@param2 int
+@UserID int,
+@CandidateID int,
+@Message nvarchar (2500),
+@IsComplited bit
 AS
-	SELECT @param1, @param2
-RETURN 0
+INSERT INTO [dbo].[Task]
+VALUES (@UserID, @CandidateID, @Message, @IsComplited)

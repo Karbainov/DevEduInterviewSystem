@@ -1,6 +1,13 @@
 ﻿CREATE PROCEDURE [dbo].[UpdateStageChangedByID]
-	@param1 int = 0,
-	@param2 int
+@ID int,
+@CandidateID bigint,
+@StageID int,
+@ChangedDate datetime2
 AS
-	SELECT @param1, @param2
-RETURN 0
+BEGIN
+UPDATE [dbo].[StageChanged]
+SET  CandidateID = @CandidateID,
+StageID = @StageID ,
+ChangedDate = @ChangedDate
+where (@ID = ID)
+end

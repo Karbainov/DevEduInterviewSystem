@@ -1,6 +1,15 @@
 ﻿CREATE PROCEDURE [dbo].[UpdateTaskByID]
-	@param1 int = 0,
-	@param2 int
+@ID int,
+@UserID int,
+@CandidateID int,
+@Message nvarchar (2500),
+@IsComplited bit
 AS
-	SELECT @param1, @param2
-RETURN 0
+BEGIN
+UPDATE [dbo].[Task]
+SET UserID = @UserID,
+CandidateID = @CandidateID ,
+Message = @Message,
+IsComplited = @IsComplited 
+where (@ID = ID)
+end
