@@ -1,9 +1,9 @@
-﻿Create Procedure UpdateCityByID 
+﻿Create Procedure [dbo].[UpdateCityByID]
 	@ID int,
 	@Name nvarchar (20)
 AS
 BEGIN
-UPDATE City
+UPDATE [dbo].[City]
 SET Name = @Name
 where (@ID = ID)
 end
