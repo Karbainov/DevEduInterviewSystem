@@ -67,8 +67,6 @@
     <Folder Include="StoredProcedures\CRUD\GroupProcedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Table1.sql" />
-    <Build Include="StoredProcedures\CRUD\Procedure1.sql" />
     <Build Include="Tables\Stage.sql" />
     <Build Include="StoredProcedures\CRUD\StageProcedures\AddStage.sql" />
     <Build Include="StoredProcedures\CRUD\StageProcedures\SelectAllStage.sql" />
