@@ -79,6 +79,7 @@
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
+    <Folder Include="StoredProcedures\CalendarInterviews" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -195,5 +196,6 @@
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
     <Build Include="Tables\Interview.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviews.sql" />
   </ItemGroup>
 </Project>
