@@ -69,6 +69,11 @@
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
+    <Folder Include="StoredProcedures\CRUD\NewFolder1\" />
+    <Folder Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD" />
+    <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
+    <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
+    <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -131,5 +136,29 @@
     <Build Include="StoredProcedures\CRUD\RoleProcedure\SelectRoleByID.sql" />
     <Build Include="StoredProcedures\CRUD\RoleProcedure\DeleteRoleByID.sql" />
     <Build Include="StoredProcedures\CRUD\RoleProcedure\UpdateRoleByID.sql" />
+    <Build Include="Tables\Candidate.sql" />
+    <Build Include="Tables\CandidatePersonalInfo.sql" />
+    <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\AddCandidatePersonalInfo.sql" />
+    <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\DeleteCandidatePersonalInfoByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\SelectAllCandidatePersonalInfo.sql" />
+    <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\SelectCandidatePersonalInfoByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\UpdateCandidatePersonalInfoByID.sql" />
+    <Build Include="StoredProcedures\CRUD\Canidate CRUD\AddCandidate.sql" />
+    <Build Include="StoredProcedures\CRUD\Canidate CRUD\DeleteCandidateByID.sql" />
+    <Build Include="StoredProcedures\CRUD\Canidate CRUD\SelectAllCandidate.sql" />
+    <Build Include="StoredProcedures\CRUD\Canidate CRUD\SelectCandidateByID.sql" />
+    <Build Include="StoredProcedures\CRUD\Canidate CRUD\UpdateCandidateByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\AddTask.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\DeleteTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectAllTask.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\UpdateTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\AddStageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\DeleteStageChangedByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\SelectAllStageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\SelectStageChangedByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
+    <Build Include="Tables\StageChanged.sql" />
+    <Build Include="Tables\Task.sql" />
   </ItemGroup>
 </Project>
