@@ -63,10 +63,9 @@
     <Folder Include="StoredProcedures\CRUD\User_InterviewProcedures" />
     <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
+    <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\Table1.sql" />
-    <Build Include="StoredProcedures\CRUD\Procedure1.sql" />
     <Build Include="Tables\Stage.sql" />
     <Build Include="StoredProcedures\CRUD\StageProcedures\AddStage.sql" />
     <Build Include="StoredProcedures\CRUD\StageProcedures\SelectAllStage.sql" />
@@ -91,5 +90,11 @@
     <Build Include="StoredProcedures\CRUD\FeedbackProcedures\SelectFeedbackByID.sql" />
     <Build Include="StoredProcedures\CRUD\FeedbackProcedures\DeleteFeedbackByID.sql" />
     <Build Include="StoredProcedures\CRUD\FeedbackProcedures\UpdateFeedbackByID.sql" />
+    <Build Include="Tables\Status.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\AddStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\DeleteStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectAllStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\UpdateStatusByID.sql" />
   </ItemGroup>
 </Project>
