@@ -61,6 +61,9 @@
     <Folder Include="StoredProcedures\CRUD" />
     <Folder Include="StoredProcedures\CRUD\StageProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_InterviewProcedures" />
+    <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
+    <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
+    <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Table1.sql" />
@@ -77,5 +80,23 @@
     <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\SelectUser_InterviewByID.sql" />
     <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\DeleteUser_InterviewByID.sql" />
     <Build Include="StoredProcedures\CRUD\User_InterviewProcedures\UpdateUser_InterviewByID.sql" />
+    <Build Include="Tables\HomeworkStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\SelectAllHomeworkStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\AddHomeworkStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\SelectHomeworkStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\DeleteHomeworkStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkStatusProcedures\UpdateHomeworkStatusByID.sql" />
+    <Build Include="Tables\Feedback.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\SelectAllFeedback.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\AddFeedback.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\SelectFeedbackByID.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\DeleteFeedbackByID.sql" />
+    <Build Include="StoredProcedures\CRUD\FeedbackProcedures\UpdateFeedbackByID.sql" />
+    <Build Include="Tables\Status.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\AddStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\DeleteStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectAllStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StatusProcedures\UpdateStatusByID.sql" />
   </ItemGroup>
 </Project>

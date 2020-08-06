@@ -8,20 +8,42 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\Roman\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\Ерёменко\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+>>>>>>> NewDev
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
       "projectName": "DevEduInterviewSystem",
       "projectPath": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
       "packagesPath": "C:\\Users\\Roman\\.nuget\\packages\\",
       "outputPath": "G:\\My работы\\DevEduInterviewSystem\\DevEduInterviewSystem\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Ерёменко\\Desktop\\ЕщёПроект\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
+      "projectName": "DevEduInterviewSystem",
+      "projectPath": "C:\\Users\\Ерёменко\\Desktop\\ЕщёПроект\\DevEduInterviewSystem\\DevEduInterviewSystem\\DevEduInterviewSystem.csproj",
+      "packagesPath": "C:\\Users\\Ерёменко\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ерёменко\\Desktop\\ЕщёПроект\\DevEduInterviewSystem\\DevEduInterviewSystem\\obj\\",
+>>>>>>> NewDev
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
+<<<<<<< HEAD
         "C:\\Users\\Roman\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+        "C:\\Users\\Ерёменко\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+>>>>>>> NewDev
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -58,7 +80,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+>>>>>>> NewDev
       }
     }
   }
