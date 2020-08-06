@@ -64,6 +64,7 @@
     <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
     <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
+    <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
@@ -99,6 +100,12 @@
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectAllStatus.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\UpdateStatusByID.sql" />
+    <Build Include="Tables\Homework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\AddHomework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\DeleteHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectAllHomework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\UpdateHomeworkByID.sql" />
     <Build Include="Tables\User.sql" />
     <Build Include="StoredProcedures\CRUD\UserProcedures\AddUser.sql" />
     <Build Include="StoredProcedures\CRUD\UserProcedures\SelectAllUser.sql" />
