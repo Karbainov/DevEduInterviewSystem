@@ -68,6 +68,7 @@
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
     <Folder Include="StoredProcedures\CRUD\Group_CandidateProcedures" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
+    <Folder Include="StoredProcedures\CRUD\InterviewStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
@@ -76,6 +77,9 @@
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
+    <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
+    <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
+    <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -132,6 +136,12 @@
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectAllHomework.sql" />
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectHomeworkByID.sql" />
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\UpdateHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\AddInterviewStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\DeleteInterviewStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\SelectAllInterviewStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\SelectInterviewStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\UpdateInterviewStatusByID.sql" />
+    <Build Include="Tables\InterviewStatus.sql" />
     <Build Include="Tables\User.sql" />
     <Build Include="StoredProcedures\CRUD\UserProcedures\AddUser.sql" />
     <Build Include="StoredProcedures\CRUD\UserProcedures\SelectAllUser.sql" />
@@ -174,5 +184,23 @@
     <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
     <Build Include="Tables\StageChanged.sql" />
     <Build Include="Tables\Task.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\AddInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\DeleteInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectAllInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
+    <Build Include="Tables\Interview.sql" />
+    <Build Include="Tables\Homework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\AddHomework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\DeleteHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectAllHomework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\UpdateHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\AddInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\DeleteInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectAllInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
+    <Build Include="Tables\Interview.sql" />
   </ItemGroup>
 </Project>
