@@ -70,6 +70,7 @@
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\CourceProcedures" />
+    <Folder Include="StoredProcedures\CRUD\CityProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -138,5 +139,11 @@
     <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectAllCourse.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectCourseByID.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\UpdateCourseByID.sql" />
+    <Build Include="Tables\Sity.sql" />
+    <Build Include="StoredProcedures\CRUD\CityProcedures\UpdateCityByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CityProcedures\SelectCityByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CityProcedures\SelectAllCity.sql" />
+    <Build Include="StoredProcedures\CRUD\CityProcedures\DeleteCityByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CityProcedures\AddCity.sql" />
   </ItemGroup>
 </Project>
