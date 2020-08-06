@@ -68,6 +68,7 @@
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
     <Folder Include="StoredProcedures\CRUD\Group_CandidateProcedures" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
+    <Folder Include="StoredProcedures\CRUD\InterviewStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
@@ -135,6 +136,12 @@
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectAllHomework.sql" />
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectHomeworkByID.sql" />
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\UpdateHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\AddInterviewStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\DeleteInterviewStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\SelectAllInterviewStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\SelectInterviewStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\UpdateInterviewStatusByID.sql" />
+    <Build Include="Tables\InterviewStatus.sql" />
     <Build Include="Tables\User.sql" />
     <Build Include="StoredProcedures\CRUD\UserProcedures\AddUser.sql" />
     <Build Include="StoredProcedures\CRUD\UserProcedures\SelectAllUser.sql" />
