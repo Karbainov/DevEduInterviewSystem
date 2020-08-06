@@ -65,6 +65,7 @@
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
     <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
+    <Folder Include="StoredProcedures\CRUD\InterviewStatusProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -103,5 +104,11 @@
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectAllHomework.sql" />
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectHomeworkByID.sql" />
     <Build Include="StoredProcedures\CRUD\HomeworkProcedures\UpdateHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\AddInterviewStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\DeleteInterviewStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\SelectAllInterviewStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\SelectInterviewStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewStatusProcedures\UpdateInterviewStatusByID.sql" />
+    <Build Include="Tables\InterviewStatus.sql" />
   </ItemGroup>
 </Project>
