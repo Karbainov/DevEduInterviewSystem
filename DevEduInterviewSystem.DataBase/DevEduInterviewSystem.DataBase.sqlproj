@@ -64,6 +64,9 @@
     <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
     <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
+    <Folder Include="StoredProcedures\CRUD\UserProcedures" />
+    <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
+    <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -96,5 +99,23 @@
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectAllStatus.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\UpdateStatusByID.sql" />
+    <Build Include="Tables\User.sql" />
+    <Build Include="StoredProcedures\CRUD\UserProcedures\AddUser.sql" />
+    <Build Include="StoredProcedures\CRUD\UserProcedures\SelectAllUser.sql" />
+    <Build Include="StoredProcedures\CRUD\UserProcedures\SelectUserByID.sql" />
+    <Build Include="StoredProcedures\CRUD\UserProcedures\DeleteUserByID.sql" />
+    <Build Include="StoredProcedures\CRUD\UserProcedures\UpdateUserByID.sql" />
+    <Build Include="Tables\User_Role.sql" />
+    <Build Include="StoredProcedures\CRUD\User_RoleProcedure\AddUser_Role.sql" />
+    <Build Include="StoredProcedures\CRUD\User_RoleProcedure\SelectAllUser_Role.sql" />
+    <Build Include="StoredProcedures\CRUD\User_RoleProcedure\SelectUser_RoleByID.sql" />
+    <Build Include="StoredProcedures\CRUD\User_RoleProcedure\DeleteUser_RoleByID.sql" />
+    <Build Include="StoredProcedures\CRUD\User_RoleProcedure\UpdateUser_RoleByID.sql" />
+    <Build Include="Tables\Role.sql" />
+    <Build Include="StoredProcedures\CRUD\RoleProcedure\AddRole.sql" />
+    <Build Include="StoredProcedures\CRUD\RoleProcedure\SelectAllRole.sql" />
+    <Build Include="StoredProcedures\CRUD\RoleProcedure\SelectRoleByID.sql" />
+    <Build Include="StoredProcedures\CRUD\RoleProcedure\DeleteRoleByID.sql" />
+    <Build Include="StoredProcedures\CRUD\RoleProcedure\UpdateRoleByID.sql" />
   </ItemGroup>
 </Project>
