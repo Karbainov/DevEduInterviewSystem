@@ -64,6 +64,7 @@
     <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
     <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
+    <Folder Include="StoredProcedures\CRUD\GroupProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Table1.sql" />
@@ -98,5 +99,11 @@
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectAllStatus.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\UpdateStatusByID.sql" />
+    <Build Include="Tables\Group.sql" />
+    <Build Include="StoredProcedures\CRUD\GroupProcedures\AddGroup.sql" />
+    <Build Include="StoredProcedures\CRUD\GroupProcedures\DeleteGroupByID.sql" />
+    <Build Include="StoredProcedures\CRUD\GroupProcedures\UpdateGroupByID.sql" />
+    <Build Include="StoredProcedures\CRUD\GroupProcedures\SelectAllGroup.sql" />
+    <Build Include="StoredProcedures\CRUD\GroupProcedures\SelectGroupByID.sql" />
   </ItemGroup>
 </Project>
