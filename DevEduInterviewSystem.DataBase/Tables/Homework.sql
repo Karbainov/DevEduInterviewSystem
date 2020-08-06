@@ -4,7 +4,8 @@
 	ID int Primary key Identity,
 	CandidateID int NULL, 
 	HomeworkStatusID int NULL,
-	HomeworkDate datetime2 NULL,
-	TestStatusID int NULL
+	TestStatusID int NULL,
+	HomeworkDate datetime2 NULL
+	
 
 )
