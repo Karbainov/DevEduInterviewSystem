@@ -65,6 +65,7 @@
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
     <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\Group_CandidateProcedures" />
+    <Folder Include="StoredProcedures\CRUD\CourceProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -103,5 +104,11 @@
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\SelectAllGroup_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\SelectGroup_CandidateByID.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\UpdateGroup_CandidateByID.sql" />
+    <Build Include="Tables\Cource.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\AddCource.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\DeleteCourceByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectAllCource.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectCourceByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\UpdateCourceByID.sql" />
   </ItemGroup>
 </Project>
