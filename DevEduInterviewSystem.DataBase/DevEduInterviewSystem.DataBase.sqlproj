@@ -204,5 +204,8 @@
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
     <Build Include="Tables\Interview.sql" />
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviews.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByUser.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByUserAndDate.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDate.sql" />
   </ItemGroup>
 </Project>
