@@ -1,9 +1,9 @@
-﻿Create Procedure dbo.[UpdateGroupByID]
+Create Procedure dbo.[UpdateGroupByID]
 @ID int,
 @CourceID int,
 @Name nvarchar(50),
-@StartDate nvarchar(20),
-@EndDate nvarchar(20)
+@StartDate datetime2,
+@EndDate datetime2
 AS
 UPDATE dbo.[Group]
 SET 
