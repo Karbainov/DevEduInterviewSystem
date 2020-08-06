@@ -64,6 +64,8 @@
     <Folder Include="StoredProcedures\CRUD\HomeworkStatusProcedures" />
     <Folder Include="StoredProcedures\CRUD\FeedbackProcedures" />
     <Folder Include="StoredProcedures\CRUD\StatusProcedures" />
+    <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
+    <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
     <Folder Include="StoredProcedures\CRUD\Group_CandidateProcedures" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
@@ -73,6 +75,7 @@
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
+    <Folder Include="StoredProcedures\CRUD\TestStatus\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -105,6 +108,18 @@
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectAllStatus.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\SelectStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\StatusProcedures\UpdateStatusByID.sql" />
+    <Build Include="Tables\Task.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\AddTask.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectAllTask.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\DeleteTaskByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TaskProcedure\UpdateTaskByID.sql" />
+    <Build Include="Tables\StageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\AddStageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\SelectAllStageChanged.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\SelectStageChangedByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\DeleteStageChangedByID.sql" />
+    <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
     <Build Include="Tables\Group_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\AddGroup_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\DeleteGroup_CandidateByID.sql" />
