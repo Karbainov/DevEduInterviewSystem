@@ -76,6 +76,9 @@
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
+    <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
+    <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
+    <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -174,5 +177,23 @@
     <Build Include="StoredProcedures\CRUD\StageChangedProcedure\UpdateStageChangedByID.sql" />
     <Build Include="Tables\StageChanged.sql" />
     <Build Include="Tables\Task.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\AddInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\DeleteInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectAllInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
+    <Build Include="Tables\Interview.sql" />
+    <Build Include="Tables\Homework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\AddHomework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\DeleteHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectAllHomework.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\SelectHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\HomeworkProcedures\UpdateHomeworkByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\AddInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\DeleteInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectAllInterview.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
+    <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
+    <Build Include="Tables\Interview.sql" />
   </ItemGroup>
 </Project>
