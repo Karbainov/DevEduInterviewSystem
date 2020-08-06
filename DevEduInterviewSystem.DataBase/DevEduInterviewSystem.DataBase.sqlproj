@@ -104,11 +104,11 @@
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\SelectAllGroup_Candidate.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\SelectGroup_CandidateByID.sql" />
     <Build Include="StoredProcedures\CRUD\Group_CandidateProcedures\UpdateGroup_CandidateByID.sql" />
-    <Build Include="Tables\Cource.sql" />
+    <Build Include="Tables\Course.sql" />
     <Build Include="StoredProcedures\CRUD\CourceProcedures\AddCource.sql" />
-    <Build Include="StoredProcedures\CRUD\CourceProcedures\DeleteCourceByID.sql" />
-    <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectAllCource.sql" />
-    <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectCourceByID.sql" />
-    <Build Include="StoredProcedures\CRUD\CourceProcedures\UpdateCourceByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\DeleteCourse.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectAllCourse.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\SelectCourseByID.sql" />
+    <Build Include="StoredProcedures\CRUD\CourceProcedures\UpdateCourseByID.sql" />
   </ItemGroup>
 </Project>
