@@ -10,6 +10,6 @@ UPDATE [dbo].[Task]
 SET UserID = @UserID,
 CandidateID = @CandidateID ,
 Message = @Message,
-IsComplited = @IsComplited 
+IsCompleted = @IsComplited 
 where (@ID = ID)
 end
