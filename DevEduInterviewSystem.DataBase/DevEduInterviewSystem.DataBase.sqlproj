@@ -237,6 +237,9 @@
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
     <Build Include="Tables\Interview.sql" />
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviews.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByUser.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByUserAndDate.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDate.sql" />
     <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\AddOneTimePassword.sql" />
     <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\DeleteOneTimePasswordByID.sql" />
     <Build Include="StoredProcedures\CRUD\OneTimePasswordProcedures\SelectAllOneTimePassword.sql" />
