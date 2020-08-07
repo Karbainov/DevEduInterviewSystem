@@ -72,7 +72,6 @@
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
-    <Folder Include="StoredProcedures\CRUD\NewFolder1\" />
     <Folder Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD" />
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
@@ -80,6 +79,7 @@
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
     <Folder Include="StoredProcedures\CRUD\HomeworkProcedures" />
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
+    <Folder Include="StoredProcedures\CRUD\TestStatus\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -202,5 +202,11 @@
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\SelectInterviewByID.sql" />
     <Build Include="StoredProcedures\CRUD\InterviewProcedure\UpdateInterviewByID.sql" />
     <Build Include="Tables\Interview.sql" />
+    <Build Include="Tables\TestStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\AddTestStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\SelectAllTestStatus.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\SelectTestStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\DeleteTestStatusByID.sql" />
+    <Build Include="StoredProcedures\CRUD\TestStatus\UpdateTestStatusByID.sql" />
   </ItemGroup>
 </Project>
