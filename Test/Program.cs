@@ -15,7 +15,9 @@ namespace Test
             CandidateDTO candidate = new CandidateDTO(1, 1, 1, 1, "123", "@@", "Vasa", "Pupkin", DateTime.Now);
             CandidateCRUD cRUD = new CandidateCRUD();
             //Console.WriteLine(cRUD.AddCandidate(connection, candidate));
-            //Console.WriteLine(cRUD.DeleteCandidateByID(connection, 3));            
+            //Console.WriteLine(cRUD.DeleteCandidateByID(connection, 3));
+            cRUD.SelectAllCandidate(connection);
+            //Console.WriteLine(cRUD.SelectAllCandidate(connection));
 
             connection.Close();
 
