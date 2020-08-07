@@ -3,13 +3,13 @@
 @UserID int,
 @CandidateID int,
 @Message nvarchar (2500),
-@IsComplited bit
+@IsCompleted bit
 AS
 BEGIN
 UPDATE [dbo].[Task]
 SET UserID = @UserID,
 CandidateID = @CandidateID ,
 Message = @Message,
-IsComplited = @IsComplited 
+IsCompleted = @IsCompleted
 where (@ID = ID)
 end
