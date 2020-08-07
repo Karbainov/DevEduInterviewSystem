@@ -36,12 +36,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter LastNameParam = new SqlParameter("@LastName", candidate.LastName);
             command.Parameters.Add(LastNameParam);
 
-            SqlParameter BDParam = new SqlParameter("@BirthDate", candidate.BirthDay);
+            SqlParameter BDParam = new SqlParameter("@BirthDay", candidate.BirthDay);
             command.Parameters.Add(BDParam);
-            connection.Close();
 
+            //connection.Close();
 
-            return command.ExecuteNonQuery();
+            return command.ExecuteNonQuery();            
          }
     }
 }

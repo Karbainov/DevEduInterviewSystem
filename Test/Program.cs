@@ -9,15 +9,22 @@ namespace Test
     {
         static public SqlConnection GetConnection()
         {
-            string connectionString = @"Data Source = DESKTOP-9K6HNII\MSSQLSERVER2;Initial Catalog = test; Integrated Security = True";
+            string connectionString = @"Data Source=.\HP;Initial Catalog = Interview; Integrated Security = True; Data Source = (local)";
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
         static void Main(string[] args)
         {
+            string connectionString = @"Data Source=.\HP;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
+            SqlConnection connection = new SqlConnection(connectionString);
+
             CandidateDTO candidate = new CandidateDTO(1, 1, 1, 1, "123", "@@", "Vasa", "Pupkin", DateTime.Now);
             CandidateCRUD cRUD = new CandidateCRUD();
-            Console.WriteLine(cRUD.AddCandidate(GetConnection(),candidate));
+            Console.WriteLine(cRUD.AddCandidate(connection, candidate));
+
+            connection.Close();
+
+            Console.ReadLine();
         }
     }
 }
