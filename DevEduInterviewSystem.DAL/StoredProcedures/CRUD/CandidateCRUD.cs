@@ -8,8 +8,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
     public class CandidateCRUD
     {
-         public int AddCandidate(SqlConnection connection, CandidateDTO candidate)
-         {
+        public int AddCandidate(SqlConnection connection, CandidateDTO candidate)
+        {
             connection.Open();
             string sqlExpression = "AddCandidate";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
@@ -39,9 +39,20 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter BDParam = new SqlParameter("@BirthDay", candidate.BirthDay);
             command.Parameters.Add(BDParam);
 
-            //connection.Close();
+            return command.ExecuteNonQuery();
+        }
 
-            return command.ExecuteNonQuery();            
-         }
+        public int DeleteCandidateByID(SqlConnection connection, int ID)
+        {
+            connection.Open();
+            string sqlExpression = "DeleteCandidateByID";
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            command.Parameters.Add(IDParam);
+
+            return command.ExecuteNonQuery();
+        }
     }
 }

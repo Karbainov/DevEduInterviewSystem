@@ -78,7 +78,6 @@
     <Folder Include="StoredProcedures\CRUD\UserProcedures" />
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
-    <Folder Include="StoredProcedures\CRUD\NewFolder1\" />
     <Folder Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD" />
     <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
