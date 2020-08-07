@@ -2,8 +2,9 @@
 @ID int,
 @CandidateID int,
 @HomeworkStatusID int,
-@HomeworkDate datetime2,
-@TestStatusID int	
+@TestStatusID int,	
+@HomeworkDate datetime2
+
 
 AS
 BEGIN
@@ -11,8 +12,9 @@ Update [dbo].[Homework]
 
 set CandidateID = @CandidateID,
 HomeworkStatusID = @HomeworkStatusID,
-HomeworkDate = @HomeworkDate,
-TestStatusID  = @TestStatusID
+TestStatusID  = @TestStatusID,
+HomeworkDate = @HomeworkDate
+
 	
 where (ID = @ID)
 END
