@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEduInterviewSystem", "DevEduInterviewSystem\DevEduInterviewSystem.csproj", "{49A78C25-6DD8-46E5-B0E5-2ECF615B4B4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem", "DevEduInterviewSystem\DevEduInterviewSystem.csproj", "{49A78C25-6DD8-46E5-B0E5-2ECF615B4B4C}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DevEduInterviewSystem.DataBase", "DevEduInterviewSystem.DataBase\DevEduInterviewSystem.DataBase.sqlproj", "{CBBB7E4F-8158-4C0E-BEC9-04533A6D6B18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEduInterviewSystem.DAL", "DevEduInterviewSystem.DAL\DevEduInterviewSystem.DAL.csproj", "{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{CBBB7E4F-8158-4C0E-BEC9-04533A6D6B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBBB7E4F-8158-4C0E-BEC9-04533A6D6B18}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBBB7E4F-8158-4C0E-BEC9-04533A6D6B18}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
