@@ -1,0 +1,3 @@
+﻿CREATE PROCEDURE [dbo].[SelectAllCity]
+AS
+Select * From [dbo].[City]
