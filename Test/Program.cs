@@ -1,4 +1,5 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using System;
 using System.Data.SqlClient;
