@@ -80,9 +80,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     Console.WriteLine($"{id} \t{StageID} \t{StatusID} \t{CityID} \t{Phone} \t{Email} \t{FirstName} \t{LastName} \t{Birthday}");
                 }
             }
-            reader.Close();                       
+            reader.Close();
 
-            return (int)command.ExecuteScalar();
+
+            command.CommandText = "SELECT COUNT(*) FROM Candidate";
+            int count = (int)command.ExecuteScalar();            
+
+            return count;
         }
 
         public int SelectCandidateByID(SqlConnection connection, int ID)
