@@ -40,7 +40,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllCandidate(SqlConnection connection)
+        public int SelectAllInterview(SqlConnection connection)
         {
             connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectAllInterview", connection);
