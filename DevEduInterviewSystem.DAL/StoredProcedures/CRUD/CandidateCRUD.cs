@@ -82,9 +82,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             }
             reader.Close();
 
-
-            command.CommandText = "SELECT COUNT(*) FROM Candidate";
-            int count = (int)command.ExecuteScalar();            
+            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Candidate", connection);
+            int count = (int)countRows.ExecuteScalar();            
 
             return count;
         }
