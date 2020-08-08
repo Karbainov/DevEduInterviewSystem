@@ -13,13 +13,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AddStageChanged", connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", stageChanged.ID);
-            command.Parameters.Add(IDParam);
-
             SqlParameter StageParam = new SqlParameter("@StageID", stageChanged.StageID);
             command.Parameters.Add(StageParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@Candidate", stageChanged.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", stageChanged.CandidateID);
             command.Parameters.Add(CandidateParam);
 
             SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", stageChanged.ChangedDate);
@@ -30,9 +27,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public int DeleteStageChangedByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            string sqlExpression = "DeleteStageChangedByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteStageChangedByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
@@ -53,15 +48,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     int id = (int)reader["ID"];
                     int StageID = (int)reader["StageID"];
-                    int Candidate = (int)reader["Candidate"];
-                    string ChangedDate = (string)reader["ChangedDate"];
+                    int Candidate = (int)reader["CandidateID"];
+                    DateTime ChangedDate = (DateTime)reader["ChangedDate"];
 
                     Console.WriteLine($"{id} \t{StageID} \t{Candidate} \t{ChangedDate}");
                 }
             }
             reader.Close();
 
-            return command.ExecuteNonQuery();
+            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM StageChanged", connection);
+            int count = (int)countRows.ExecuteScalar();
+
+            return count;
         }
 
         public int SelectStageChangedByID(SqlConnection connection, int ID)
@@ -81,8 +79,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     int Id = (int)reader["ID"];
                     int StageID = (int)reader["StageID"];
-                    int Candidate = (int)reader["Candidate"];
-                    var ChangedDate = (DateTime)reader["ChangedDate"];
+                    int Candidate = (int)reader["CandidateID"];
+                    DateTime ChangedDate = (DateTime)reader["ChangedDate"];
 
                     Console.WriteLine($"\t{Id} \t{StageID} \t{Candidate} \t{ChangedDate}");
                 }
@@ -100,13 +98,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter StageParam = new SqlParameter("@ID", stageChanged.ID);
-            command.Parameters.Add(StageParam);
-
             SqlParameter StatusParam = new SqlParameter("@StageID", stageChanged.StageID);
             command.Parameters.Add(StatusParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@Candidate", stageChanged.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", stageChanged.CandidateID);
             command.Parameters.Add(CandidateParam);
 
             SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", stageChanged.ChangedDate);

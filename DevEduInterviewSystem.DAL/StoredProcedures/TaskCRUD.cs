@@ -13,11 +13,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AddTask", connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", task.ID);
-            command.Parameters.Add(IDParam);
-
             SqlParameter UserParam = new SqlParameter("@UserID", task.UserID);
             command.Parameters.Add(UserParam);
+
+            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", task.CandidateID);
+            command.Parameters.Add(CandidateIDParam);
 
             SqlParameter MessageParam = new SqlParameter("@Message", task.Message);
             command.Parameters.Add(MessageParam);
@@ -30,9 +30,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
         public int DeleteTaskByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            string sqlExpression = "DeleteTaskByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteTaskByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
@@ -53,10 +51,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                 {
                     int id = (int)reader["ID"];
                     int UserID = (int)reader["UserID"];
-                    int Message = (int)reader["Message"];
+                    int CandidateID = (int)reader["CandidateID"];
+                    string Message = (string)reader["Message"];
                     string IsCompleted = (string)reader["IsCompleted"];
                   
-                    Console.WriteLine($"{id} \t{UserID} \t{Message} \t{IsCompleted}");
+                    Console.WriteLine($"{id} \t{UserID} \t{CandidateID} \t{Message} \t{IsCompleted}");
                 }
             }
             reader.Close();
@@ -81,10 +80,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                 {
                     int Id = (int)reader["ID"];
                     int UserID = (int)reader["UserID"];
-                    int Message = (int)reader["Message"];
+                    int CandidateID = (int)reader["CandidateID"];
+                    string Message = (string)reader["Message"];
                     string IsCompleted = (string)reader["IsCompleted"];
 
-                    Console.WriteLine($"\t{Id} \t{UserID} \t{Message} \t{IsCompleted}");
+                    Console.WriteLine($"\t{Id} \t{UserID} \t{CandidateID} \t{Message} \t{IsCompleted}");
                 }
             }
             reader.Close();
@@ -100,8 +100,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter StageParam = new SqlParameter("@ID", task.ID);
-            command.Parameters.Add(StageParam);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", task.CandidateID);
+            command.Parameters.Add(CandidateParam);
 
             SqlParameter StatusParam = new SqlParameter("@UserID", task.UserID);
             command.Parameters.Add(StatusParam);
