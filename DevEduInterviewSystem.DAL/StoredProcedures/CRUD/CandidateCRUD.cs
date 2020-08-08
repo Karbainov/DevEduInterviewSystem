@@ -80,9 +80,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     Console.WriteLine($"{id} \t{StageID} \t{StatusID} \t{CityID} \t{Phone} \t{Email} \t{FirstName} \t{LastName} \t{Birthday}");
                 }
             }
-            reader.Close();                       
+            reader.Close();
 
-            return (int)command.ExecuteScalar();
+
+            command.CommandText = "SELECT COUNT(*) FROM Candidate";
+            int count = (int)command.ExecuteScalar();            
+
+            return count;
         }
 
         public int SelectCandidateByID(SqlConnection connection, int ID)
@@ -98,7 +102,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             if (reader.HasRows) // если есть данные
             {
                 // выводим названия столбцов
-                Console.WriteLine($"id \t StageID \t StatusID \t CityID \t Phone \t Email \t FirstName \t LastName \t Birthday");
+                Console.WriteLine($"id \tStageID \tStatusID \tCityID \tPhone \tEmail \tFirstName \tLastName \tBirthday");
 
                 while (reader.Read()) // построчно считываем данные
                 {
