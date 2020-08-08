@@ -3,7 +3,7 @@
 @UserID int,
 @CandidateID int,
 @Message nvarchar (2500),
-@IsCompleted bit
+@IsCompleted nvarchar (50)
 AS
 BEGIN
 UPDATE [dbo].[Task]
