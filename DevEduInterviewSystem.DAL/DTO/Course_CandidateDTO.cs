@@ -14,7 +14,12 @@ namespace DevEduInterviewSystem.DAL.DTO
         {
 
         }
-
+        public Course_CandidateDTO(int CourseID, int CandidateID)
+        {
+            this.ID = ID;
+            this.CourseID = CourseID;
+            this.CandidateID = CandidateID;
+        }
         public Course_CandidateDTO(int ID, int CourseID, int CandidateID)
         {
             this.ID = ID;
