@@ -1,4 +1,5 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using System;
 using System.Data.SqlClient;
@@ -7,20 +8,23 @@ namespace Test
 {
     class Program
     {
-        static public SqlConnection GetConnection()
-        {
-            string connectionString = @"Data Source=.\HP;Initial Catalog = Interview; Integrated Security = True; Data Source = (local)";
-            SqlConnection connection = new SqlConnection(connectionString);
-            return connection;
-        }
         static void Main(string[] args)
         {
-            string connectionString = @"Data Source=.\HP;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
+            string connectionString = @"Data Source=DESKTOP-9K6HNII;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
             SqlConnection connection = new SqlConnection(connectionString);
 
-            CandidateDTO candidate = new CandidateDTO(1, 1, 1, 1, "123", "@@", "Vasa", "Pupkin", DateTime.Now);
-            CandidateCRUD cRUD = new CandidateCRUD();
-            Console.WriteLine(cRUD.AddCandidate(connection, candidate));
+            StageDTO stage = new StageDTO(2, "qwer");
+            StageCRUD cRUD = new StageCRUD();
+           // Console.WriteLine(cRUD.AddStage(connection, stage));
+           // Console.WriteLine(cRUD.DeleteStageByID(connection, 1));
+           
+
+
+           
+           // Console.WriteLine(cRUD.UpdateStageByID(connection, stage, 2));
+            connection.Close();
+
+            Console.WriteLine(cRUD.SelectAllStage(connection));
 
             connection.Close();
 
