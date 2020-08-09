@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[CandidatePersonalInfo] (
 	[ID] int Primary key Identity,
-	[CandidateID] int FOREIGN KEY ([CandidateID]) REFERENCES [Candidate]([ID]) NULL,
+	[CandidateID] int, --FOREIGN KEY ([CandidateID]) REFERENCES [dbo].[Candidate]([ID]) NULL,
 	[MaritalStatus] bit NULL,
 	[Education] nvarchar(50) NULL,
 	[WorkPlace] nvarchar(50) NULL,

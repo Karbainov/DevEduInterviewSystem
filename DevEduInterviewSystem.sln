@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem", "De
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DevEduInterviewSystem.DataBase", "DevEduInterviewSystem.DataBase\DevEduInterviewSystem.DataBase.sqlproj", "{CBBB7E4F-8158-4C0E-BEC9-04533A6D6B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEduInterviewSystem.DAL", "DevEduInterviewSystem.DAL\DevEduInterviewSystem.DAL.csproj", "{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.DAL", "DevEduInterviewSystem.DAL\DevEduInterviewSystem.DAL.csproj", "{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D22E78E0-F964-47E1-9BFD-AB86EDF2F91A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

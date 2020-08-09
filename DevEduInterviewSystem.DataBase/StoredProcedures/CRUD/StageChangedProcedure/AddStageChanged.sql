@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AddStageChanged]
-@CandidateID bigint,
+@CandidateID int,
 @StageID int,
 @ChangedDate datetime2
 AS
