@@ -23,6 +23,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return command.ExecuteNonQuery();
         }
+        public int AddCity(SqlConnection connection, CityDTO city)
+        {
+            connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddCity", connection);
+
+            SqlParameter CityNameParam = new SqlParameter("@Name", city.Name);
+            command.Parameters.Add(CityNameParam);
+
+            return command.ExecuteNonQuery();
+        }
         public int DeleteCityByID(SqlConnection connection, int ID)
         {
             connection.Open();
@@ -98,6 +108,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return command.ExecuteNonQuery();
         }
+        public int UpdateCityByID(SqlConnection connection, CityDTO city, int ID)
+        {
+            connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateCityByID", connection);
 
+            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            command.Parameters.Add(IDParam);
+
+            SqlParameter CityNameParam = new SqlParameter("@Name", city.Name);
+            command.Parameters.Add(CityNameParam);
+
+            return command.ExecuteNonQuery();
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace Test
 
             //Console.WriteLine(cc.AddCourse_Candidate(connection, CorseCCRUD));
             //connection.Close();
-            Console.WriteLine(cityCRUD.UpdateCityByID(connection, "Leningrad", 3));
+            Console.WriteLine(cityCRUD.AddCity(connection, "Ekaterinburg"));
             connection.Close();
             Console.WriteLine(cityCRUD.SelectAllCity(connection));
             connection.Close();
