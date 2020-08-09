@@ -21,8 +21,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AddCourse", connection);
 
-            SqlParameter nameParam = new SqlParameter("@Name", course.Name);
-            command.Parameters.Add(nameParam);
+            SqlParameter nameCourseParam = new SqlParameter("@Name", course.Name);
+            command.Parameters.Add(nameCourseParam);
 
             return command.ExecuteNonQuery();
         }
@@ -52,7 +52,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     int id = (int)reader["id"];
                     string Name = (string)reader["Name"];
-
                     Console.WriteLine($"{id} \t{Name} ");
                 }
             }
@@ -80,8 +79,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     int id = (int)reader["id"];
                     string Name = (string)reader["Name"];
-
-
                     Console.WriteLine($"{id} \t{Name} ");
                 }
             }
@@ -97,8 +94,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter NameParam = new SqlParameter("@Name", course.Name);
-            command.Parameters.Add(NameParam);
+            SqlParameter nameCourseParam = new SqlParameter("@Name", course.Name);
+            command.Parameters.Add(nameCourseParam);
 
 
 

@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class Course_CandidateCRUD
+    public class CityCRUD
     {
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {
@@ -13,50 +13,44 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return command;
         }
-
-        public int AddCourse_Candidate(SqlConnection connection, Course_CandidateDTO course_candidate)
+        public int AddCity(SqlConnection connection, CityDTO city)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCourse_Candidate", connection);
+            SqlCommand command = ReferenceToProcedure("AddCity", connection);
 
-            SqlParameter CourseIDParam = new SqlParameter("@CourseID", course_candidate.CourseID);
-            command.Parameters.Add(CourseIDParam);
-
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", course_candidate.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
+            SqlParameter CityNameParam = new SqlParameter("@Name", city.Name);
+            command.Parameters.Add(CityNameParam);
 
             return command.ExecuteNonQuery();
         }
-        public int DeleteCourse_CandidateByID(SqlConnection connection, int ID)
+        public int DeleteCityByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteCourse_CandidateByID", connection);
+            SqlCommand command = ReferenceToProcedure("DeleteCityByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
-        public int SelectAllCourse_Candidate(SqlConnection connection)
+        public int SelectAllCity(SqlConnection connection)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllCourse_Candidate", connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllCity", connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.HasRows) // если есть данные
             {
                 // выводим названия столбцов
-                Console.WriteLine($"ID \t CourseID \t CandidateID");
+                Console.WriteLine($"ID \tNameCity");
 
                 while (reader.Read()) // построчно считываем данные
                 {
                     int id = (int)reader["id"];
-                    int courseID = (int)reader["CourseID"];
-                    int candidateID = (int)reader["CandidateID"];
+                    string name = (string)reader["Name"];
 
-
-                    Console.WriteLine($"{id} \t{courseID} \t{candidateID}");
+                    Console.WriteLine($"{id} \t{name}");
                 }
             }
             reader.Close();
@@ -64,10 +58,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return (int)command.ExecuteScalar();
         }
 
-        public int SelectCourse_CandidateByID(SqlConnection connection, int ID)
+        public int SelectCityByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectCourse_CandidateByID", connection);
+            SqlCommand command = ReferenceToProcedure("SelectCityByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
@@ -77,21 +71,21 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             if (reader.HasRows) // если есть данные
             {
                 // выводим названия столбцов
-                Console.WriteLine($"ID \t CourseID \t CandidateID");
+                Console.WriteLine($"ID \tNameCity");
 
                 while (reader.Read()) // построчно считываем данные
                 {
                     int id = (int)reader["id"];
-                    int courseID = (int)reader["CourseID"];
-                    int candidateID = (int)reader["CandidateID"];
-                    Console.WriteLine($"{id} \t{courseID} \t{candidateID}");
+                    string name = (string)reader["Name"];
+
+                    Console.WriteLine($"{id} \t{name}");
                 }
             }
             reader.Close();
 
             return (int)command.ExecuteScalar();
         }
-        public int UpdateCourse_CandidateByID(SqlConnection connection, Course_CandidateDTO course_candidate, int ID)
+        public int UpdateCityByID(SqlConnection connection, CityDTO city, int ID)
         {
             connection.Open();
             SqlCommand command = ReferenceToProcedure("UpdateCourse_CandidateByID", connection);
@@ -99,13 +93,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", course_candidate.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
-
-            SqlParameter CourseIDParam = new SqlParameter("@CourseID", course_candidate.CourseID);
-            command.Parameters.Add(CandidateIDParam);
+            SqlParameter CityNameParam = new SqlParameter("@CandidateID", city.Name);
+            command.Parameters.Add(CityNameParam);
 
             return command.ExecuteNonQuery();
         }
+
     }
 }
