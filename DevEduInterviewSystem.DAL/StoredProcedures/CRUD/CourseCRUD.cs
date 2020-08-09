@@ -16,12 +16,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command;
         }
 
-        public int AddCourse(SqlConnection connection, CourseDTO course)
+        public int AddCourse(SqlConnection connection, string course)
         {
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AddCourse", connection);
 
-            SqlParameter nameCourseParam = new SqlParameter("@Name", course.Name);
+            SqlParameter nameCourseParam = new SqlParameter("@Name", course);
             command.Parameters.Add(nameCourseParam);
 
             return command.ExecuteNonQuery();
@@ -86,7 +86,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return (int)command.ExecuteScalar();
         }
-        public int UpdateCourseByID(SqlConnection connection, CourseDTO course, int ID)
+        public int UpdateCourseByID(SqlConnection connection, string course, int ID)
         {
             connection.Open();
             SqlCommand command = ReferenceToProcedure("UpdateCourseByID", connection);
@@ -94,7 +94,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter nameCourseParam = new SqlParameter("@Name", course.Name);
+            SqlParameter nameCourseParam = new SqlParameter("@Name", course);
             command.Parameters.Add(nameCourseParam);
 
 

@@ -36,7 +36,7 @@ namespace Test
             CourseCRUD cRud = new CourseCRUD();
             Course_CandidateDTO CorseCCRUD = new Course_CandidateDTO(1, 1);
             Course_CandidateCRUD cc = new Course_CandidateCRUD();
-            CityDTO city = new CityDTO("SPB");
+            CityDTO city = new CityDTO("Moskow");
             CityCRUD cityCRUD = new CityCRUD();
             connection.Close();
             //Console.WriteLine(cRUD.AddStage(connection, stage));
@@ -48,7 +48,7 @@ namespace Test
 
             //Console.WriteLine(cc.AddCourse_Candidate(connection, CorseCCRUD));
             //connection.Close();
-            Console.WriteLine(cityCRUD.AddCity(connection, city));
+            Console.WriteLine(cityCRUD.UpdateCityByID(connection, "Leningrad", 3));
             connection.Close();
             Console.WriteLine(cityCRUD.SelectAllCity(connection));
             connection.Close();
