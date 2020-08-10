@@ -6,6 +6,6 @@ namespace DevEduInterviewSystem.DAL.Shared
 {
     public struct PrimerConnection
     {
-        public const string ConnectionString = @"Data Source=DESKTOP-9K6HNII\MSSQLSERVER2;Initial Catalog = test; Integrated Security = True";
+        public const string ConnectionString = @"Data Source=DESKTOP-IEKEDGF;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
     }
 }
