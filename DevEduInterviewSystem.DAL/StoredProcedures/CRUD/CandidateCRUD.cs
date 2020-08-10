@@ -6,164 +6,154 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class CandidateCRUD
+    public class CandidateCRUD:AbstractCRUD<CandidateDTO>
     {
-        public int AddCandidate(SqlConnection connection, CandidateDTO candidate)
+        public override int Add(CandidateDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCandidate", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("Adddto", Connection);
 
-            SqlParameter StageParam = new SqlParameter("@StageID", candidate.StageID);
+            SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageParam);
 
-            SqlParameter StatusParam = new SqlParameter("@StatusID", candidate.StatusID);
+            SqlParameter StatusParam = new SqlParameter("@StatusID", dto.StatusID);
             command.Parameters.Add(StatusParam);
 
-            SqlParameter CityParam = new SqlParameter("@CityID", candidate.CityID);
+            SqlParameter CityParam = new SqlParameter("@CityID", dto.CityID);
             command.Parameters.Add(CityParam);
 
-            SqlParameter PhoneParam = new SqlParameter("@Phone", candidate.Phone);
+            SqlParameter PhoneParam = new SqlParameter("@Phone", dto.Phone);
             command.Parameters.Add(PhoneParam);
 
-            SqlParameter EmailParam = new SqlParameter("@Email", candidate.Email);
+            SqlParameter EmailParam = new SqlParameter("@Email", dto.Email);
             command.Parameters.Add(EmailParam);
 
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", candidate.FirstName);
+            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
             command.Parameters.Add(FirstNameParam);
 
-            SqlParameter LastNameParam = new SqlParameter("@LastName", candidate.LastName);
+            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
-            SqlParameter BDParam = new SqlParameter("@BirthDay", candidate.BirthDay);
+            SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
             command.Parameters.Add(BDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteCandidateByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
+            Connection.Open();
             string sqlExpression = "DeleteCandidateByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            SqlCommand command = new SqlCommand(sqlExpression, Connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllCandidate(SqlConnection connection)
+        public override List<CandidateDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllCandidate", connection);            
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllCandidate", Connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
+            List<CandidateDTO> candidates = new List<CandidateDTO>();
+
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t StageID \t StatusID \t CityID \t Phone \t Email \t FirstName \t LastName \t Birthday");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int StageID = (int)reader["StageID"];
-                    int StatusID = (int)reader["StatusID"];
-                    int CityID = (int)reader["CityID"];
-                    int Phone = (int)reader["Phone"];
-                    var Email = (string)reader["Email"];
-                    var FirstName = (string)reader["FirstName"];
-                    var LastName = (string)reader["LastName"];
-                    var Birthday = (DateTime)reader["Birthday"];
+                    CandidateDTO candidate = new CandidateDTO()
+                    {
+                        ID = (int)reader["id"],
+                        StageID = (int)reader["StageID"],
+                        StatusID = (int)reader["StatusID"],
+                        CityID = (int)reader["CityID"],
+                        Phone = (string)reader["Phone"],
+                        Email = (string)reader["Email"],
+                        FirstName = (string)reader["FirstName"],
+                        LastName = (string)reader["LastName"],
+                        BirthDay = (DateTime)reader["Birthday"]
+                    };
 
-                    Console.WriteLine($"{id} \t{StageID} \t{StatusID} \t{CityID} \t{Phone} \t{Email} \t{FirstName} \t{LastName} \t{Birthday}");
+                    candidates.Add(candidate);
                 }
             }
             reader.Close();
 
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Candidate", connection);
-            int count = (int)countRows.ExecuteScalar();            
-
-            return count;
+            return candidates;
         }
 
-        public int SelectCandidateByID(SqlConnection connection, int ID)
+        public override CandidateDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectCandidateByID", connection);           
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectCandidateByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            CandidateDTO candidate = new CandidateDTO();
 
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \tStageID \tStatusID \tCityID \tPhone \tEmail \tFirstName \tLastName \tBirthday");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int StageID = (int)reader["StageID"];
-                    int StatusID = (int)reader["StatusID"];
-                    int CityID = (int)reader["CityID"];
-                    int Phone = (int)reader["Phone"];
-                    var Email = (string)reader["Email"];
-                    var FirstName = (string)reader["FirstName"];
-                    var LastName = (string)reader["LastName"];
-                    var Birthday = (DateTime)reader["Birthday"];
+                    candidate.ID = (int)reader["id"];
+                    candidate.StageID = (int)reader["StageID"];
+                    candidate.StatusID = (int)reader["StatusID"];
+                    candidate.CityID = (int)reader["CityID"];
+                    candidate.Phone = (string)reader["Phone"];
+                    candidate.Email = (string)reader["Email"];
+                    candidate.FirstName = (string)reader["FirstName"];
+                    candidate.LastName = (string)reader["LastName"];
+                    candidate.BirthDay = (DateTime)reader["Birthday"];
 
-                    Console.WriteLine($"{id} \t{StageID} \t{StatusID} \t{CityID} \t{Phone} \t{Email} \t{FirstName} \t{LastName} \t{Birthday}");
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return candidate;
         }
 
-        public int UpdateCandidateByID(SqlConnection connection, CandidateDTO candidate, int ID)
+        public override int UpdateByID(CandidateDTO dto)
         {
-            connection.Open();            
-            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID", connection);            
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdatedtoByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter StageParam = new SqlParameter("@StageID", candidate.StageID);
+            SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageParam);
 
-            SqlParameter StatusParam = new SqlParameter("@StatusID", candidate.StatusID);
+            SqlParameter StatusParam = new SqlParameter("@StatusID", dto.StatusID);
             command.Parameters.Add(StatusParam);
 
-            SqlParameter CityParam = new SqlParameter("@CityID", candidate.CityID);
+            SqlParameter CityParam = new SqlParameter("@CityID", dto.CityID);
             command.Parameters.Add(CityParam);
 
-            SqlParameter PhoneParam = new SqlParameter("@Phone", candidate.Phone);
+            SqlParameter PhoneParam = new SqlParameter("@Phone", dto.Phone);
             command.Parameters.Add(PhoneParam);
 
-            SqlParameter EmailParam = new SqlParameter("@Email", candidate.Email);
+            SqlParameter EmailParam = new SqlParameter("@Email", dto.Email);
             command.Parameters.Add(EmailParam);
 
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", candidate.FirstName);
+            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
             command.Parameters.Add(FirstNameParam);
 
-            SqlParameter LastNameParam = new SqlParameter("@LastName", candidate.LastName);
+            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
-            SqlParameter BDParam = new SqlParameter("@BirthDay", candidate.BirthDay);
+            SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
             command.Parameters.Add(BDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
+      
     }
 }
