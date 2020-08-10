@@ -26,9 +26,9 @@ namespace Test
 
 
             //StageDTO stage = new StageDTO(1,"sdwqwa");
-            FeedbackDTO feedback = new FeedbackDTO(1,1,1,"Привет",DateTime.Now);
+            HomeworkStatusDTO homeworkStatus = new HomeworkStatusDTO(1, "jfjf");
             //StageCRUD cRUD = new StageCRUD();
-            FeedbackCRUD feedbackCrud = new FeedbackCRUD();
+            HomeworkStatusCRUD Crud = new HomeworkStatusCRUD();
             //Console.WriteLine(cRUD.AddStage(connection, stage));
             //InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
             //InterviewCRUD iRUD = new InterviewCRUD();
@@ -42,13 +42,13 @@ namespace Test
             //Console.WriteLine(cRUD.AddStage(connection, stage));
             //connection.Close();
             //Console.WriteLine(cRUD.SelectAllStage(connection));
-            //Console.WriteLine(cRUD.DeleteStageByID(connection, 1));
+            Console.WriteLine(Crud.UpdateByID(connection, homeworkStatus, 2));
             //Console.WriteLine(candCrud.AddCandidate(connection, cand));
             //connection.Close();
 
             //Console.WriteLine(cc.AddCourse_Candidate(connection, CorseCCRUD));
             //connection.Close();
-            Console.WriteLine(feedbackCrud.Add(connection, feedback));
+            //Console.WriteLine(homeworkStatusCrud.Add(connection, homeworkStatus));
             connection.Close();
             ////Console.WriteLine(feedbackCrud.SelectAll(connection));
             //connection.Close();
