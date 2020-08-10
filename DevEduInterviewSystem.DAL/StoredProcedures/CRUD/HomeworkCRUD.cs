@@ -1,36 +1,38 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Data.SqlClient;
+using System.Collections.Generic;
+using System.Text;
 
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class InterviewCRUD
+    public class HomeworkCRUD
     {
-        public int AddInterview(SqlConnection connection, InterviewDTO interview)
+        public int AddHomework(SqlConnection connection, HomeworkDTO homework)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddInterview", connection);
+            SqlCommand command = ReferenceToProcedure("AddHomework", connection);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", interview.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", homework.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
-            command.Parameters.Add(InterviewStatusParam);
+            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", homework.HomeworkStatusID);
+            command.Parameters.Add(HomeworkStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", interview.Attempt);
-            command.Parameters.Add(AttemptParam);
+            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", homework.TestStatusID);
+            command.Parameters.Add(TestStatusParam);
 
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
-            command.Parameters.Add(DateTimeInterviewParam);
+            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", homework.HomeworkDate);
+            command.Parameters.Add(HomeworkDateParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteInterviewByID(SqlConnection connection, int ID)
+        public int DeleteHomeworkByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            string sqlExpression = "DeleteInterviewByID";
+            string sqlExpression = "DeleteHomeworkByID";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -40,62 +42,62 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllInterview(SqlConnection connection)
+        public int SelectAllHomework(SqlConnection connection)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllInterview", connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllHomework", connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t CandidateID \t InterviewStatusID \t Attempt \t DateTimeInterview ");
+               
+                Console.WriteLine($"id \t CandidateID \t HomeworkStatusID \t TestStatusID \t HomeworkDate ");
 
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     int id = (int)reader["id"];
                     int CandidateID = (int)reader["CandidateID"];
-                    int InterviewStatusID = (int)reader["InterviewStatusID"];
-                    int Attempt = (int)reader["Attempt"];
-                    var DateTimeInterview = (DateTime)reader["DateTimeInterview"];
+                    int HomeworkStatusID = (int)reader["HomeworkStatusID"];
+                    int TestStatusID = (int)reader["TestStatusID"];
+                    var HomeworkDate = (DateTime)reader["HomeworkDate"];
 
-                    Console.WriteLine($"{id} \t{CandidateID} \t{InterviewStatusID} \t{Attempt} \t{DateTimeInterview}");
+                    Console.WriteLine($"{id} \t{CandidateID} \t{HomeworkStatusID} \t{TestStatusID} \t{HomeworkDate}");
                 }
             }
             reader.Close();
 
 
-            command.CommandText = "SELECT COUNT(*) FROM Interview";
+            command.CommandText = "SELECT COUNT(*) FROM Homework";
             int count = (int)command.ExecuteScalar();
 
             return count;
         }
 
-        public int SelectInterviewByID(SqlConnection connection, int ID)
+        public int SelectHomeworkByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectInterviewByID", connection);
+            SqlCommand command = ReferenceToProcedure("SelectHomeworkByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t CandidateID \t InterviewStatusID \t Attempt \t DateTimeInterview ");
+                
+                Console.WriteLine($"id \t CandidateID \t HomeworkStatusID \t TestStatusID \t HomeworkDate ");
 
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     int id = (int)reader["id"];
                     int CandidateID = (int)reader["CandidateID"];
-                    int InterviewStatusID = (int)reader["InterviewStatusID"];
-                    int Attempt = (int)reader["Attempt"];
-                    var DateTimeInterview = (DateTime)reader["DateTimeInterview"];
+                    int HomeworkStatusID = (int)reader["HomeworkStatusID"];
+                    int TestStatusID = (int)reader["Homework"];
+                    var HomeworkDate = (DateTime)reader["HomeworkDate"];
 
-                    Console.WriteLine($"{id} \t{CandidateID} \t{InterviewStatusID} \t{Attempt} \t{DateTimeInterview}");
+                    Console.WriteLine($"{id} \t{CandidateID} \t{HomeworkStatusID} \t{TestStatusID} \t{HomeworkDate}");
                 }
             }
             reader.Close();
@@ -103,25 +105,25 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return (int)command.ExecuteScalar();
         }
 
-        public int UpdateInterviewByID(SqlConnection connection, InterviewDTO interview, int ID)
+        public int UpdateHomeworkByID(SqlConnection connection, HomeworkDTO homework, int ID)
         {
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateInterviewByID", connection);
+            SqlCommand command = ReferenceToProcedure("UpdateHomeworkByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", interview.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", homework.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
-            command.Parameters.Add(InterviewStatusParam);
+            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", homework.HomeworkStatusID);
+            command.Parameters.Add(HomeworkStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", interview.Attempt);
-            command.Parameters.Add(AttemptParam);
+            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", homework.TestStatusID);
+            command.Parameters.Add(TestStatusParam);
 
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
-            command.Parameters.Add(DateTimeInterviewParam); 
+            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", homework.HomeworkDate);
+            command.Parameters.Add(HomeworkDateParam); 
 
             return command.ExecuteNonQuery();
         }
