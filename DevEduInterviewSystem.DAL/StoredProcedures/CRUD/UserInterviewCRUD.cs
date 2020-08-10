@@ -6,102 +6,104 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class UserInterviewCRUD
+    public class UserInterviewCRUD : AbstractCRUD<UserInterviewDTO>
     {
-        public int AddUser_Interview(SqlConnection connection, UserInterviewDTO userInterview)
+        public override int Add(UserInterviewDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUser_Interview", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddUser_Interview", Connection);
 
-            SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", userInterview.InterviewID);
+            SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", dto.InterviewID);
             command.Parameters.Add(InterviewIDParam);
 
-            SqlParameter userInterviewParam = new SqlParameter("@UserID", userInterview.UserID);
+            SqlParameter userInterviewParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(userInterviewParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteUser_InterviewByID(SqlConnection connection, int ID)
+       
+
+        public override int DeleteByID(int id)
         {
-            connection.Open();
+            Connection.Open();
             string sqlExpression = "DeleteUser_InterviewByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            SqlCommand command = new SqlCommand(sqlExpression, Connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
-
+            
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllUser_Interview(SqlConnection connection)
+       
+        public override List<UserInterviewDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllUser_Interview", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllUser_Interview", Connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
+            List<UserInterviewDTO> userInterviews = new List<UserInterviewDTO>();
+
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t InterviewID \t UserID");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int InterviewID = (int)reader["InterviewID"];
-                    int UserID = (int)reader["UserID"];
-
-                    Console.WriteLine($"{id} \t{InterviewID} \t{UserID} ");
+                    UserInterviewDTO userInterview = new UserInterviewDTO()
+                    {
+                        ID = (int)reader["id"],
+                        InterviewID = (int)reader["InterviewID"],
+                        UserID = (int)reader["UserID"]
+                    };
+                    userInterviews.Add(userInterview);
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return userInterviews;
         }
+              
 
-        public int SelectUser_InterviewByID(SqlConnection connection, int ID)
+        public override UserInterviewDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectUser_InterviewByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectUser_InterviewByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            UserInterviewDTO userinterview = new UserInterviewDTO();
 
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t InterviewID \t UserID");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int InterviewID = (int)reader["InterviewID"];
-                    int UserID = (int)reader["UserID"];
-
-                    Console.WriteLine($"{id} \t{InterviewID} \t{UserID} ");
+                    userinterview.ID = (int)reader["id"];
+                    userinterview.InterviewID = (int)reader["InterviewID"];
+                    userinterview.UserID = (int)reader["UserID"];
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return userinterview;
         }
 
-        public int UpdateUser_InterviewByID(SqlConnection connection, UserInterviewDTO userInterview, int ID)
+       
+        public override int UpdateByID(UserInterviewDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUser_InterviewByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateUser_InterviewByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", userInterview.InterviewID);
+            SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", dto.InterviewID);
             command.Parameters.Add(InterviewIDParam);
 
-            SqlParameter UserIDParam = new SqlParameter("@UserID", userInterview.UserID);
+            SqlParameter UserIDParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserIDParam);
 
 
@@ -109,12 +111,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command.ExecuteNonQuery();
         }
 
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+       
 
-            return command;
-        }
     }
 }

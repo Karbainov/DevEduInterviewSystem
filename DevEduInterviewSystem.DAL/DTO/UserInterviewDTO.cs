@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-   public  class UserInterviewDTO
+   public  class UserInterviewDTO : IDTO
    {
 
         public int ID { get; set; }
