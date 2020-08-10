@@ -152,8 +152,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(BDParam);
 
             return command.ExecuteNonQuery();
-        }
-
-      
+        }    
     }
 }
