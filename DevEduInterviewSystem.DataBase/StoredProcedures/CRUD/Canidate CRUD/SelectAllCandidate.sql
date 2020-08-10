@@ -1,4 +1,4 @@
-﻿CREATE Procedure SelectAllCandidate as
+﻿CREATE Procedure [dbo].[SelectAllCandidate] as
   begin
-  select * From dbo.[Candidate] 
+  select * From [dbo].[Candidate] 
   end
