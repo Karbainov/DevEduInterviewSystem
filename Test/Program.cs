@@ -10,8 +10,8 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            string connectionString = @"Data Source=DESKTOP-IEKEDGF;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
-            //string connectionString = @"Data Source=DESKTOP-IEKEDGF\SQLEXPRESS;Initial Catalog=DevEduInterviewSystem.DataBase; Data Source = (local)";
+            string connectionString = @"Data Source=DESKTOP-HRBRQKP;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
+            //string connectionString = @"Data Source=DESKTOP-HRBRQKP;Initial Catalog=DevEduInterviewSystem.DataBase; Data Source = (local)";
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Подключение...");
             connection.Open();
@@ -26,18 +26,18 @@ namespace Test
 
 
             //StageDTO stage = new StageDTO(1,"sdwqwa");
-            CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "3242342", "fefefw", "Denis", "Matveev", DateTime.Today);
+            FeedbackDTO feedback = new FeedbackDTO(1,1,1,"Привет",DateTime.Now);
             //StageCRUD cRUD = new StageCRUD();
-            CandidateCRUD candCrud = new CandidateCRUD();
+            FeedbackCRUD feedbackCrud = new FeedbackCRUD();
             //Console.WriteLine(cRUD.AddStage(connection, stage));
             //InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
             //InterviewCRUD iRUD = new InterviewCRUD();
-            CourseDTO course = new CourseDTO("C++");
-            CourseCRUD cRud = new CourseCRUD();
-            Course_CandidateDTO CorseCCRUD = new Course_CandidateDTO(1, 1);
-            Course_CandidateCRUD cc = new Course_CandidateCRUD();
-            CityDTO city = new CityDTO("Moskow");
-            CityCRUD cityCRUD = new CityCRUD();
+            //CourseDTO course = new CourseDTO("C++");
+            //CourseCRUD cRud = new CourseCRUD();
+            //Course_CandidateDTO CorseCCRUD = new Course_CandidateDTO(1, 1);
+            //Course_CandidateCRUD cc = new Course_CandidateCRUD();
+            //CityDTO city = new CityDTO("Moskow");
+            //CityCRUD cityCRUD = new CityCRUD();
             connection.Close();
             //Console.WriteLine(cRUD.AddStage(connection, stage));
             //connection.Close();
@@ -48,10 +48,10 @@ namespace Test
 
             //Console.WriteLine(cc.AddCourse_Candidate(connection, CorseCCRUD));
             //connection.Close();
-            Console.WriteLine(cityCRUD.AddCity(connection, "Ekaterinburg"));
+            Console.WriteLine(feedbackCrud.Add(connection, feedback));
             connection.Close();
-            Console.WriteLine(cityCRUD.SelectAllCity(connection));
-            connection.Close();
+            ////Console.WriteLine(feedbackCrud.SelectAll(connection));
+            //connection.Close();
 
             //Console.ReadLine();
         }
