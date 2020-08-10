@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         {
             Connection = new SqlConnection(PrimerConnection.ConnectionString);
         }
-        abstract public int Add( T dto);
+        abstract public int Add(T dto);
         abstract public int DeleteByID(int id);
         abstract public int UpdateByID(T dto);
         abstract public List<T> SelectAll();
