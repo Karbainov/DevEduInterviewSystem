@@ -6,101 +6,93 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class TestStatusCRUD
+    public class TestStatusCRUD : AbstractCRUD<TestStatusDTO>
     {
-        public int AddTestStatus(SqlConnection connection, TestStatusDTO testStatus)
+        public override int Add(TestStatusDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddTestStatus", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddTestStatus", Connection);
 
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", testStatus.Name);
+            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CandidateIDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteTestStatusByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteTestStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteTestStatusByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllTestStatus(SqlConnection connection)
+        public override List<TestStatusDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllTestStatus", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllTestStatus", Connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
-            {
-                while (reader.Read()) // построчно считываем данные
-                {
-                    int ID = (int)reader["id"];                    
-                    var Name = (string)reader["Name"];
+            List<TestStatusDTO> tests = new List<TestStatusDTO>();
 
-                    Console.WriteLine($"{ID} \t{Name}");
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    TestStatusDTO testStatus = new TestStatusDTO()
+                    {
+                        ID = (int)reader["id"],
+                        Name = (string)reader["Name"]
+                    };
+
+                    tests.Add(testStatus);
+                }
+            }
+            reader.Close();
+            return tests;
+        }
+
+        public override TestStatusDTO SelectByID(int id)
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectTestStatusByID", Connection);
+
+            SqlParameter IDParam = new SqlParameter("@ID", id);
+            command.Parameters.Add(IDParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+            TestStatusDTO testStatus = new TestStatusDTO();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    testStatus.ID = (int)reader["id"];
+                    testStatus.Name = (string)reader["Name"];
                 }
             }
             reader.Close();
 
-
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM TestStatus", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return testStatus;
         }
 
-        public int SelectTestStatusByID(SqlConnection connection, int ID)
+        public override int UpdateByID(TestStatusDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectTestStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateTestStatusByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) // если есть данные
-            {
-                while (reader.Read()) // построчно считываем данные
-                {
-                    int id = (int)reader["id"];
-                    var Name = (string)reader["Name"];
-
-                    Console.WriteLine($"{id} \t{Name}");
-                }
-            }
-            reader.Close();
-
-            return (int)command.ExecuteScalar();
-        }
-
-        public int UpdateTestStatusByID(SqlConnection connection, TestStatusDTO testStatus, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateTestStatusByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", testStatus.Name);
+            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CandidateIDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
     }
 }
