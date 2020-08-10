@@ -35,25 +35,27 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllGroupCandidate(SqlConnection connection)
+        public List<GroupCandidateDTO> SelectAllGroupCandidate(SqlConnection connection)
         {
             connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectAllGroup_Candidate", connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
+            List<GroupCandidateDTO> GroupCandidateDTOs = new List<GroupCandidateDTO>();
             if (reader.HasRows) // если есть данные
             {
                 // выводим названия столбцов
                 Console.WriteLine($"id \t GroupID \t CandidateID");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int GroupID = (int)reader["GroupID"];
-                    int CandidateID = (int)reader["CandidateID"];
+                    GroupCandidateDTO dTO = new GroupCandidateDTO();
 
-                    Console.WriteLine($"{id} \t{GroupID} \t{CandidateID}");
+                    dTO.ID = (int)reader["id"];
+                    dTO.GroupID = (int)reader["GroupID"];
+                    dTO.CandidateID = (int)reader["CandidateID"];
+
+                    GroupCandidateDTOs.Add(dTO);
                 }
             }
             reader.Close();
@@ -61,7 +63,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Group_Candidate", connection);
             int count = (int)countRows.ExecuteScalar();
 
-            return count;
+            return GroupCandidateDTOs;
         }
 
         public int SelectGroupCandidateByID(SqlConnection connection, int ID)

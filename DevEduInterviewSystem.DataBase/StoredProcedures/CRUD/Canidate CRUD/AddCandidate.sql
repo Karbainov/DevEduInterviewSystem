@@ -1,4 +1,4 @@
-﻿CREATE Procedure AddCandidate
+﻿CREATE Procedure [dbo].[AddCandidate]
   @StageID int, 
   @StatusID int,
   @CityID int,
@@ -9,6 +9,6 @@
   @Birthday datetime2
   as
   begin
-  insert into dbo.[Candidate] 
+  insert into [dbo].[Candidate] 
   values (@StageID, @StatusID, @CityID, @Phone, @Email, @FirstName, @LastName, @Birthday)
   end

@@ -1,4 +1,4 @@
-﻿CREATE Procedure UpdateCandidateByID
+﻿CREATE Procedure [dbo].[UpdateCandidateByID]
   @ID int,
   @StageID int, 
   @StatusID int,
@@ -10,7 +10,7 @@
   @Birthday datetime2
   as
   begin
-  Update dbo.[Candidate] 
+  Update [dbo].[Candidate] 
   set StageID = @StageID,
   StatusID = @StatusID,
   CityID = @CityID,
