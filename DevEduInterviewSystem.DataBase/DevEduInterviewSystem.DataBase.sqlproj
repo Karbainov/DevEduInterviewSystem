@@ -92,6 +92,7 @@
     <Folder Include="StoredProcedures\CRUD\CityProcedures" />
     <Folder Include="StoredProcedures\CRUD\Course_CandidatProcedures" />
     <Folder Include="StoredProcedures\CRUD\TestStatus\" />
+    <Folder Include="StoredProcedures\InterviewHistory" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -278,5 +279,6 @@
     <Build Include="StoredProcedures\CRUD\TestStatus\SelectTestStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\DeleteTestStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\UpdateTestStatusByID.sql" />
+    <Build Include="StoredProcedures\InterviewHistory\AttemptsInterviewCandidate.sql" />
   </ItemGroup>
 </Project>
