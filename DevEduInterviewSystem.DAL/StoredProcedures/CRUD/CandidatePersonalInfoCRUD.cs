@@ -6,163 +6,153 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class CandidatePersonalInfoCRUD
+    public class CandidatePersonalInfoCRUD : AbstractCRUD<CandidatePersonalInfoDTO>
     {
-        public int AddCandidatePersonalInfo(SqlConnection connection, CandidatePersonalInfoDTO candidatePersonalInfo)
+        public override int Add(CandidatePersonalInfoDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCandidatePersonalInfo", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("Adddto", Connection);
 
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", candidatePersonalInfo.CandidateID);
+            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateIDParam);
 
-            SqlParameter MaritalStatusParam = new SqlParameter("MaritalStatus", candidatePersonalInfo.MaritalStatus);
+            SqlParameter MaritalStatusParam = new SqlParameter("MaritalStatus", dto.MaritalStatus);
             command.Parameters.Add(MaritalStatusParam);
 
-            SqlParameter EducationParam = new SqlParameter("@Education", candidatePersonalInfo.Education);
+            SqlParameter EducationParam = new SqlParameter("@Education", dto.Education);
             command.Parameters.Add(EducationParam);
 
-            SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", candidatePersonalInfo.WorkPlace);
+            SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", dto.WorkPlace);
             command.Parameters.Add(WorkPlaceParam);
 
-            SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", candidatePersonalInfo.ITExperience);
+            SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", dto.ITExperience);
             command.Parameters.Add(ITExperienceParam);
 
-            SqlParameter HobbiesParam = new SqlParameter("@Hobbies", candidatePersonalInfo.Hobbies);
+            SqlParameter HobbiesParam = new SqlParameter("@Hobbies", dto.Hobbies);
             command.Parameters.Add(HobbiesParam);
 
-            SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", candidatePersonalInfo.InfoSourse);
+            SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", dto.InfoSourse);
             command.Parameters.Add(InfoSourseParam);
 
-            SqlParameter ExpectationsParam = new SqlParameter("@Expectations", candidatePersonalInfo.Expectations);
+            SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
             command.Parameters.Add(ExpectationsParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteCandidatePersonalInfoByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteCandidatePersonalInfoByID", connection);
-            
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteCandidatePersonalInfoByID", Connection);
+
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllCandidatePersonalInfo(SqlConnection connection)
+        public override List<CandidatePersonalInfoDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllCandidatePersonalInfo", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllCandidatePersonalInfo", Connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
+            List<CandidatePersonalInfoDTO> candidates = new List<CandidatePersonalInfoDTO>();
+
+            if (reader.HasRows)
             {
-                // выводим названия столбцов
-                //Console.WriteLine($"ID \t StageID \t StatusID \t CityID \t Phone \t Email \t FirstName \t LastName \t Birthday");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
-                    int ID = (int)reader["id"];
-                    int CandidateID = (int)reader["CandidateID"];
-                    bool MaritalStatus = (bool)reader["MaritalStatus"];
-                    var Education = (string)reader["Education"];
-                    var WorkPlace = (string)reader["WorkPlace"];
-                    var ITExperience = (string)reader["ITExperience"];
-                    var Hobbies = (string)reader["Hobbies"];
-                    var InfoSourse = (string)reader["InfoSourse"];
-                    var Expectations = (string)reader["Expectations"];
+                    CandidatePersonalInfoDTO candidate = new CandidatePersonalInfoDTO()
+                    {
+                        ID = (int)reader["id"],
+                        CandidateID = (int)reader["CandidateID"],
+                        MaritalStatus = (bool)reader["MaritalStatus"],
+                        Education = (string)reader["Education"],
+                        WorkPlace = (string)reader["WorkPlace"],
+                        ITExperience = (string)reader["ITExperience"],
+                        Hobbies = (string)reader["Hobbies"],
+                        InfoSourse = (string)reader["InfoSourse"],
+                        Expectations = (string)reader["Expectations"]
+                    };
 
-                    Console.WriteLine($"{ID} \t{CandidateID} \t{MaritalStatus} \t{Education} \t{WorkPlace} \t{ITExperience} \t{Hobbies} \t{InfoSourse} \t{Expectations}");
+                    candidates.Add(candidate);
+                }
+            }
+
+            reader.Close();
+
+            return candidates;
+        }
+
+        public override CandidatePersonalInfoDTO SelectByID(int id)
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectCandidatePersonalInfoByID", Connection);
+
+            SqlParameter IDParam = new SqlParameter("@ID", id);
+            command.Parameters.Add(IDParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+            CandidatePersonalInfoDTO candidate = new CandidatePersonalInfoDTO();
+
+            if (reader.HasRows) 
+            {
+
+                while (reader.Read()) 
+                {
+                    candidate.ID = (int)reader["id"];
+                    candidate.CandidateID = (int)reader["CandidateID"];
+                    candidate.MaritalStatus = (bool)reader["MaritalStatus"];
+                    candidate.Education = (string)reader["Education"];
+                    candidate.WorkPlace = (string)reader["WorkPlace"];
+                    candidate.ITExperience = (string)reader["ITExperience"];
+                    candidate.Hobbies = (string)reader["Hobbies"];
+                    candidate.InfoSourse = (string)reader["InfoSourse"];
+                    candidate.Expectations = (string)reader["Expectations"];
+
                 }
             }
             reader.Close();
 
-
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM CandidatePersonalInfo", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return candidate;
         }
 
-        public int SelectCandidatePersonalInfoByID(SqlConnection connection, int ID)
+        public override int UpdateByID(CandidatePersonalInfoDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectCandidatePersonalInfoByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateCandidatePersonalInfoByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) // если есть данные
-            {
-                // выводим названия столбцов
-                //Console.WriteLine($"id \tStageID \tStatusID \tCityID \tPhone \tEmail \tFirstName \tLastName \tBirthday");
-
-                while (reader.Read()) // построчно считываем данные
-                {
-                    int id = (int)reader["id"];
-                    int CandidateID = (int)reader["CandidateID"];
-                    bool MaritalStatus = (bool)reader["MaritalStatus"];
-                    var Education = (string)reader["Education"];
-                    var WorkPlace = (string)reader["WorkPlace"];
-                    var ITExperience = (string)reader["ITExperience"];
-                    var Hobbies = (string)reader["Hobbies"];
-                    var InfoSourse = (string)reader["InfoSourse"];
-                    var Expectations = (string)reader["Expectations"];
-
-                    Console.WriteLine($"{id} \t{CandidateID} \t{MaritalStatus} \t{Education} \t{WorkPlace} \t{ITExperience} \t{Hobbies} \t{InfoSourse} \t{Expectations}");
-                }
-            }
-            reader.Close();
-
-            return (int)command.ExecuteScalar();
-        }
-
-        public int UpdateCandidatePersonalInfoByID(SqlConnection connection, CandidatePersonalInfoDTO candidatePersonalInfo, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCandidatePersonalInfoByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", candidatePersonalInfo.CandidateID);
+            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateIDParam);
 
-            SqlParameter MaritalStatusParam = new SqlParameter("MaritalStatus", candidatePersonalInfo.MaritalStatus);
+            SqlParameter MaritalStatusParam = new SqlParameter("MaritalStatus", dto.MaritalStatus);
             command.Parameters.Add(MaritalStatusParam);
 
-            SqlParameter EducationParam = new SqlParameter("@Education", candidatePersonalInfo.Education);
+            SqlParameter EducationParam = new SqlParameter("@Education", dto.Education);
             command.Parameters.Add(EducationParam);
 
-            SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", candidatePersonalInfo.WorkPlace);
+            SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", dto.WorkPlace);
             command.Parameters.Add(WorkPlaceParam);
 
-            SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", candidatePersonalInfo.ITExperience);
+            SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", dto.ITExperience);
             command.Parameters.Add(ITExperienceParam);
 
-            SqlParameter HobbiesParam = new SqlParameter("@Hobbies", candidatePersonalInfo.Hobbies);
+            SqlParameter HobbiesParam = new SqlParameter("@Hobbies", dto.Hobbies);
             command.Parameters.Add(HobbiesParam);
 
-            SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", candidatePersonalInfo.InfoSourse);
+            SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", dto.InfoSourse);
             command.Parameters.Add(InfoSourseParam);
 
-            SqlParameter ExpectationsParam = new SqlParameter("@Expectations", candidatePersonalInfo.Expectations);
+            SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
             command.Parameters.Add(ExpectationsParam);
 
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
+        }       
+       
     }
 }

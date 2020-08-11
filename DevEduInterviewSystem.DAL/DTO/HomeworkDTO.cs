@@ -4,12 +4,12 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-    public class HomeworkDTO
+    public class HomeworkDTO : IDTO
     {
         public int ID { get; set; }
-        public int CandidateID { get; set; }
-        public int HomeworkStatusID { get; set; }
-        public int TestStatusID { get; set; }
+        public int? CandidateID { get; set; }
+        public int? HomeworkStatusID { get; set; }
+        public int? TestStatusID { get; set; }
         public DateTime HomeworkDate { get; set; }
 
         public HomeworkDTO()
