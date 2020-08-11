@@ -4,11 +4,11 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-   public class TaskDTO
+   public class TaskDTO : IDTO
     {
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public int CandidateID { get; set; }
+        public int? UserID { get; set; }
+        public int? CandidateID { get; set; }
         public string Message { get; set; }
         public string IsCompleted { get; set; }
        

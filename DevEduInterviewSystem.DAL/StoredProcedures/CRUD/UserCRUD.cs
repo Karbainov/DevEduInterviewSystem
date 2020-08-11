@@ -6,131 +6,112 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class UserCRUD
+    public class UserCRUD : AbstractCRUD<UserDTO>
     {
-        public int AddUser(SqlConnection connection, UserDTO user)
+        public override int Add(UserDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUser", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddUser", Connection);
 
-            SqlParameter LoginParam = new SqlParameter("@StageID", user.Login);
+            SqlParameter LoginParam = new SqlParameter("@Login", dto.Login);
             command.Parameters.Add(LoginParam);
 
-            SqlParameter PasswordParam = new SqlParameter("@StatusID", user.Password);
+            SqlParameter PasswordParam = new SqlParameter("@Password", dto.Password);
             command.Parameters.Add(PasswordParam);
 
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", user.FirstName);
+            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
             command.Parameters.Add(FirstNameParam);
 
-            SqlParameter LastNameParam = new SqlParameter("@LastName", user.LastName);
+            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteCandidateByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
+            Connection.Open();
             string sqlExpression = "DeleteUserByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            SqlCommand command = new SqlCommand(sqlExpression, Connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllCandidate(SqlConnection connection)
+        public override List<UserDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllUser", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllUser", Connection);
+            SqlDataReader reader = command.ExecuteReader();
+            List<UserDTO> users = new List<UserDTO>();
+            if (reader.HasRows)
+            {
+                while (reader.Read()) 
+                {
+                    UserDTO user = new UserDTO()
+                    {
+                        ID = (int)reader["id"],
+                        Login = (string)reader["Login"],
+                        Password = (string)reader["Password"],
+                        FirstName = (string)reader["FirstName"],
+                        LastName = (string)reader["LastName"]
+                    };
+                    users.Add(user);
+                }
+            }
+            reader.Close();
+            return users;
+        }
+        public override UserDTO SelectByID(int id)
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectUserByID", Connection);
+
+            SqlParameter IDParam = new SqlParameter("@ID", id);
+            command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            UserDTO user = new UserDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t Login \t Password \t FirstName \t LastName");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
-                    int id = (int)reader["id"];
-                    string Login = (string)reader["Login"];
-                    string Password = (string)reader["Password"];
-                    string FirstName = (string)reader["FirstName"];
-                    string LastName = (string)reader["LastName"];
-                    Console.WriteLine($"{id} \t{Login} \t{Password} \t{FirstName} \t{LastName}");
+                    user.ID = (int)reader["id"];
+                    user.Login = (string)reader["Login"];
+                    user.Password = (string)reader["Password"];
+                    user.FirstName = (string)reader["FirstName"];
+                    user.LastName = (string)reader["LastName"];
                 }
             }
             reader.Close();
 
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM USER", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return user;
         }
-
-        public int SelectCandidateByID(SqlConnection connection, int ID)
+        public override int UpdateByID(UserDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectUserByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateUserByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) // если есть данные
-            {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t Login \t Password \t FirstName \t LastName");
-
-                while (reader.Read()) // построчно считываем данные
-                {
-                    int id = (int)reader["id"];
-                    string Login = (string)reader["Login"];
-                    string Password = (string)reader["Password"];
-                    string FirstName = (string)reader["FirstName"];
-                    string LastName = (string)reader["LastName"];
-                    Console.WriteLine($"{id} \t{Login} \t{Password} \t{FirstName} \t{LastName}");
-                }
-            }
-            reader.Close();
-
-            return (int)command.ExecuteScalar();
-        }
-
-        public int UpdateCandidateByID(SqlConnection connection, UserDTO user, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter LoginParam = new SqlParameter("@StageID", user.Login);
+            SqlParameter LoginParam = new SqlParameter("@StageID", dto.Login);
             command.Parameters.Add(LoginParam);
 
-            SqlParameter PasswordParam = new SqlParameter("@StatusID", user.Password);
+            SqlParameter PasswordParam = new SqlParameter("@StatusID", dto.Password);
             command.Parameters.Add(PasswordParam);
 
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", user.FirstName);
+            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
             command.Parameters.Add(FirstNameParam);
 
-            SqlParameter LastNameParam = new SqlParameter("@LastName", user.LastName);
+            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
             return command.ExecuteNonQuery();
         }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
-
     }
 }

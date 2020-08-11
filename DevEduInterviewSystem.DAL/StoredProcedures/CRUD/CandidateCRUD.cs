@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("Adddto", Connection);
+            SqlCommand command = ReferenceToProcedure("AddCandidate", Connection);
 
             SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageParam);
@@ -58,10 +58,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectAllCandidate", Connection);
 
-            SqlDataReader reader = command.ExecuteReader();
 
             List<CandidateDTO> candidates = new List<CandidateDTO>();
 
+            SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows) // если есть данные
             {
                 while (reader.Read()) // построчно считываем данные
@@ -122,7 +122,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdatedtoByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID", Connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
@@ -152,8 +152,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(BDParam);
 
             return command.ExecuteNonQuery();
-        }
-
-      
+        }    
     }
 }
