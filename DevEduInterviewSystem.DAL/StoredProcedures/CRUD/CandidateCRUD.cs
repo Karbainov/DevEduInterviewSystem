@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("Adddto", Connection);
+            SqlCommand command = ReferenceToProcedure("AddCandidate", Connection);
 
             SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageParam);
@@ -122,7 +122,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdatedtoByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID", Connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
