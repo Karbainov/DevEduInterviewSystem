@@ -4,29 +4,29 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-   public class TaskDTO : IDTO
+    public class TaskDTO : IDTO
     {
         public int ID { get; set; }
-        public int? UserID { get; set; }
-        public int? CandidateID { get; set; }
+        public int UserID { get; set; }
+        public int CandidateID { get; set; }
         public string Message { get; set; }
         public string IsCompleted { get; set; }
-       
+
         public TaskDTO()
         {
 
         }
 
-        public TaskDTO(int ID, int UserID, int CandidateID, string Message, string IsCompleted)
+        public TaskDTO(int id, int userID, int candidateID, string message, string isCompleted)
         {
-            this.ID = ID;
-            this.UserID = UserID;
-            this.CandidateID = CandidateID;
-            this.Message = Message;
-            this.IsCompleted = IsCompleted;
+            ID = id;
+            UserID = userID;
+            CandidateID = candidateID;
+            Message = message;
+            IsCompleted = isCompleted;
 
         }
 
     }
-   
+
 }

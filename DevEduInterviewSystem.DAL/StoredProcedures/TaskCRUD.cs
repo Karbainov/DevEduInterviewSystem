@@ -3,124 +3,121 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures
 {
-    public class TaskCRUD
+    public class TaskCRUD : AbstractCRUD<TaskDTO>
     {
-        public int AddTask(SqlConnection connection, TaskDTO task)
+        public override int Add(TaskDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddTask", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddTask", Connection);
 
-            SqlParameter UserParam = new SqlParameter("@UserID", task.UserID);
+            SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserParam);
 
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", task.CandidateID);
+            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateIDParam);
 
-            SqlParameter MessageParam = new SqlParameter("@Message", task.Message);
+            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
             command.Parameters.Add(MessageParam);
 
-            SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", task.IsCompleted);
+            SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", dto.IsCompleted);
             command.Parameters.Add(IsCompletedParam);
 
             return command.ExecuteNonQuery();
         }
-        public int DeleteTaskByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteTaskByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteTaskByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllTask(SqlConnection connection)
+        public override List<TaskDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllTask", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllTask", Connection);
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) 
+            List<TaskDTO> tasks = new List<TaskDTO>();
+
+            if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    int id = (int)reader["ID"];
-                    int UserID = (int)reader["UserID"];
-                    int CandidateID = (int)reader["CandidateID"];
-                    string Message = (string)reader["Message"];
-                    string IsCompleted = (string)reader["IsCompleted"];
-                  
-                    Console.WriteLine($"{id} \t{UserID} \t{CandidateID} \t{Message} \t{IsCompleted}");
+                    TaskDTO task = new TaskDTO()
+                    {
+                        ID = (int)reader["id"],
+                        UserID = (int)reader["UserID"],
+                        CandidateID = (int)reader["CandidateID"],
+                        Message = (string)reader["Message"],
+                        IsCompleted = (string)reader["IsCompleted"]
+                    };
+                    tasks.Add(task);
                 }
+
             }
             reader.Close();
 
-            return command.ExecuteNonQuery();
+            return tasks;
         }
 
-        public int SelectTaskByID(SqlConnection connection, int ID)
+        public override TaskDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectTaskByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectTaskByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            TaskDTO task = new TaskDTO();
 
-            if (reader.HasRows) 
+            if (reader.HasRows)
             {
-              
-                while (reader.Read()) 
+                while (reader.Read())
                 {
-                    int Id = (int)reader["ID"];
-                    int UserID = (int)reader["UserID"];
-                    int CandidateID = (int)reader["CandidateID"];
-                    string Message = (string)reader["Message"];
-                    string IsCompleted = (string)reader["IsCompleted"];
+                    task.ID = (int)reader["id"];
+                    task.UserID = (int)reader["UserID"];
+                    task.CandidateID = (int)reader["CandidateID"];
+                    task.Message = (string)reader["Message"];
+                    task.IsCompleted = (string)reader["IsCompleted"];
 
-                    Console.WriteLine($"\t{Id} \t{UserID} \t{CandidateID} \t{Message} \t{IsCompleted}");
                 }
             }
             reader.Close();
 
-            return command.ExecuteNonQuery();
+            return task;
         }
 
-        public int UpdateTaskByID(SqlConnection connection, TaskDTO task, int ID)
+        public override int UpdateByID(TaskDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateTaskByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateTaskByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", task.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter StatusParam = new SqlParameter("@UserID", task.UserID);
+            SqlParameter StatusParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(StatusParam);
 
-            SqlParameter MessageParam = new SqlParameter("@Message", task.Message);
+            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
             command.Parameters.Add(MessageParam);
 
-            SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", task.IsCompleted);
+            SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", dto.IsCompleted);
             command.Parameters.Add(IsCompletedParam);
 
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
         }
     }
 
