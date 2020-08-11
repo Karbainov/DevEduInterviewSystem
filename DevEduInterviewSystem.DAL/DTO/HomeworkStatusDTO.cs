@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-    public class HomeworkStatusDTO
+    public class HomeworkStatusDTO : IDTO
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -21,3 +21,4 @@ namespace DevEduInterviewSystem.DAL.DTO
         }
     }
 }
+
