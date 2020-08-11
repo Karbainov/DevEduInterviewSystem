@@ -7,8 +7,8 @@ namespace DevEduInterviewSystem.DAL.DTO
     public class UserRoleDTO : IDTO
     {
         public int ID { get; set; }
-        public int UserID { get; set; }
-        public int RoleID { get; set; }
+        public int? UserID { get; set; }
+        public int? RoleID { get; set; }
 
         public UserRoleDTO()
         {
