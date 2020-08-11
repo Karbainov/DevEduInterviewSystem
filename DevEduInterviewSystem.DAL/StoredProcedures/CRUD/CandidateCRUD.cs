@@ -58,10 +58,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectAllCandidate", Connection);
 
-            SqlDataReader reader = command.ExecuteReader();
 
             List<CandidateDTO> candidates = new List<CandidateDTO>();
 
+            SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows) // если есть данные
             {
                 while (reader.Read()) // построчно считываем данные

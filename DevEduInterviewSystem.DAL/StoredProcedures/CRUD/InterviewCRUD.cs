@@ -18,7 +18,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
             command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", interview.Attempt);
+            SqlParameter AttemptParam = new SqlParameter("@Attempt", interview.Attempt);
             command.Parameters.Add(AttemptParam);
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
@@ -117,7 +117,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
             command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", interview.Attempt);
+            SqlParameter AttemptParam = new SqlParameter("@Attempt", interview.Attempt);
             command.Parameters.Add(AttemptParam);
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
