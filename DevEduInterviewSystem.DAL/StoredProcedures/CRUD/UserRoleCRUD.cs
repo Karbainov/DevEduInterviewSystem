@@ -6,114 +6,95 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class UserRoleCRUD
+    public class UserRoleCRUD: AbstractCRUD<UserRoleDTO>
     {
-        public int AddUserRole(SqlConnection connection, UserRoleDTO userRole)
+        public override int Add(UserRoleDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddRole", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddUserRole", Connection);
 
-            SqlParameter UserID = new SqlParameter("@UserID", userRole.UserID);
+            SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserID);
 
-            SqlParameter RoleID = new SqlParameter("@RoleID", userRole.RoleID);
+            SqlParameter RoleID = new SqlParameter("@RoleID", dto.RoleID);
             command.Parameters.Add(RoleID);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteUserRoleByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
+            Сonnection.Open();
             string sqlExpression = "DeleteUserRoleByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            SqlCommand command = new SqlCommand(sqlExpression, Сonnection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllUserRole(SqlConnection connection)
+        public override List<UserRoleDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllUserRole", connection);
-
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllUserRole", Connection);
             SqlDataReader reader = command.ExecuteReader();
+            List<UserRoleDTO> userRoles = new List<UserRoleDTO>();
 
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t UserID \t RoleID");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    int id = (int)reader["ID"];
-                    int UserID = (int)reader["UserID"];
-                    int RoleID = (int)reader["RoleID"];
-                    Console.WriteLine($"{id} \t{UserID} \t{RoleID} ");
+                    UserRoleDTO userRole = new UserRoleDTO() 
+                    {
+                        ID = (int)reader["ID"],
+                        UserID = (int)reader["UserID"],
+                        RoleID = (int)reader["RoleID"]
+                    };
+                    userRoles.Add(userRole);
                 }
             }
             reader.Close();
-
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM USERROLE", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return userRoles;
         }
-
-        public int SelectUserRoleByID(SqlConnection connection, int ID)
+        public override UserRoleDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectUserRoleByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectUserRoleByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) // если есть данные
+            UserRoleDTO userRole = new UserRoleDTO();
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t UserID \t RoleID");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
-                    int id = (int)reader["id"];
-                    int UserID = (int)reader["UserID"];
-                    int RoleID = (int)reader["RoleID"];
-
-                    Console.WriteLine($"{id} \t{UserID} \t{RoleID}");
+                    userRole.ID = (int)reader["id"];
+                    userRole.UserID = (int)reader["UserID"];
+                    userRole.RoleID = (int)reader["RoleID"];
                 }
             }
             reader.Close();
-            return (int)command.ExecuteScalar();
+            return userRole;
         }
-
-        public int UpdateUserRoleByID(SqlConnection connection, UserRoleDTO userRole, int ID)
+        public override int UpdateByID(UserRoleDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUserRoleByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateUserRoleByID", Connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter UserID = new SqlParameter("@UserID", userRole.UserID);
+            SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserID);
 
-            SqlParameter RoleID = new SqlParameter("@RoleID", userRole.RoleID);
+            SqlParameter RoleID = new SqlParameter("@RoleID", dto.RoleID);
             command.Parameters.Add(RoleID);
 
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
         }
     }
 }
