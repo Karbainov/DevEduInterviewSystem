@@ -47,9 +47,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlCommand command = ReferenceToProcedure("SelectAllUser", Connection);
             SqlDataReader reader = command.ExecuteReader();
             List<UserDTO> users = new List<UserDTO>();
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     UserDTO user = new UserDTO()
                     {
@@ -76,9 +76,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             UserDTO user = new UserDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     user.ID = (int)reader["id"];
                     user.Login = (string)reader["Login"];

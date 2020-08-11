@@ -24,9 +24,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int DeleteByID(int id)
         {
-            Сonnection.Open();
+            Connection.Open();
             string sqlExpression = "DeleteUserRoleByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Сonnection);
+            SqlCommand command = new SqlCommand(sqlExpression, Connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
@@ -42,9 +42,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             List<UserRoleDTO> userRoles = new List<UserRoleDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     UserRoleDTO userRole = new UserRoleDTO() 
                     {
