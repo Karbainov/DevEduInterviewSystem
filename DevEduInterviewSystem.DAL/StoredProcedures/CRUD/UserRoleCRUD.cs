@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(UserRoleDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUserRole", Connection);
+            SqlCommand command = ReferenceToProcedure("AddUserRole");
 
             SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserID);
@@ -25,9 +25,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteUserRoleByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteUserRoleByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -38,7 +36,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<UserRoleDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllUserRole", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllUserRole");
             SqlDataReader reader = command.ExecuteReader();
             List<UserRoleDTO> userRoles = new List<UserRoleDTO>();
 
@@ -61,7 +59,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override UserRoleDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectUserRoleByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectUserRoleByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -83,7 +81,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(UserRoleDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUserRoleByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateUserRoleByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

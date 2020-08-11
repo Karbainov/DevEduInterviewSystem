@@ -18,7 +18,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
             command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", interview.Attempt);
+            SqlParameter AttemptParam = new SqlParameter("@Attempt", interview.Attempt);
             command.Parameters.Add(AttemptParam);
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
@@ -30,9 +30,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public int DeleteInterviewByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            string sqlExpression = "DeleteInterviewByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteInterviewByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
@@ -117,7 +115,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
             command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", interview.Attempt);
+            SqlParameter AttemptParam = new SqlParameter("@Attempt", interview.Attempt);
             command.Parameters.Add(AttemptParam);
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
