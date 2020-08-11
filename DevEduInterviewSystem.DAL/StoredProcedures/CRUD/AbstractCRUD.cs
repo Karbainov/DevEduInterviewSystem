@@ -12,7 +12,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public SqlConnection Connection { get; set; }
         public AbstractCRUD()
         {
-            Connection = new SqlConnection(PrimerConnection.ConnectionString);
+            //Connection = new SqlConnection(ConnectionSingleTone.ConnectionString);
+            Connection = ConnectionSingleTone.GetInstance().connection;
         }
         abstract public int Add(T dto);
         abstract public int DeleteByID(int id);

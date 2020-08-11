@@ -13,64 +13,71 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            SqlConnection connection = ConnectionSingleTone.GetInstance().connection;
 
-            AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
-            AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
+            //AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
+            //AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
 
-            Console.WriteLine(interView.SelectAllByUser(1));
+            //Console.WriteLine(interView.SelectAllByUser(1));
 
-            //CandidateDTO cand = new CandidateDTO();
-            //CandidateCRUD cCrud = new CandidateCRUD();
-            //Console.WriteLine(cCrud.SelectAll());
+            //CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
+            //CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
+            //CandidateDTO cand3 = new CandidateDTO(3, 3, 3, 3, "+911", "v@ya.ru", "Yana", "Smirnova", DateTime.Now);
+            //CandidateCRUD crud = new CandidateCRUD();
+            ////crud.Add(cand);
+            //crud.Add(cand2);
+            //connection.Close();
+            //crud.Add(cand3);
+            //connection.Close();
 
-            //string connectionString = @"Data Source=DESKTOP-IEKEDGF;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source = (local)";
-            //string connectionString = @"Data Source=DESKTOP-HRBRQKP;Initial Catalog=DevEduInterviewSystem.DataBase; Data Source = (local)";
-            //SqlConnection Connection = new SqlConnection(ConnectionString);
-            //SqlConnection Connection = new SqlConnection(PrimerConnection.ConnectionString);
-            //Console.WriteLine("Подключение...");
-            //Connection.Open();
-            //Console.WriteLine("Подключение открыто");
+            //UserDTO user = new UserDTO(1, "Login", "***", "Sergey", "Timofeev");
+            //UserDTO user2 = new UserDTO(2, "Terminator", "***", "Polina", "Matveevna");
+            //UserCRUD userCRUD = new UserCRUD();
+            //userCRUD.Add(user);
+            //connection.Close();
+            //userCRUD.Add(user2);
+            //connection.Close();
 
-            //// Вывод информации о подключении
-            //Console.WriteLine($"База данных: {Connection.Database}");
-            //Console.WriteLine($"Сервер: { Connection.DataSource}");
-            //Console.WriteLine($"Версия сервера: {Connection.ServerVersion}");
-            //Console.WriteLine($"Состояние: {Connection.State}");
-            //Console.WriteLine($"WorkstationID: {Connection.WorkstationId}");
-
-            //Connection.Close();
-            //StageDTO stage = new StageDTO(1,"sdwqwa");
-            //HomeworkStatusDTO homeworkStatus = new HomeworkStatusDTO(1, "jfjf");
-            //StageCRUD cRUD = new StageCRUD();
-            //HomeworkStatusCRUD Crud = new HomeworkStatusCRUD();
-            //Console.WriteLine(cRUD.AddStage(connection, stage));
             //InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
-            //InterviewCRUD iRUD = new InterviewCRUD();
-            //CourseDTO course = new CourseDTO("C++");
-            //CourseCRUD cRud = new CourseCRUD();
-            //Course_CandidateDTO CorseCCRUD = new Course_CandidateDTO(1, 1);
-            //Course_CandidateCRUD cc = new Course_CandidateCRUD();
-            //CityDTO city = new CityDTO("Pyatigorsk");
-            //CityCRUD cityCRUD = new CityCRUD();
-            //Connection.Close();
-            //Console.WriteLine(cRUD.AddStage(connection, stage));
+            //InterviewDTO interview2 = new InterviewDTO(1, 2, 1, 1, DateTime.Now);
+            //InterviewDTO interview3 = new InterviewDTO(7, 9, 1, 1, DateTime.Now);
+            //InterviewCRUD interviewCRUD = new InterviewCRUD();
+            //interviewCRUD.UpdateInterviewByID(connection, interview3, 7);
+            //interviewCRUD.AddInterview(connection, interview);
             //connection.Close();
-            //Console.WriteLine(cRUD.SelectAllStage(connection));
-            //Console.WriteLine(Crud.UpdateByID(connection, homeworkStatus, 2));
-            //Console.WriteLine(candCrud.AddCandidate(connection, cand));
+            //interviewCRUD.AddInterview(connection, interview2);
+            //connection.Close();
+            //interviewCRUD.AddInterview(connection, interview3);
             //connection.Close();
 
-            //Console.WriteLine(cc.AddCourse_Candidate(connection, CorseCCRUD));
+            //InterviewStatusDTO interviewStatus = new InterviewStatusDTO(1, "success");
+            //InterviewStatusDTO interviewStatus2 = new InterviewStatusDTO(2, "fail");
+            //InterviewStatusCRUD statusCRUD = new InterviewStatusCRUD();
+            //statusCRUD.AddInterviewStatus(connection, interviewStatus);
             //connection.Close();
-            //Console.WriteLine(homeworkStatusCrud.Add(connection, homeworkStatus));
+            //statusCRUD.AddInterviewStatus(connection, interviewStatus2);
+            //connection.Close();
 
-            //Console.WriteLine(cityCRUD.Add(city));
-            //Connection.Close();
+            //UserInterviewDTO userInterview = new UserInterviewDTO(1, 1, 2);
+            //UserInterviewDTO userInterview2 = new UserInterviewDTO(2, 2, 1);
+            //UserInterviewDTO userInterview3 = new UserInterviewDTO(2, 2, 5);
+            //UserInterviewCRUD usInterviewCRUD = new UserInterviewCRUD();
+            //usInterviewCRUD.Add(userInterview);
+            //connection.Close();
+            //usInterviewCRUD.Add(userInterview2);
+            //connection.Close();
+            //usInterviewCRUD.Add(userInterview3);
+            //connection.Close();
 
-            //Console.WriteLine(cityCRUD.SelectAll());
-            //Connection.Close();
+            AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
+            interviewsByUserQuery.SelectAllByUser(1);
 
-            //Console.ReadLine();
+            connection.Close();
+
+
+
+            Console.WriteLine("Выполнено");
+                        
         }
     }
 }

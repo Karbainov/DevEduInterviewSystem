@@ -9,10 +9,10 @@ using System.Text;
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserQuery
-    {
-        SqlConnection connection = new SqlConnection(PrimerConnection.ConnectionString);
+    {        
         public List<AllInterviewsByUserDTO> SelectAllByUser(int id)
         {
+            SqlConnection connection = ConnectionSingleTone.GetInstance().connection;
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByUser", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);
@@ -21,23 +21,26 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 
             List<AllInterviewsByUserDTO> interviews = new List<AllInterviewsByUserDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
-                    {
-                        UserFirstName = (string)reader["FirstName"],
-                        UserLastName = (string)reader["LastName"],
-                        IDCandidate = (int)reader["ID"],
-                        CandidateFirstName = (string)reader["FirstName"],
-                        CandidateLastName = (string)reader["LastName"],
-                        CandidatePhone = (string)reader["Phone"],
+                    {                        
+                        UserFirstName = (string)reader["UserFirstName"],
+                        UserLastName = (string)reader["UserLastName"],
+                        IDCandidate = (int)reader["CandidateID"],
+                        CandidateFirstName = (string)reader["CandidateFirstName"],
+                        CandidateLastName = (string)reader["CandidateLastName"],
+                        CandidatePhone = (string)reader["CandidatePhone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        InterviewStatus = (string)reader["Name"]
+                        InterviewStatus = (string)reader["Status"]
                     };
                     interviews.Add(interview);
+
+                    Console.WriteLine($"{interview.UserFirstName} \t{interview.UserLastName} \t{interview.IDCandidate} \t{interview.CandidateFirstName}" +
+                        $"\t{interview.CandidateLastName} \t{interview.CandidatePhone} \t{interview.DateTimeInterview} \t{interview.Attempt} \t{interview.InterviewStatus}");
                 }
             }
             reader.Close();
