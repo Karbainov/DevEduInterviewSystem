@@ -22,9 +22,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.InterviewHistoryQuere
             SqlDataReader reader = command.ExecuteReader();
             AtteptsInterviewCandidateDTO candidate = new AtteptsInterviewCandidateDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     candidate.CandidateFirstName = (string)reader["FirstName"];
                     candidate.CandidateLastName = (string)reader["LastName"];
