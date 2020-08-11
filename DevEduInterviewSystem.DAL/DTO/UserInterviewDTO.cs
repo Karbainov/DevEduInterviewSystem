@@ -8,8 +8,8 @@ namespace DevEduInterviewSystem.DAL.DTO
    {
 
         public int ID { get; set; }
-        public int InterviewID { get; set; }
-        public int UserID { get; set; }
+        public int? InterviewID { get; set; }
+        public int? UserID { get; set; }
 
         public UserInterviewDTO()
         {
