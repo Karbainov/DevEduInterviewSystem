@@ -1,8 +1,8 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
-using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
 using System;
 using System.Data.SqlClient;
@@ -14,10 +14,10 @@ namespace Test
         static void Main(string[] args)
         {
 
-            AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
-            AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
-
-            Console.WriteLine(interView.SelectAllByUser(1));
+            AllInterviewsByUserAndDateDTO interV = new AllInterviewsByUserAndDateDTO();
+            AllInterviewsByUserAndDateQuery interView = new AllInterviewsByUserAndDateQuery();
+            DateTime date1 = new DateTime(2020, 3, 6);
+            Console.WriteLine(interView.SelectAllInterviewsByUserAndDate(1, date1));
 
             //CandidateDTO cand = new CandidateDTO();
             //CandidateCRUD cCrud = new CandidateCRUD();
