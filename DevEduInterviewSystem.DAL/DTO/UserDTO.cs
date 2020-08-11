@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-    public class UserDTO
+    public class UserDTO : IDTO
     {
         public int ID { get; set; }
         public string Login { get; set; }
