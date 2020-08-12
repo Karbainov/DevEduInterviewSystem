@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
 {
-    public class AllInterviewsByDateDTO : IDTO
+    public class AllInterviewsDTO : IDTO
     {
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
@@ -16,11 +16,11 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
         public int Attempt { get; set; }
         public string InterviewStatus { get; set; }
 
-        public AllInterviewsByDateDTO()
+        public AllInterviewsDTO()
         {
 
         }
-        public AllInterviewsByDateDTO(string userFirstName, string userLastName, int idCandidate, string candidateFirstName,
+        public AllInterviewsDTO(string userFirstName, string userLastName, int idCandidate, string candidateFirstName,
             string candidateLastName, string candidatePhone, DateTime dateTimeInterview, int attempt, string interviewStatus)
         {
             UserFirstName = userFirstName;
@@ -36,3 +36,5 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
         }
     }
 }
+
+

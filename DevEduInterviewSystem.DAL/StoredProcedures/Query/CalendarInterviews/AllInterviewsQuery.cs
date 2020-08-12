@@ -1,35 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
-using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 
 
-
-
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
-    public class AllInterviewsByDateQuery
-    {       
-        public List<AllInterviewsDTO> SelectAllInterviewsByDate(DateTime DateTimeInterview)
+    public class AllInterviewsQuery
+    {
+        public List<AllInterviewsDTO> SelectAllInterviews()
         {
-            SqlConnection connection = new SqlConnection(PrimerConnection.ConnectionString);
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsDate", connection);
-            SqlParameter dataParam = new SqlParameter("@DateTimeInterview", DateTimeInterview);
-            command.Parameters.Add(dataParam);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviews", Connection);
+
+            List<AllInterviewsDTO> allInterviews = new List<AllInterviewsDTO>();
+
             SqlDataReader reader = command.ExecuteReader();
-
-            List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
 
             if (reader.HasRows) // если есть данные
             {
                 while (reader.Read()) // построчно считываем данные
                 {
-                    AllInterviewsDTO interview = new AllInterviewsDTO()
+                    AllInterviewsDTO allInterview = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
@@ -41,12 +36,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                         Attempt = (int)reader["Attempt"],
                         InterviewStatus = (string)reader["Name"]
                     };
-                    interviews.Add(interview);
+                    allInterviews.Add(allInterview);
                 }
             }
             reader.Close();
 
-            return interviews;
+            return allInterviews;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {
