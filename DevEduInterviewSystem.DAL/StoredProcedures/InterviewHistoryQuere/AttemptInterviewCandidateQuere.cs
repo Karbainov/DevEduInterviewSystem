@@ -28,8 +28,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.InterviewHistoryQuere
                 {
                     candidate.CandidateFirstName = (string)reader["FirstName"];
                     candidate.CandidateLastName = (string)reader["LastName"];
-                    candidate.AttemptInterview = (int)reader["Attempt"];
-                    
+                    candidate.AttemptInterview = (int)reader["Attempt"];                    
 
                 }
             }

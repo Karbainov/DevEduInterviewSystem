@@ -13,7 +13,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
         public List<UsersAndRoleDTO> UsersAndRole()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllCandidate", Connection);
+            SqlCommand command = ReferenceToProcedure("UsersAndRole", Connection);
 
             List<UsersAndRoleDTO> usersAndRoles = new List<UsersAndRoleDTO>();
             SqlDataReader reader = command.ExecuteReader();
@@ -26,6 +26,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                         Login = (string)reader["Login"],
                         FirstName = (string)reader["FirstName"],
                         LastName = (string)reader["LastName"],
+                        Password = (string)reader["Password"],
                         Role = (string)reader["Role"],
                        
                     };
