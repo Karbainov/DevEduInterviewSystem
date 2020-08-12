@@ -9,9 +9,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
 {
     public class UsersAndRoleProcedure
     {
-        //SqlConnection Connection = ConnectionSingleTone.GetInstance().connection;
-        SqlConnection Connection = new SqlConnection(PrimerConnection.ConnectionString);
-        //SqlConnection Connection = new SqlConnection(ConnectionSingleTone.ConnectionString);
+        SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+        
         public List<UsersAndRoleDTO> UsersAndRole()
         {
             Connection.Open();
