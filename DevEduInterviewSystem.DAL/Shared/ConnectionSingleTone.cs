@@ -6,14 +6,16 @@ using System.Text;
 namespace DevEduInterviewSystem.DAL.Shared
 {
     public class ConnectionSingleTone
-    {
+    {        
+        public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
+
+        public SqlConnection Connection { get { return new SqlConnection(ConnectionString); } private set { Connection = value; } }
+
         private ConnectionSingleTone() { }
 
         private static ConnectionSingleTone _instance;
 
-        public const string ConnectionString = @"Data Source=.\HP;Initial Catalog=DevEduInterviewSystem.DataBase;Integrated Security=True; Data Source=(local)";
-
-        public SqlConnection connection = new SqlConnection(ConnectionString);
+        private string _connectionString = SQLConnectionPaths.MainConnectionString;            
 
         public static ConnectionSingleTone GetInstance()
         {
