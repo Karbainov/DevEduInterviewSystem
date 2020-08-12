@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.InterviewHistoryQuere
         
         public AttemptsInterviewCandidateDTO AttemptsInterviewCandidate(int CandidateID)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().connection;
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AtteptsInterviewCandidate", Connection);
 

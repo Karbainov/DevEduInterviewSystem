@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
     {        
         public List<AllInterviewsByUserDTO> SelectAllByUser(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().connection;
+            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByUser", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);
