@@ -278,5 +278,6 @@
     <Build Include="StoredProcedures\CRUD\TestStatus\SelectTestStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\DeleteTestStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\UpdateTestStatusByID.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateInterval.sql" />
   </ItemGroup>
 </Project>

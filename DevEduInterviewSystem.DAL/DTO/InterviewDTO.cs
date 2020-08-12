@@ -2,7 +2,7 @@
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-    public class InterviewDTO
+    public class InterviewDTO : IDTO
     {
         public int ID { get; set; }
         public int CandidateID { get; set; }

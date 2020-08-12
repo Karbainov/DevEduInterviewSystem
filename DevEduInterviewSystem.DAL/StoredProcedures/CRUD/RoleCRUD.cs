@@ -6,107 +6,83 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class RoleCRUD
+    public class RoleCRUD : AbstractCRUD<RoleDTO>
     {
-        public int AddRole(SqlConnection connection, RoleDTO role)
+        public override int Add(RoleDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddRole", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddRole");
 
-            SqlParameter TypeOfRoleParam = new SqlParameter("@TypeOfRole", role.TypeOfRole);
+            SqlParameter TypeOfRoleParam = new SqlParameter("@TypeOfRole", dto.TypeOfRole);
             command.Parameters.Add(TypeOfRoleParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteRoleByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            string sqlExpression = "DeleteRoleByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteRoleByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
-
-        public int SelectAllRole(SqlConnection connection)
+        public override List<RoleDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllRole", connection);
-
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllRole");
             SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) // если есть данные
+            List<RoleDTO> roles = new List<RoleDTO>();
+            if (reader.HasRows)
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t TypeOfRole");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
-                    int id = (int)reader["id"];
-                    string TypeOfRole = (string)reader["TypeOfRole"];
-
-                    Console.WriteLine($"{id} \t{TypeOfRole} ");
+                    RoleDTO role = new RoleDTO()
+                    { 
+                    ID = (int)reader["ID"],
+                    TypeOfRole = (string)reader["TypeOfRole"]
+                    };
+                    roles.Add(role);
                 }
             }
             reader.Close();
-
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Role", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return roles;
         }
-
-        public int SelectRoleByID(SqlConnection connection, int ID)
+        public override RoleDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectRoleByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectRoleByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) // если есть данные
+            RoleDTO role = new RoleDTO();
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \tTypeOfRole");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
-                    int id = (int)reader["id"];
-                    string TypeOfRole = (string)reader["TypeOfRole"];
-
-                    Console.WriteLine($"{id} \t{TypeOfRole}");
+                    role.ID = (int)reader["id"];
+                    role.TypeOfRole = (string)reader["TypeOfRole"];
                 }
             }
             reader.Close();
-            return (int)command.ExecuteScalar();
+            return role;
         }
-
-        public int UpdateRoleByID(SqlConnection connection, RoleDTO role, int ID)
+        public override int UpdateByID(RoleDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateRoleByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateRoleByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter TypeOfRoleParam = new SqlParameter("@TypeOfRole", role.TypeOfRole);
+            SqlParameter TypeOfRoleParam = new SqlParameter("@TypeOfRole", dto.TypeOfRole);
             command.Parameters.Add(TypeOfRoleParam);
 
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
         }
     }
 }

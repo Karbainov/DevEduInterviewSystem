@@ -6,80 +6,83 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class GroupCRUD
+    public class GroupCRUD : AbstractCRUD<GroupDTO>
     {
-        public int AddGroup(SqlConnection connection, GroupDTO group)
+        public override int Add(GroupDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddGroup", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddGroup");
 
-            SqlParameter CourseParam = new SqlParameter("@CourseID", group.CourseID);
+            SqlParameter CourseParam = new SqlParameter("@CourseID", dto.CourseID);
             command.Parameters.Add(CourseParam);
 
-            SqlParameter NameParam = new SqlParameter("@NameID", group.Name);
+            SqlParameter NameParam = new SqlParameter("@NameID", dto.Name);
             command.Parameters.Add(NameParam);
 
-            SqlParameter StartDateParam = new SqlParameter("@StartDate", group.StartDate);
+            SqlParameter StartDateParam = new SqlParameter("@StartDate", dto.StartDate);
             command.Parameters.Add(StartDateParam);
 
-            SqlParameter EndDateParam = new SqlParameter("@EndDateID", group.EndDate);
+            SqlParameter EndDateParam = new SqlParameter("@EndDateID", dto.EndDate);
             command.Parameters.Add(EndDateParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteGroupByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            string sqlExpression = "DeleteGroupByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteGroupByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllGroup(SqlConnection connection)
+        public override List<GroupDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllGroup", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllGroup");
 
             SqlDataReader reader = command.ExecuteReader();
 
+            List<GroupDTO> groups = new List<GroupDTO>();
+
             if (reader.HasRows)
             {
-                Console.WriteLine($"id \t CourseID \t Name \t StartDate \t EndDate \t ");
+                //Console.WriteLine($"id \t CourseID \t Name \t StartDate \t EndDate \t ");
 
                 while (reader.Read())
                 {
-                    var id = reader["id"];
-                    int CourseID = (int)reader["CourseID"];
-                    var Name = (string)reader["Name"];
-                    var StartDate = (DateTime)reader["StartName"];
-                    var EndDate = (DateTime)reader["EndName"];
+                    GroupDTO group = new GroupDTO()
+                    {
+                        ID = (int)reader["id"],
+                        CourseID = (int)reader["CourseID"],
+                        Name = (string)reader["Name"],
+                        StartDate = (DateTime)reader["StartName"],
+                        EndDate = (DateTime)reader["EndName"]
+                    };
 
-                    Console.WriteLine($"{id} \t {CourseID} \t {Name} \t {StartDate} \t {EndDate}");
+                    groups.Add(group);
+                    //Console.WriteLine($"{id} \t {CourseID} \t {Name} \t {StartDate} \t {EndDate}");
                 }
             }
             reader.Close();
 
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Group", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return groups;
         }
 
-        public int SelectGroupByID(SqlConnection connection, int ID)
+        public override GroupDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectGroupByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectGroupByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+
+            GroupDTO groups = new GroupDTO();
 
             if (reader.HasRows) // если есть данные
             {
@@ -88,49 +91,41 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int CourseID = (int)reader["CourseID"];
-                    string Name = (string)reader["Name"];
-                    var StartDate = (DateTime)reader["StartDate"];
-                    var EndDate = (DateTime)reader["EndDate"];
+                    groups.ID = (int)reader["id"];
+                    groups.CourseID = (int)reader["CourseID"];
+                    groups.Name = (string)reader["Name"];
+                    groups.StartDate = (DateTime)reader["StartDate"];
+                    groups.EndDate = (DateTime)reader["EndDate"];
 
-                    Console.WriteLine($"{id} \t {CourseID} \t{Name} \t{StartDate} \t{EndDate}");
+                    //Console.WriteLine($"{id} \t {CourseID} \t{Name} \t{StartDate} \t{EndDate}");
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return groups;
         }
 
-        public int UpdateGroupByID(SqlConnection connection, GroupDTO group, int ID)
+        public override int UpdateByID(GroupDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateGroupByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateGroupByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CourseParam = new SqlParameter("@CourseID", group.CourseID);
+            SqlParameter CourseParam = new SqlParameter("@CourseID", dto.CourseID);
             command.Parameters.Add(CourseParam);
 
-            SqlParameter NameParam = new SqlParameter("@Name", group.Name);
+            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
 
-            SqlParameter StartDateParam = new SqlParameter("@StartDate", group.StartDate);
+            SqlParameter StartDateParam = new SqlParameter("@StartDate", dto.StartDate);
             command.Parameters.Add(StartDateParam);
 
-            SqlParameter EndDateParam = new SqlParameter("@EndDate", group.EndDate);
+            SqlParameter EndDateParam = new SqlParameter("@EndDate", dto.EndDate);
             command.Parameters.Add(EndDateParam);
 
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
         }
     }
 }

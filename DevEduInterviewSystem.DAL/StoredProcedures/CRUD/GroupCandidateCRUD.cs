@@ -6,118 +6,105 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class GroupCandidateCRUD
+    public class GroupCandidateCRUD : AbstractCRUD<GroupCandidateDTO>
     {
-        public int AddGroupCandidate(SqlConnection connection, GroupCandidateDTO groupCandidate)
+        public override int Add(GroupCandidateDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddGroup_Candidate", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddGroup_Candidate");
 
-            SqlParameter GroupParam = new SqlParameter("@GroupID", groupCandidate.GroupID);
+            SqlParameter GroupParam = new SqlParameter("@GroupID", dto.GroupID);
             command.Parameters.Add(GroupParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", groupCandidate.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteGroupCandidateByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            string sqlExpression = "DeleteGroup_CandidateByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteGroup_CandidateByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public List<GroupCandidateDTO> SelectAllGroupCandidate(SqlConnection connection)
+        public override List<GroupCandidateDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllGroup_Candidate", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllGroup_Candidate");
 
             SqlDataReader reader = command.ExecuteReader();
 
-            List<GroupCandidateDTO> GroupCandidateDTOs = new List<GroupCandidateDTO>();
-            if (reader.HasRows) // если есть данные
+            List<GroupCandidateDTO> groupsCandidates = new List<GroupCandidateDTO>();
+
+            if (reader.HasRows) // Eсли есть данные.
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t GroupID \t CandidateID");
-                while (reader.Read()) // построчно считываем данные
+                // Выводим названия столбцов.
+                // Console.WriteLine($"id \t GroupID \t CandidateID");
+                while (reader.Read()) // Построчно считываем данные.
                 {
-                    GroupCandidateDTO dTO = new GroupCandidateDTO();
+                    GroupCandidateDTO groupCandidate = new GroupCandidateDTO()
+                    {
+                        ID = (int)reader["id"],
+                        GroupID = (int)reader["GroupID"],
+                        CandidateID = (int)reader["CandidateID"]
+                    };
 
-                    dTO.ID = (int)reader["id"];
-                    dTO.GroupID = (int)reader["GroupID"];
-                    dTO.CandidateID = (int)reader["CandidateID"];
-
-                    GroupCandidateDTOs.Add(dTO);
+                    groupsCandidates.Add(groupCandidate);
                 }
             }
             reader.Close();
 
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Group_Candidate", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return GroupCandidateDTOs;
+            return groupsCandidates;
         }
 
-        public int SelectGroupCandidateByID(SqlConnection connection, int ID)
+        public override GroupCandidateDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectGroup_СandidateByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectGroup_СandidateByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            GroupCandidateDTO groupCandidate = new GroupCandidateDTO();
 
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t GroupID \t CandidateID");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    var id = reader["id"];
-                    int GroupID = (int)reader["GroupID"];
-                    int CandidateID = (int)reader["CandidateID"];
+                    groupCandidate.ID = (int)reader["id"];
+                    groupCandidate.GroupID = (int)reader["GroupID"];
+                    groupCandidate.CandidateID = (int)reader["CandidateID"];
 
-                    Console.WriteLine($"{id} \t{GroupID} \t{CandidateID} ");
+                    //Console.WriteLine($"{id} \t{GroupID} \t{CandidateID} ");
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return groupCandidate;
         }
 
-        public int UpdateGroupCandidateByID(SqlConnection connection, GroupCandidateDTO groupCandidate, int ID)
+        public override int UpdateByID(GroupCandidateDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateGroup_CandidateByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateGroup_CandidateByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter GroupParam = new SqlParameter("@InterviewID", groupCandidate.GroupID);
+            SqlParameter GroupParam = new SqlParameter("@InterviewID", dto.GroupID);
             command.Parameters.Add(GroupParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", groupCandidate.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
         }
     }
 }

@@ -3,7 +3,7 @@
 	[StageID] int, --FOREIGN KEY ([StageID]) REFERENCES [Stage]([ID]) NULL,
 	[StatusID] int, --FOREIGN KEY ([StatusID]) REFERENCES [Status]([ID]) NULL,
 	[CityID] INT,  --FOREIGN KEY ([CityID]) REFERENCES [City]([ID]) NULL,
-	[Phone] int NULL,
+	[Phone] nvarchar(30) NULL,
 	[Email] nvarchar(30) NULL,
 	[FirstName] nvarchar(30) NULL,
 	[LastName] nvarchar(30) NULL,

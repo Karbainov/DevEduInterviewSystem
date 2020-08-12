@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-   public interface IDTO
+    public interface IDTO
     {
     }
 }

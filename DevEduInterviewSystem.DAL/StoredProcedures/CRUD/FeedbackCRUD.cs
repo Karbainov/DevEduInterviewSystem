@@ -6,135 +6,126 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class FeedbackCRUD
+    public class FeedbackCRUD : AbstractCRUD<FeedbackDTO>
     {
-        public int Add(SqlConnection connection, FeedbackDTO feedback)
+      
+        public override int Add(FeedbackDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddFeedback", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddFeedback");
 
-            SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", feedback.StageChangedID);
+            SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
             command.Parameters.Add(StageChangedIDParam);
 
 
-            SqlParameter UserParam = new SqlParameter("@UserID", feedback.UserID);
+            SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserParam);
 
-            SqlParameter MessageParam = new SqlParameter("@Message", feedback.Message);
+            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
             command.Parameters.Add(MessageParam);
 
-            SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", feedback.TimeFeedback);
+            SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
             command.Parameters.Add(TimeFeedbackParam);
 
             return command.ExecuteNonQuery();
-
         }
 
-        public int DeleteByID(SqlConnection connection, int ID)
+   
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            string sqlExpression = "DeleteFeedbackByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteFeedbackByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAll(SqlConnection connection)
+        public override List<FeedbackDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllFeedback", connection);
+
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllFeedback");
 
             SqlDataReader reader = command.ExecuteReader();
 
+            List<FeedbackDTO> feedbacks = new List<FeedbackDTO>();
+
             if (reader.HasRows)
             {
-                Console.WriteLine("{0} \t{1} \t{2} \t{3} \t{4}", reader.GetName(0), reader.GetName(1),
-                                     reader.GetName(2), reader.GetName(3), reader.GetName(3));
+               
+               
                 while (reader.Read())
                 {
-                    var id = reader["id"];
-                    int StageChangedID = (int)reader["StageChangedID"];
-                    int UserID = (int)reader["UserID"];
-                    string Message = (string)reader["Message"];
-                    var TimeFeedback = reader["TimeFeedback"];
+                    FeedbackDTO feedback = new FeedbackDTO()
+                    {
 
-                    Console.WriteLine("{0} \t{1} \t{2} \t{3} \t{4}", id, StageChangedID, UserID, Message, TimeFeedback);
+                        ID = (int)reader["id"],
+                        StageChangedID = (int)reader["StageChangedID"],
+                        UserID = (int)reader["UserID"],
+                        Message = (string)reader["Message"],
+                        TimeFeedback = (DateTime)reader["TimeFeedback"],
 
+                    };
+
+                    feedbacks.Add(feedback);
                 }
             }
             reader.Close();
+            return feedbacks;
+        }  
 
-            command.CommandText = "SELECT COUNT(*) FROM Feedback";
-            int count = (int)command.ExecuteScalar();
-
-            return count;
-        }
-
-        public int SelectAllByID(SqlConnection connection, int ID)
+        public override FeedbackDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllFeedbackByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllFeedbackByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            FeedbackDTO feedback = new FeedbackDTO();
 
             if (reader.HasRows)
             {
-                Console.WriteLine("{0} \t{1} \t{2} \t{3} \t{4}", reader.GetName(0), reader.GetName(1),
-                                     reader.GetName(2), reader.GetName(3), reader.GetName(3));
                 while (reader.Read())
                 {
-                    var id = reader["id"];
-                    int StageChangedID = (int)reader["StageChangedID"];
-                    int UserID = (int)reader["UserID"];
-                    string Message = (string)reader["Message"];
-                    var TimeFeedback = reader["TimeFeedback"];
+                    feedback.ID = (int)reader["id"];
+                    feedback.StageChangedID = (int)reader["StageChangedID"];
+                    feedback.UserID = (int)reader["UserID"];
+                    feedback.Message = (string)reader["Message"];
+                    feedback.TimeFeedback = (DateTime)reader["TimeFeedback"];
 
-                    Console.WriteLine("{0} \t{1} \t{2} \t{3} \t{4}", id, StageChangedID, UserID, Message, TimeFeedback);
-
-                }
+                    };
             }
             reader.Close();
-            return (int)command.ExecuteScalar();
+            return feedback;
         }
 
-        public int UpdateByID(SqlConnection connection, FeedbackDTO feedback, int ID)
+        public override int UpdateByID(FeedbackDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectFeedbackByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectFeedbackByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter StageChangedParam = new SqlParameter("@StageChangedID", feedback.StageChangedID);
+            SqlParameter StageChangedParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
             command.Parameters.Add(StageChangedParam);
 
 
-            SqlParameter UserParam = new SqlParameter("@UserID", feedback.UserID);
+            SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserParam);
 
-            SqlParameter MessageParam = new SqlParameter("@Message", feedback.Message);
+            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
             command.Parameters.Add(MessageParam);
 
-            SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", feedback.Message);
+            SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.Message);
             command.Parameters.Add(TimeFeedbackParam);
 
             return command.ExecuteNonQuery();
         }
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
-
     }
 }
 
