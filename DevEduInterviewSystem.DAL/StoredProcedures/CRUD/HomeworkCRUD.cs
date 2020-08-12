@@ -32,9 +32,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public int DeleteHomeworkByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            string sqlExpression = "DeleteHomeworkByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteHomeworkByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);

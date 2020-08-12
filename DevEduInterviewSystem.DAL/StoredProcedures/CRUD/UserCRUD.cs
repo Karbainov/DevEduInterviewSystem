@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(UserDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUser", Connection);
+            SqlCommand command = ReferenceToProcedure("AddUser");
 
             SqlParameter LoginParam = new SqlParameter("@Login", dto.Login);
             command.Parameters.Add(LoginParam);
@@ -31,9 +31,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteUserByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteUserByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -44,7 +42,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<UserDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllUser", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllUser");
             SqlDataReader reader = command.ExecuteReader();
             List<UserDTO> users = new List<UserDTO>();
             if (reader.HasRows)
@@ -68,7 +66,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override UserDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectUserByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectUserByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -94,7 +92,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(UserDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUserByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateUserByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

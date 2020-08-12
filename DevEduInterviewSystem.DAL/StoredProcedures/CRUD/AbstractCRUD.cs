@@ -12,17 +12,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public SqlConnection Connection { get; set; }
         public AbstractCRUD()
         {
-            Connection = new SqlConnection(PrimerConnection.ConnectionString);
+            Connection = ConnectionSingleTone.GetInstance().Connection;            
         }
-        abstract public int Add( T dto);
+        abstract public int Add(T dto);
         abstract public int DeleteByID(int id);
         abstract public int UpdateByID(T dto);
         abstract public List<T> SelectAll();
         abstract public T SelectByID(int id);
        
-        protected SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
+        protected SqlCommand ReferenceToProcedure(string sqlExpression)
         {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            SqlCommand command = new SqlCommand(sqlExpression, Connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
             return command;

@@ -4,18 +4,18 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.InterviewHistoryDTO
 {
-    public class AtteptsInterviewCandidateDTO : IDTO
+    public class AttemptsInterviewCandidateDTO : IDTO
     {
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public int AttemptInterview { get; set; }
 
-        public AtteptsInterviewCandidateDTO()
+        public AttemptsInterviewCandidateDTO()
         {
 
         }
 
-        public AtteptsInterviewCandidateDTO(string firstName, string lastName, int attempt)
+        public AttemptsInterviewCandidateDTO(string firstName, string lastName, int attempt)
         {
             CandidateFirstName = firstName;
             CandidateLastName = lastName;
