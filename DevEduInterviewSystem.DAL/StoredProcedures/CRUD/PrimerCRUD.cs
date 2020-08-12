@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DevEduInterviewSystem.DAL.DTO
+namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public interface IDTO
+    class PrimerCRUD
     {
     }
 }

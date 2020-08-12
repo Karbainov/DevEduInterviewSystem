@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(GroupCandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddGroup_Candidate", Connection);
+            SqlCommand command = ReferenceToProcedure("AddGroup_Candidate");
 
             SqlParameter GroupParam = new SqlParameter("@GroupID", dto.GroupID);
             command.Parameters.Add(GroupParam);
@@ -25,9 +25,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteGroup_CandidateByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteGroup_CandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -38,7 +36,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<GroupCandidateDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllGroup_Candidate", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllGroup_Candidate");
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -68,7 +66,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override GroupCandidateDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectGroup_СandidateByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectGroup_СandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -95,7 +93,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(GroupCandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateGroup_CandidateByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateGroup_CandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

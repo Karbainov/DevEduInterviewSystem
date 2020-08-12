@@ -9,10 +9,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.InterviewHistoryQuere
 {
     public class AttemptInterviewCandidateQuere
     {
-        SqlConnection Connection = new SqlConnection(PrimerConnection.ConnectionString);
-        public AtteptsInterviewCandidateDTO AtteptsInterviewCandidate(int CandidateID)
+        
+        public AttemptsInterviewCandidateDTO AttemptsInterviewCandidate(int CandidateID)
         {
-
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AtteptsInterviewCandidate", Connection);
 
@@ -20,16 +20,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.InterviewHistoryQuere
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-            AtteptsInterviewCandidateDTO candidate = new AtteptsInterviewCandidateDTO();
+            AttemptsInterviewCandidateDTO candidate = new AttemptsInterviewCandidateDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     candidate.CandidateFirstName = (string)reader["FirstName"];
                     candidate.CandidateLastName = (string)reader["LastName"];
-                    candidate.AttemptInterview = (int)reader["Attempt"];
-                    
+                    candidate.AttemptInterview = (int)reader["Attempt"];                    
 
                 }
             }
