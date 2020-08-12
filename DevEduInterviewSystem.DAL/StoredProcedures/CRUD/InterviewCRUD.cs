@@ -10,7 +10,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(InterviewDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("Adddto", Connection);
+            SqlCommand command = ReferenceToProcedure("AddInterview");
 
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
@@ -18,7 +18,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", dto.InterviewStatusID);
             command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@AttemptID", dto.Attempt);
+            SqlParameter AttemptParam = new SqlParameter("@Attempt", dto.Attempt);
             command.Parameters.Add(AttemptParam);
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
@@ -43,18 +43,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<InterviewDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllInterview", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllInterview");
 
             SqlDataReader reader = command.ExecuteReader();
 
             List<InterviewDTO> interviews = new List<InterviewDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t CandidateID \t InterviewStatusID \t Attempt \t DateTimeInterview ");
+                
+                
 
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
 
                     InterviewDTO interview = new InterviewDTO()
@@ -79,7 +79,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override InterviewDTO SelectByID(int ID)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectInterviewByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectInterviewByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
@@ -87,10 +87,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             InterviewDTO interview = new InterviewDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
 
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     interview.ID = (int)reader["id"];
                     interview.CandidateID = (int)reader["CandidateID"];
@@ -104,12 +104,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return interview;
         }
 
-        public int UpdateInterviewByID(SqlConnection connection, InterviewDTO interview, int ID)
+        public override int UpdateByID(InterviewDTO interview)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateInterviewByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateInterviewByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", interview.ID);
             command.Parameters.Add(IDParam);
 
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", interview.CandidateID);
@@ -127,13 +127,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command.ExecuteNonQuery();
         }
 
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
     }
 }
 
