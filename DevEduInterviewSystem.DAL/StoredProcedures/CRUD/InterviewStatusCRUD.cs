@@ -20,9 +20,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public int DeleteInterviewStatusByID(SqlConnection connection, int ID)
         {
             connection.Open();
-            string sqlExpression = "DeleteInterviewStatusByID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteInterviewStatusByID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);

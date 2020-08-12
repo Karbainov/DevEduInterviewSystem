@@ -26,16 +26,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return command.ExecuteNonQuery();
         }
-        public int AddCourse(SqlConnection connection, CourseDTO course)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCourse", connection);
-
-            SqlParameter nameCourseParam = new SqlParameter("@Name", course.Name);
-            command.Parameters.Add(nameCourseParam);
-
-            return command.ExecuteNonQuery();
-        }
+        
         public int DeleteCourseByID(SqlConnection connection, int ID)
         {
             connection.Open();

@@ -28,6 +28,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                         Login = (string)reader["Login"],
                         FirstName = (string)reader["FirstName"],
                         LastName = (string)reader["LastName"],
+                        Password = (string)reader["Password"],
                         Role = (string)reader["Role"],
                        
                     };

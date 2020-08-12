@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(HomeworkStatusDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddHomeworkStatus", Connection);
+            SqlCommand command = ReferenceToProcedure("AddHomeworkStatus");
 
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
@@ -23,9 +23,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteHomeworkStatusByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteHomeworkStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -37,15 +35,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<HomeworkStatusDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllHomeworkStatus", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllHomeworkStatus");
 
             SqlDataReader reader = command.ExecuteReader();
 
             List<HomeworkStatusDTO> homeworktatuses = new List<HomeworkStatusDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     HomeworkStatusDTO homeworkStatus = new HomeworkStatusDTO()
                     {
@@ -64,7 +62,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override HomeworkStatusDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectHomeworkStatusByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectHomeworkStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -72,10 +70,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             HomeworkStatusDTO homeworkStatus = new HomeworkStatusDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
 
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     homeworkStatus.ID = (int)reader["id"];
                     homeworkStatus.Name = (string)reader["Name"];
@@ -91,7 +89,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         {
 
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateHomeworkStatusByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateHomeworkStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

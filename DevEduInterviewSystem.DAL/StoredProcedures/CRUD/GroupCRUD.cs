@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(GroupDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddGroup", Connection);
+            SqlCommand command = ReferenceToProcedure("AddGroup");
 
             SqlParameter CourseParam = new SqlParameter("@CourseID", dto.CourseID);
             command.Parameters.Add(CourseParam);
@@ -31,9 +31,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteGroupByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteGroupByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -44,7 +42,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<GroupDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllGroup", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllGroup");
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -77,7 +75,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override GroupDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectGroupByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectGroupByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -110,7 +108,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(GroupDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateGroupByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateGroupByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
