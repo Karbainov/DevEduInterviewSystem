@@ -10,7 +10,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CityDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCity", Connection);
+            SqlCommand command = ReferenceToProcedure("@AddCity", Connection);
 
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CityNameParam);
@@ -46,9 +46,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
 
             List<CityDTO> citys = new List<CityDTO>();
-            if (reader.HasRows) // если есть данные
+            // Если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                // Построчно считываем данные
+                while (reader.Read()) 
                 {
                     CityDTO city = new CityDTO()
                     {
@@ -72,10 +74,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlDataReader reader = command.ExecuteReader();
             CityDTO city = new CityDTO();
-            
-            if (reader.HasRows) // если есть данные
+
+            // Если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                // Построчно считываем данные
+                while (reader.Read())
                 {
                     {
                         city.ID = (int)reader["id"];
