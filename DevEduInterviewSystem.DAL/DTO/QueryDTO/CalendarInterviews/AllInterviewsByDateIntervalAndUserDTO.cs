@@ -14,7 +14,9 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews
         public string CandidatePhone { get; set; }
         public DateTime DateTimeInterview { get; set; }
         public int Attempt { get; set; }
-        public string Status { get; set; }
+        public string InterviewStatus { get; set; }
+
+
 
         public AllInterviewsByDateIntervalAndUserDTO()
         {
@@ -31,7 +33,18 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews
             CandidatePhone = candidatePhone;
             DateTimeInterview = dateTimeInterview;
             Attempt = attempt;
-            Status = status;
+            InterviewStatus = status;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
+
+            AllInterviewsByDateIntervalAndUserDTO dto = (AllInterviewsByDateIntervalAndUserDTO)obj;
+            return (this.UserFirstName == dto.UserFirstName && this.UserLastName == dto.UserLastName
+                && this.CandidateFirstName == dto.CandidateFirstName && this.CandidateLastName == dto.CandidateLastName
+                && this.CandidatePhone == dto.CandidatePhone && this.Attempt == dto.Attempt && this.InterviewStatus == dto.InterviewStatus
+                && this.DateTimeInterview.ToShortTimeString() == dto.DateTimeInterview.ToShortTimeString()
+                && this.DateTimeInterview.ToShortDateString() == dto.DateTimeInterview.ToShortDateString());
         }
     }
 }
