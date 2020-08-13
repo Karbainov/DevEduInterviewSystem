@@ -1,26 +1,27 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
-using System;
+﻿using System;
+using DevEduInterviewSystem.DAL.DTO;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class InterviewStatusCRUD
+    public class InterviewStatusCRUD : AbstractCRUD<InterviewStatusDTO>
     {
-        public int AddInterviewStatus(SqlConnection connection, InterviewStatusDTO interviewStatus)
+        public override int Add(InterviewStatusDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddInterviewStatus", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddInterviewStatus");
 
-            SqlParameter NameParam = new SqlParameter("@Name", interviewStatus.Name);
+            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteInterviewStatusByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int ID)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteInterviewStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteInterviewStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
@@ -28,83 +29,73 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllInterviewStatus(SqlConnection connection)
+        public override List<InterviewStatusDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllInterviewStatus", connection);
+            Connection.Open();
+
+            SqlCommand command = ReferenceToProcedure("SelectAllInterviewStatus");
+
+            List<InterviewStatusDTO> interviewsstatus = new List<InterviewStatusDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t Name");
 
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
-                    int id = (int)reader["id"];
-                    string Name = (string)reader["Name"];
+                    InterviewStatusDTO interviewstatus = new InterviewStatusDTO()
+                    {
+                        ID = (int)reader["id"],
+                        Name = (string)reader["Name"]
+                    };
 
-
-                    Console.WriteLine($"{id} \t{Name} ");
+                    interviewsstatus.Add(interviewstatus);
                 }
+                
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return interviewsstatus;
         }
 
-        public int SelectInterviewStatusByID(SqlConnection connection, int ID)
+        public override InterviewStatusDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectInterviewStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectInterviewStatusByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
 
+            InterviewStatusDTO interviewstatus = new InterviewStatusDTO();
+
             if (reader.HasRows) // если есть данные
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t Name");
-
                 while (reader.Read()) // построчно считываем данные
                 {
-                    int id = (int)reader["id"];
-                    int Name = (int)reader["Name"];
-
-
-                    Console.WriteLine($"{id} \t{Name} ");
+                    interviewstatus.ID = (int)reader["id"];
+                    interviewstatus.Name = (string)reader["Name"];
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return interviewstatus;
         }
 
-        public int UpdateInterviewStatusByID(SqlConnection connection, InterviewStatusDTO interviewStatus, int ID)
+        public override int UpdateByID(InterviewStatusDTO interviewStatus)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateInterviewStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateInterviewStatusByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", interviewStatus.ID);
             command.Parameters.Add(IDParam);
 
             SqlParameter NameParam = new SqlParameter("@Name", interviewStatus.Name);
             command.Parameters.Add(NameParam);
 
-
-
             return command.ExecuteNonQuery();
-        }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
         }
     }
 }
