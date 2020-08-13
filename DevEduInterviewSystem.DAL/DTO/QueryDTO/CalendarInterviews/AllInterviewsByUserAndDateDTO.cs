@@ -20,7 +20,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews
         {
 
         }
-        public AllInterviewsByUserAndDateDTO(string userFirstName, string userLastName, int idCandidate, string candidateFirstName,
+        public AllInterviewsByUserAndDateDTO (string userFirstName, string userLastName, int idCandidate, string candidateFirstName,
             string candidateLastName, string candidatePhone, DateTime dateTimeInterview, int attempt, string status)
         {
             UserFirstName = userFirstName;

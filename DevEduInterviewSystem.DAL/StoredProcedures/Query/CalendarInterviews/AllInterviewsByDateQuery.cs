@@ -13,8 +13,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
     {       
         public List<AllInterviewsByDateDTO> SelectAllInterviewsByDate(DateTime DateTimeInterview)
         {
-            SqlConnection connection = new SqlConnection(PrimerConnection.ConnectionString);
-
+            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByDate", connection);
             SqlParameter dataParam = new SqlParameter("@DateTimeInterview", DateTimeInterview);
@@ -45,8 +44,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             }
             reader.Close();
 
-        //    //return interviews;
-        //}
+            return interviews;
+        }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {
             SqlCommand command = new SqlCommand(sqlExpression, connection);
