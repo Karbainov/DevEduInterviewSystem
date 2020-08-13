@@ -85,11 +85,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             {
                 // Построчно считываем данные
                 while (reader.Read())
-                {
-                    {
-                        city.ID = (int)reader["id"];
-                        city.Name = (string)reader["name"];
-                    }
+                { 
+                    city.ID = (int)reader["id"];
+                    city.Name = (string)reader["name"];
+                    Console.WriteLine($"{city.ID} \t{city.Name}");
                 }
             }
             reader.Close();

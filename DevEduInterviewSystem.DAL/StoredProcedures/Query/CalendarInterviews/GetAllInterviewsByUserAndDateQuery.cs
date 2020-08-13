@@ -7,9 +7,9 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
-    public class AllInterviewsByUserAndDateQuery
+    public class GetAllInterviewsByUserAndDateQuery
     {
-        public List<AllInterviewsByUserAndDateDTO> SelectAllInterviewsByUserAndDate(int userid, DateTime date)
+        public List<GetAllInterviewsByUserAndDateDTO> SelectAllInterviewsByUserAndDate(int userid, DateTime date)
         {
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();
@@ -21,13 +21,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             command.Parameters.Add(dateParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AllInterviewsByUserAndDateDTO> interviews = new List<AllInterviewsByUserAndDateDTO>();
+            List<GetAllInterviewsByUserAndDateDTO> interviews = new List<GetAllInterviewsByUserAndDateDTO>();
 
             if (reader.HasRows) // если есть данные
             {
                 while (reader.Read()) // построчно считываем данные
                 {
-                    AllInterviewsByUserAndDateDTO interview = new AllInterviewsByUserAndDateDTO()
+                    GetAllInterviewsByUserAndDateDTO interview = new GetAllInterviewsByUserAndDateDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
