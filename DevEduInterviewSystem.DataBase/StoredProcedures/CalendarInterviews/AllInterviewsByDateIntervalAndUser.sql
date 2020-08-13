@@ -13,4 +13,4 @@ Join [dbo].[Candidate] AS C ON I.[CandidateID] = C.[ID]
 Join [dbo].[InterviewStatus] AS ISt ON I.[InterviewStatusID] = ISt.[ID]
 WHERE I.[DateTimeInterview] >= @StartDateTimeInterview AND I.[DateTimeInterview] <= @FinishDateTimeInterview 
 AND U.[ID] = @UserID
-ORDER BY C.[ID]
+ORDER BY I.[DateTimeInterview]

@@ -2,7 +2,7 @@
 @StartDateTimeInterview datetime2,
 @FinishDateTimeInterview datetime2
 AS
-SELECT U.[FirstName] AS [UserFirstName], U.[LastName] AS [UserLastName], C.[ID] AS [CandidateID],
+SELECT U.[FirstName] AS [UserFirstName], U.[LastName] AS [UserLastName], U.[Login] AS [UserLogin], C.[ID] AS [CandidateID],
 C.[FirstName] AS [CandidateFirstName], C.[LastName] AS [CandidateLastName], C.[Phone] AS [CandidatePhone], 
 I.[DateTimeInterview], I.[Attempt], ISt.[Name] AS [Status]
 FROM [dbo].[Interview] AS I
