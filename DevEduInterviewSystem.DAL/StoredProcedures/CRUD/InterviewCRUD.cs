@@ -24,7 +24,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
             command.Parameters.Add(DateTimeInterviewParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Interview]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -47,12 +52,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<InterviewDTO> interviews = new List<InterviewDTO>();
 
-            if (reader.HasRows) 
+            if (reader.HasRows)
             {
-                
-                
 
-                while (reader.Read()) 
+
+
+                while (reader.Read())
                 {
 
                     InterviewDTO interview = new InterviewDTO()
@@ -79,16 +84,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectInterviewByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", id);
+            SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
             InterviewDTO interview = new InterviewDTO();
 
-            if (reader.HasRows) 
+            if (reader.HasRows)
             {
 
-                while (reader.Read()) 
+                while (reader.Read())
                 {
                     interview.ID = (int)reader["id"];
                     interview.CandidateID = (int)reader["CandidateID"];
@@ -102,12 +107,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return interview;
         }
 
-        public override int UpdateByID(InterviewDTO interview)
+        public override int UpdateByID(InterviewDTO dto)
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("UpdateInterviewByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", interview.ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
@@ -120,10 +125,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(AttemptParam);
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
-            command.Parameters.Add(DateTimeInterviewParam); 
+            command.Parameters.Add(DateTimeInterviewParam);
 
             return command.ExecuteNonQuery();
 
+        }
     }
 }
 

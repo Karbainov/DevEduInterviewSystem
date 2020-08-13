@@ -35,9 +35,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(LastNameParam);
 
             SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
-            command.Parameters.Add(BDParam);
+            command.Parameters.Add(BDParam); 
+            
+            command.ExecuteNonQuery();
 
-            return command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Candidate]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            return count;
         }
 
         public override int DeleteByID(int id)

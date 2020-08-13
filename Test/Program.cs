@@ -21,13 +21,13 @@ namespace Test
 
             //Console.WriteLine(interView.SelectAllByUser(1));
 
-            //CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
+            CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
             //CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
             //CandidateDTO cand3 = new CandidateDTO(3, 3, 3, 3, "+911", "v@ya.ru", "Yana", "Smirnova", DateTime.Now);
-            //CandidateCRUD crud = new CandidateCRUD();
+            CandidateCRUD crud = new CandidateCRUD();
             //connection.Close();
-            //crud.Add(cand);
-            //connection.Close();
+            crud.Add(cand);
+            connection.Close();
             //crud.Add(cand2);
             //connection.Close();
             //crud.Add(cand3);
@@ -42,12 +42,12 @@ namespace Test
             //userCRUD.Add(user2);
             //connection.Close();
 
-            //InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
+            InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
             //InterviewDTO interview2 = new InterviewDTO(1, 2, 1, 1, DateTime.Now);
             //InterviewDTO interview3 = new InterviewDTO(7, 9, 1, 1, DateTime.Now);
-            //InterviewCRUD interviewCRUD = new InterviewCRUD();
+            InterviewCRUD interviewCRUD = new InterviewCRUD();
             //interviewCRUD.UpdateInterviewByID(connection, interview3, 7);
-            //interviewCRUD.AddInterview(connection, interview);
+            //interviewCRUD.Add(interview);
             //connection.Close();
             //interviewCRUD.AddInterview(connection, interview2);
             //connection.Close();

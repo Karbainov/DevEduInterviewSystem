@@ -36,5 +36,17 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
             InterviewStatus = interviewStatus;
 
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
+
+            AllInterviewsByUserDTO dto = (AllInterviewsByUserDTO)obj;
+            return (this.UserFirstName == dto.UserFirstName && this.UserLastName == dto.UserLastName
+                && this.CandidateFirstName == dto.CandidateFirstName && this.CandidateLastName == dto.CandidateLastName
+                && this.CandidatePhone == dto.CandidatePhone && this.Attempt == dto.Attempt && this.InterviewStatus == dto.InterviewStatus
+                && this.DateTimeInterview.ToShortTimeString() == dto.DateTimeInterview.ToShortTimeString()
+                && this.DateTimeInterview.ToShortDateString() == dto.DateTimeInterview.ToShortDateString());
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserQuery
     {        
-        public List<AllInterviewsDTO> SelectAllByUser(int id)
+        public List<AllInterviewsByUserDTO> SelectAllByUser(int id)
         {
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();
@@ -19,15 +19,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             command.Parameters.Add(userParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
+            List<AllInterviewsByUserDTO> interviews = new List<AllInterviewsByUserDTO>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllInterviewsDTO interview = new AllInterviewsDTO()
-                    {                        
-                        //UserID = (int)reader["UserID"],
+                    AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
+                    {
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],
                         IDCandidate = (int)reader["CandidateID"],
@@ -39,9 +38,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                         InterviewStatus = (string)reader["Status"]
                     };
                     interviews.Add(interview);
-
-                    //Console.WriteLine($"{interview.UserFirstName} \t{interview.UserLastName} \t{interview.IDCandidate} \t{interview.CandidateFirstName}" +
-                    //    $"\t{interview.CandidateLastName} \t{interview.CandidatePhone} \t{interview.DateTimeInterview} \t{interview.Attempt} \t{interview.InterviewStatus}");
                 }
             }
             reader.Close();

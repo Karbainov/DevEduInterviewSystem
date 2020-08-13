@@ -23,7 +23,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("DeleteInterviewStatusByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", id);
+            SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
@@ -32,8 +32,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<InterviewStatusDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllInterviewStatus");
-
             SqlCommand command = ReferenceToProcedure("SelectAllInterviewStatus");
 
             List<InterviewStatusDTO> interviewsstatus = new List<InterviewStatusDTO>();
@@ -94,7 +92,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", interviewStatus.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
+            SqlParameter NameParam = new SqlParameter("@Name", interviewStatus.Name);
             command.Parameters.Add(NameParam);
 
             return command.ExecuteNonQuery();
