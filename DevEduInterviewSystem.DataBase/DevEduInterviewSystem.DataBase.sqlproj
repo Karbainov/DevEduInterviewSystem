@@ -287,5 +287,6 @@
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateIntervalAndUser.sql" />
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfAllCourses.sql" />
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
+    <Build Include="StoredProcedures\OneUserRole.sql" />
   </ItemGroup>
 </Project>
