@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
     {
         SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
-        public List<UsersAndRoleDTO> UsersAndRole()
+        public List<UsersAndRoleDTO> SelectUsersAndRole()
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("UsersAndRole", Connection);

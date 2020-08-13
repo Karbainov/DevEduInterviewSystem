@@ -1,48 +1,46 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
-using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+﻿using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
+namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllInterviewsByUserQuery
-    {        
-        public List<AllInterviewsByUserDTO> SelectAllInterviewsByUser(int id)
+    public class AllTasksByUserQuery
+    {
+        public List<AllTasksByUserDTO> SelectAllTasksByUser(int id)
         {
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsByUser", connection);
+            SqlCommand command = ReferenceToProcedure("AllTasksByUser", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);
             command.Parameters.Add(userParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AllInterviewsByUserDTO> interviews = new List<AllInterviewsByUserDTO>();
+            List<AllTasksByUserDTO> tasks = new List<AllTasksByUserDTO>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
+                    AllTasksByUserDTO task = new AllTasksByUserDTO()
                     {
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],
                         CandidateID = (int)reader["CandidateID"],
                         CandidateFirstName = (string)reader["CandidateFirstName"],
                         CandidateLastName = (string)reader["CandidateLastName"],
-                        CandidatePhone = (string)reader["CandidatePhone"],
-                        DateTimeInterview = (DateTime)reader["DateTimeInterview"],
-                        Attempt = (int)reader["Attempt"],
-                        InterviewStatus = (string)reader["Status"]
+                        Task = (string)reader["Task"],
+                        IsCompleted = (bool)reader["IsCompleted"],
+                        Stage = (string)reader["Stage"]
                     };
-                    interviews.Add(interview);
+                    tasks.Add(task);
                 }
             }
             reader.Close();
 
-            return interviews;
+            return tasks;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {
