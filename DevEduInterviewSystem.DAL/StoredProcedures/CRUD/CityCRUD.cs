@@ -8,12 +8,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
     public class CityCRUD : AbstractCRUD<CityDTO>
     {
-        SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
         public override int Add(CityDTO dto)
         {
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@AddCity");
-            //SqlCommand command = ReferenceToProcedure("@AddCity");
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CityNameParam);
             Connection.Close();
@@ -22,6 +21,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int DeleteByID(int id)
         {
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@DeleteCityByID");
 
@@ -33,6 +33,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(CityDTO dto)
         {
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@UpdateCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
@@ -43,6 +44,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override List<CityDTO> SelectAll()
         {
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@SelectAllCity");
             SqlDataReader reader = command.ExecuteReader();
@@ -69,6 +71,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override CityDTO SelectByID(int id)
         {
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@SelectCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", id);
@@ -76,7 +79,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlDataReader reader = command.ExecuteReader();
             CityDTO city = new CityDTO();
-
             // Если есть данные
             if (reader.HasRows)
             {
@@ -90,6 +92,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return city;
         }
     }
