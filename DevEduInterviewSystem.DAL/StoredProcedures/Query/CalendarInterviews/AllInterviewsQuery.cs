@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
-
+using System.Globalization;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
@@ -20,14 +20,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     AllInterviewsDTO allInterview = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
+                        Login = (string)reader["Login"],
                         IDCandidate = (int)reader["ID"],
                         CandidateFirstName = (string)reader["FirstName"],
                         CandidateLastName = (string)reader["LastName"],

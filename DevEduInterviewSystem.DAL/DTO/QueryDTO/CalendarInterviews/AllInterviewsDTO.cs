@@ -8,6 +8,7 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
     {
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
+        public string Login { get; set; }
         public int IDCandidate { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
