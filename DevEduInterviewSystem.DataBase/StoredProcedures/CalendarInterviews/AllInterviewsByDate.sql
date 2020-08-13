@@ -10,3 +10,4 @@ Join [dbo].[User] AS U ON UI.[UserID] = U.[ID]
 Join [dbo].[Candidate] AS C ON I.[CandidateID] = C.[ID]
 Join [dbo].[InterviewStatus] AS ISt ON I.[InterviewStatusID] = ISt.[ID]
 WHERE I.DateTimeInterview = @DateTimeInterview
+ORDER BY C.[ID]

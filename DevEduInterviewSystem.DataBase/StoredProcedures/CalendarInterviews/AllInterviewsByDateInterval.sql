@@ -2,9 +2,13 @@
 @StartDateTimeInterview datetime2,
 @FinishDateTimeInterview datetime2
 AS
-Select * From [dbo].[Interview]
-Join [User_Interview] On [User_Interview].InterviewID = [Interview].ID
-Join [User] On [User_Interview].UserID = [User].ID
-Join [Candidate] On [Interview].CandidateID = [Candidate].ID
-Join [InterviewStatus] On [Interview].InterviewStatusID = [InterviewStatus].ID
-Where [Interview].DateTimeInterview >= @StartDateTimeInterview and  [Interview].DateTimeInterview <= @FinishDateTimeInterview
+SELECT U.[FirstName] AS [UserFirstName], U.[LastName] AS [UserLastName], C.[ID] AS [CandidateID],
+C.[FirstName] AS [CandidateFirstName], C.[LastName] AS [CandidateLastName], C.[Phone] AS [CandidatePhone], 
+I.[DateTimeInterview], I.[Attempt], ISt.[Name] AS [Status]
+FROM [dbo].[Interview] AS I
+Join [dbo].[User_Interview]  UI On UI.[InterviewID] = I.[ID]
+Join [dbo].[User] AS U On UI.[UserID] = U.[ID]
+Join [dbo].[Candidate] AS C On I.[CandidateID] = C.[ID]
+Join [dbo].[InterviewStatus] AS ISt On I.[InterviewStatusID] = ISt.[ID]
+WHERE I.[DateTimeInterview] >= @StartDateTimeInterview AND I.[DateTimeInterview] <= @FinishDateTimeInterview
+ORDER BY I.[DateTimeInterview]

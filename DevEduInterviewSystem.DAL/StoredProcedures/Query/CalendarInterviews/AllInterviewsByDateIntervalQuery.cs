@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
-
+using DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalQuery
     {
-        public List<AllInterviewsDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview)
+        public List<AllInterviewsByDateIntervalDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview)
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsDateInterval", Connection);
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDateInterval", Connection);
 
             SqlParameter startDateTimeInterviewParam = new SqlParameter("@StartDateTimeInterview", startDateTimeInterview);
             command.Parameters.Add(startDateTimeInterviewParam);
@@ -22,25 +22,25 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             SqlParameter finishDateTimeInterviewParam = new SqlParameter("@FinishDateTimeInterview", finishDateTimeInterview);
             command.Parameters.Add(finishDateTimeInterviewParam);
 
-            List<AllInterviewsDTO> allInterviewsIntervals = new List<AllInterviewsDTO>();
+            List<AllInterviewsByDateIntervalDTO> allInterviewsIntervals = new List<AllInterviewsByDateIntervalDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
-                    AllInterviewsDTO allInterviewsInterval = new AllInterviewsDTO()
+                    AllInterviewsByDateIntervalDTO allInterviewsInterval = new AllInterviewsByDateIntervalDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
-                        IDCandidate = (int)reader["ID"],
+                        CandidateID = (int)reader["ID"],
                         CandidateFirstName = (string)reader["FirstName"],
                         CandidateLastName = (string)reader["LastName"],
                         CandidatePhone = (string)reader["Phone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        InterviewStatus = (string)reader["Name"]
+                        Status = (string)reader["Name"]
                     };
                     allInterviewsIntervals.Add(allInterviewsInterval);
                 }

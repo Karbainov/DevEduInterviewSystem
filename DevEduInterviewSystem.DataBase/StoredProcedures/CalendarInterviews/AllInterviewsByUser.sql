@@ -9,3 +9,4 @@ Join [dbo].[User] AS U On UI.[UserID] = U.[ID]
 Join [dbo].[Candidate] AS C ON I.[CandidateID] = C.[ID]
 Join [dbo].[InterviewStatus] AS ISt ON I.[InterviewStatusID] = ISt.[ID]
 WHERE U.[ID] = @UserID
+ORDER BY U.[LastName] 

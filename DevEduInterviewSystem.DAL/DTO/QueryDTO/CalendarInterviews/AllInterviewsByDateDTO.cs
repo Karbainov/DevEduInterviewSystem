@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews
 {
-    public class AllInterviewsByDateDTO
+    public class AllInterviewsByDateDTO : IDTO
     {
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
