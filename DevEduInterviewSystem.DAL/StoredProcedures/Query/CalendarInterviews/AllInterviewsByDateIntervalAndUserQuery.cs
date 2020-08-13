@@ -1,35 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
-using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 
 
-
-
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
-    public class AllInterviewsByDateQuery
-    {       
-        public List<AllInterviewsDTO> SelectAllInterviewsByDate(DateTime DateTimeInterview)
+    public class AllInterviewsByDateIntervalAndUserQuery
+    {
+        public List<AllInterviewsDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
         {
-            SqlConnection connection = new SqlConnection(PrimerConnection.ConnectionString);
+            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsDate", connection);
-            SqlParameter dataParam = new SqlParameter("@DateTimeInterview", DateTimeInterview);
-            command.Parameters.Add(dataParam);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviewsDateInterval", Connection);
+
+            SqlParameter startDateTimeInterviewParam = new SqlParameter("@StartDateTimeInterview", startDateTimeInterview);
+            command.Parameters.Add(startDateTimeInterviewParam);
+
+            SqlParameter finishDateTimeInterviewParam = new SqlParameter("@FinishDateTimeInterview", finishDateTimeInterview);
+            command.Parameters.Add(finishDateTimeInterviewParam);
+
+            SqlParameter userParam = new SqlParameter("@UserID", id);
+            command.Parameters.Add(userParam);
+
+            List<AllInterviewsDTO> allInterviewsIntervalUsers = new List<AllInterviewsDTO>();
+
             SqlDataReader reader = command.ExecuteReader();
-
-            List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
 
             if (reader.HasRows) // если есть данные
             {
                 while (reader.Read()) // построчно считываем данные
                 {
-                    AllInterviewsDTO interview = new AllInterviewsDTO()
+                    AllInterviewsDTO allInterviewsIntervalUser = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
@@ -41,12 +45,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                         Attempt = (int)reader["Attempt"],
                         InterviewStatus = (string)reader["Name"]
                     };
-                    interviews.Add(interview);
+                    allInterviewsIntervalUsers.Add(allInterviewsIntervalUser);
                 }
             }
             reader.Close();
 
-            return interviews;
+            return allInterviewsIntervalUsers;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {
