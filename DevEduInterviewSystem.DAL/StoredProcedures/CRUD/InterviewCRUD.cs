@@ -24,15 +24,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
             command.Parameters.Add(DateTimeInterviewParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Interview]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteInterviewByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteInterviewByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -49,12 +52,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<InterviewDTO> interviews = new List<InterviewDTO>();
 
-            if (reader.HasRows) 
+            if (reader.HasRows)
             {
-                
-                
 
-                while (reader.Read()) 
+
+
+                while (reader.Read())
                 {
 
                     InterviewDTO interview = new InterviewDTO()
@@ -87,10 +90,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             InterviewDTO interview = new InterviewDTO();
 
-            if (reader.HasRows) 
+            if (reader.HasRows)
             {
 
-                while (reader.Read()) 
+                while (reader.Read())
                 {
                     interview.ID = (int)reader["id"];
                     interview.CandidateID = (int)reader["CandidateID"];
@@ -104,29 +107,29 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return interview;
         }
 
-        public override int UpdateByID(InterviewDTO interview)
+        public override int UpdateByID(InterviewDTO dto)
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("UpdateInterviewByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", interview.ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", interview.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", interview.InterviewStatusID);
+            SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", dto.InterviewStatusID);
             command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter AttemptParam = new SqlParameter("@Attempt", interview.Attempt);
+            SqlParameter AttemptParam = new SqlParameter("@Attempt", dto.Attempt);
             command.Parameters.Add(AttemptParam);
 
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", interview.DateTimeInterview);
-            command.Parameters.Add(DateTimeInterviewParam); 
+            SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
+            command.Parameters.Add(DateTimeInterviewParam);
 
             return command.ExecuteNonQuery();
-        }
 
+        }
     }
 }
 

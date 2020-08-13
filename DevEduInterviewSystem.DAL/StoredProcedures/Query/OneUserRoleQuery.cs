@@ -1,45 +1,43 @@
-﻿using DevEduInterviewSystem.DAL.DTO.QuereDTO;
+﻿using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DevEduInterviewSystem.DAL.StoredProcedures
+namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class UsersAndRoleProcedure
+    public class OneUserRoleQuery
     {
-        //SqlConnection Connection = ConnectionSingleTone.GetInstance().connection;
-        SqlConnection Connection = new SqlConnection(PrimerConnection.ConnectionString);
-        //SqlConnection Connection = new SqlConnection(ConnectionSingleTone.ConnectionString);
-        public List<UsersAndRoleDTO> UsersAndRole()
-        {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UsersAndRole", Connection);
 
-            List<UsersAndRoleDTO> usersAndRoles = new List<UsersAndRoleDTO>();
+        public List<OneUserRoleDTO> SelectOneUserRole(int id)
+        {
+            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            connection.Open();
+            SqlCommand command = ReferenceToProcedure("OneUserRole", connection);
+            SqlParameter userParam = new SqlParameter("@UserID", id);
+            command.Parameters.Add(userParam);
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows) 
+            List<OneUserRoleDTO> roles = new List<OneUserRoleDTO>();
+            if (reader.HasRows)
             {
-                while (reader.Read()) 
+                while (reader.Read())
                 {
-                    UsersAndRoleDTO usersAndRole = new UsersAndRoleDTO()
+                    OneUserRoleDTO role = new OneUserRoleDTO()
                     {
                         Login = (string)reader["Login"],
                         FirstName = (string)reader["FirstName"],
                         LastName = (string)reader["LastName"],
                         Password = (string)reader["Password"],
                         Role = (string)reader["Role"],
-                       
                     };
-
-                    usersAndRoles.Add(usersAndRole);
+                    roles.Add(role);
                 }
             }
             reader.Close();
-
-            return usersAndRoles;
-
+            return roles;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {

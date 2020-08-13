@@ -94,6 +94,7 @@
     <Folder Include="StoredProcedures\CRUD\TestStatus\" />
     <Folder Include="StoredProcedures\InterviewHistory\" />
     <Folder Include="StoredProcedures\StudentsOfGroup" />
+    <Folder Include="StoredProcedures\AllStudentsOfCourse" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -285,5 +286,9 @@
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateInterval.sql" />
     <Build Include="StoredProcedures\StudentsOfGroup\AllStudentsOfGroup.sql" />
     <Build Include="StoredProcedures\StudentsOfGroup\AllStudentsOfGroupByStart.sql" />
+    <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateIntervalAndUser.sql" />
+    <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfAllCourses.sql" />
+    <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
+    <Build Include="StoredProcedures\OneUserRole.sql" />
   </ItemGroup>
 </Project>
