@@ -92,6 +92,7 @@
     <Folder Include="StoredProcedures\CRUD\CityProcedures" />
     <Folder Include="StoredProcedures\CRUD\Course_CandidatProcedures" />
     <Folder Include="StoredProcedures\CRUD\TestStatus\" />
+    <Folder Include="StoredProcedures\InterviewHistory\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
