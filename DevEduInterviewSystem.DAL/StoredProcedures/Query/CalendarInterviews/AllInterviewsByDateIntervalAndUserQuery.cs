@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
-
+using DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalAndUserQuery
     {
-        public List<AllInterviewsDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
+        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
@@ -25,25 +25,25 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             SqlParameter userParam = new SqlParameter("@UserID", id);
             command.Parameters.Add(userParam);
 
-            List<AllInterviewsDTO> allInterviewsIntervalUsers = new List<AllInterviewsDTO>();
+            List<AllInterviewsByDateIntervalAndUserDTO> allInterviewsIntervalUsers = new List<AllInterviewsByDateIntervalAndUserDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
-                    AllInterviewsDTO allInterviewsIntervalUser = new AllInterviewsDTO()
+                    AllInterviewsByDateIntervalAndUserDTO allInterviewsIntervalUser = new AllInterviewsByDateIntervalAndUserDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
-                        IDCandidate = (int)reader["ID"],
+                        CandidateID = (int)reader["ID"],
                         CandidateFirstName = (string)reader["FirstName"],
                         CandidateLastName = (string)reader["LastName"],
                         CandidatePhone = (string)reader["Phone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        InterviewStatus = (string)reader["Name"]
+                        Status = (string)reader["Name"]
                     };
                     allInterviewsIntervalUsers.Add(allInterviewsIntervalUser);
                 }

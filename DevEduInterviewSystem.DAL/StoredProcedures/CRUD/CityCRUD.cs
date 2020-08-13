@@ -15,7 +15,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlCommand command = ReferenceToProcedure("@AddCity");
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CityNameParam);
-            Connection.Close();
+            
             return command.ExecuteNonQuery();
         }
 
