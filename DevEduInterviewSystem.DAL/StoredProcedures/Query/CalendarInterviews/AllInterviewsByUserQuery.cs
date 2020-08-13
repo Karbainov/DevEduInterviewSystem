@@ -10,7 +10,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserQuery
     {        
-        public List<AllInterviewsDTO> SelectAllByUser(int id)
+        public List<AllInterviewsByUserDTO> SelectAllByUser(int id)
         {
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();
@@ -19,13 +19,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             command.Parameters.Add(userParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
+            List<AllInterviewsByUserDTO> interviews = new List<AllInterviewsByUserDTO>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllInterviewsDTO interview = new AllInterviewsDTO()
+                    AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
                     {                        
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],

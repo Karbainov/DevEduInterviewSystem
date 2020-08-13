@@ -8,8 +8,8 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
     {
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
-        public string Login { get; set; }
-        public int IDCandidate { get; set; }
+        public string UserLogin { get; set; }
+        public int CandidateID { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string CandidatePhone { get; set; }
@@ -21,19 +21,19 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
         {
 
         }
-        public AllInterviewsDTO(string userFirstName, string userLastName, int idCandidate, string candidateFirstName,
+        public AllInterviewsDTO(string userFirstName, string userLastName, string login, int candidateID, string candidateFirstName,
             string candidateLastName, string candidatePhone, DateTime dateTimeInterview, int attempt, string interviewStatus)
         {
             UserFirstName = userFirstName;
             UserLastName = userLastName;
-            IDCandidate = idCandidate;
+            UserLogin = login;
+            CandidateID = candidateID;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
             CandidatePhone = candidatePhone;
             DateTimeInterview = dateTimeInterview;
             Attempt = attempt;
             InterviewStatus = interviewStatus;
-
         }
     }
 }
