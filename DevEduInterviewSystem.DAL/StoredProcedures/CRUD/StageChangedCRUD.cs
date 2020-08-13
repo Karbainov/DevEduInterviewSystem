@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(StageChangedDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddStageChanged", Connection);
+            SqlCommand command = ReferenceToProcedure("AddStageChanged");
 
             SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageParam);
@@ -27,7 +27,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteStageChangedByID", Connection);
+            SqlCommand command = ReferenceToProcedure("DeleteStageChangedByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -38,7 +38,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<StageChangedDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllStageChanged", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllStageChanged");
 
             SqlDataReader reader = command.ExecuteReader();
             List<StageChangedDTO> stageChangeds = new List<StageChangedDTO>();
@@ -66,7 +66,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override StageChangedDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectStageChangedByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectStageChangedByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -94,7 +94,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(StageChangedDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateStageChangedByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateStageChangedByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
