@@ -288,5 +288,6 @@
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfAllCourses.sql" />
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
     <Build Include="StoredProcedures\OneUserRole.sql" />
+    <Build Include="StoredProcedures\AllTasksByUser.sql" />
   </ItemGroup>
 </Project>
