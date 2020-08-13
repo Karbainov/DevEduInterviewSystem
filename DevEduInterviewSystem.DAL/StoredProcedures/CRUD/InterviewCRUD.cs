@@ -1,8 +1,7 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using DevEduInterviewSystem.DAL.DTO;
 using System.Data.SqlClient;
-
+using System.Collections.Generic;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -46,29 +45,36 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlDataReader reader = command.ExecuteReader();
 
-            List<InterviewDTO> list = new List<InterviewDTO>();
+            List<InterviewDTO> interviews = new List<InterviewDTO>();
 
-            if (reader.HasRows)
+            if (reader.HasRows) 
             {
+                
+                
 
-                while (reader.Read())
+                while (reader.Read()) 
                 {
-                    InterviewDTO interview = new InterviewDTO();
-                    interview.ID = (int)reader["id"];
-                    interview.CandidateID = (int)reader["CandidateID"];
-                    interview.InterviewStatusID = (int)reader["InterviewStatusID"];
-                    interview.Attempt = (int)reader["Attempt"];
-                    interview.DateTimeInterview = (DateTime)reader["DateTimeInterview"];
 
-                    list.Add(interview);
+                    InterviewDTO interview = new InterviewDTO()
+                    {
+                        ID = (int)reader["id"],
+                        CandidateID = (int)reader["CandidateID"],
+                        InterviewStatusID = (int)reader["InterviewStatusID"],
+                        Attempt = (int)reader["Attempt"],
+                        DateTimeInterview = (DateTime)reader["DateTimeInterview"]
+                    };
+
+                    interviews.Add(interview);
+
                 }
             }
             reader.Close();
 
-            return list;
+            return interviews;
+
         }
 
-        public override InterviewDTO SelectByID(int id)
+        public override InterviewDTO SelectByID(int ID)
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectInterviewByID");
@@ -77,12 +83,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-
             InterviewDTO interview = new InterviewDTO();
 
-            if (reader.HasRows)
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+
+                while (reader.Read()) 
                 {
                     interview.ID = (int)reader["id"];
                     interview.CandidateID = (int)reader["CandidateID"];
@@ -96,12 +102,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return interview;
         }
 
-        public override int UpdateByID(InterviewDTO dto)
+        public override int UpdateByID(InterviewDTO interview)
         {
-           Connection.Open();
+            Connection.Open();
             SqlCommand command = ReferenceToProcedure("UpdateInterviewByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
+            SqlParameter IDParam = new SqlParameter("@ID", interview.ID);
             command.Parameters.Add(IDParam);
 
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
@@ -118,7 +124,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return command.ExecuteNonQuery();
 
-        }
     }
 }
 
