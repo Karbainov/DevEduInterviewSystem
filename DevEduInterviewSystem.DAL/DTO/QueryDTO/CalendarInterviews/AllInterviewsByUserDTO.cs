@@ -4,12 +4,12 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
 {
-    public class AllInterviewsByUserDTO
+    public class AllInterviewsByUserDTO: IDTO 
     {
-        public int UserID { get; set; }
+        //public int UserID { get; set; }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
-        public int? IDCandidate { get; set; }
+        public int? CandidateID { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string CandidatePhone { get; set; }
@@ -21,13 +21,13 @@ namespace DevEduInterviewSystem.DAL.DTO.CalendarInterviews
         {
 
         }
-        public AllInterviewsByUserDTO(int userID, string userFirstName, string userLastName, int idCandidate, string candidateFirstName, 
+        public AllInterviewsByUserDTO(int userID, string userFirstName, string userLastName, int candidateID, string candidateFirstName, 
             string candidateLastName, string candidatePhone, DateTime dateTimeInterview, int attempt, string interviewStatus)
         {
-            UserID = userID;
+           // UserID = userID;
             UserFirstName = userFirstName;
             UserLastName = userLastName;
-            IDCandidate = idCandidate;
+            CandidateID = candidateID;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
             CandidatePhone = candidatePhone;
