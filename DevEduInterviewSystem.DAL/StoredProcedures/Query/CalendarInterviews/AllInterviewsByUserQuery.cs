@@ -27,6 +27,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                 {
                     AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
                     {                        
+                        //UserID = (int)reader["UserID"],
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],
                         IDCandidate = (int)reader["CandidateID"],
@@ -39,8 +40,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                     };
                     interviews.Add(interview);
 
-                    Console.WriteLine($"{interview.UserFirstName} \t{interview.UserLastName} \t{interview.IDCandidate} \t{interview.CandidateFirstName}" +
-                        $"\t{interview.CandidateLastName} \t{interview.CandidatePhone} \t{interview.DateTimeInterview} \t{interview.Attempt} \t{interview.InterviewStatus}");
+                    //Console.WriteLine($"{interview.UserFirstName} \t{interview.UserLastName} \t{interview.IDCandidate} \t{interview.CandidateFirstName}" +
+                    //    $"\t{interview.CandidateLastName} \t{interview.CandidatePhone} \t{interview.DateTimeInterview} \t{interview.Attempt} \t{interview.InterviewStatus}");
                 }
             }
             reader.Close();

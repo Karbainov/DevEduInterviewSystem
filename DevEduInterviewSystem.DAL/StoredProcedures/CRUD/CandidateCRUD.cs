@@ -43,7 +43,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteCandidateByID";
             SqlCommand command = ReferenceToProcedure("DeleteCandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
@@ -56,7 +55,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectAllCandidate");
-
 
             List<CandidateDTO> candidates = new List<CandidateDTO>();
 
@@ -97,9 +95,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             CandidateDTO candidate = new CandidateDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     candidate.ID = (int)reader["id"];
                     candidate.StageID = (int)reader["StageID"];
