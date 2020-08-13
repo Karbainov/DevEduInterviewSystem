@@ -8,7 +8,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserQuery
     {        
-        public List<AllInterviewsByUserDTO> SelectAllByUser(int id)
+        public List<AllInterviewsByUserDTO> SelectAllInterviewsByUser(int id)
         {
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();

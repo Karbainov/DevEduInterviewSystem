@@ -9,7 +9,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalAndUserQuery
     {
-        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
+        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateIntervalAndUser(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
