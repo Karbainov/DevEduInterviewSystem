@@ -6,101 +6,95 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class StatusCRUD
+    public class StatusCRUD : AbstractCRUD<StatusDTO>
     {
-        public int AddStatus(SqlConnection connection, StatusDTO status)
+        public override int Add(StatusDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddStatus", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddStatus");
 
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", status.Name);
+            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CandidateIDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int DeleteStatusByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteStatusByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             return command.ExecuteNonQuery();
         }
 
-        public int SelectAllStatus(SqlConnection connection)
+        public override List<StatusDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllStatus", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllStatus");
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) 
-            {
-                while (reader.Read()) 
-                {
-                    int ID = (int)reader["id"];                    
-                    var Name = (string)reader["Name"];
+            List<StatusDTO> list = new List<StatusDTO>();
 
-                    Console.WriteLine($"{ID} \t{Name}");
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    StatusDTO status = new StatusDTO()
+                    {
+                        ID = (int)reader["id"],
+                        Name = (string)reader["Name"]
+                    };
+
+                    list.Add(status);                    
                 }
             }
             reader.Close();
 
-
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM Status", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            return list;
         }
-
-        public int SelectStatusByID(SqlConnection connection, int ID)
+                
+        public override StatusDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectStatusByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) 
-            {
-                while (reader.Read()) 
-                {
-                    int id = (int)reader["id"];
-                    var Name = (string)reader["Name"];
+            StatusDTO status = new StatusDTO();
 
-                    Console.WriteLine($"{id} \t{Name}");
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    status.ID = (int)reader["id"];
+                    status.Name = (string)reader["Name"];
                 }
             }
             reader.Close();
 
-            return (int)command.ExecuteScalar();
+            return status;
         }
 
-        public int UpdateStatusByID(SqlConnection connection, StatusDTO status, int ID)
+        public override int UpdateByID(StatusDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateStatusByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateStatusByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", status.Name);
+            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CandidateIDParam);
 
             return command.ExecuteNonQuery();
         }
-
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
+                
     }
 }
