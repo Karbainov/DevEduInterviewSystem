@@ -1,4 +1,5 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,15 +8,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
     public class CityCRUD : AbstractCRUD<CityDTO>
     {
+        SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
         public override int Add(CityDTO dto)
         {
             Connection.Open();
-<<<<<<< HEAD
-            SqlCommand command = ReferenceToProcedure("@AddCity", Connection);
-=======
-            SqlCommand command = ReferenceToProcedure("AddCity");
->>>>>>> dev
-
+            SqlCommand command = ReferenceToProcedure("@AddCity");
+            //SqlCommand command = ReferenceToProcedure("@AddCity");
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CityNameParam);
             Connection.Close();
