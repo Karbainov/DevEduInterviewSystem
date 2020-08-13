@@ -32,7 +32,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<InterviewStatusDTO> SelectAll()
         {
             Connection.Open();
-
             SqlCommand command = ReferenceToProcedure("SelectAllInterviewStatus");
 
             List<InterviewStatusDTO> interviewsstatus = new List<InterviewStatusDTO>();
@@ -68,6 +67,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            InterviewStatusDTO interviewStatus = new InterviewStatusDTO();
 
             InterviewStatusDTO interviewstatus = new InterviewStatusDTO();
 

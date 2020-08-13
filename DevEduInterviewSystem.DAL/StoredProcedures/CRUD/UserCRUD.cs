@@ -25,7 +25,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            return count;
         }
 
         public override int DeleteByID(int id)

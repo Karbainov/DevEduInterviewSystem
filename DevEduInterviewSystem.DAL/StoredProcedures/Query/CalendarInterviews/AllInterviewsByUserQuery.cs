@@ -26,7 +26,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                 while (reader.Read())
                 {
                     AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
-                    {                        
+                    {
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],
                         CandidateID = (int)reader["CandidateID"],
