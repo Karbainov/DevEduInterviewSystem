@@ -16,9 +16,9 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
         public string FeedBack { get; set; }
-        public string CurseName { get; set; }
+        public string CourseName { get; set; }
         public string GroupName { get; set; }
-        public string MaritalStatus { get; set; }
+        public bool MaritalStatus { get; set; }
         public string Education { get; set; }
         public string WorkPlace { get; set; }
         public string ITExperience { get; set; }
@@ -32,7 +32,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         }
 
         public AllInformationAboutTheCandidateByIDDTO(int id, string stage, string status, string city, string phone, string email,string firstName, string lastName, DateTime birthDay, string feedBack,
-            string curseName, string groupName, string maritalStatus, string education, string work, string itExperience, string hobbies, string infoSourse, string expectations)
+            string curseName, string groupName, bool maritalStatus, string education, string work, string itExperience, string hobbies, string infoSourse, string expectations)
         {
             ID = id;
             TypeOfStage = stage;
@@ -44,7 +44,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             LastName = lastName;
             Birthday = birthDay;
             FeedBack = feedBack;
-            CurseName = curseName;
+            CourseName = curseName;
             GroupName = groupName;
             MaritalStatus = maritalStatus;
             Education = education;

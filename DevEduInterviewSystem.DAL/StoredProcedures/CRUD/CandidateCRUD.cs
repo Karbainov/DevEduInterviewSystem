@@ -37,7 +37,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
             command.Parameters.Add(BDParam);
 
-            return command.ExecuteNonQuery();
+
+            int a = (int)(decimal)command.ExecuteScalar();
+            Connection.Close();
+            return a;
         }
 
         public override int DeleteByID(int id)
@@ -48,8 +51,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
-
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
         public override List<CandidateDTO> SelectAll()

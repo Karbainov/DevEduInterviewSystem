@@ -6,117 +6,123 @@ using DevEduInterviewSystem.DAL.DTO;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-   public class StageChangedCRUD
+   public class StageChangedCRUD : AbstractCRUD<StageChangedDTO>
     {
-        public int AddStageChanged(SqlConnection connection, StageChangedDTO stageChanged)
+        public override int Add(StageChangedDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddStageChanged", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddStageChanged");
 
-            SqlParameter StageParam = new SqlParameter("@StageID", stageChanged.StageID);
-            command.Parameters.Add(StageParam);
+            SqlParameter StageIDParam = new SqlParameter("@StageID", dto.StageID);
+            command.Parameters.Add(StageIDParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", stageChanged.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", stageChanged.ChangedDate);
+            SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
             command.Parameters.Add(ChangedDateParam);
 
-            return command.ExecuteNonQuery();
+            int a = (int)(decimal)command.ExecuteScalar();
+            Connection.Close();
+            return a;
         }
-        public int DeleteStageChangedByID(SqlConnection connection, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteStageChangedByID", connection);
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+        
+        public override int DeleteByID(int id)
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteStageChangedByID");
+
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
-        public int SelectAllStageChanged(SqlConnection connection)
+     
+        public override List<StageChangedDTO> SelectAll()
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllStageChanged", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllStageChanged");
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    int id = (int)reader["ID"];
-                    int StageID = (int)reader["StageID"];
-                    int Candidate = (int)reader["CandidateID"];
-                    DateTime ChangedDate = (DateTime)reader["ChangedDate"];
+            List<StageChangedDTO> stages = new List<StageChangedDTO>();
 
-                    Console.WriteLine($"{id} \t{StageID} \t{Candidate} \t{ChangedDate}");
+            if (reader.HasRows) // если есть данные
+            {
+                while (reader.Read()) // построчно считываем данные
+                {
+                    StageChangedDTO stage = new StageChangedDTO()
+                    {
+                        ID = (int)reader["ID"],
+                        StageID = (int)reader["StageID"],
+                        CandidateID = (int)reader["CandidateID"],
+                        ChangedDate = (DateTime)reader["ChangedDate"]
+                    
+                    };
+                    stages.Add(stage);
                 }
             }
             reader.Close();
-
-            SqlCommand countRows = new SqlCommand("SELECT COUNT(*) FROM StageChanged", connection);
-            int count = (int)countRows.ExecuteScalar();
-
-            return count;
+            Connection.Close();
+            return stages;
         }
 
-        public int SelectStageChangedByID(SqlConnection connection, int ID)
+       
+        public override StageChangedDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectStageChangedByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectStageChangedByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            StageChangedDTO stage = new StageChangedDTO();
 
-            if (reader.HasRows)
+            if (reader.HasRows) // если есть данные
             {
-
-                while (reader.Read())
+                while (reader.Read()) // построчно считываем данные
                 {
-                    int Id = (int)reader["ID"];
-                    int StageID = (int)reader["StageID"];
-                    int Candidate = (int)reader["CandidateID"];
-                    DateTime ChangedDate = (DateTime)reader["ChangedDate"];
-
-                    Console.WriteLine($"\t{Id} \t{StageID} \t{Candidate} \t{ChangedDate}");
+                    stage.ID = (int)reader["ID"];
+                    stage.StageID = (int)reader["StageID"];
+                    stage.CandidateID = (int)reader["CandidateID"];
+                    stage.ChangedDate = (DateTime)reader["ChangedDate"];
                 }
             }
             reader.Close();
-
-            return command.ExecuteNonQuery();
+            Connection.Close();
+            return stage;
         }
 
-        public int UpdateStageChangedByID(SqlConnection connection, StageChangedDTO stageChanged, int ID)
+        
+        public override int UpdateByID(StageChangedDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateStageChangedByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateStageChangedByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter StatusParam = new SqlParameter("@StageID", stageChanged.StageID);
+            SqlParameter StatusParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StatusParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", stageChanged.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", stageChanged.ChangedDate);
+            SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
             command.Parameters.Add(ChangedDateParam);
 
-            return command.ExecuteNonQuery();
-
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+        
 
-            return command;
-        }
+      
     }
 }

@@ -6,3 +6,4 @@
 AS
 INSERT INTO [dbo].[User]
 VALUES (@Login, @Password, @FirstName, @LastName)
+SELECT SCOPE_IDENTITY()

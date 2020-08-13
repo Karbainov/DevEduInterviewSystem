@@ -11,39 +11,41 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
     {
         SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
-        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutTheCandidateByID()
+        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutTheCandidateByID(int ID)
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInformationAboutTheCandidateByID", Connection);
             AllInformationAboutTheCandidateByIDDTO allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO();
 
+            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            command.Parameters.Add(IDParam);
+
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
-                {                   
-                    
+
+                {             
+                   
                     allInfoCandidate.ID = (int)reader["ID"];
                     allInfoCandidate.TypeOfStage = (string)reader["TypeOfStage"];
                     allInfoCandidate.TypeOfStatus = (string)reader["TypeOfStatus"];
                     allInfoCandidate.City = (string)reader["City"];
-                    allInfoCandidate.Phone = (string)reader["Phone"];
+                    //allInfoCandidate.Phone = (string)reader["Phone"];
                     allInfoCandidate.Email = (string)reader["Email"];
                     allInfoCandidate.FirstName = (string)reader["FirstName"];
                     allInfoCandidate.LastName = (string)reader["LastName"];
                     allInfoCandidate.Birthday = (DateTime)reader["Birthday"];
                     allInfoCandidate.FeedBack = (string)reader["FeedBack"];
-                    allInfoCandidate.CurseName = (string)reader["CurseName"];
-                    allInfoCandidate.GroupName = (string)reader["GroupName"];
-                    allInfoCandidate.MaritalStatus = (string)reader["MaritalStatus"];
+                    //allInfoCandidate.CourseName = (string)reader["CourseName"];
+                    //allInfoCandidate.GroupName = (string)reader["GroupName"];
+                    allInfoCandidate.MaritalStatus = (bool)reader["MaritalStatus"];
                     allInfoCandidate.Education = (string)reader["Education"];
                     allInfoCandidate.WorkPlace = (string)reader["WorkPlace"];
                     allInfoCandidate.ITExperience = (string)reader["ITExperience"];
                     allInfoCandidate.Hobbies = (string)reader["Hobbies"];
                     allInfoCandidate.InfoSourse = (string)reader["InfoSourse"];
                     allInfoCandidate.Expectations = (string)reader["Expectations"];
-
-                                     
                 }
             }
             reader.Close();
