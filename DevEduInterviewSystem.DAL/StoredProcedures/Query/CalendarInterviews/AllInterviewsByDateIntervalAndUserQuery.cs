@@ -9,12 +9,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalAndUserQuery
     {
-        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
+        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateIntervalAndUser(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
 
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsDateInterval", Connection);
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDateIntervalAndUser", Connection);
 
             SqlParameter startDateTimeInterviewParam = new SqlParameter("@StartDateTimeInterview", startDateTimeInterview);
             command.Parameters.Add(startDateTimeInterviewParam);
