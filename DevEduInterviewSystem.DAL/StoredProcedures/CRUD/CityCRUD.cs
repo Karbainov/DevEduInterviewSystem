@@ -62,6 +62,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                         Name = (string)reader["name"],
                     };
                     citys.Add(city);
+                    Console.WriteLine($"{city.ID} \t{city.Name}");
                 }
             }
             reader.Close();
