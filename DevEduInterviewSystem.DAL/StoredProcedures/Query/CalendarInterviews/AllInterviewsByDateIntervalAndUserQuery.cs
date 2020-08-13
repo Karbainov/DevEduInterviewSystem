@@ -35,15 +35,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                 {
                     AllInterviewsByDateIntervalAndUserDTO allInterviewsIntervalUser = new AllInterviewsByDateIntervalAndUserDTO()
                     {
-                        UserFirstName = (string)reader["FirstName"],
-                        UserLastName = (string)reader["LastName"],
-                        CandidateID = (int)reader["ID"],
-                        CandidateFirstName = (string)reader["FirstName"],
-                        CandidateLastName = (string)reader["LastName"],
-                        CandidatePhone = (string)reader["Phone"],
+                        UserFirstName = (string)reader["UserFirstName"],
+                        UserLastName = (string)reader["UserLastName"],
+                        CandidateID = (int)reader["CandidateID"],
+                        CandidateFirstName = (string)reader["CandidateFirstName"],
+                        CandidateLastName = (string)reader["CandidateLastName"],
+                        CandidatePhone = (string)reader["CandidatePhone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        Status = (string)reader["Name"]
+                        InterviewStatus = (string)reader["Status"]
                     };
                     allInterviewsIntervalUsers.Add(allInterviewsIntervalUser);
                 }
