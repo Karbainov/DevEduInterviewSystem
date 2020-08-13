@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(FeedbackDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddFeedback", Connection);
+            SqlCommand command = ReferenceToProcedure("AddFeedback");
 
             SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
             command.Parameters.Add(StageChangedIDParam);
@@ -34,9 +34,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteFeedbackByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteFeedbackByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -48,7 +46,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         {
 
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllFeedback", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllFeedback");
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -81,7 +79,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override FeedbackDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllFeedbackByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllFeedbackByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -108,7 +106,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(FeedbackDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectFeedbackByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectFeedbackByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

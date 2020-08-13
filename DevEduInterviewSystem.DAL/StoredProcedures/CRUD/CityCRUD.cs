@@ -10,7 +10,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CityDTO dto)
         {
             Connection.Open();
+<<<<<<< HEAD
             SqlCommand command = ReferenceToProcedure("@AddCity", Connection);
+=======
+            SqlCommand command = ReferenceToProcedure("AddCity");
+>>>>>>> dev
 
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CityNameParam);
@@ -21,7 +25,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@DeleteCityByID", Connection);
+            SqlCommand command = ReferenceToProcedure("@DeleteCityByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -32,7 +36,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(CityDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@UpdateCityByID", Connection);
+            SqlCommand command = ReferenceToProcedure("@UpdateCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
 
             command.Parameters.Add(IDParam);
@@ -42,7 +46,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<CityDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@SelectAllCity", Connection);
+            SqlCommand command = ReferenceToProcedure("@SelectAllCity");
             SqlDataReader reader = command.ExecuteReader();
 
             List<CityDTO> citys = new List<CityDTO>();
@@ -68,7 +72,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override CityDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@SelectCityByID", Connection);
+            SqlCommand command = ReferenceToProcedure("@SelectCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 

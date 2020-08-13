@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(TestStatusDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddTestStatus", Connection);
+            SqlCommand command = ReferenceToProcedure("AddTestStatus");
 
             SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CandidateIDParam);
@@ -22,7 +22,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteTestStatusByID", Connection);
+            SqlCommand command = ReferenceToProcedure("DeleteTestStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -33,7 +33,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<TestStatusDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllTestStatus", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllTestStatus");
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -59,7 +59,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override TestStatusDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectTestStatusByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectTestStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -83,7 +83,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(TestStatusDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateTestStatusByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateTestStatusByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

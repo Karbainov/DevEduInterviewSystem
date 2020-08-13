@@ -2,7 +2,7 @@ using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
+
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCandidate", Connection);
+            SqlCommand command = ReferenceToProcedure("AddCandidate");
 
             SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageParam);
@@ -44,8 +44,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         {
             Connection.Open();
             string sqlExpression = "DeleteCandidateByID";
-            SqlCommand command = new SqlCommand(sqlExpression, Connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlCommand command = ReferenceToProcedure("DeleteCandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -56,15 +55,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<CandidateDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllCandidate", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectAllCandidate");
 
 
             List<CandidateDTO> candidates = new List<CandidateDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     CandidateDTO candidate = new CandidateDTO()
                     {
@@ -90,7 +89,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override CandidateDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectCandidateByID", Connection);
+            SqlCommand command = ReferenceToProcedure("SelectCandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -122,7 +121,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID", Connection);
+            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);

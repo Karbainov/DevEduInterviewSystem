@@ -4,11 +4,11 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
-   public class StageChangedDTO : IDTO
+    public class StageChangedDTO : IDTO
     {
         public int ID { get; set; }
-        public int? StageID { get; set; }
-        public int? CandidateID { get; set; }
+        public int StageID { get; set; }
+        public int CandidateID { get; set; }
         public DateTime ChangedDate { get; set; }
 
         public StageChangedDTO()
@@ -16,12 +16,12 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public StageChangedDTO(int ID, int StageID, int CandidateID, DateTime ChangedDate)
+        public StageChangedDTO(int id, int stageID, int candidateID, DateTime changedDate)
         {
-            this.ID = ID;
-            this.StageID = StageID;
-            this.CandidateID = CandidateID;
-            this.ChangedDate = ChangedDate;
+            ID = id;
+            StageID = stageID;
+            CandidateID = candidateID;
+            ChangedDate = changedDate;
         }
     }
 }
