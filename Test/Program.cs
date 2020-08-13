@@ -13,7 +13,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().connection;
+            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
 
             //AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
             //AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
