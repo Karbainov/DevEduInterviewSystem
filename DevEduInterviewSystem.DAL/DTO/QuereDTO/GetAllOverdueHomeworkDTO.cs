@@ -6,6 +6,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
 {
     public class GetAllOverdueHomeworkDTO:IDTO
     {
+        public int CandidateID { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string StatusHomeWork { get; set; }
@@ -16,8 +17,9 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
 
         }
 
-        public GetAllOverdueHomeworkDTO(string candidateFirstName, string candidateLastName, string statusHomeWork, DateTime homeWorkDate)
+        public GetAllOverdueHomeworkDTO(int candidateID, string candidateFirstName, string candidateLastName, string statusHomeWork, DateTime homeWorkDate)
         {
+            CandidateID = candidateID;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
             StatusHomeWork = statusHomeWork;

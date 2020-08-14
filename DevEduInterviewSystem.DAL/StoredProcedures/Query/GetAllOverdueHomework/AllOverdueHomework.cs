@@ -3,7 +3,6 @@ using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
 {
@@ -13,8 +12,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
-
-            SqlCommand command = ReferenceToProcedure("@AllOverdueHomework");
+            DateTime dateCurrent = DateTime.Now;
+            SqlCommand command = ReferenceToProcedure("@AllOverdueHomeworkS", Connection);
+            SqlParameter currentDateParam = new SqlParameter("@DareCurrent", dateCurrent);
+            command.Parameters.Add(currentDateParam);
 
             List<GetAllOverdueHomeworkDTO> allOverdueHomeworks = new List<GetAllOverdueHomeworkDTO>();
 
@@ -25,6 +26,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
                 {
                     GetAllOverdueHomeworkDTO allOverdueHomework = new GetAllOverdueHomeworkDTO()
                     {
+                        CandidateID = (int)reader["CandidateID"],
                         CandidateFirstName = (string)reader["CandidateFirstName"],
                         CandidateLastName = (string)reader["CandidateLastName"],
                         HomeWorkDate = (DateTime)reader["HomeWorkDate"]
