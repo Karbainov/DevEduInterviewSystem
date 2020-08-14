@@ -283,6 +283,7 @@
     <Build Include="StoredProcedures\CRUD\TestStatus\UpdateTestStatusByID.sql" />
     <Build Include="StoredProcedures\UsersAndRole.sql" />
     <Build Include="StoredProcedures\InterviewHistory\AttemptsInterviewCandidate.sql" />
+    <Build Include="StoredProcedures\InterviewHistory\AllInformationAboutTheCandidateByID.sql" />
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateInterval.sql" />
     <Build Include="StoredProcedures\StudentsOfGroup\AllStudentsOfGroup.sql" />
     <Build Include="StoredProcedures\StudentsOfGroup\AllStudentsOfGroupByStart.sql" />

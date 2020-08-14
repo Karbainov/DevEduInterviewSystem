@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddCity");
 
-            SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
+            SqlParameter CityNameParam = new SqlParameter("@Name", dto.CityName);
             command.Parameters.Add(CityNameParam);
             
             int numberOfRowsAded = command.ExecuteNonQuery();
@@ -30,7 +30,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
         public override int UpdateByID(CityDTO dto)
@@ -38,9 +40,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@UpdateCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-
             command.Parameters.Add(IDParam);
-            return command.ExecuteNonQuery();
+
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a; return command.ExecuteNonQuery();
         }
 
         public override List<CityDTO> SelectAll()
@@ -57,7 +61,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     CityDTO city = new CityDTO()
                     {
                         ID = (int)reader["id"],
-                        Name = (string)reader["name"],
+                        CityName = (string)reader["City"],
                     };
                     citys.Add(city);
                 }
@@ -83,11 +87,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     {
                         city.ID = (int)reader["id"];
-                        city.Name = (string)reader["name"];
+                        city.CityName = (string)reader["City"];
                     }
                 }
             }
             reader.Close();
+            Connection.Close();
             return city;
         }
     }

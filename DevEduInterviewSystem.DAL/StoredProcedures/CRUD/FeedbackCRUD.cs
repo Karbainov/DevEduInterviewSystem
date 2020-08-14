@@ -27,7 +27,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
             command.Parameters.Add(TimeFeedbackParam);
 
-            return command.ExecuteNonQuery();
+            int a = (int)(decimal)command.ExecuteScalar();
+            Connection.Close();
+            return a;
         }
 
    
@@ -39,7 +41,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
         public override List<FeedbackDTO> SelectAll()
@@ -73,6 +77,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return feedbacks;
         }  
 
@@ -100,6 +105,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     };
             }
             reader.Close();
+            Connection.Close();
             return feedback;
         }
 
@@ -124,7 +130,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.Message);
             command.Parameters.Add(TimeFeedbackParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
     }
 }

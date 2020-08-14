@@ -3,3 +3,5 @@
 AS
 INSERT INTO [dbo].[City]
 VALUES (@Name)
+  SELECT SCOPE_IDENTITY()
+

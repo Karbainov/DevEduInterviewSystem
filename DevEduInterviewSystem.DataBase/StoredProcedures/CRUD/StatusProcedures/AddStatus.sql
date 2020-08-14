@@ -3,3 +3,4 @@
 as
 INSERT INTO [dbo].[Status]
 VALUES (@Name)
+  SELECT SCOPE_IDENTITY()

@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CandidatePersonalInfoDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("Adddto");
+            SqlCommand command = ReferenceToProcedure("AddCandidatePersonalInfo");
 
             SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateIDParam);

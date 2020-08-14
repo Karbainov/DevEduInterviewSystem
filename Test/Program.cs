@@ -97,7 +97,7 @@ namespace Test
             AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
             //interviewsByUserQuery.SelectAllByUser(65);
 
-            connection.Close();
+            //connection.Close();
 
 
 
