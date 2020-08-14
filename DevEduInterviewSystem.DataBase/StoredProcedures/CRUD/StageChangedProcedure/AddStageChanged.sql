@@ -5,3 +5,4 @@
 AS
 INSERT INTO [dbo].[StageChanged]
 VALUES (@CandidateID, @StageID, @ChangedDate)
+SELECT SCOPE_IDENTITY()

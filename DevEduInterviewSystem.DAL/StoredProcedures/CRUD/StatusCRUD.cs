@@ -13,11 +13,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddStatus");
 
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(CandidateIDParam);
+            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
+            command.Parameters.Add(NameParam);
 
-            return command.ExecuteNonQuery();
+            int a = (int)(decimal)command.ExecuteScalar();
+            Connection.Close();
+            return a;
         }
+        
 
         public override int DeleteByID(int id)
         {
@@ -27,8 +30,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
+
+       
 
         public override List<StatusDTO> SelectAll()
         {
@@ -37,26 +44,28 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlDataReader reader = command.ExecuteReader();
 
-            List<StatusDTO> list = new List<StatusDTO>();
+            List<StatusDTO> statuses = new List<StatusDTO>();
 
-            if (reader.HasRows)
+            if (reader.HasRows) // если есть данные
             {
-                while (reader.Read())
+                while (reader.Read()) // построчно считываем данные
                 {
                     StatusDTO status = new StatusDTO()
                     {
                         ID = (int)reader["id"],
-                        Name = (string)reader["Name"]
+                        Name = (string)reader["Name"],
                     };
-
-                    list.Add(status);                    
+                    statuses.Add(status);
                 }
             }
             reader.Close();
+            Connection.Close();
 
-            return list;
+            return statuses;
         }
-                
+
+       
+
         public override StatusDTO SelectByID(int id)
         {
             Connection.Open();
@@ -66,21 +75,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-
             StatusDTO status = new StatusDTO();
 
-            if (reader.HasRows)
+            if (reader.HasRows) // если есть данные
             {
-                while (reader.Read())
+                while (reader.Read()) // построчно считываем данные
                 {
                     status.ID = (int)reader["id"];
                     status.Name = (string)reader["Name"];
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return status;
         }
+
+        
 
         public override int UpdateByID(StatusDTO dto)
         {
@@ -90,11 +100,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(CandidateIDParam);
+            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
+            command.Parameters.Add(NameParam);
 
-            return command.ExecuteNonQuery();
-        }
-                
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
+        }      
     }
 }

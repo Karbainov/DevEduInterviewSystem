@@ -4,3 +4,4 @@
 AS
 INSERT INTO dbo.[Group_Candidate]
 VALUES (@GroupID, @CandidateID)
+  SELECT SCOPE_IDENTITY()

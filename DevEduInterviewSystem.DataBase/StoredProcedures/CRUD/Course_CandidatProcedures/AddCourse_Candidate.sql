@@ -4,3 +4,4 @@
 AS
 INSERT INTO [dbo].[Course_Candidate]
 VALUES (@CourseID, @CandidateID)
+  SELECT SCOPE_IDENTITY()

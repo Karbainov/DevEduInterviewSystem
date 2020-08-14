@@ -19,7 +19,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            return command.ExecuteNonQuery();
+            int a = (int)(decimal)command.ExecuteScalar();
+            Connection.Close();
+            return a;
         }
 
         public override int DeleteByID(int id)
@@ -30,7 +32,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
         public override List<GroupCandidateDTO> SelectAll()
@@ -42,11 +46,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<GroupCandidateDTO> groupsCandidates = new List<GroupCandidateDTO>();
 
-            if (reader.HasRows) // Eсли есть данные.
+            if (reader.HasRows) 
             {
-                // Выводим названия столбцов.
-                // Console.WriteLine($"id \t GroupID \t CandidateID");
-                while (reader.Read()) // Построчно считываем данные.
+                while (reader.Read()) 
                 {
                     GroupCandidateDTO groupCandidate = new GroupCandidateDTO()
                     {
@@ -59,7 +61,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return groupsCandidates;
         }
 
@@ -82,11 +84,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     groupCandidate.GroupID = (int)reader["GroupID"];
                     groupCandidate.CandidateID = (int)reader["CandidateID"];
 
-                    //Console.WriteLine($"{id} \t{GroupID} \t{CandidateID} ");
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return groupCandidate;
         }
 
@@ -104,7 +105,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
     }
 }
