@@ -16,7 +16,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TypeOfRoleParam = new SqlParameter("@TypeOfRole", dto.TypeOfRole);
             command.Parameters.Add(TypeOfRoleParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Role]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -27,7 +33,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
         public override List<RoleDTO> SelectAll()
         {
@@ -48,6 +57,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return roles;
         }
         public override RoleDTO SelectByID(int id)
@@ -69,6 +79,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return role;
         }
         public override int UpdateByID(RoleDTO dto)
@@ -82,7 +93,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TypeOfRoleParam = new SqlParameter("@TypeOfRole", dto.TypeOfRole);
             command.Parameters.Add(TypeOfRoleParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
     }
 }

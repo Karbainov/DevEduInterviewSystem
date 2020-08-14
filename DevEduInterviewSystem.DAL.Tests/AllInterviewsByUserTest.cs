@@ -33,7 +33,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (UserDTO dto in userDTOMock)
             {                
                 _mockUserID.Add(userCRUD.Add(dto));
-                Connection.Close();
             }
 
             CityCRUD cityCRUD = new CityCRUD();
@@ -42,7 +41,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (CityDTO dto in cityDTOMock)
             {
                 cityCRUD.Add(dto);
-                Connection.Close();
             }
 
             StatusCRUD statusCRUD = new StatusCRUD();
@@ -50,7 +48,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (StatusDTO dto in statusDTOMock)
             {
                 statusCRUD.Add(dto);
-                Connection.Close();
             }
 
             StageCRUD stageCRUD = new StageCRUD();
@@ -58,7 +55,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (StageDTO dto in stageDTOMock)
             {
                 stageCRUD.Add(dto);
-                Connection.Close();
             }
 
             InterviewStatusCRUD interviewStatusCRUD = new InterviewStatusCRUD();
@@ -66,7 +62,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (InterviewStatusDTO dto in interviewStatusDTOMock)
             {
                 interviewStatusCRUD.Add(dto);
-                Connection.Close();
             }
 
             CandidateCRUD candidateCRUD = new CandidateCRUD();
@@ -74,7 +69,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (CandidateDTO dto in candidateDTOMock)
             {
                 _mockCandidateID.Add(candidateCRUD.Add(dto));
-                Connection.Close();
             }
 
             InterviewCRUD interviewCRUD = new InterviewCRUD();
@@ -84,7 +78,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             {
                 dto.CandidateID = _mockCandidateID[count];
                 _mockInterviewID.Add(interviewCRUD.Add(dto));
-                Connection.Close();
                 count++;
             }
 
@@ -94,9 +87,7 @@ namespace DevEduInterviewSystem.DAL.Tests
                 UserInterviewDTO userInterview = new UserInterviewDTO(1, _mockInterviewID[i], _mockUserID[i]);
                 UserInterviewDTO userInterview2 = new UserInterviewDTO(2, _mockInterviewID[_mockUserID.Count - i - 1], _mockUserID[i]);
                 userInterviewCRUD.Add(userInterview);
-                Connection.Close();
                 userInterviewCRUD.Add(userInterview2);
-                Connection.Close();
             }
         } 
 
@@ -105,8 +96,6 @@ namespace DevEduInterviewSystem.DAL.Tests
         {
             AllInterviewsByUserQuery _allInterviewsQuery = new AllInterviewsByUserQuery();
             List<AllInterviewsDTO> actual = _allInterviewsQuery.SelectAllInterviewsByUser(_mockUserID[idnumber]);
-
-            Connection.Close();
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -178,25 +167,24 @@ namespace DevEduInterviewSystem.DAL.Tests
             {
                 UserFirstName = "Svetlana",
                 UserLastName = "Fokina",
-                CandidateFirstName = "Yana",
-                CandidateLastName = "Smirnova",
-                CandidatePhone = "8921",
-                DateTimeInterview = new DateTime(2020, 09, 20, 12, 00, 00),
-                Attempt = 1,
-                InterviewStatus = "canceled"
-
+                CandidateFirstName = "Ivan",
+                CandidateLastName = "Sidorov",
+                CandidatePhone = "821",
+                DateTimeInterview = new DateTime(2020, 08, 20, 10, 30, 00),
+                Attempt = 2,
+                InterviewStatus = "fail" 
             };
 
             AllInterviewsDTO interviewSvetlana2 = new AllInterviewsDTO()
             {
                 UserFirstName = "Svetlana",
                 UserLastName = "Fokina",
-                CandidateFirstName = "Ivan",
-                CandidateLastName = "Sidorov",
-                CandidatePhone = "821",
-                DateTimeInterview = new DateTime(2020, 08, 20, 10, 30, 00),
-                Attempt = 2,
-                InterviewStatus = "fail"
+                CandidateFirstName = "Yana",
+                CandidateLastName = "Smirnova",
+                CandidatePhone = "8921",
+                DateTimeInterview = new DateTime(2020, 09, 20, 12, 00, 00),
+                Attempt = 1,
+                InterviewStatus = "canceled"
             };
 
 

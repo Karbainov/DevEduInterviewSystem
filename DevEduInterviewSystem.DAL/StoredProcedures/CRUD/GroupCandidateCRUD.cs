@@ -19,9 +19,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            int a = (int)(decimal)command.ExecuteScalar();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group_Candidate]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
-            return a;
+
+            return count;
         }
 
         public override int DeleteByID(int id)

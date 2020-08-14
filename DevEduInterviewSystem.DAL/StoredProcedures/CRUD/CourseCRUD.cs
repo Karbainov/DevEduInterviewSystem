@@ -16,9 +16,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
 
-            int a = (int)(decimal)command.ExecuteScalar();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Course]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
-            return a;
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -29,9 +33,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            int a = command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
             Connection.Close();
-            return a;
+            return rows;
         }
 
         public override int UpdateByID(CourseDTO dto)
@@ -45,9 +49,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
 
-            int a = command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
             Connection.Close();
-            return a;
+            return rows;
         }
 
         public override List<CourseDTO> SelectAll()
@@ -59,9 +63,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<CourseDTO> courses = new List<CourseDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     CourseDTO course = new CourseDTO()
                     {
@@ -87,9 +91,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             CourseDTO stage = new CourseDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     stage.ID = (int)reader["id"];
                     stage.Name = (string)reader["Name"];

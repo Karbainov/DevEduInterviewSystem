@@ -48,7 +48,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return allInterviewsIntervalUsers;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)

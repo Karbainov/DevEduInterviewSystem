@@ -50,7 +50,8 @@ namespace tesd
         [OneTimeSetUp]
         public void Setup()
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            //ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
             stage = new StageDTO(40, "interview");            
             stageID = stageCRUD.Add(stage);

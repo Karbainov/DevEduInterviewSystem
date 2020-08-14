@@ -31,11 +31,10 @@ namespace DevEduInterviewSystem.DAL.Tests
 
             UserCRUD userCRUD = new UserCRUD(); //заполнение таблиц 
             UserDTOMock userDTOMock = new UserDTOMock();
-            Connection.Close();
             foreach (UserDTO dto in userDTOMock) //Нужно начинать с таблиц у которых нет форен кей.
             {
                 _mockUserID.Add(userCRUD.Add(dto)); //заполнение таблицы mock и дабавление id в лист (Нужно изменить CRUD файл, что бы сохранить id)
-                Connection.Close();
+                
             }
 
             CityCRUD cityCRUD = new CityCRUD();
@@ -44,7 +43,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (CityDTO dto in cityDTOMock)
             {
                 cityCRUD.Add(dto);
-                Connection.Close();
             }
 
             StatusCRUD statusCRUD = new StatusCRUD();
@@ -52,7 +50,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (StatusDTO dto in statusDTOMock)
             {
                 statusCRUD.Add(dto);
-                Connection.Close();
             }
 
             StageCRUD stageCRUD = new StageCRUD();
@@ -60,7 +57,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (StageDTO dto in stageDTOMock)
             {
                 stageCRUD.Add(dto);
-                Connection.Close();
             }
 
             InterviewStatusCRUD interviewStatusCRUD = new InterviewStatusCRUD();
@@ -68,7 +64,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (InterviewStatusDTO dto in interviewStatusDTOMock)
             {
                 interviewStatusCRUD.Add(dto);
-                Connection.Close();
             }
 
             CandidateCRUD candidateCRUD = new CandidateCRUD();
@@ -76,7 +71,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (CandidateDTO dto in candidateDTOMock)
             {
                 _mockCandidateID.Add(candidateCRUD.Add(dto));
-                Connection.Close();
             }
 
             InterviewCRUD interviewCRUD = new InterviewCRUD();
@@ -86,7 +80,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             {
                 dto.CandidateID = _mockCandidateID[count];
                 _mockInterviewID.Add(interviewCRUD.Add(dto));
-                Connection.Close();
                 count++;
             }
 
@@ -96,9 +89,7 @@ namespace DevEduInterviewSystem.DAL.Tests
                 UserInterviewDTO userInterview = new UserInterviewDTO(1, _mockInterviewID[i], _mockUserID[i]);
                 UserInterviewDTO userInterview2 = new UserInterviewDTO(2, _mockInterviewID[_mockUserID.Count - i - 1], _mockUserID[i]);
                 userInterviewCRUD.Add(userInterview);
-                Connection.Close();
                 userInterviewCRUD.Add(userInterview2);
-                Connection.Close();
             }
 
 
@@ -109,8 +100,6 @@ namespace DevEduInterviewSystem.DAL.Tests
         {
             AllInterviewsByDateIntervalAndUserQuery _allInterviewsQuery = new AllInterviewsByDateIntervalAndUserQuery();
             List<AllInterviewsDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateIntervalAndUser(startDateTime, finishDateTime, _mockUserID[idnumber]);
-
-            Connection.Close();
 
             Assert.AreEqual(expected, actual);
         }

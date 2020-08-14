@@ -13,7 +13,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.MainConnectionString;
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             Console.WriteLine("Подключение к серверу");
@@ -97,7 +97,7 @@ namespace Test
             AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
             //interviewsByUserQuery.SelectAllByUser(65);
 
-            //connection.Close();
+            connection.Close();
 
 
 
