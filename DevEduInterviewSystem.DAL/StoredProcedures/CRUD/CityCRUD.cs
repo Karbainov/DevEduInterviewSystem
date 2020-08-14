@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddCity");
 
-            SqlParameter CityNameParam = new SqlParameter("@City", dto.City);
+            SqlParameter CityNameParam = new SqlParameter("@Name", dto.CityName);
             command.Parameters.Add(CityNameParam);
 
             int a = (int)(decimal)command.ExecuteScalar();
@@ -60,7 +60,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     CityDTO city = new CityDTO()
                     {
                         ID = (int)reader["id"],
-                        City = (string)reader["City"],
+                        CityName = (string)reader["City"],
                     };
                     citys.Add(city);
                 }
@@ -86,7 +86,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     {
                         city.ID = (int)reader["id"];
-                        city.City = (string)reader["City"];
+                        city.CityName = (string)reader["City"];
                     }
                 }
             }

@@ -88,14 +88,13 @@ namespace tesd
             //groupCandidateID = groupCandidateCRUD.Add(groupCandidate);
 
         }
-        [OneTimeTearDown]
-        public void TearDown()
-        {
+        //[OneTimeTearDown]
+        //public void TearDown()
+        //{
+        //    cRUD.DeleteByID(candidateID);
 
-            cRUD.DeleteByID(candidateID);
-
-            feedbackCRUD.DeleteByID(feedBackID);
-        }
+        //    feedbackCRUD.DeleteByID(feedBackID);
+        //}
 
         [Test]
         public void Test1()
@@ -105,7 +104,7 @@ namespace tesd
             Assert.AreEqual(candidateID, allInfoCandidate.ID);
             Assert.AreEqual(stage.Name, allInfoCandidate.TypeOfStage);
             Assert.AreEqual(status.Name, allInfoCandidate.TypeOfStatus);
-            Assert.AreEqual(city.City, allInfoCandidate.City);
+            Assert.AreEqual(city.CityName, allInfoCandidate.CityName);
             //Assert.AreEqual(candidate.Phone, allInfoCandidate.Phone);
             Assert.AreEqual(candidate.Email, allInfoCandidate.Email);
             Assert.AreEqual(candidate.FirstName, allInfoCandidate.FirstName);

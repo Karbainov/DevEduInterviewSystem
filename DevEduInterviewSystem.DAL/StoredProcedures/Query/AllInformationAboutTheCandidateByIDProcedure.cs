@@ -30,7 +30,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
                     allInfoCandidate.ID = (int)reader["ID"];
                     allInfoCandidate.TypeOfStage = (string)reader["TypeOfStage"];
                     allInfoCandidate.TypeOfStatus = (string)reader["TypeOfStatus"];
-                    allInfoCandidate.City = (string)reader["City"];
+                    allInfoCandidate.CityName = (string)reader["CityName"];
                     //allInfoCandidate.Phone = (string)reader["Phone"];
                     allInfoCandidate.Email = (string)reader["Email"];
                     allInfoCandidate.FirstName = (string)reader["FirstName"];

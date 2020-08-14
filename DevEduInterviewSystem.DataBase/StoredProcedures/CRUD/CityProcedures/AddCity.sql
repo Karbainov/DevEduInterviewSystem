@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[AddCity]
-	@City nvarchar(30)
+	@Name nvarchar(30)
 AS
 INSERT INTO [dbo].[City]
-VALUES (@City)
+VALUES (@Name)
   SELECT SCOPE_IDENTITY()
 

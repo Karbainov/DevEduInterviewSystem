@@ -9,7 +9,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         public int ID { get; set; }       
         public string TypeOfStage { get; set; }
         public string TypeOfStatus { get; set; }
-        public string City { get; set; }
+        public string CityName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
@@ -37,7 +37,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             ID = id;
             TypeOfStage = stage;
             TypeOfStatus = status;
-            City = city;
+            CityName = city;
             Phone = phone;
             Email = email;
             FirstName = firstName;
@@ -54,5 +54,12 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             InfoSourse = infoSourse;
             Expectations = expectations;
         }
+
+        //public override bool Equals(object obj)
+        //{
+        //    var tmp = (AllInformationAboutTheCandidateByIDDTO)obj;
+        //    if(tmp.ID == ID && 
+        //        tmp.)
+        //}
     }
 }
