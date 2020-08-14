@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.BLL
 {
-    public class Manager
+    public class ManagerRoleLogic : IRoleLogic
     {
     }
 }
