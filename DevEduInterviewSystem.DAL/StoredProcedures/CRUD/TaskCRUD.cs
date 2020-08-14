@@ -11,8 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
     public class TaskCRUD : AbstractCRUD<TaskDTO>
     {
         public override int Add(TaskDTO dto)
-        {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+        {            
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddTask");
 
@@ -28,7 +27,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
             SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", dto.IsCompleted);
             command.Parameters.Add(IsCompletedParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Task]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
         public override int DeleteByID(int id)
         {
@@ -38,7 +43,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
         public override List<TaskDTO> SelectAll()
@@ -67,7 +75,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
 
             }
             reader.Close();
-
+            Connection.Close();
             return tasks;
         }
 
@@ -95,7 +103,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return task;
         }
 
@@ -119,7 +127,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
             SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", dto.IsCompleted);
             command.Parameters.Add(IsCompletedParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
     }
 }

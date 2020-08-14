@@ -6,34 +6,31 @@ using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 
-
-
-
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateQuery
     {       
         public List<AllInterviewsDTO> SelectAllInterviewsByDate(DateTime DateTimeInterview)
         {
-            SqlConnection connection = new SqlConnection(PrimerConnection.ConnectionString);
-
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsDate", connection);
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDate", connection);
             SqlParameter dataParam = new SqlParameter("@DateTimeInterview", DateTimeInterview);
             command.Parameters.Add(dataParam);
             SqlDataReader reader = command.ExecuteReader();
 
             List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     AllInterviewsDTO interview = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
-                        IDCandidate = (int)reader["ID"],
+                        UserLogin = (string)reader["Login"],
+                        CandidateID = (int)reader["ID"],
                         CandidateFirstName = (string)reader["FirstName"],
                         CandidateLastName = (string)reader["LastName"],
                         CandidatePhone = (string)reader["Phone"],

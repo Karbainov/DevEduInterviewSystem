@@ -6,4 +6,5 @@
 AS
 INSERT INTO [dbo].[Interview]
 VALUES (@CandidateID, @InterviewStatusID, @Attempt, @DateTimeInterview)
+  SELECT SCOPE_IDENTITY()
 

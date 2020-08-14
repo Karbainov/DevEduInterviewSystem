@@ -7,4 +7,6 @@ as
 begin
 INSERT INTO [dbo].[Feedback]
 VALUES (@StageChangedID, @UserID, @Message, @TimeFeedback)
+  SELECT SCOPE_IDENTITY()
+
 end

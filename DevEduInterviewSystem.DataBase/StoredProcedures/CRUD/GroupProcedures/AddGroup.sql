@@ -6,3 +6,4 @@ Create Procedure dbo.[AddGroup]
 AS
 INSERT INTO dbo.[Group]
 VALUES (@CourceID, @Name, @StartDate, @EndDate)
+  SELECT SCOPE_IDENTITY()

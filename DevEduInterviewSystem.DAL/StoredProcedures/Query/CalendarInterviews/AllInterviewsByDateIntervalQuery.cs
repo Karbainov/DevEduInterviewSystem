@@ -4,17 +4,16 @@ using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 
-
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalQuery
     {
         public List<AllInterviewsDTO> SelectAllInterviewsByDateInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllInterviewsDateInterval", Connection);
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDateInterval", Connection);
 
             SqlParameter startDateTimeInterviewParam = new SqlParameter("@StartDateTimeInterview", startDateTimeInterview);
             command.Parameters.Add(startDateTimeInterviewParam);
@@ -26,15 +25,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 
             SqlDataReader reader = command.ExecuteReader();
             
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     AllInterviewsDTO allInterviewsInterval = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["FirstName"],
                         UserLastName = (string)reader["LastName"],
-                        IDCandidate = (int)reader["ID"],
+                        UserLogin = (string)reader["Login"],
+                        CandidateID = (int)reader["ID"],
                         CandidateFirstName = (string)reader["FirstName"],
                         CandidateLastName = (string)reader["LastName"],
                         CandidatePhone = (string)reader["Phone"],
@@ -46,7 +46,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return allInterviewsIntervals;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)

@@ -7,8 +7,7 @@ using System.Text;
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
     public class FeedbackCRUD : AbstractCRUD<FeedbackDTO>
-    {
-      
+    {      
         public override int Add(FeedbackDTO dto)
         {
             Connection.Open();
@@ -16,7 +15,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
             command.Parameters.Add(StageChangedIDParam);
-
 
             SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserParam);
@@ -27,7 +25,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
             command.Parameters.Add(TimeFeedbackParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Feedback]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
    
@@ -39,7 +43,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
         public override List<FeedbackDTO> SelectAll()
@@ -73,6 +79,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return feedbacks;
         }  
 
@@ -97,9 +104,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     feedback.Message = (string)reader["Message"];
                     feedback.TimeFeedback = (DateTime)reader["TimeFeedback"];
 
-                    };
+                };
             }
             reader.Close();
+            Connection.Close();
             return feedback;
         }
 
@@ -124,7 +132,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.Message);
             command.Parameters.Add(TimeFeedbackParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
     }
 }

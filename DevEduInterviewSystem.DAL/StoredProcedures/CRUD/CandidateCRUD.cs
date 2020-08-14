@@ -35,28 +35,35 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(LastNameParam);
 
             SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
-            command.Parameters.Add(BDParam);
+            command.Parameters.Add(BDParam); 
+            
+            command.ExecuteNonQuery();
 
-            return command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Candidate]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            string sqlExpression = "DeleteCandidateByID";
             SqlCommand command = ReferenceToProcedure("DeleteCandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+            return rows;
         }
 
         public override List<CandidateDTO> SelectAll()
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectAllCandidate");
-
 
             List<CandidateDTO> candidates = new List<CandidateDTO>();
 
@@ -82,6 +89,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
 
             return candidates;
         }
@@ -97,9 +105,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             CandidateDTO candidate = new CandidateDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     candidate.ID = (int)reader["id"];
                     candidate.StageID = (int)reader["StageID"];
@@ -114,6 +122,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
 
             return candidate;
         }
@@ -150,7 +159,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
             command.Parameters.Add(BDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }    
     }
 }
