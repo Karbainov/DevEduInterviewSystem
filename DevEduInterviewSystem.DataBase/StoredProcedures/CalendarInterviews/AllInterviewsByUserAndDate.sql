@@ -2,10 +2,14 @@
 @UserID int,
 @DateTimeInterview datetime2
 AS
-Select * From [Interview]
-Join [User_Interview] On [User_Interview].InterviewID = [Interview].ID
-Join [User] On [User_Interview].UserID = [User].ID
-Join [Candidate] On [Interview].CandidateID = [Candidate].ID
-Join [InterviewStatus] On [Interview].InterviewStatusID = [InterviewStatus].ID
-Where [User].ID = @UserID and [Interview].DateTimeInterview = @DateTimeInterview
+Select U.[FirstName] AS [UserFirstName], U.[LastName] AS [UserLastName], C.[ID] AS [CandidateID],
+C.[FirstName] AS [CandidateFirstName], C.[LastName] AS [CandidateLastName], C.[Phone] AS [CandidatePhone], 
+I.[DateTimeInterview], I.[Attempt], ISt.[Name] AS [Status]
+FROM [Interview] AS I
+Join [User_Interview] AS UI ON UI.[InterviewID] = I.[ID]
+Join [User] AS U ON UI.[UserID] = U.[ID]
+Join [Candidate] AS C ON I.[CandidateID] = C.[ID]
+Join [InterviewStatus] AS ISt ON I.[InterviewStatusID] = ISt.[ID]
+WHERE U.[ID] = @UserID AND I.[DateTimeInterview] = @DateTimeInterview
+ORDER BY C.[ID]
 

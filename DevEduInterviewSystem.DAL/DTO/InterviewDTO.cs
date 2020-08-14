@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace DevEduInterviewSystem.DAL.DTO
 {
@@ -15,7 +15,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public InterviewDTO(int ID, int CandidateID, int InterviewStatusID, int Attempt, DateTime DateTimeInterview)
+        public InterviewDTO(int ID, int? CandidateID, int? InterviewStatusID, int? Attempt, DateTime DateTimeInterview)
         {
             this.ID = ID;
             this.CandidateID = CandidateID;

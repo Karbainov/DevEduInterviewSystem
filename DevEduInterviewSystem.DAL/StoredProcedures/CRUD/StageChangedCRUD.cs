@@ -48,12 +48,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlCommand command = ReferenceToProcedure("SelectAllStageChanged");
 
             SqlDataReader reader = command.ExecuteReader();
+            List<StageChangedDTO> stageChangeds = new List<StageChangedDTO>();
 
             List<StageChangedDTO> stages = new List<StageChangedDTO>();
 
             if (reader.HasRows) // если есть данные
             {
-                while (reader.Read()) // построчно считываем данные
+
+                while (reader.Read())
                 {
                     StageChangedDTO stage = new StageChangedDTO()
                     {
@@ -121,8 +123,5 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return a;
         }
 
-        
-
-      
     }
 }
