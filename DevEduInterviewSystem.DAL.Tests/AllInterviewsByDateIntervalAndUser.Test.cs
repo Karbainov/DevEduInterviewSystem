@@ -109,7 +109,7 @@ namespace DevEduInterviewSystem.DAL.Tests
         public void SelectAllInterviewsByDateIntervalTest(int idnumber, DateTime startDateTime, DateTime finishDateTime, List<AllInterviewsByDateIntervalAndUserDTO> expected)
         {
             AllInterviewsByDateIntervalAndUserQuery _allInterviewsQuery = new AllInterviewsByDateIntervalAndUserQuery();
-            List<AllInterviewsByDateIntervalAndUserDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateInterval( startDateTime, finishDateTime, _mockUserID[idnumber]);
+            List<AllInterviewsByDateIntervalAndUserDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateIntervalAndUser( startDateTime, finishDateTime, _mockUserID[idnumber]);
 
             Connection.Close();
 

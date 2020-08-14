@@ -31,14 +31,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
                     allInfoCandidate.TypeOfStage = (string)reader["TypeOfStage"];
                     allInfoCandidate.TypeOfStatus = (string)reader["TypeOfStatus"];
                     allInfoCandidate.CityName = (string)reader["CityName"];
-                    //allInfoCandidate.Phone = (string)reader["Phone"];
+                    allInfoCandidate.Phone = Convert.ToString(reader["Phone"]);
                     allInfoCandidate.Email = (string)reader["Email"];
                     allInfoCandidate.FirstName = (string)reader["FirstName"];
                     allInfoCandidate.LastName = (string)reader["LastName"];
                     allInfoCandidate.Birthday = (DateTime)reader["Birthday"];
                     allInfoCandidate.FeedBack = (string)reader["FeedBack"];
-                    //allInfoCandidate.CourseName = (string)reader["CourseName"];
-                    //allInfoCandidate.GroupName = (string)reader["GroupName"];
+                    allInfoCandidate.CourseName = (string)reader["CourseName"];
+                    allInfoCandidate.GroupName = (string)reader["GroupName"];
                     allInfoCandidate.MaritalStatus = (bool)reader["MaritalStatus"];
                     allInfoCandidate.Education = (string)reader["Education"];
                     allInfoCandidate.WorkPlace = (string)reader["WorkPlace"];

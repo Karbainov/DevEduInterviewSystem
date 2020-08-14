@@ -93,14 +93,14 @@ namespace Test
             //    Connection.Close();
             //}
 
-            AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
-            interviewsByUserQuery.SelectAllByUser(65);
+            //AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
+            //interviewsByUserQuery.SelectAllByUser(65);
 
-            connection.Close();
+            //connection.Close();
 
 
 
-            Console.WriteLine("Выполнено");
+            //Console.WriteLine("Выполнено");
                         
         }
     }

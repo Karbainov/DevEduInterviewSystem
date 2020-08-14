@@ -78,14 +78,14 @@ namespace tesd
             candidatePersonalInfo = new CandidatePersonalInfoDTO(1, candidateID, false, "da", "macduck", "Da", "rubis cube", "like song", "123");
             candedatepersonalinfoID = candidatePersonalInfoCRUD.Add(candidatePersonalInfo);
 
-            //course = new CourseDTO("backend");
-            //courseID = courseCRUD.Add(course);
+            course = new CourseDTO("backend");
+            courseID = courseCRUD.Add(course);
 
-            //group = new GroupDTO(1, courseID, "back #1", DateTime.Now, DateTime.Now);
-            //groupID = groupCRUD.Add(group);
+            group = new GroupDTO(1, courseID, "back #1", DateTime.Now, DateTime.Now);
+            groupID = groupCRUD.Add(group);
 
-            //groupCandidate = new GroupCandidateDTO(1, groupID, candidateID);
-            //groupCandidateID = groupCandidateCRUD.Add(groupCandidate);
+            groupCandidate = new GroupCandidateDTO(1, groupID, candidateID);
+            groupCandidateID = groupCandidateCRUD.Add(groupCandidate);
 
         }
         //[OneTimeTearDown]
@@ -105,7 +105,7 @@ namespace tesd
             Assert.AreEqual(stage.Name, allInfoCandidate.TypeOfStage);
             Assert.AreEqual(status.Name, allInfoCandidate.TypeOfStatus);
             Assert.AreEqual(city.CityName, allInfoCandidate.CityName);
-            //Assert.AreEqual(candidate.Phone, allInfoCandidate.Phone);
+            Assert.AreEqual(candidate.Phone, allInfoCandidate.Phone);
             Assert.AreEqual(candidate.Email, allInfoCandidate.Email);
             Assert.AreEqual(candidate.FirstName, allInfoCandidate.FirstName);
             Assert.AreEqual(candidate.LastName, allInfoCandidate.LastName);
@@ -117,8 +117,8 @@ namespace tesd
             Assert.AreEqual(candidatePersonalInfo.InfoSourse, allInfoCandidate.InfoSourse);
             Assert.AreEqual(candidatePersonalInfo.Hobbies, allInfoCandidate.Hobbies);
             Assert.AreEqual(candidatePersonalInfo.Expectations, allInfoCandidate.Expectations);
-            //Assert.AreEqual(group.Name, allInfoCandidate.GroupName);
-            //Assert.AreEqual(course.Name, allInfoCandidate.CourseName);
+            Assert.AreEqual(group.Name, allInfoCandidate.GroupName);
+            Assert.AreEqual(course.Name, allInfoCandidate.CourseName);
 
         }
     }

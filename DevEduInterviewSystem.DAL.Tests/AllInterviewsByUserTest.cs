@@ -104,7 +104,7 @@ namespace DevEduInterviewSystem.DAL.Tests
         public void SelectAllByUserTest(int idnumber, List<AllInterviewsByUserDTO> expected)
         {
             AllInterviewsByUserQuery _allInterviewsQuery = new AllInterviewsByUserQuery();
-            List<AllInterviewsByUserDTO> actual = _allInterviewsQuery.SelectAllByUser(_mockUserID[idnumber]);
+            List<AllInterviewsByUserDTO> actual = _allInterviewsQuery.SelectAllInterviewsByUser(_mockUserID[idnumber]);
 
             Connection.Close();
 
