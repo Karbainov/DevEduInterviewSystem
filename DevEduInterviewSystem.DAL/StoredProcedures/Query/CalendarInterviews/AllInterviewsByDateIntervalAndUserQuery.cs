@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
-using DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalAndUserQuery
     {
-        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateIntervalAndUser(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
+        public List<AllInterviewsDTO> SelectAllInterviewsByDateIntervalAndUser(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByDateIntervalAndUser", Connection);
@@ -25,7 +24,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             SqlParameter userParam = new SqlParameter("@UserID", id);
             command.Parameters.Add(userParam);
 
-            List<AllInterviewsByDateIntervalAndUserDTO> allInterviewsIntervalUsers = new List<AllInterviewsByDateIntervalAndUserDTO>();
+            List<AllInterviewsDTO> allInterviewsIntervalUsers = new List<AllInterviewsDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -33,7 +32,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             {
                 while (reader.Read()) 
                 {
-                    AllInterviewsByDateIntervalAndUserDTO allInterviewsIntervalUser = new AllInterviewsByDateIntervalAndUserDTO()
+                    AllInterviewsDTO allInterviewsIntervalUser = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],

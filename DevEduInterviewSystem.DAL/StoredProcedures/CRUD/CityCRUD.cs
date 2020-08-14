@@ -15,7 +15,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(CityNameParam);
             
-            return command.ExecuteNonQuery();
+            int numberOfRowsAded = command.ExecuteNonQuery();
+
+            Connection.Close();
+
+            return numberOfRowsAded;
         }
 
         public override int DeleteByID(int id)

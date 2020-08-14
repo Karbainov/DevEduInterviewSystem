@@ -29,7 +29,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
-
+            Connection.Close();
             return count;
         }
 

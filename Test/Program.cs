@@ -13,21 +13,22 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            //connection.Open();
-            //Console.WriteLine("Подключение к серверу");
+            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            connection.Open();
+            Console.WriteLine("Подключение к серверу");
             //AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
             //AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
 
             //Console.WriteLine(interView.SelectAllByUser(1));
 
-            CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
-            //CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
-            //CandidateDTO cand3 = new CandidateDTO(3, 3, 3, 3, "+911", "v@ya.ru", "Yana", "Smirnova", DateTime.Now);
-            CandidateCRUD crud = new CandidateCRUD();
+            //CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
+            ////CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
+            ////CandidateDTO cand3 = new CandidateDTO(3, 3, 3, 3, "+911", "v@ya.ru", "Yana", "Smirnova", DateTime.Now);
+            //CandidateCRUD crud = new CandidateCRUD();
+            ////connection.Close();
+            //crud.Add(cand);
             //connection.Close();
-            crud.Add(cand);
-            connection.Close();
             //crud.Add(cand2);
             //connection.Close();
             //crud.Add(cand3);
@@ -94,14 +95,22 @@ namespace Test
             //}
 
             AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
-            interviewsByUserQuery.SelectAllByUser(65);
+            //interviewsByUserQuery.SelectAllByUser(65);
 
             connection.Close();
 
 
 
             Console.WriteLine("Выполнено");
-                        
+
+            connection.Open();
+            Console.WriteLine("Подключение к серверу");
+            connection.Close();
+
+
+
+            Console.WriteLine("Выполнено");
+
         }
     }
 }

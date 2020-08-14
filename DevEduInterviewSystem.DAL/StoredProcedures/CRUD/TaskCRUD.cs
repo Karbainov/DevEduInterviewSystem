@@ -11,8 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
     public class TaskCRUD : AbstractCRUD<TaskDTO>
     {
         public override int Add(TaskDTO dto)
-        {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+        {            
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddTask");
 
