@@ -1,14 +1,15 @@
 ﻿Create Procedure [dbo].[UpdateOneTimePasswordByID]
 @ID int,
 @CandidateID int,
-@OneTimePasswordDate datetime2,
+@DateOfPasswordIssue datetime2,
 @OneTimePassword int
 AS
 BEGIN
 UPDATE [dbo].[OneTimePassword]
 SET
 CandidateID = @CandidateID,
-OneTimePasswordDate = @OneTimePasswordDate,
+DateOfPasswordIssue = @DateOfPasswordIssue,
 OneTimePassword = @OneTimePassword
 where (ID = @ID)
 end
+
