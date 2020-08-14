@@ -37,9 +37,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
             command.Parameters.Add(ExpectationsParam);
 
-            int a = (int)(decimal)command.ExecuteScalar();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[CandidatePersonalInfo]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
-            return a;
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -50,9 +55,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            int a = command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
             Connection.Close();
-            return a;
+
+            return rows;
         }
 
         public override List<CandidatePersonalInfoDTO> SelectAll()
@@ -155,9 +161,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
             command.Parameters.Add(ExpectationsParam);
 
-            int a = command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
             Connection.Close();
-            return a;
+
+            return rows;
         }       
        
     }

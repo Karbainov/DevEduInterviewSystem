@@ -22,9 +22,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
             command.Parameters.Add(ChangedDateParam);
 
-            int a = (int)(decimal)command.ExecuteScalar();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[StageChanged]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
-            return a;
+
+            return count;
         }
 
         

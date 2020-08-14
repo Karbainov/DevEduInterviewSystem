@@ -9,7 +9,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
     public class AllInformationAboutTheCandidateByIDProcedure
     {
-        SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+        SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
         public AllInformationAboutTheCandidateByIDDTO AllInformationAboutTheCandidateByID(int ID)
         {
@@ -24,9 +24,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
             if (reader.HasRows)
             {
                 while (reader.Read())
-
-                {             
-                   
+                {
                     allInfoCandidate.ID = (int)reader["ID"];
                     allInfoCandidate.TypeOfStage = (string)reader["TypeOfStage"];
                     allInfoCandidate.TypeOfStatus = (string)reader["TypeOfStatus"];
@@ -49,6 +47,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
                 }
             }
             reader.Close();
+            Connection.Close();
 
             return allInfoCandidate;
 

@@ -7,8 +7,7 @@ using System.Text;
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
     public class FeedbackCRUD : AbstractCRUD<FeedbackDTO>
-    {
-      
+    {      
         public override int Add(FeedbackDTO dto)
         {
             Connection.Open();
@@ -16,7 +15,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
             command.Parameters.Add(StageChangedIDParam);
-
 
             SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserParam);
@@ -27,9 +25,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
             command.Parameters.Add(TimeFeedbackParam);
 
-            int a = (int)(decimal)command.ExecuteScalar();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Feedback]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
-            return a;
+
+            return count;
         }
 
    
@@ -102,7 +104,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     feedback.Message = (string)reader["Message"];
                     feedback.TimeFeedback = (DateTime)reader["TimeFeedback"];
 
-                    };
+                };
             }
             reader.Close();
             Connection.Close();

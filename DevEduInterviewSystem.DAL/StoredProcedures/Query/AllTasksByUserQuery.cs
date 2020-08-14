@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
     {
         public List<AllTasksByUserDTO> SelectAllTasksByUser(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllTasksByUser", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);

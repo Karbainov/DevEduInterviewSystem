@@ -42,6 +42,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Candidate]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
+            Connection.Close();
+
             return count;
         }
 
@@ -52,9 +54,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
-            int a = command.ExecuteNonQuery();
+
+            int rows = command.ExecuteNonQuery();
             Connection.Close();
-            return a;
+            return rows;
         }
 
         public override List<CandidateDTO> SelectAll()
@@ -86,6 +89,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
 
             return candidates;
         }
@@ -118,6 +122,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
 
             return candidate;
         }
@@ -154,7 +159,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
             command.Parameters.Add(BDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }    
     }
 }

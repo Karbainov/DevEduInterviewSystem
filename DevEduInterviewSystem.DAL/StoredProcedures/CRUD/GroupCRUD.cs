@@ -25,9 +25,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter EndDateParam = new SqlParameter("@EndDate", dto.EndDate);
             command.Parameters.Add(EndDateParam);
 
-            int a = (int)(decimal)command.ExecuteScalar();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
-            return a;
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -54,8 +58,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             if (reader.HasRows)
             {
-                
-
                 while (reader.Read())
                 {
                     GroupDTO group = new GroupDTO()
@@ -87,11 +89,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             GroupDTO groups = new GroupDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                // выводим названия столбцов
-                Console.WriteLine($"id \t CourseID \t Name \t StartDate \t EndDate");
-
                 while (reader.Read()) // построчно считываем данные
                 {
                     groups.ID = (int)reader["id"];
@@ -99,8 +98,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     groups.Name = (string)reader["Name"];
                     groups.StartDate = (DateTime)reader["StartDate"];
                     groups.EndDate = (DateTime)reader["EndDate"];
-
-                    //Console.WriteLine($"{id} \t {CourseID} \t{Name} \t{StartDate} \t{EndDate}");
                 }
             }
             reader.Close();
