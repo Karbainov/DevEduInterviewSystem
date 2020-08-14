@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews
         public string CandidatePhone { get; set; }
         public DateTime DateTimeInterview { get; set; }
         public int Attempt { get; set; }
-        public string Status { get; set; }
+        public string InterviewStatus { get; set; }
 
         public AllInterviewsByUserAndDateDTO()
         {
@@ -31,7 +31,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews
             CandidatePhone = candidatePhone;
             DateTimeInterview = dateTimeInterview;
             Attempt = attempt;
-            Status = status;
+            InterviewStatus = status;
         }
     }
 }

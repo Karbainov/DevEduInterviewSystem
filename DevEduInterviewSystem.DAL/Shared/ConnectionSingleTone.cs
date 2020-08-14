@@ -7,7 +7,7 @@ namespace DevEduInterviewSystem.DAL.Shared
 {
     public class ConnectionSingleTone
     {
-        public const string ConnectionString = SQLConnectionPaths.TestConnectionString;
+        public const string ConnectionString = SQLConnectionPaths.MainConnectionString;
 
         public SqlConnection Connection = new SqlConnection(ConnectionString);
 

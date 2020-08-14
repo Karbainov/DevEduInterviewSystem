@@ -1,16 +1,14 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
-using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+﻿using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserQuery
     {        
-        public List<AllInterviewsByUserDTO> SelectAllByUser(int id)
+        public List<AllInterviewsByUserDTO> SelectAllInterviewsByUser(int id)
         {
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
             connection.Open();

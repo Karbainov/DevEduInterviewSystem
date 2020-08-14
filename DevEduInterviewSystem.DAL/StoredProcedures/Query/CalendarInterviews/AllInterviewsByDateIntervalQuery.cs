@@ -41,7 +41,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                         CandidatePhone = (string)reader["Phone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        Status = (string)reader["Name"]
+                        InterviewStatus = (string)reader["Name"]
                     };
                     allInterviewsIntervals.Add(allInterviewsInterval);
                 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
+namespace DevEduInterviewSystem.DAL.DTO.QuereDTO.StudentsOfGroup
 {
     public class AllStudentsOfGroupDTO : IDTO
     {

@@ -1,5 +1,6 @@
-using DevEduInterviewSystem.DAL.DTO;
+﻿using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+using DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
@@ -12,27 +13,29 @@ using System.Data.SqlClient;
 namespace DevEduInterviewSystem.DAL.Tests
 {
     [TestFixture]
-    public class AllInterviewsByUserTest
+    public class AllInterviewsByDateIntervalAndUserTest
     {
         private List<int> _mockUserID;
         private List<int> _mockInterviewID;
         private List<int> _mockCandidateID;
+        //private List<DateTime> _mockDate;
+
         SqlConnection Connection;
 
         [SetUp]
         public void Setup()
-        {            
+        {
             Connection = ConnectionSingleTone.GetInstance().Connection;
             _mockUserID = new List<int>();
             _mockInterviewID = new List<int>();
             _mockCandidateID = new List<int>();
 
-            UserCRUD userCRUD = new UserCRUD();
+            UserCRUD userCRUD = new UserCRUD(); //заполнение таблиц 
             UserDTOMock userDTOMock = new UserDTOMock();
             Connection.Close();
-            foreach (UserDTO dto in userDTOMock)
-            {                
-                _mockUserID.Add(userCRUD.Add(dto));
+            foreach (UserDTO dto in userDTOMock) //Нужно начинать с таблиц у которых нет форен кей.
+            {
+                _mockUserID.Add(userCRUD.Add(dto)); //заполнение таблицы mock и дабавление id в лист (Нужно изменить CRUD файл, что бы сохранить id)
                 Connection.Close();
             }
 
@@ -98,13 +101,15 @@ namespace DevEduInterviewSystem.DAL.Tests
                 userInterviewCRUD.Add(userInterview2);
                 Connection.Close();
             }
-        } 
 
-        [Test, TestCaseSource(typeof(AllInterviewsByUserQueryDataSource))]
-        public void SelectAllByUserTest(int idnumber, List<AllInterviewsByUserDTO> expected)
+
+        }
+
+        [Test, TestCaseSource(typeof(AllInterviewsByDateIntervalAndUserQueryDataSource))]
+        public void SelectAllInterviewsByDateIntervalTest(int idnumber, DateTime startDateTime, DateTime finishDateTime, List<AllInterviewsByDateIntervalAndUserDTO> expected)
         {
-            AllInterviewsByUserQuery _allInterviewsQuery = new AllInterviewsByUserQuery();
-            List<AllInterviewsByUserDTO> actual = _allInterviewsQuery.SelectAllByUser(_mockUserID[idnumber]);
+            AllInterviewsByDateIntervalAndUserQuery _allInterviewsQuery = new AllInterviewsByDateIntervalAndUserQuery();
+            List<AllInterviewsByDateIntervalAndUserDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateInterval( startDateTime, finishDateTime, _mockUserID[idnumber]);
 
             Connection.Close();
 
@@ -114,15 +119,15 @@ namespace DevEduInterviewSystem.DAL.Tests
         [TearDown]
         public void TearDown()
         {
-            //�������� ����������� ���������
+            //Удаление добавленных элементов
 
         }
 
-        public class AllInterviewsByUserQueryDataSource : IEnumerable
+        public class AllInterviewsByDateIntervalAndUserQueryDataSource : IEnumerable
         {
-            List<AllInterviewsByUserDTO> firstTest = new List<AllInterviewsByUserDTO>();
+            List<AllInterviewsByDateIntervalAndUserDTO> firstTest = new List<AllInterviewsByDateIntervalAndUserDTO>();
 
-            AllInterviewsByUserDTO interviewSergey1 = new AllInterviewsByUserDTO()
+            AllInterviewsByDateIntervalAndUserDTO interviewSergey1 = new AllInterviewsByDateIntervalAndUserDTO()
             {
                 UserFirstName = "Sergey",
                 UserLastName = "Timofeev",
@@ -132,9 +137,9 @@ namespace DevEduInterviewSystem.DAL.Tests
                 DateTimeInterview = new DateTime(2020, 07, 20, 18, 30, 00),
                 Attempt = 1,
                 InterviewStatus = "success"
-            };            
+            };
 
-            AllInterviewsByUserDTO interviewSergey2 = new AllInterviewsByUserDTO()
+            AllInterviewsByDateIntervalAndUserDTO interviewSergey2 = new AllInterviewsByDateIntervalAndUserDTO()
             {
                 UserFirstName = "Sergey",
                 UserLastName = "Timofeev",
@@ -146,9 +151,9 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "fail"
             };
 
-            List<AllInterviewsByUserDTO> secondTest = new List<AllInterviewsByUserDTO>();
+            List<AllInterviewsByDateIntervalAndUserDTO> secondTest = new List<AllInterviewsByDateIntervalAndUserDTO>();
 
-            AllInterviewsByUserDTO interviewPolina1 = new AllInterviewsByUserDTO()
+            AllInterviewsByDateIntervalAndUserDTO interviewPolina1 = new AllInterviewsByDateIntervalAndUserDTO()
             {
                 UserFirstName = "Polina",
                 UserLastName = "Matveevna",
@@ -160,7 +165,7 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "fail"
             };
 
-            AllInterviewsByUserDTO interviewPolina2 = new AllInterviewsByUserDTO()
+            AllInterviewsByDateIntervalAndUserDTO interviewPolina2 = new AllInterviewsByDateIntervalAndUserDTO()
             {
                 UserFirstName = "Polina",
                 UserLastName = "Matveevna",
@@ -172,9 +177,9 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "canceled"
             };
 
-            List<AllInterviewsByUserDTO> thirdTest = new List<AllInterviewsByUserDTO>();
+            List<AllInterviewsByDateIntervalAndUserDTO> thirdTest = new List<AllInterviewsByDateIntervalAndUserDTO>();
 
-            AllInterviewsByUserDTO interviewSvetlana1 = new AllInterviewsByUserDTO()
+            AllInterviewsByDateIntervalAndUserDTO interviewSvetlana1 = new AllInterviewsByDateIntervalAndUserDTO()
             {
                 
 
@@ -188,7 +193,7 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "fail"
             };
 
-            AllInterviewsByUserDTO interviewSvetlana2 = new AllInterviewsByUserDTO()
+            AllInterviewsByDateIntervalAndUserDTO interviewSvetlana2 = new AllInterviewsByDateIntervalAndUserDTO()
             {
                 UserFirstName = "Svetlana",
                 UserLastName = "Fokina",
@@ -210,9 +215,9 @@ namespace DevEduInterviewSystem.DAL.Tests
                 thirdTest.Add(interviewSvetlana1);
                 thirdTest.Add(interviewSvetlana2);
 
-                yield return new object[] { 0, firstTest };
-                yield return new object[] { 1, secondTest };
-                yield return new object[] { 2, thirdTest };
+                yield return new object[] { 0, new DateTime(2019, 7, 20, 18, 30, 00), new DateTime(2021, 9, 20, 12, 00, 00), firstTest };
+                yield return new object[] { 1, new DateTime(2019, 8, 20, 10, 30, 00), new DateTime(2021, 8, 20, 10, 30, 00), secondTest };
+                yield return new object[] { 2, new DateTime(2019, 8, 20, 10, 30, 00), new DateTime(2021, 9, 12, 15, 00, 00), thirdTest };
             }
         }
     }
