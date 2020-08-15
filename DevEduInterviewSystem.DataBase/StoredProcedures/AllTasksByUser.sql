@@ -8,5 +8,5 @@ FROM dbo.[USER] AS U
 JOIN dbo.[Task] AS T ON U.[ID] = T.[UserID]
 JOIN dbo.[Candidate] AS C ON T.[CandidateID] = C.[ID]
 JOIN dbo.[Stage] AS S ON C.[StageID] = S.[ID]
-WHERE U.[ID] = @UserID
+WHERE U.[ID] = @UserID AND U.IsDeleted = 0
 
