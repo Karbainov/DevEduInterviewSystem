@@ -27,6 +27,13 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
+        public TaskDTO(int ID, int? UserID, int? CandidateID)
+        {
+            this.ID = ID;
+            this.UserID = UserID;
+            this.CandidateID = CandidateID;
+        }
+
     }
    
 }
