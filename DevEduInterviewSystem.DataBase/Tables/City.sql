@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[City]
 (
 	ID int NOT NULL PRIMARY KEY IDENTITY, 
-	Name nvarchar(30) NULL
+	[Name] nvarchar(30) NULL
 )

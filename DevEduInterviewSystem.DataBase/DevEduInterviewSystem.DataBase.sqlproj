@@ -95,6 +95,7 @@
     <Folder Include="StoredProcedures\InterviewHistory\" />
     <Folder Include="StoredProcedures\StudentsOfGroup" />
     <Folder Include="StoredProcedures\AllStudentsOfCourse" />
+    <Folder Include="StoredProcedures\CandidateSelectionProcessInfoQuery" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -292,5 +293,7 @@
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
     <Build Include="StoredProcedures\OneUserRole.sql" />
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
+    <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\AllSelectionProcess.sql" />
+    <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByID.sql" />
   </ItemGroup>
 </Project>
