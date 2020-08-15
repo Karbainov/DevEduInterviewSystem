@@ -25,6 +25,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
+            SqlParameter IsDeletedParam = new SqlParameter("@IsDeleted", dto.IsDeleted);
+            command.Parameters.Add(IsDeletedParam);
+
             command.ExecuteNonQuery();
 
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User]", Connection);
