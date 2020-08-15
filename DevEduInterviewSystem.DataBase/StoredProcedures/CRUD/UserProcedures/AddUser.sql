@@ -5,5 +5,5 @@
 @LastName nvarchar (30)
 AS
 INSERT INTO [dbo].[User]
-VALUES (@Login, @Password, @FirstName, @LastName)
+VALUES (@Login, @Password, @FirstName, @LastName, 0)
 SELECT SCOPE_IDENTITY()

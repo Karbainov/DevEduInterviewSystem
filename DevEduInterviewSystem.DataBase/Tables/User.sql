@@ -4,5 +4,6 @@
 	[Login] NVARCHAR(50) NULL,
 	[Password] NVARCHAR(50) NULL,
 	[FirstName] NVARCHAR(50) NULL,
-	[LastName] NVARCHAR(50) NULL
+	[LastName] NVARCHAR(50) NULL,
+	[IsDeleted] BIT NULL DEFAULT 0
 )
