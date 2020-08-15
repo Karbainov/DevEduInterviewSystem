@@ -6,110 +6,102 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class CourseCRUD
+    public class CourseCRUD : AbstractCRUD<CourseDTO>
     {
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
+        public override int Add(CourseDTO dto)
         {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddCourse");
 
-            return command;
+            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
+            command.Parameters.Add(NameParam);
+
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Course]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
-        public int AddCourse(SqlConnection connection, string course)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCourse", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteCourseByID");
 
-            SqlParameter nameCourseParam = new SqlParameter("@Name", course);
-            command.Parameters.Add(nameCourseParam);
-
-            return command.ExecuteNonQuery();
-        }
-        
-        public int DeleteCourseByID(SqlConnection connection, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteCourseByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+            return rows;
         }
-        public int SelectAllCourse(SqlConnection connection)
+
+        public override int UpdateByID(CourseDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllCourse", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateCourseByID");
+
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
+            command.Parameters.Add(IDParam);
+
+            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
+            command.Parameters.Add(NameParam);
+
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+            return rows;
+        }
+
+        public override List<CourseDTO> SelectAll()
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllCourse");
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) // если есть данные
-            {
-                // выводим названия столбцов
-                Console.WriteLine($"ID \tCourseName");
+            List<CourseDTO> courses = new List<CourseDTO>();
 
-                while (reader.Read()) // построчно считываем данные
+            if (reader.HasRows)
+            {
+                while (reader.Read())
                 {
-                    int id = (int)reader["id"];
-                    string Name = (string)reader["Name"];
-                    Console.WriteLine($"{id} \t{Name} ");
+                    CourseDTO course = new CourseDTO()
+                    {
+                        ID = (int)reader["id"],
+                        Name = (string)reader["Name"],
+                    };
+                    courses.Add(course);
                 }
             }
             reader.Close();
-
-            return (int)command.ExecuteScalar();
+            Connection.Close();
+            return courses;
         }
 
-        public int SelectCourseByID(SqlConnection connection, int ID)
+        public override CourseDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectCourseByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectCourseByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
+            CourseDTO stage = new CourseDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                // выводим названия столбцов
-                Console.WriteLine($"ID \tCourseName");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
-                    int id = (int)reader["id"];
-                    string Name = (string)reader["Name"];
-                    Console.WriteLine($"{id} \t{Name} ");
+                    stage.ID = (int)reader["id"];
+                    stage.Name = (string)reader["Name"];
                 }
             }
             reader.Close();
-
-            return (int)command.ExecuteScalar();
-        }
-        public int UpdateCourseByID(SqlConnection connection, string course, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCourseByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter nameCourseParam = new SqlParameter("@Name", course);
-            command.Parameters.Add(nameCourseParam);
-            return command.ExecuteNonQuery();
-        }
-        public int UpdateCourseByID(SqlConnection connection, CourseDTO course, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCourseByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter nameCourseParam = new SqlParameter("@Name", course.Name);
-            command.Parameters.Add(nameCourseParam);
-            return command.ExecuteNonQuery();
+            Connection.Close();
+            return stage;
         }
     }
 }

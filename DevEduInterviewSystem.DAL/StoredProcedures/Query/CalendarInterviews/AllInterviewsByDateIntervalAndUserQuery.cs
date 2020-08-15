@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
-using DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByDateIntervalAndUserQuery
     {
-        public List<AllInterviewsByDateIntervalAndUserDTO> SelectAllInterviewsByDateIntervalAndUser(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
+        public List<AllInterviewsDTO> SelectAllInterviewsByDateIntervalAndUser(DateTime startDateTimeInterview, DateTime finishDateTimeInterview, int id)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByDateIntervalAndUser", Connection);
@@ -25,7 +24,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             SqlParameter userParam = new SqlParameter("@UserID", id);
             command.Parameters.Add(userParam);
 
-            List<AllInterviewsByDateIntervalAndUserDTO> allInterviewsIntervalUsers = new List<AllInterviewsByDateIntervalAndUserDTO>();
+            List<AllInterviewsDTO> allInterviewsIntervalUsers = new List<AllInterviewsDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -33,23 +32,23 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
             {
                 while (reader.Read()) 
                 {
-                    AllInterviewsByDateIntervalAndUserDTO allInterviewsIntervalUser = new AllInterviewsByDateIntervalAndUserDTO()
+                    AllInterviewsDTO allInterviewsIntervalUser = new AllInterviewsDTO()
                     {
-                        UserFirstName = (string)reader["FirstName"],
-                        UserLastName = (string)reader["LastName"],
-                        CandidateID = (int)reader["ID"],
-                        CandidateFirstName = (string)reader["FirstName"],
-                        CandidateLastName = (string)reader["LastName"],
-                        CandidatePhone = (string)reader["Phone"],
+                        UserFirstName = (string)reader["UserFirstName"],
+                        UserLastName = (string)reader["UserLastName"],
+                        CandidateID = (int)reader["CandidateID"],
+                        CandidateFirstName = (string)reader["CandidateFirstName"],
+                        CandidateLastName = (string)reader["CandidateLastName"],
+                        CandidatePhone = (string)reader["CandidatePhone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        Status = (string)reader["Name"]
+                        InterviewStatus = (string)reader["Status"]
                     };
                     allInterviewsIntervalUsers.Add(allInterviewsIntervalUser);
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return allInterviewsIntervalUsers;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)

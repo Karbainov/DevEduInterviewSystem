@@ -25,11 +25,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
+            SqlParameter IsDeletedParam = new SqlParameter("@IsDeleted", dto.IsDeleted);
+            command.Parameters.Add(IsDeletedParam);
+
             command.ExecuteNonQuery();
 
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
+            Connection.Close();
             return count;
         }
 
@@ -41,7 +45,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
 
         public override List<UserDTO> SelectAll()
@@ -66,6 +72,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return users;
         }
         public override UserDTO SelectByID(int id)
@@ -91,7 +98,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return user;
         }
         public override int UpdateByID(UserDTO dto)
@@ -114,7 +121,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
-            return command.ExecuteNonQuery();
+            int a = command.ExecuteNonQuery();
+            Connection.Close();
+            return a;
         }
     }
 }

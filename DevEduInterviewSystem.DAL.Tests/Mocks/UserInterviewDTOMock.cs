@@ -10,9 +10,9 @@ namespace DevEduInterviewSystem.DAL.Tests
 	{
         public IEnumerator GetEnumerator()
         {
-			yield return new UserInterviewDTO(1, 17, 65);
-			yield return new UserInterviewDTO(2, 18, 66);
-			yield return new UserInterviewDTO(3, 19, 67);
+			yield return new UserInterviewDTO(1, 1, 1);
+			yield return new UserInterviewDTO(2, 2, 2);
+			yield return new UserInterviewDTO(3, 3, 3);
 		}
     }
 }

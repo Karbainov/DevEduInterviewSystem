@@ -1,32 +1,31 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
-using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+﻿using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserQuery
     {        
-        public List<AllInterviewsByUserDTO> SelectAllInterviewsByUser(int id)
+        public List<AllInterviewsDTO> SelectAllInterviewsByUser(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByUser", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);
             command.Parameters.Add(userParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AllInterviewsByUserDTO> interviews = new List<AllInterviewsByUserDTO>();
+            List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllInterviewsByUserDTO interview = new AllInterviewsByUserDTO()
+                    AllInterviewsDTO interview = new AllInterviewsDTO()
                     {
+                        UserID = id,
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],
                         CandidateID = (int)reader["CandidateID"],
@@ -41,7 +40,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                 }
             }
             reader.Close();
-
+            connection.Close();
             return interviews;
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)

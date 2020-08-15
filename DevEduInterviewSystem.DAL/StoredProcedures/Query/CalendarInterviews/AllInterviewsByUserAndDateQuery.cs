@@ -1,4 +1,4 @@
-﻿using DevEduInterviewSystem.DAL.DTO.QueryDTO.CalendarInterviews;
+﻿using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
@@ -9,22 +9,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
 {
     public class AllInterviewsByUserAndDateQuery
     {
-        public List<AllInterviewsByUserAndDateDTO> SelectAllInterviewsByUserAndDate(int id)
+        public List<AllInterviewsDTO> SelectAllInterviewsByUserAndDate(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByUserAndDate", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);
             command.Parameters.Add(userParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AllInterviewsByUserAndDateDTO> interviews = new List<AllInterviewsByUserAndDateDTO>();
+            List<AllInterviewsDTO> interviews = new List<AllInterviewsDTO>();
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllInterviewsByUserAndDateDTO interview = new AllInterviewsByUserAndDateDTO()
+                    AllInterviewsDTO interview = new AllInterviewsDTO()
                     {
                         UserFirstName = (string)reader["UserFirstName"],
                         UserLastName = (string)reader["UserLastName"],
@@ -34,7 +34,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
                         CandidatePhone = (string)reader["CandidatePhone"],
                         DateTimeInterview = (DateTime)reader["DateTimeInterview"],
                         Attempt = (int)reader["Attempt"],
-                        Status = (string)reader["Status"]
+                        InterviewStatus = (string)reader["Status"]
                     };
                     interviews.Add(interview);
                 }

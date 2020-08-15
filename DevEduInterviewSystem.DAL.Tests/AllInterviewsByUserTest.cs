@@ -21,19 +21,18 @@ namespace DevEduInterviewSystem.DAL.Tests
 
         [SetUp]
         public void Setup()
-        {            
-            Connection = ConnectionSingleTone.GetInstance().Connection;
+        {
+            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             _mockUserID = new List<int>();
             _mockInterviewID = new List<int>();
             _mockCandidateID = new List<int>();
 
             UserCRUD userCRUD = new UserCRUD();
             UserDTOMock userDTOMock = new UserDTOMock();
-            Connection.Close();
             foreach (UserDTO dto in userDTOMock)
             {                
                 _mockUserID.Add(userCRUD.Add(dto));
-                Connection.Close();
             }
 
             CityCRUD cityCRUD = new CityCRUD();
@@ -42,7 +41,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (CityDTO dto in cityDTOMock)
             {
                 cityCRUD.Add(dto);
-                Connection.Close();
             }
 
             StatusCRUD statusCRUD = new StatusCRUD();
@@ -50,7 +48,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (StatusDTO dto in statusDTOMock)
             {
                 statusCRUD.Add(dto);
-                Connection.Close();
             }
 
             StageCRUD stageCRUD = new StageCRUD();
@@ -58,7 +55,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (StageDTO dto in stageDTOMock)
             {
                 stageCRUD.Add(dto);
-                Connection.Close();
             }
 
             InterviewStatusCRUD interviewStatusCRUD = new InterviewStatusCRUD();
@@ -66,7 +62,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (InterviewStatusDTO dto in interviewStatusDTOMock)
             {
                 interviewStatusCRUD.Add(dto);
-                Connection.Close();
             }
 
             CandidateCRUD candidateCRUD = new CandidateCRUD();
@@ -74,7 +69,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             foreach (CandidateDTO dto in candidateDTOMock)
             {
                 _mockCandidateID.Add(candidateCRUD.Add(dto));
-                Connection.Close();
             }
 
             InterviewCRUD interviewCRUD = new InterviewCRUD();
@@ -84,7 +78,6 @@ namespace DevEduInterviewSystem.DAL.Tests
             {
                 dto.CandidateID = _mockCandidateID[count];
                 _mockInterviewID.Add(interviewCRUD.Add(dto));
-                Connection.Close();
                 count++;
             }
 
@@ -94,35 +87,31 @@ namespace DevEduInterviewSystem.DAL.Tests
                 UserInterviewDTO userInterview = new UserInterviewDTO(1, _mockInterviewID[i], _mockUserID[i]);
                 UserInterviewDTO userInterview2 = new UserInterviewDTO(2, _mockInterviewID[_mockUserID.Count - i - 1], _mockUserID[i]);
                 userInterviewCRUD.Add(userInterview);
-                Connection.Close();
                 userInterviewCRUD.Add(userInterview2);
-                Connection.Close();
             }
         } 
 
         [Test, TestCaseSource(typeof(AllInterviewsByUserQueryDataSource))]
-        public void SelectAllByUserTest(int idnumber, List<AllInterviewsByUserDTO> expected)
+        public void SelectAllByUserTest(int idnumber, List<AllInterviewsDTO> expected)
         {
             AllInterviewsByUserQuery _allInterviewsQuery = new AllInterviewsByUserQuery();
-            List<AllInterviewsByUserDTO> actual = _allInterviewsQuery.SelectAllInterviewsByUser(_mockUserID[idnumber]);
+            List<AllInterviewsDTO> actual = _allInterviewsQuery.SelectAllInterviewsByUser(_mockUserID[idnumber]);
 
-            Connection.Close();
-
-            Assert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TearDown]
         public void TearDown()
         {
-            //Удаление добавленных элементов
-
+            
         }
 
         public class AllInterviewsByUserQueryDataSource : IEnumerable
-        {
-            List<AllInterviewsByUserDTO> firstTest = new List<AllInterviewsByUserDTO>();
+        {           
 
-            AllInterviewsByUserDTO interviewSergey1 = new AllInterviewsByUserDTO()
+            List<AllInterviewsDTO> firstTest = new List<AllInterviewsDTO>();
+
+            AllInterviewsDTO interviewSergey1 = new AllInterviewsDTO()
             {
                 UserFirstName = "Sergey",
                 UserLastName = "Timofeev",
@@ -134,7 +123,7 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "success"
             };            
 
-            AllInterviewsByUserDTO interviewSergey2 = new AllInterviewsByUserDTO()
+            AllInterviewsDTO interviewSergey2 = new AllInterviewsDTO()
             {
                 UserFirstName = "Sergey",
                 UserLastName = "Timofeev",
@@ -146,9 +135,9 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "fail"
             };
 
-            List<AllInterviewsByUserDTO> secondTest = new List<AllInterviewsByUserDTO>();
+            List<AllInterviewsDTO> secondTest = new List<AllInterviewsDTO>();
 
-            AllInterviewsByUserDTO interviewPolina1 = new AllInterviewsByUserDTO()
+            AllInterviewsDTO interviewPolina1 = new AllInterviewsDTO()
             {
                 UserFirstName = "Polina",
                 UserLastName = "Matveevna",
@@ -160,7 +149,7 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "fail"
             };
 
-            AllInterviewsByUserDTO interviewPolina2 = new AllInterviewsByUserDTO()
+            AllInterviewsDTO interviewPolina2 = new AllInterviewsDTO()
             {
                 UserFirstName = "Polina",
                 UserLastName = "Matveevna",
@@ -172,9 +161,21 @@ namespace DevEduInterviewSystem.DAL.Tests
                 InterviewStatus = "canceled"
             };
 
-            List<AllInterviewsByUserDTO> thirdTest = new List<AllInterviewsByUserDTO>();
+            List<AllInterviewsDTO> thirdTest = new List<AllInterviewsDTO>();
 
-            AllInterviewsByUserDTO interviewSvetlana1 = new AllInterviewsByUserDTO()
+            AllInterviewsDTO interviewSvetlana1 = new AllInterviewsDTO()
+            {
+                UserFirstName = "Svetlana",
+                UserLastName = "Fokina",
+                CandidateFirstName = "Ivan",
+                CandidateLastName = "Sidorov",
+                CandidatePhone = "821",
+                DateTimeInterview = new DateTime(2020, 08, 20, 10, 30, 00),
+                Attempt = 2,
+                InterviewStatus = "fail" 
+            };
+
+            AllInterviewsDTO interviewSvetlana2 = new AllInterviewsDTO()
             {
                 UserFirstName = "Svetlana",
                 UserLastName = "Fokina",
@@ -184,18 +185,6 @@ namespace DevEduInterviewSystem.DAL.Tests
                 DateTimeInterview = new DateTime(2020, 09, 20, 12, 00, 00),
                 Attempt = 1,
                 InterviewStatus = "canceled"
-            };
-
-            AllInterviewsByUserDTO interviewSvetlana2 = new AllInterviewsByUserDTO()
-            {
-                UserFirstName = "Svetlana",
-                UserLastName = "Fokina",
-                CandidateFirstName = "Ivan",
-                CandidateLastName = "Sidorov",
-                CandidatePhone = "821",
-                DateTimeInterview = new DateTime(2020, 08, 20, 10, 30, 00),
-                Attempt = 2,
-                InterviewStatus = "fail"
             };
 
 
@@ -212,6 +201,8 @@ namespace DevEduInterviewSystem.DAL.Tests
                 yield return new object[] { 1, secondTest };
                 yield return new object[] { 2, thirdTest };
             }
+
+            
         }
     }
 }

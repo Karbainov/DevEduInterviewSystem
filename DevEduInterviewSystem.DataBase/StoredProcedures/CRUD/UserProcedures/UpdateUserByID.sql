@@ -11,5 +11,5 @@ SET Login = @Login,
 Password = @Password,
 FirstName = @FirstName,
 LastName = @LastName
-where (@ID = ID)
+WHERE (@ID = ID) AND (IsDeleted = 0)
 END

@@ -19,7 +19,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter userInterviewParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(userInterviewParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User_Interview]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
        
@@ -31,8 +38,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
-            
-            return command.ExecuteNonQuery();
+
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
        
@@ -45,9 +55,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<UserInterviewDTO> userInterviews = new List<UserInterviewDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     UserInterviewDTO userInterview = new UserInterviewDTO()
                     {
@@ -59,7 +69,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return userInterviews;
         }
               
@@ -75,9 +85,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             UserInterviewDTO userinterview = new UserInterviewDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     userinterview.ID = (int)reader["id"];
                     userinterview.InterviewID = (int)reader["InterviewID"];
@@ -85,7 +95,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return userinterview;
         }
 
@@ -104,9 +114,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter UserIDParam = new SqlParameter("@UserID", dto.UserID);
             command.Parameters.Add(UserIDParam);
 
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
 
-
-            return command.ExecuteNonQuery();
+            return rows;
         }
 
        

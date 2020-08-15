@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.StudentsOfGroup
     {
         public List<AllStudentsOfGroupByStartDTO> SelectAllStudentsOfGroupByStart( DateTime startDate)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfGroupByStart", Connection);
             SqlParameter dateParam = new SqlParameter("@StartDate", startDate);

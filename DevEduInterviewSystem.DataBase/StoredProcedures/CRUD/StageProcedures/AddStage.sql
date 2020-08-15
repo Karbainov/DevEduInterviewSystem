@@ -4,3 +4,4 @@ as
 
 insert into [dbo].[Stage]
 values (@Name)
+SELECT SCOPE_IDENTITY()

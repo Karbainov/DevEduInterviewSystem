@@ -15,7 +15,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[InterviewStatus]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
         public override int DeleteByID(int ID)
@@ -26,7 +32,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
         public override List<InterviewStatusDTO> SelectAll()
@@ -54,7 +63,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 
             }
             reader.Close();
-
+            Connection.Close();
             return interviewsstatus;
         }
 
@@ -80,7 +89,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return interviewstatus;
         }
 
@@ -95,7 +104,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter NameParam = new SqlParameter("@Name", interviewStatus.Name);
             command.Parameters.Add(NameParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
     }
 }

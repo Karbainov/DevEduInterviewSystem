@@ -9,10 +9,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
     public class AllStudentsOfAllCoursesQuery
     {
-
         public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse()
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfCourse", Connection);
 
