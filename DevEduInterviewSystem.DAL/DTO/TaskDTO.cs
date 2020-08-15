@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public TaskDTO(int ID, int UserID, int CandidateID, string Message, string IsCompleted)
+        public TaskDTO(int ID, int? UserID, int? CandidateID, string Message, string IsCompleted)
         {
             this.ID = ID;
             this.UserID = UserID;
