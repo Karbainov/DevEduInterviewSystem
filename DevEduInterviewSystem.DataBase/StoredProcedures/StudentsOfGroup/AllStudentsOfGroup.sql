@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AllStudentsOfGroup]
+@GroupID int
 AS
 	SELECT G.[Name], C.FirstName, C.LastName
 	FROM Group_Candidate AS GC
