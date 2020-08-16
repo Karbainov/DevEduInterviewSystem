@@ -10,10 +10,6 @@ namespace DevEduInterviewSystem.DAL.DTO
         public string Name { get; set; }
 
         public CourseDTO() { }
-        public CourseDTO(string Name)
-        {
-            this.Name = Name;
-        }
         public CourseDTO(int ID, string Name)
         {
             this.ID = ID;
