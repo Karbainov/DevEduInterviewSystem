@@ -29,17 +29,17 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             HomeWorkDate = homeWorkDate;
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj.GetType() != this.GetType()) return false;
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
 
-        //    AllOverdueHomeworkDTO dto = (AllOverdueHomeworkDTO)obj;
-        //    return (this.CandidateID == dto.CandidateID
-        //        && this.CandidateFirstName == dto.CandidateFirstName
-        //        && this.CandidateLastName == dto.CandidateLastName
-        //        && this.HomeWorkStatus == dto.HomeWorkStatus
-        //        && this.TestStatus == dto.TestStatus
-        //        && this.HomeWorkDate.ToShortDateString() == dto.HomeWorkDate.ToShortDateString());
-        //}
+            AllOverdueHomeworkDTO dto = (AllOverdueHomeworkDTO)obj;
+            return (this.CandidateID == dto.CandidateID
+                && this.CandidateFirstName == dto.CandidateFirstName
+                && this.CandidateLastName == dto.CandidateLastName
+                && this.HomeWorkStatus == dto.HomeWorkStatus
+                && this.TestStatus == dto.TestStatus
+                && this.HomeWorkDate.ToShortDateString() == dto.HomeWorkDate.ToShortDateString());
+        }
     }
 }
