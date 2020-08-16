@@ -6,30 +6,32 @@ using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
 {
-    public class AllOverdueHomework
+    public class GetAllOverdueHomework
     {
-        public List<GetAllOverdueHomeworkDTO> GetAllOverdueHomework()
+        public List<AllOverdueHomeworkDTO> AllOverdueHomework()
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             DateTime dateCurrent = DateTime.Now;
-            SqlCommand command = ReferenceToProcedure("AllOverdueHomeworksAndTests", Connection);
-            SqlParameter currentDateParam = new SqlParameter("@DareCurrent", dateCurrent);
+            SqlCommand command = ReferenceToProcedure("AllOverdueHomework", Connection);
+            SqlParameter currentDateParam = new SqlParameter("@DateCurrent", dateCurrent);
             command.Parameters.Add(currentDateParam);
 
-            List<GetAllOverdueHomeworkDTO> allOverdueHomeworks = new List<GetAllOverdueHomeworkDTO>();
+            List<AllOverdueHomeworkDTO> allOverdueHomeworks = new List<AllOverdueHomeworkDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    GetAllOverdueHomeworkDTO allOverdueHomework = new GetAllOverdueHomeworkDTO()
+                    AllOverdueHomeworkDTO allOverdueHomework = new AllOverdueHomeworkDTO()
                     {
                         CandidateID = (int)reader["CandidateID"],
                         CandidateFirstName = (string)reader["CandidateFirstName"],
                         CandidateLastName = (string)reader["CandidateLastName"],
-                        HomeWorkDate = (DateTime)reader["HomeWorkDate"]
+                        HomeWorkDate = (DateTime)reader["HomeworkDate"],
+                        HomeWorkStatus = (string)reader["HomeWorkStatus"],
+                        TestStatus = (string)reader["TestStatus"]
                     };
 
                     allOverdueHomeworks.Add(allOverdueHomework);

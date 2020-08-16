@@ -1,8 +1,10 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
 using System;
 using System.Data.SqlClient;
@@ -17,17 +19,20 @@ namespace Test
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             Console.WriteLine("Подключение к серверу");
+            AllOverdueHomeworkDTO all = new AllOverdueHomeworkDTO();
+            GetAllOverdueHomework cr = new GetAllOverdueHomework();
+            
             //AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
             //AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
 
 
-            CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
-            CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
+            //CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
+            //CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
             ////CandidateDTO cand3 = new CandidateDTO(3, 3, 3, 3, "+911", "v@ya.ru", "Yana", "Smirnova", DateTime.Now);
-            CandidateCRUD crud = new CandidateCRUD();
+            //CandidateCRUD crud = new CandidateCRUD();
             ////connection.Close();
-            crud.Add(cand2);
-            connection.Close();
+            //crud.Add(cand2);
+            //connection.Close();
             //crud.Add(cand2);
             //connection.Close();
             //crud.Add(cand3);
@@ -90,7 +95,7 @@ namespace Test
 
 
             Console.WriteLine("Выполнено");
-
+            Console.ReadLine();
         }
     }
 }

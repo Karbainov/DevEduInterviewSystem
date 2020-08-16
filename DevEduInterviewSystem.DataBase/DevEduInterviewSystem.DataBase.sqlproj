@@ -294,6 +294,6 @@
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="StoredProcedures\AllOverdueHomeworksAndTests.sql" />
+    <None Include="StoredProcedures\AllOverdueHomework.sql" />
   </ItemGroup>
 </Project>
