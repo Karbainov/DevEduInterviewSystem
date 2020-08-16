@@ -11,7 +11,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(StageChangedDTO dto)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@AddStageChanged");
 
@@ -36,7 +35,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         
         public override int DeleteByID(int id)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@DeleteStageChangedByID");
 
@@ -51,7 +49,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
      
         public override List<StageChangedDTO> SelectAll()
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@SelectAllStageChanged");
 
@@ -84,7 +81,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
        
         public override StageChangedDTO SelectByID(int id)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectStageChangedByID");
 
@@ -112,7 +108,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         
         public override int UpdateByID(StageChangedDTO dto)
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("UpdateStageChangedByID");
 

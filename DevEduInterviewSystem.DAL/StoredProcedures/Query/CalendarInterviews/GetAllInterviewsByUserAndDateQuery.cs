@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
     {
         public List<GetAllInterviewsByUserAndDateDTO> SelectAllInterviewsByUserAndDate(int userid, DateTime date)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByUserAndDate", connection);
             

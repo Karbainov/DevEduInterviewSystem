@@ -10,10 +10,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
     {
         public List<GetAllOverdueHomeworkDTO> GetAllOverdueHomework()
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             DateTime dateCurrent = DateTime.Now;
-            SqlCommand command = ReferenceToProcedure("@AllOverdueHomeworkS", Connection);
+            SqlCommand command = ReferenceToProcedure("AllOverdueHomeworksAndTests", Connection);
             SqlParameter currentDateParam = new SqlParameter("@DareCurrent", dateCurrent);
             command.Parameters.Add(currentDateParam);
 
@@ -39,6 +39,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
             Connection.Close();
             return allOverdueHomeworks;
 
+        }
+        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
+        {
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            return command;
         }
     }
 }

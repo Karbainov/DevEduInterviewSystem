@@ -11,8 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(Course_CandidateDTO dto)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            connection.Open();
+            Connection.Open();
             SqlCommand command = ReferenceToProcedure("@AddCourse_Candidate");
 
             SqlParameter CourseIDParam = new SqlParameter("@CourseID", dto.CourseID);
@@ -33,8 +32,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int DeleteByID(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            connection.Open();
+            Connection.Open();
             SqlCommand command = ReferenceToProcedure("@DeleteCourse_CandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
@@ -48,8 +46,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(Course_CandidateDTO dto)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            connection.Open();
+            Connection.Open();
             SqlCommand command = ReferenceToProcedure("@UpdateCourse_CandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
@@ -69,8 +66,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override List<Course_CandidateDTO> SelectAll()
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            connection.Open();
+            Connection.Open();
             SqlCommand command = ReferenceToProcedure("@SelectAllCourse_Candidate");
 
             SqlDataReader reader = command.ExecuteReader();

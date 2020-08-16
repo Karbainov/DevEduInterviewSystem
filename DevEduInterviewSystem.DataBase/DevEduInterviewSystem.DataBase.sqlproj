@@ -293,4 +293,7 @@
     <Build Include="StoredProcedures\OneUserRole.sql" />
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="StoredProcedures\AllOverdueHomeworksAndTests.sql" />
+  </ItemGroup>
 </Project>

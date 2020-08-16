@@ -9,10 +9,10 @@ namespace DevEduInterviewSystem.DAL.DTO
         public int ID { get; set; }
         public string CityName { get; set; }
         public CityDTO() { }
-        public CityDTO(int ID, string Name) 
+        public CityDTO(int id, string name) 
         {
-            this.ID = ID;
-            this.CityName = City;
+            ID = id;
+            CityName = name;
         }
     }
     
