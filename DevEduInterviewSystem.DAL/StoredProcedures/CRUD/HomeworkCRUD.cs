@@ -17,14 +17,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter InterviewStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
-            command.Parameters.Add(InterviewStatusParam);
+            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
+            command.Parameters.Add(HomeworkStatusParam);
 
             SqlParameter AttemptParam = new SqlParameter("TestStatusID", dto.TestStatusID);
             command.Parameters.Add(AttemptParam);
 
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
-            command.Parameters.Add(DateTimeInterviewParam);
+            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
+            command.Parameters.Add(HomeworkDateParam);
 
             command.ExecuteNonQuery();
 
