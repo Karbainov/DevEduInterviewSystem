@@ -13,104 +13,17 @@ namespace Test
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
            
-            //connection.Open();
-            AllInterviewsByUserAndDateDTO interV = new AllInterviewsByUserAndDateDTO();
-            AllInterviewsByUserAndDateQuery interView = new AllInterviewsByUserAndDateQuery();
-            DateTime date1 = new DateTime(2020, 3, 6);
-            Console.WriteLine(interView.SelectAllInterviewsByUserAndDate(1, date1));
-=======
+
             SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            //connection.Open();
-            //Console.WriteLine("Подключение к серверу");
->>>>>>> dev
-            //AllInterviewsByUserDTO intrview = new AllInterviewsByUserDTO();
-            //AllInterviewsByUserQuery interView = new AllInterviewsByUserQuery();
 
-            //Console.WriteLine(interView.SelectAllByUser(1));
 
-            CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
+            //CandidateDTO cand = new CandidateDTO(1, 1, 1, 1, "+911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now);
             //CandidateDTO cand2 = new CandidateDTO(2, 2, 2, 2, "+911", "v@ya.ru", "Ivan", "Sidorov", DateTime.Now);
             //CandidateDTO cand3 = new CandidateDTO(3, 3, 3, 3, "+911", "v@ya.ru", "Yana", "Smirnova", DateTime.Now);
-            CandidateCRUD crud = new CandidateCRUD();
+            //CandidateCRUD crud = new CandidateCRUD();
             //connection.Close();
-            crud.Add(cand);
-            connection.Close();
-            //crud.Add(cand2);
-            //connection.Close();
-            //crud.Add(cand3);
-            //connection.Close();
-
-            //UserDTO user = new UserDTO(1, "Login", "***", "Sergey", "Timofeev");
-            //UserDTO user2 = new UserDTO(2, "Terminator", "***", "Polina", "Matveevna");
-            //UserCRUD userCRUD = new UserCRUD();
-            //connection.Close();
-            //userCRUD.Add(user);
-            //connection.Close();
-            //userCRUD.Add(user2);
-            //connection.Close();
-
-            InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
-            //InterviewDTO interview2 = new InterviewDTO(1, 2, 1, 1, DateTime.Now);
-            //InterviewDTO interview3 = new InterviewDTO(7, 9, 1, 1, DateTime.Now);
-            InterviewCRUD interviewCRUD = new InterviewCRUD();
-            //interviewCRUD.UpdateInterviewByID(connection, interview3, 7);
-            //interviewCRUD.Add(interview);
-            //connection.Close();
-            //interviewCRUD.AddInterview(connection, interview2);
-            //connection.Close();
-            //interviewCRUD.AddInterview(connection, interview3);
-            //connection.Close();
-
-            //InterviewStatusDTO interviewStatus = new InterviewStatusDTO(1, "success");
-            //InterviewStatusDTO interviewStatus2 = new InterviewStatusDTO(2, "fail");
-            //InterviewStatusCRUD statusCRUD = new InterviewStatusCRUD();
-            //statusCRUD.AddInterviewStatus(connection, interviewStatus);
-            //connection.Close();
-            //statusCRUD.AddInterviewStatus(connection, interviewStatus2);
-            //connection.Close();
-
-            //UserInterviewDTO userInterview = new UserInterviewDTO(1, 1, 2);
-            //UserInterviewDTO userInterview2 = new UserInterviewDTO(2, 2, 1);
-            //UserInterviewDTO userInterview3 = new UserInterviewDTO(2, 2, 5);
-            //UserInterviewCRUD usInterviewCRUD = new UserInterviewCRUD();
-            //usInterviewCRUD.Add(userInterview);
-            //connection.Close();
-            //usInterviewCRUD.Add(userInterview2);
-            //connection.Close();
-            //usInterviewCRUD.Add(userInterview3);
-            //connection.Close();
-
-<<<<<<< HEAD
-            //AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
-            //interviewsByUserQuery.SelectAllByUser(1);
-=======
-            //InterviewCRUD interviewCRUD = new InterviewCRUD();
-            //InterviewDTO interview = new InterviewDTO(1, 1, 1, 1, DateTime.Now);
-            //InterviewDTO interview2 = new InterviewDTO(1, 2, 1, 1, DateTime.Now);
-            //InterviewDTO interview3 = new InterviewDTO(7, 9, 1, 1, DateTime.Now);
-            ////InterviewCRUD interviewCRUD = new InterviewCRUD();
-            //interviewCRUD.Add(interview);
-            //connection.Close();
-            //interviewCRUD.Add(interview2);
-            //connection.Close();
-            //interviewCRUD.Add(interview3);
-            //connection.Close();
-
-            //UserInterviewCRUD userInterviewCRUD = new UserInterviewCRUD();
-            //UserInterviewDTOMock userInterviewDTOMock = new UserInterviewDTOMock();
-            //foreach (UserInterviewDTO dto in userInterviewDTOMock)
-            //{
-            //    userInterviewCRUD.Add(dto);
-            //    Connection.Close();
-            //}
-
-            AllInterviewsByUserQuery interviewsByUserQuery = new AllInterviewsByUserQuery();
-            interviewsByUserQuery.SelectAllByUser(65);
->>>>>>> dev
-
-            //connection.Close();
+            
 
 
 
