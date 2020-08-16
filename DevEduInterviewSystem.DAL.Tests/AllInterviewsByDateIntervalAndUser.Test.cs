@@ -39,7 +39,7 @@ namespace DevEduInterviewSystem.DAL.Tests
 
             CityCRUD cityCRUD = new CityCRUD();
             CityDTOMock cityDTOMock = new CityDTOMock();
-            Connection.Close();
+           // Connection.Close();
             foreach (CityDTO dto in cityDTOMock)
             {
                 cityCRUD.Add(dto);
