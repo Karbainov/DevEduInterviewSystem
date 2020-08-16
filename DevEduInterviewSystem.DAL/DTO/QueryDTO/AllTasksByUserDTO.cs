@@ -29,5 +29,19 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO
             IsCompleted = isCompleted;
             Stage = stage;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
+
+            AllTasksByUserDTO dto = (AllTasksByUserDTO)obj;
+            return (this.UserFirstName == dto.UserFirstName
+                && this.UserLastName == dto.UserLastName
+                && this.CandidateFirstName == dto.CandidateFirstName
+                && this.CandidateLastName == dto.CandidateLastName
+                && this.Task == dto.Task
+                && this.IsCompleted == dto.IsCompleted
+                && this.Stage == dto.Stage);
+        }
     }
 }

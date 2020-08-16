@@ -1,7 +1,7 @@
 ﻿Create Procedure [dbo].[AddOneTimePassword]
 @CandidateID int,
-@OneTimePasswordDate datetime2,
+@DateOfPasswordIssue datetime2,
 @OneTimePassword int
 AS
 INSERT INTO [dbo].[OnetimePassword]
-VALUES (@CandidateID, @OneTimePasswordDate, @OneTimePassword)
+VALUES (@CandidateID, @DateOfPasswordIssue, @OneTimePassword)

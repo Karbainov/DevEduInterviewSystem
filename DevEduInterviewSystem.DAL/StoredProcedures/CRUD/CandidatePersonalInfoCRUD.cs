@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CandidatePersonalInfoDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("Adddto");
+            SqlCommand command = ReferenceToProcedure("AddCandidatePersonalInfo");
 
             SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateIDParam);
@@ -37,7 +37,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
             command.Parameters.Add(ExpectationsParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[CandidatePersonalInfo]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -48,7 +55,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
         public override List<CandidatePersonalInfoDTO> SelectAll()
@@ -82,7 +92,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             }
 
             reader.Close();
-
+            Connection.Close();
             return candidates;
         }
 
@@ -115,7 +125,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return candidate;
         }
 
@@ -151,7 +161,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
             command.Parameters.Add(ExpectationsParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }       
        
     }

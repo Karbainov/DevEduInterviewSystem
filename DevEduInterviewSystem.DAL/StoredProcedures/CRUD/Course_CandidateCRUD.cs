@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class Course_CandidateCRUD : AbstractCRUD<Course_CandidateDTO>
+    public class Course_CandidateCRUD: AbstractCRUD<Course_CandidateDTO>
     {
         public override int Add(Course_CandidateDTO dto)
         {
@@ -21,7 +21,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateIDParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Course_Candidate]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -33,7 +40,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
         public override int UpdateByID(Course_CandidateDTO dto)
@@ -51,7 +61,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CourseIDParam = new SqlParameter("@CourseID", dto.CourseID);
             command.Parameters.Add(CandidateIDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
         public override List<Course_CandidateDTO> SelectAll()
@@ -63,55 +76,47 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             List<Course_CandidateDTO> courseCandidates = new List<Course_CandidateDTO>();
 
-            // Если есть данные
+            List<Course_CandidateDTO> candidates = new List<Course_CandidateDTO>();
+
             if (reader.HasRows)
             {
-                // Построчно считываем данные
+
                 while (reader.Read())
                 {
-                    Course_CandidateDTO courseCandidate = new Course_CandidateDTO()
-                    {
-                        ID = (int)reader["id"],
-                        CourseID = (int)reader["CourseID"],
-                        CandidateID = (int)reader["CandidateID"]
-                    };
-                    courseCandidates.Add(courseCandidate);
-                    Console.WriteLine($"{courseCandidate.ID} \t{courseCandidate.CourseID} \t{courseCandidate.CandidateID}");
+                    Course_CandidateDTO candidate = new Course_CandidateDTO();
+                    candidate.ID = (int)reader["id"];
+                    candidate.CourseID = (int)reader["CourseID"];
+                    candidate.CandidateID = (int)reader["CandidateID"];
+                    candidates.Add(candidate);
                 }
             }
             reader.Close();
-
-            return courseCandidates;
+            Connection.Close();
+            return candidates;
         }
 
         public override Course_CandidateDTO SelectByID(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("@SelectCourse_CandidateByID");
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectCourse_CandidateByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-
-            Course_CandidateDTO courseCandidate = new Course_CandidateDTO();
-            if (reader.HasRows) // если есть данные
+            Course_CandidateDTO candidate = new Course_CandidateDTO();
+            if (reader.HasRows)
             {
-                // выводим названия столбцов
-                Console.WriteLine($"ID \t CourseID \t CandidateID");
-
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
-                    courseCandidate.ID = (int)reader["id"];
-                    courseCandidate.CourseID = (int)reader["CourseID"];
-                    courseCandidate.CandidateID = (int)reader["CandidateID"];
-                    Console.WriteLine($"{courseCandidate.ID} \t{courseCandidate.CourseID} \t{courseCandidate.CandidateID} ");
+                    candidate.ID = (int)reader["id"];
+                    candidate.CourseID = (int)reader["CourseID"];
+                    candidate.CandidateID = (int)reader["CandidateID"];
                 }
             }
             reader.Close();
-
-            return courseCandidate;
+            Connection.Close();
+            return candidate;
         }
     }
 }

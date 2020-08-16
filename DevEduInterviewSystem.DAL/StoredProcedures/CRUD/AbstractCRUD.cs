@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public SqlConnection Connection { get; set; }
         public AbstractCRUD()
         {
-            Connection = ConnectionSingleTone.GetInstance().Connection;            
+            Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);            
         }
         abstract public int Add(T dto);
         abstract public int DeleteByID(int id);

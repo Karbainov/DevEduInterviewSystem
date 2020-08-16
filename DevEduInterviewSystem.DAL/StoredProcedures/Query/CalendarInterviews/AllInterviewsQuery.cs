@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews
     {
         public List<AllInterviewsDTO> SelectAllInterviews()
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviews", Connection);

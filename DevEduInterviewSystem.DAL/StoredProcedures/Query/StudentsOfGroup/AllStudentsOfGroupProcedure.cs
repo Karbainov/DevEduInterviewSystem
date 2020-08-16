@@ -13,7 +13,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 
         public List<AllStudentsOfGroupDTO> SelectAllStudentsOfGroup(string name )
         {
-            SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfGroup", Connection);
             SqlParameter GroupParam = new SqlParameter("@GroupID", name);

@@ -19,7 +19,7 @@ Join [User_Interview] AS UI ON UI.[InterviewID] = I.[ID]
 Join [User] AS U ON UI.[UserID] = U.[ID]
 Join [Candidate] AS C ON I.[CandidateID] = C.[ID]
 Join [InterviewStatus] AS ISt ON I.[InterviewStatusID] = ISt.[ID]
-WHERE U.[ID] = @UserID AND I.[DateTimeInterview] = @DateTimeInterview
+WHERE U.[ID] = @UserID AND U.IsDeleted = 0 AND I.[DateTimeInterview] = @DateTimeInterview
 ORDER BY C.[ID]
 >>>>>>> dev
 

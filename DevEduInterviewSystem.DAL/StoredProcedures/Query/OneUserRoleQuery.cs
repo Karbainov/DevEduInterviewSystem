@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 
         public List<OneUserRoleDTO> SelectOneUserRole(int id)
         {
-            SqlConnection connection = ConnectionSingleTone.GetInstance().Connection;
+            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             SqlCommand command = ReferenceToProcedure("OneUserRole", connection);
             SqlParameter userParam = new SqlParameter("@UserID", id);

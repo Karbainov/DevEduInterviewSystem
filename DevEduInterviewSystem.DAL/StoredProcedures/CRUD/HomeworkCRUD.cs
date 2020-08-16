@@ -7,131 +7,129 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
-    public class HomeworkCRUD
+    public class HomeworkCRUD : AbstractCRUD<HomeworkDTO>
     {
-        public int AddHomework(SqlConnection connection, HomeworkDTO homework)
+        public override int Add(HomeworkDTO dto)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddHomework", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddHomework");
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", homework.CandidateID);
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", homework.HomeworkStatusID);
+            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
             command.Parameters.Add(HomeworkStatusParam);
 
-            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", homework.TestStatusID);
+            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", dto.TestStatusID);
             command.Parameters.Add(TestStatusParam);
 
-            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", homework.HomeworkDate);
+            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
             command.Parameters.Add(HomeworkDateParam);
 
-            return command.ExecuteNonQuery();
-        }
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Homework]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
 
-        public int DeleteHomeworkByID(SqlConnection connection, int ID)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteHomeworkByID", connection);
-
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
-            command.Parameters.Add(IDParam);
-
-            return command.ExecuteNonQuery();
-        }
-
-        public int SelectAllHomework(SqlConnection connection)
-        {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllHomework", connection);
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            if (reader.HasRows) 
-            {
-               
-                Console.WriteLine($"id \t CandidateID \t HomeworkStatusID \t TestStatusID \t HomeworkDate ");
-
-                while (reader.Read()) 
-                {
-                    int id = (int)reader["id"];
-                    int CandidateID = (int)reader["CandidateID"];
-                    int HomeworkStatusID = (int)reader["HomeworkStatusID"];
-                    int TestStatusID = (int)reader["TestStatusID"];
-                    var HomeworkDate = (DateTime)reader["HomeworkDate"];
-
-                    Console.WriteLine($"{id} \t{CandidateID} \t{HomeworkStatusID} \t{TestStatusID} \t{HomeworkDate}");
-                }
-            }
-            reader.Close();
-
-
-            command.CommandText = "SELECT COUNT(*) FROM Homework";
-            int count = (int)command.ExecuteScalar();
+            Connection.Close();
 
             return count;
         }
 
-        public int SelectHomeworkByID(SqlConnection connection, int ID)
+        public override int DeleteByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectHomeworkByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("DeleteHomeworkByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
+            
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
+        }
+
+        public override List<HomeworkDTO> SelectAll()
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectAllHomework");
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (reader.HasRows) 
+            List<HomeworkDTO> homeworks = new List<HomeworkDTO>();
+
+            if (reader.HasRows)
             {
-                
-                Console.WriteLine($"id \t CandidateID \t HomeworkStatusID \t TestStatusID \t HomeworkDate ");
-
-                while (reader.Read()) 
+                while (reader.Read())
                 {
-                    int id = (int)reader["id"];
-                    int CandidateID = (int)reader["CandidateID"];
-                    int HomeworkStatusID = (int)reader["HomeworkStatusID"];
-                    int TestStatusID = (int)reader["Homework"];
-                    var HomeworkDate = (DateTime)reader["HomeworkDate"];
+                    HomeworkDTO dto = new HomeworkDTO();
 
-                    Console.WriteLine($"{id} \t{CandidateID} \t{HomeworkStatusID} \t{TestStatusID} \t{HomeworkDate}");
+                    dto.ID = (int)reader["id"];
+                    dto.CandidateID = (int)reader["CandidateID"];
+                    dto.HomeworkStatusID = (int)reader["HomeworkStatusID"];
+                    dto.TestStatusID = (int)reader["TestStatusID"];
+                    dto.HomeworkDate = (DateTime)reader["HomeworkDate"];
+
+                    homeworks.Add(dto);
                 }
             }
             reader.Close();
+            Connection.Close();
 
-            return (int)command.ExecuteScalar();
+            return homeworks;
         }
 
-        public int UpdateHomeworkByID(SqlConnection connection, HomeworkDTO homework, int ID)
+        public override HomeworkDTO SelectByID(int id)
         {
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateHomeworkByID", connection);
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("SelectHomeworkByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", ID);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", homework.CandidateID);
-            command.Parameters.Add(CandidateParam);
+            SqlDataReader reader = command.ExecuteReader();
+            HomeworkDTO dto = new HomeworkDTO();
 
-            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", homework.HomeworkStatusID);
-            command.Parameters.Add(HomeworkStatusParam);
-
-            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", homework.TestStatusID);
-            command.Parameters.Add(TestStatusParam);
-
-            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", homework.HomeworkDate);
-            command.Parameters.Add(HomeworkDateParam); 
-
-            return command.ExecuteNonQuery();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    dto.ID = (int)reader["id"];
+                    dto.CandidateID = (int)reader["CandidateID"];
+                    dto.HomeworkStatusID = (int)reader["HomeworkStatusID"];
+                    dto.TestStatusID = (int)reader["TestStatusID"];
+                    dto.HomeworkDate = (DateTime)reader["HomeworkDate"];
+                }
+            }
+            reader.Close();
+            Connection.Close();
+            return dto;
         }
 
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
+        public override int UpdateByID(HomeworkDTO dto)
         {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("UpdateHomeworkByID");
 
-            return command;
+            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
+            command.Parameters.Add(IDParam);
+
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
+            command.Parameters.Add(CandidateParam);
+
+            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
+            command.Parameters.Add(HomeworkStatusParam);
+
+            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", dto.TestStatusID);
+            command.Parameters.Add(TestStatusParam);
+
+            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
+            command.Parameters.Add(HomeworkDateParam);
+
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
     }
 }

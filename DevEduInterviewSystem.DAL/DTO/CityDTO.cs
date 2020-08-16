@@ -7,12 +7,12 @@ namespace DevEduInterviewSystem.DAL.DTO
     public class CityDTO:IDTO
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string CityName { get; set; }
         public CityDTO() { }
         public CityDTO(int ID, string Name) 
         {
             this.ID = ID;
-            this.Name = Name;
+            this.CityName = City;
         }
     }
     

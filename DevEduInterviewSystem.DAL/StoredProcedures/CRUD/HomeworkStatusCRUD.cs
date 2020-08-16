@@ -17,7 +17,13 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
 
-            return command.ExecuteNonQuery();
+            command.ExecuteNonQuery();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[HomeworkStatus]", Connection);
+            int count = (int)returnCurrentID.ExecuteScalar();
+
+            Connection.Close();
+
+            return count;
         }
 
         public override int DeleteByID(int id)
@@ -28,7 +34,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
-            return command.ExecuteNonQuery();
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
+
+            return rows;
         }
 
 
@@ -55,6 +64,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
+            Connection.Close();
             return homeworktatuses;
         }
 
@@ -80,7 +90,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 }
             }
             reader.Close();
-
+            Connection.Close();
             return homeworkStatus;
         }
 
@@ -96,10 +106,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);
+           
+            int rows = command.ExecuteNonQuery();
+            Connection.Close();
 
-
-
-            return command.ExecuteNonQuery();
+            return rows;
         }
     }
 }
