@@ -295,5 +295,6 @@
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\AllSelectionProcess.sql" />
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByID.sql" />
+    <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByCourse.sql" />
   </ItemGroup>
 </Project>

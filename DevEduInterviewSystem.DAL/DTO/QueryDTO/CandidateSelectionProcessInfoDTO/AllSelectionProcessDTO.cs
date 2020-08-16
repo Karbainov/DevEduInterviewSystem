@@ -17,8 +17,8 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CandidateSelectionProcessInfoDT
         {
 
         }
-
-        public AllSelectionProcessDTO(int idCandidate, string candidateFirstName, string candidateLastName,
+        
+        public AllSelectionProcessDTO(string candidateFirstName, string candidateLastName,
                                                    string status, string stage, string course)
         {
             FirstName = candidateFirstName;

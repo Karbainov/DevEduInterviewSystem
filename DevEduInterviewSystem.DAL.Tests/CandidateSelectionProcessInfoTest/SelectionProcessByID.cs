@@ -126,20 +126,20 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
 
             AllSelectionProcessDTO selectionProcessPolina1 = new AllSelectionProcessDTO()
             {
-                FirstName = "Polina",
-                LastName = "Matveevna",
+                FirstName = "Ivan",
+                LastName = "Sidorov",
                 Status = "Скорее подходит",
-                Stage = "Doing homework",
-                Course = "Mobile"
+                Stage = "Failed interview",
+                Course = "Frontend"
             };
 
             AllSelectionProcessDTO selectionProcessPolina2 = new AllSelectionProcessDTO()
             {
-                FirstName = "Polina",
-                LastName = "Matveevna",
+                FirstName = "Ivan",
+                LastName = "Sidorov",
                 Status = "Скорее подходит",
-                Stage = "Doing homework",
-                Course = "Mobile"
+                Stage = "Failed interview",
+                Course = "BackEnd"
             };
             public IEnumerator GetEnumerator()
             {
