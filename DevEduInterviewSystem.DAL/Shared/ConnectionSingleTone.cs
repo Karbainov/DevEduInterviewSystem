@@ -19,7 +19,7 @@ namespace DevEduInterviewSystem.DAL.Shared
 
         private static ConnectionSingleTone _instance;
 
-        private string _connectionString = SQLConnectionPaths.MainConnectionString;        
+        private string _connectionString = SQLConnectionPaths.TestConnectionString;        
 
         public static ConnectionSingleTone GetInstance()
         {

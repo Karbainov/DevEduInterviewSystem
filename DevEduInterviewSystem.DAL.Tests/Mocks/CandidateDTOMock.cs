@@ -14,6 +14,7 @@ namespace DevEduInterviewSystem.DAL.Tests
 			yield return new CandidateDTO(2, 2, 2, 2, "821", "i@ya.ru", "Ivan", "Sidorov", DateTime.Now);
 			yield return new CandidateDTO(3, 3, 3, 3, "8921", "y@ya.ru", "Yana", "Smirnova", DateTime.Now);
 			yield return new CandidateDTO(4, 1, 2, 3, "8", "y@google.com", "Elena", "Kac", DateTime.Now);
+	
 		}
     }
 }
