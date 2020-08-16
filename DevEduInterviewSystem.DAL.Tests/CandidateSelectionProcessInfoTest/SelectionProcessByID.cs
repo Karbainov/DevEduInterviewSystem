@@ -3,7 +3,6 @@ using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO.CandidateSelectionProcessInfoDTO;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
-using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.CandidateSelectionProcessInfo;
 using DevEduInterviewSystem.DAL.Tests.Mocks;
 using NUnit.Framework;
@@ -19,7 +18,7 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
     public class SelectionProcessByIDTest
     {
         private List<int> _mockCandidateID;
-        //private List<int> _mockCourseID;
+        private List<int> _mockCourseID;
 
         //private List<DateTime> _mockDate;
 
@@ -30,19 +29,19 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
         {
             ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
             Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            _mockCandidateID = new List<int>();  
+            _mockCandidateID = new List<int>();
+            _mockCourseID = new List<int>();
 
             CourseCRUD courseCRUD = new CourseCRUD();
             CourseDTOMock courseDTOMock = new CourseDTOMock();
             foreach (CourseDTO dto in courseDTOMock)
             {
-                courseCRUD.Add(dto);
+                _mockCourseID.Add(courseCRUD.Add(dto));
             }
 
 
             CityCRUD cityCRUD = new CityCRUD();
             CityDTOMock cityDTOMock = new CityDTOMock();
-            Connection.Close();
             foreach (CityDTO dto in cityDTOMock)
             {
                 cityCRUD.Add(dto);
@@ -68,6 +67,16 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
             {
                 _mockCandidateID.Add(candidateCRUD.Add(dto));
             }
+
+            Course_CandidateCRUD courseCandidateCRUD = new Course_CandidateCRUD();
+            for (int i = 0; i < _mockCandidateID.Count; i++)
+            {
+                Course_CandidateDTO courseCandidate = new Course_CandidateDTO(1, _mockCourseID[i], _mockCandidateID[i]);
+                Course_CandidateDTO courseCandidate2 = new Course_CandidateDTO(2, _mockCourseID[_mockCourseID.Count - i - 1], _mockCandidateID[i]);
+                courseCandidateCRUD.Add(courseCandidate);
+                courseCandidateCRUD.Add(courseCandidate2);
+            }
+
         }
 
         [Test, TestCaseSource(typeof(CandidateSelectionProcessInfoByIDDataSource))]
@@ -75,6 +84,12 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
         public void SelectCandidateInfoByID(int idNumber, List<AllSelectionProcessDTO> expected)
         {
             SelectionProcessByIDQuery _selectionProcessByIDQuery = new SelectionProcessByIDQuery();
+
+
+
+            List<AllSelectionProcessDTO> actual = _selectionProcessByIDQuery.SelectProcessByCandidate(_mockCandidateID[idNumber]);
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TearDown]
@@ -90,16 +105,35 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
 
             AllSelectionProcessDTO selectionProcessVasya1 = new AllSelectionProcessDTO()
             {
-                FirstName = "Sergey",
-                LastName = "Timofeev",
+                FirstName = "Vasya",
+                LastName = "Pupkin",
                 Status = "Точно подходит",
                 Stage = "Waiting interview",
                 Course = "BaseC#"
             };
 
+            AllSelectionProcessDTO selectionProcessVasya2 = new AllSelectionProcessDTO()
+            {
+                FirstName = "Vasya",
+                LastName = "Pupkin",
+                Status = "Точно подходит",
+                Stage = "Waiting interview",
+                Course = "Mobile"
+            };
+
+
             List<AllSelectionProcessDTO> secondTest = new List<AllSelectionProcessDTO>();
 
-            AllSelectionProcessDTO selectionProcessPolina = new AllSelectionProcessDTO()
+            AllSelectionProcessDTO selectionProcessPolina1 = new AllSelectionProcessDTO()
+            {
+                FirstName = "Polina",
+                LastName = "Matveevna",
+                Status = "Скорее подходит",
+                Stage = "Doing homework",
+                Course = "Mobile"
+            };
+
+            AllSelectionProcessDTO selectionProcessPolina2 = new AllSelectionProcessDTO()
             {
                 FirstName = "Polina",
                 LastName = "Matveevna",
@@ -110,7 +144,9 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
             public IEnumerator GetEnumerator()
             {
                 firstTest.Add(selectionProcessVasya1);
-                secondTest.Add(selectionProcessPolina);
+                firstTest.Add(selectionProcessVasya2);
+                secondTest.Add(selectionProcessPolina1);
+                secondTest.Add(selectionProcessPolina2);
                 yield return new object[] { 0, firstTest };
                 yield return new object[] { 1, secondTest };
             }

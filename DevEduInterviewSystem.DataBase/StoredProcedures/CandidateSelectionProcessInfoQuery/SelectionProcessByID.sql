@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[SelectionProcessByID] 
 @CandidateID int
 AS
-SELECT C.ID as IDCandidate, C.FirstName as CandidateFirstName, C.LastName as CandidateLastName, 
+SELECT C.ID as CandidateID, C.FirstName as CandidateFirstName, C.LastName as CandidateLastName, 
        S.[Name] as [Status], St.[Name] as Stage, [Course].[Name] as Course
 FROM [dbo].[Candidate] as C 
 JOIN [dbo].[Status] as S on C.StatusID = S.ID

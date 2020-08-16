@@ -16,7 +16,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.CandidateSelectionPro
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectionProcessByID", Connection);
-            SqlParameter IDParam = new SqlParameter("@CandidadeID", idCandidate);
+            SqlParameter IDParam = new SqlParameter("@CandidateID", idCandidate);
+            command.Parameters.Add(IDParam);
+
             SqlDataReader reader = command.ExecuteReader();
 
             List<AllSelectionProcessDTO> candidates = new List<AllSelectionProcessDTO>();

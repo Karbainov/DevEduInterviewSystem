@@ -13,7 +13,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.MainConnectionString;
+            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
             Console.WriteLine("Подключение к серверу");

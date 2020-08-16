@@ -28,5 +28,17 @@ namespace DevEduInterviewSystem.DAL.DTO.QueryDTO.CandidateSelectionProcessInfoDT
             Course = course;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
+
+            AllSelectionProcessDTO dto = (AllSelectionProcessDTO)obj;
+            return (this.FirstName == dto.FirstName
+                && this.LastName == dto.LastName
+                && this.Status == dto.Status
+                && this.Stage == dto.Stage
+                && this.Course == dto.Course);         
+        }
+
     }
 }
