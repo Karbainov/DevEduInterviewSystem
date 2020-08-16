@@ -10,7 +10,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(CityDTO dto)
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@AddCity");
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.CityName);
@@ -28,7 +27,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int DeleteByID(int id)
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@DeleteCityByID");
 
@@ -42,7 +40,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(CityDTO dto)
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@UpdateCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
@@ -55,7 +52,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override List<CityDTO> SelectAll()
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@SelectAllCity");
             SqlDataReader reader = command.ExecuteReader();
@@ -81,7 +77,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override CityDTO SelectByID(int id)
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("@SelectCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", id);

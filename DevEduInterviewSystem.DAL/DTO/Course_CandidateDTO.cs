@@ -11,11 +11,11 @@ namespace DevEduInterviewSystem.DAL.DTO
         public int? CandidateID { get; set; }
 
         public Course_CandidateDTO(){ }
-        public Course_CandidateDTO(int ID, int CourseID, int CandidateID)
+        public Course_CandidateDTO(int id, int courseID, int candidateID)
         {
-            this.ID = ID;
-            this.CourseID = CourseID;
-            this.CandidateID = CandidateID;
+            ID = id;
+            CourseID = courseID;
+            CandidateID = candidateID;
         }
     }
 }
