@@ -7,10 +7,10 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllStudentsOfCourseQuery
+    public class AllCandidateOfCourseQuery
     {
 
-        public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse(int id)
+        public List<AllCandidateOfCourseDTO> SelectAllAllStudentsOfCourse(int id)
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
@@ -18,14 +18,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
             SqlParameter courseParam = new SqlParameter("@CourseID", id);
             command.Parameters.Add(courseParam);
 
-            List<AllStudentsOfCourseDTO> allStudentsOfAllCourses = new List<AllStudentsOfCourseDTO>();
+            List<AllCandidateOfCourseDTO> allStudentsOfAllCourses = new List<AllCandidateOfCourseDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllStudentsOfCourseDTO allStudentsOfAllCourse = new AllStudentsOfCourseDTO()
+                    AllCandidateOfCourseDTO allStudentsOfAllCourse = new AllCandidateOfCourseDTO()
                     {
                         Name = (string)reader["Name"]
                     };

@@ -7,23 +7,23 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllStudentsOfAllCoursesQuery
+    public class AllCandidateOfAllCoursesQuery
     {
 
-        public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse()
+        public List<AllCandidateOfCourseDTO> SelectAllAllStudentsOfCourse()
         {
             SqlConnection Connection = ConnectionSingleTone.GetInstance().Connection;
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfCourse", Connection);
 
-            List<AllStudentsOfCourseDTO> allStudentsOfAllCourses = new List<AllStudentsOfCourseDTO>();
+            List<AllCandidateOfCourseDTO> allStudentsOfAllCourses = new List<AllCandidateOfCourseDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllStudentsOfCourseDTO allStudentsOfAllCourse = new AllStudentsOfCourseDTO()
+                    AllCandidateOfCourseDTO allStudentsOfAllCourse = new AllCandidateOfCourseDTO()
                     {
                         Name = (string)reader["Name"]
                     };

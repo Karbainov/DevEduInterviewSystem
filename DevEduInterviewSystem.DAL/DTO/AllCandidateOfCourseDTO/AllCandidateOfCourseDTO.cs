@@ -4,16 +4,16 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
 {
-    public class AllStudentsOfCourseDTO : IDTO
+    public class AllCandidateOfCourseDTO : IDTO
     {
         public string Name { get; set; }
 
-        public AllStudentsOfCourseDTO()
+        public AllCandidateOfCourseDTO()
         {
 
         }
 
-        public AllStudentsOfCourseDTO(string name)
+        public AllCandidateOfCourseDTO(string name)
         {
             Name = name;
         }
