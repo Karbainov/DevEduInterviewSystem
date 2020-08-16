@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(StageChangedDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@AddStageChanged");
+            SqlCommand command = ReferenceToProcedure("AddStageChanged");
 
             SqlParameter StageIDParam = new SqlParameter("@StageID", dto.StageID);
             command.Parameters.Add(StageIDParam);

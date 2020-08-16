@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(CityDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@AddCity");
+            SqlCommand command = ReferenceToProcedure("AddCity");
             SqlParameter CityNameParam = new SqlParameter("@Name", dto.CityName);
             command.Parameters.Add(CityNameParam);
             

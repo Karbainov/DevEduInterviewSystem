@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(Course_CandidateDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@AddCourse_Candidate");
+            SqlCommand command = ReferenceToProcedure("AddCourse_Candidate");
 
             SqlParameter CourseIDParam = new SqlParameter("@CourseID", dto.CourseID);
             command.Parameters.Add(CourseIDParam);
