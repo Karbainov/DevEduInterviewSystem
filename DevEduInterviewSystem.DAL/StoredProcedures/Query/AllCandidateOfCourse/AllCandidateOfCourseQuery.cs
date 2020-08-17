@@ -7,22 +7,29 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllStudentsOfAllCoursesQuery
+    public class AllCandidateOfCourseQuery
     {
-        public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse()
+<<<<<<< HEAD:DevEduInterviewSystem.DAL/StoredProcedures/Query/AllStudentsOfCourse/AllStudentsOfCourseQuery.cs
+        public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse(int id)
+=======
+
+        public List<AllCandidateOfCourseDTO> SelectAllAllStudentsOfCourse(int id)
+>>>>>>> AllStudentsOfAllCourses:DevEduInterviewSystem.DAL/StoredProcedures/Query/AllCandidateOfCourse/AllCandidateOfCourseQuery.cs
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString); 
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfCourse", Connection);
+            SqlParameter courseParam = new SqlParameter("@CourseID", id);
+            command.Parameters.Add(courseParam);
 
-            List<AllStudentsOfCourseDTO> allStudentsOfAllCourses = new List<AllStudentsOfCourseDTO>();
+            List<AllCandidateOfCourseDTO> allStudentsOfAllCourses = new List<AllCandidateOfCourseDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllStudentsOfCourseDTO allStudentsOfAllCourse = new AllStudentsOfCourseDTO()
+                    AllCandidateOfCourseDTO allStudentsOfAllCourse = new AllCandidateOfCourseDTO()
                     {
                         Name = (string)reader["Name"]
                     };
@@ -44,4 +51,5 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
         }
     }
 }
+
 
