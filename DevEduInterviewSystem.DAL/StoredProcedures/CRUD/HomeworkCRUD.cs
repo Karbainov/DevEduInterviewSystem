@@ -17,21 +17,20 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
             command.Parameters.Add(CandidateParam);
 
-            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
-            command.Parameters.Add(HomeworkStatusParam);
+            SqlParameter InterviewStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
+            command.Parameters.Add(InterviewStatusParam);
 
-            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", dto.TestStatusID);
-            command.Parameters.Add(TestStatusParam);
+            SqlParameter AttemptParam = new SqlParameter("TestStatusID", dto.TestStatusID);
+            command.Parameters.Add(AttemptParam);
 
-            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
-            command.Parameters.Add(HomeworkDateParam);
+            SqlParameter DateTimeInterviewParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
+            command.Parameters.Add(DateTimeInterviewParam);
 
             command.ExecuteNonQuery();
+
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Homework]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
-
             Connection.Close();
-
             return count;
         }
 
@@ -42,7 +41,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
-            
+
             int rows = command.ExecuteNonQuery();
             Connection.Close();
 
@@ -62,48 +61,52 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             {
                 while (reader.Read())
                 {
-                    HomeworkDTO dto = new HomeworkDTO();
 
-                    dto.ID = (int)reader["id"];
-                    dto.CandidateID = (int)reader["CandidateID"];
-                    dto.HomeworkStatusID = (int)reader["HomeworkStatusID"];
-                    dto.TestStatusID = (int)reader["TestStatusID"];
-                    dto.HomeworkDate = (DateTime)reader["HomeworkDate"];
+                    HomeworkDTO homework = new HomeworkDTO()
+                    {
+                        ID = (int)reader["id"],
+                        CandidateID = (int)reader["CandidateID"],
+                        HomeworkStatusID = (int)reader["HomeworkStatusID"],
+                        TestStatusID = (int)reader["TestStatusID"],
+                        HomeworkDate = (DateTime)reader["HomeworkDate"]
+                    };
 
-                    homeworks.Add(dto);
+                    homeworks.Add(homework);
                 }
             }
             reader.Close();
             Connection.Close();
 
             return homeworks;
+
         }
 
-        public override HomeworkDTO SelectByID(int id)
+        public override HomeworkDTO SelectByID(int ID)
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("SelectHomeworkByID");
 
-            SqlParameter IDParam = new SqlParameter("@ID", id);
+            SqlParameter IDParam = new SqlParameter("@ID", ID);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-            HomeworkDTO dto = new HomeworkDTO();
+            HomeworkDTO homework = new HomeworkDTO();
 
             if (reader.HasRows)
             {
+
                 while (reader.Read())
                 {
-                    dto.ID = (int)reader["id"];
-                    dto.CandidateID = (int)reader["CandidateID"];
-                    dto.HomeworkStatusID = (int)reader["HomeworkStatusID"];
-                    dto.TestStatusID = (int)reader["TestStatusID"];
-                    dto.HomeworkDate = (DateTime)reader["HomeworkDate"];
+                    homework.ID = (int)reader["id"];
+                    homework.CandidateID = (int)reader["CandidateID"];
+                    homework.HomeworkStatusID = (int)reader["HomeworkStatusID"];
+                    homework.TestStatusID = (int)reader["TestStatusID"];
+                    homework.HomeworkDate = (DateTime)reader["HomeworkDate"];
                 }
             }
             reader.Close();
             Connection.Close();
-            return dto;
+            return homework;
         }
 
         public override int UpdateByID(HomeworkDTO dto)
@@ -120,8 +123,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
             command.Parameters.Add(HomeworkStatusParam);
 
-            SqlParameter TestStatusParam = new SqlParameter("@TestStatusID", dto.TestStatusID);
-            command.Parameters.Add(TestStatusParam);
+            SqlParameter TestStatusIDParam = new SqlParameter("@Attempt", dto.TestStatusID);
+            command.Parameters.Add(TestStatusIDParam);
 
             SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
             command.Parameters.Add(HomeworkDateParam);
@@ -130,7 +133,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Close();
 
             return rows;
+
         }
     }
 }
-

@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(StatusDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddStatus");
+            SqlCommand command = ReferenceToProcedure("@AddStatus");
 
             SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
             command.Parameters.Add(NameParam);

@@ -9,6 +9,10 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : ARoleLogic
     {
+        public void InsertCity(CityDTO city, CityCRUD crud)
+        {
+            crud.Add(city);
+        }
         public void AddNewUser(UserDTO user, UserRoleDTO role)
         {
             AddUser(user);
