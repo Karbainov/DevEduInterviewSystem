@@ -6,15 +6,15 @@ using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
 {
-    public class GetAllOverdueHomework
+    public class AllOverdueHomework
     {
-        public List<AllOverdueHomeworkDTO> AllOverdueHomework()
+        public List<AllOverdueHomeworkDTO> GetAllOverdueHomework(DateTime dateTime)
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             DateTime dateCurrent = DateTime.Now;
             SqlCommand command = ReferenceToProcedure("AllOverdueHomework", Connection);
-            SqlParameter currentDateParam = new SqlParameter("@DateCurrent", dateCurrent);
+            SqlParameter currentDateParam = new SqlParameter("@DateCurrent", new DateTime(2020, 07, 20, 18, 30, 00));
             command.Parameters.Add(currentDateParam);
 
             List<AllOverdueHomeworkDTO> allOverdueHomeworks = new List<AllOverdueHomeworkDTO>();
@@ -27,9 +27,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
                     AllOverdueHomeworkDTO allOverdueHomework = new AllOverdueHomeworkDTO()
                     {
                         CandidateID = (int)reader["CandidateID"],
+                        HomeWorkDate = (DateTime)reader["HomeWorkDate"],
                         CandidateFirstName = (string)reader["CandidateFirstName"],
                         CandidateLastName = (string)reader["CandidateLastName"],
-                        HomeWorkDate = (DateTime)reader["HomeworkDate"],
                         HomeWorkStatus = (string)reader["HomeWorkStatus"],
                         TestStatus = (string)reader["TestStatus"]
                     };

@@ -1,32 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
 {
     public class AllOverdueHomeworkDTO : IDTO
     {
         public int CandidateID { get; set; }
+        public DateTime HomeWorkDate { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string HomeWorkStatus { get; set; }
         public string TestStatus { get; set; }
-        public DateTime HomeWorkDate { get; set; }
 
         public AllOverdueHomeworkDTO()
         {
 
         }
 
-        public AllOverdueHomeworkDTO(int candidateID, string candidateFirstName, string candidateLastName,
-            string homeWorkStatus, string testStatus, DateTime homeWorkDate)
+        public AllOverdueHomeworkDTO(int candidateID, DateTime homeWorkDate, string candidateFirstName, string candidateLastName,
+            string homeWorkStatus, string testStatus)
         {
             CandidateID = candidateID;
+            HomeWorkDate = homeWorkDate;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
             HomeWorkStatus = homeWorkStatus;
             TestStatus = testStatus;
-            HomeWorkDate = homeWorkDate;
         }
 
         public override bool Equals(object obj)

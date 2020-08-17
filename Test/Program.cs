@@ -8,6 +8,7 @@ using System;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using DevEduInterviewSystem.DAL.DTO.QuereDTO;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework;
 
 namespace Test
 {
@@ -20,6 +21,10 @@ namespace Test
 
             UsersWithRoleProcedure test = new UsersWithRoleProcedure();
             List<UsersWithRoleDTO> result = test.SelectUsersWithRole();
+
+            AllOverdueHomeworkDTO dto = new AllOverdueHomeworkDTO();
+            AllOverdueHomework creud = new AllOverdueHomework();
+            creud.GetAllOverdueHomework(new DateTime(2020, 07, 20, 18, 30, 00));
 
 
             connection.Open();

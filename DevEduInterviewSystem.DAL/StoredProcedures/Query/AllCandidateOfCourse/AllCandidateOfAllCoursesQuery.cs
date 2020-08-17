@@ -9,12 +9,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
     public class AllCandidateOfAllCoursesQuery
     {
-<<<<<<< HEAD:DevEduInterviewSystem.DAL/StoredProcedures/Query/AllStudentsOfCourse/AllStudentsOfAllCoursesQuery.cs
-        public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse()
-=======
-
         public List<AllCandidateOfCourseDTO> SelectAllAllStudentsOfCourse()
->>>>>>> AllStudentsOfAllCourses:DevEduInterviewSystem.DAL/StoredProcedures/Query/AllCandidateOfCourse/AllCandidateOfAllCoursesQuery.cs
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();

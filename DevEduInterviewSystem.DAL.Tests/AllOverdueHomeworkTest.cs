@@ -88,8 +88,8 @@ namespace DevEduInterviewSystem.DAL.Tests
         [Test, TestCaseSource(typeof(AllOverdueHomeworksAndTestsDataSource))]
         public void GetAllOverdueHomeworksAndTestsTest(int idnumber, List<AllOverdueHomeworkDTO> expected)
         {
-            GetAllOverdueHomework _allOverdueHomework = new GetAllOverdueHomework();
-            List<AllOverdueHomeworkDTO> actual = _allOverdueHomework.AllOverdueHomework();
+            AllOverdueHomework _allOverdueHomework = new AllOverdueHomework();
+            List<AllOverdueHomeworkDTO> actual = _allOverdueHomework.GetAllOverdueHomework(new DateTime(2020, 07, 20, 18, 30, 00));
             Assert.AreEqual(expected, actual);
         }
 
