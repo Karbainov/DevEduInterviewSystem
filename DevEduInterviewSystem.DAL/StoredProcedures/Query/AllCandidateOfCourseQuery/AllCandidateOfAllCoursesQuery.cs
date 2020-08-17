@@ -7,34 +7,32 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllStudentsOfCourseQuery
+    public class AllCandidateOfAllCoursesQuery
     {
-        public List<AllStudentsOfCourseDTO> SelectAllAllStudentsOfCourse(int id)
+        public List<AllCandidateOfCourseDTO> SelectAllAllCandidateOfCourse()
         {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString); 
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllStudentsOfCourse", Connection);
-            SqlParameter courseParam = new SqlParameter("@CourseID", id);
-            command.Parameters.Add(courseParam);
+            SqlCommand command = ReferenceToProcedure("AllCandidateOfCourse", Connection);
 
-            List<AllStudentsOfCourseDTO> allStudentsOfAllCourses = new List<AllStudentsOfCourseDTO>();
+            List<AllCandidateOfCourseDTO> allCandidateOfAllCourses = new List<AllCandidateOfCourseDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllStudentsOfCourseDTO allStudentsOfAllCourse = new AllStudentsOfCourseDTO()
+                    AllCandidateOfCourseDTO allCandidateOfAllCourse = new AllCandidateOfCourseDTO()
                     {
                         Name = (string)reader["Name"]
                     };
 
-                    allStudentsOfAllCourses.Add(allStudentsOfAllCourse);
+                    allCandidateOfAllCourses.Add(allCandidateOfAllCourse);
                 }
             }
             reader.Close();
 
-            return allStudentsOfAllCourses;
+            return allCandidateOfAllCourses;
 
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
@@ -46,5 +44,4 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
         }
     }
 }
-
 
