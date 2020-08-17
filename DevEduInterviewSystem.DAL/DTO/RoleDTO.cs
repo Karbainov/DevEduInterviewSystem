@@ -17,5 +17,13 @@ namespace DevEduInterviewSystem.DAL.DTO
             this.ID = ID;
             this.TypeOfRole = TypeOfRole;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
+
+            RoleDTO dto = (RoleDTO)obj;
+            return (this.TypeOfRole == dto.TypeOfRole);
+        }
     }
 }
