@@ -9,9 +9,5 @@ namespace DevEduInterviewSystem.BLL
 {
     public class ManagerRoleLogic : IRoleLogic
     {
-        public void InsertCity(CityDTO city, CityCRUD crud)
-        {
-            throw new AccessDeniedException("Not enough rights");
-        }
     }
 }

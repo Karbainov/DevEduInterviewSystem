@@ -29,6 +29,7 @@ namespace DevEduInterviewSystem.BLL
         }
         public void InsertCity(CityDTO city, CityCRUD crud)
         {
+            CityCRUD crud = new CityCRUD();
             crud.Add(city);
         }
         #endregion
