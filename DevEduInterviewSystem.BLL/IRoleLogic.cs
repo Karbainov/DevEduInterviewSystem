@@ -8,7 +8,6 @@ namespace DevEduInterviewSystem.BLL
 {
     public interface IRoleLogic
     {
-        public void InsertCity(CityDTO city, CityCRUD crud);
 
     }
 
