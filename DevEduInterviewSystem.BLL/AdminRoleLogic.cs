@@ -1,5 +1,6 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -51,6 +52,12 @@ namespace DevEduInterviewSystem.BLL
             UserRoleDTO roleDTO = new UserRoleDTO(userDTO.ID, roleID);
             UserRoleCRUD role = new UserRoleCRUD();
             role.Add(roleDTO);
+        }
+
+        public void ShowDeletedUsers()
+        {
+            AllDeletedUsers users = new AllDeletedUsers();
+            users.SelectAllDeletedUsers();
         }
 
         //public void AddUser(UserDTO userDTO, UserRoleDTO roleDTO)
