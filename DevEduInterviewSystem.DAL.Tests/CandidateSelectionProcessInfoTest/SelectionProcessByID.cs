@@ -30,7 +30,7 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
             _mockCourseID = new List<int>();
 
             CourseCRUD courseCRUD = new CourseCRUD();
-            CourseDTOMock courseDTOMock = new CourseDTOMock();
+            Course2DTOMock courseDTOMock = new Course2DTOMock();
             foreach (CourseDTO dto in courseDTOMock)
             {
                 _mockCourseID.Add(courseCRUD.Add(dto));
