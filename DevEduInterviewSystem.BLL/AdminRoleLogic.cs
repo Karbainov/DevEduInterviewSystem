@@ -8,9 +8,11 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : IRoleLogic
     {
-        public void InsertCity(CityDTO city, CityCRUD crud)
+        public void InsertCity(CityDTO city)
         {
+            CityCRUD crud = new CityCRUD();
             crud.Add(city);
         }
+
     }
 }
