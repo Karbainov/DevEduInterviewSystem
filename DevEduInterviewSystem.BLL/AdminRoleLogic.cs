@@ -9,10 +9,11 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : IRoleLogic
     {
-        //public SqlConnection Connection { get ; set; }
-        //public void GetConnection()
-        //{
-        //}
+        public InterviewsNumber interviewsLimit { get; set; }
+        public void ChangeNumberOfInterviewsInOnePeriod(int number)
+        {
+            interviewsLimit = new InterviewsNumber(number);
+        }
 
         #region Methods for adding fields in system tables
         public void AddRole(RoleDTO role)
@@ -44,6 +45,5 @@ namespace DevEduInterviewSystem.BLL
             user.Add(userDTO);
             role.UpdateByID(roleDTO);
         }
-
     }
 }
