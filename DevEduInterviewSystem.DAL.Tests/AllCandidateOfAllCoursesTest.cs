@@ -67,7 +67,7 @@ namespace DevEduInterviewSystem.DAL.Tests
             }
 
             CourseCRUD courseCRUD = new CourseCRUD();
-            CourseDTOMock courseDTOMock = new CourseDTOMock();
+            Course2DTOMock courseDTOMock = new Course2DTOMock();
             int count = 0;
             foreach (CourseDTO dto in courseDTOMock)
             {

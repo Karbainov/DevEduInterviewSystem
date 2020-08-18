@@ -11,11 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.DAL",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tesd", "tesd\tesd.csproj", "{C9B8C2D6-7CD6-44DC-BBC3-DC2B8540A210}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.DAL.Tests", "DevEduInterviewSystem.DAL.Tests\DevEduInterviewSystem.DAL.Tests.csproj", "{1B8D2012-2A6D-4FFD-96E4-1AB5E2904663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEduInterviewSystem.DAL.Tests", "DevEduInterviewSystem.DAL.Tests\DevEduInterviewSystem.DAL.Tests.csproj", "{1B8D2012-2A6D-4FFD-96E4-1AB5E2904663}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEduInterviewSystem.BLL", "DevEduInterviewSystem.BLL\DevEduInterviewSystem.BLL.csproj", "{57A2AE1B-34D5-4043-9A8F-667DC6D33935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.BLL", "DevEduInterviewSystem.BLL\DevEduInterviewSystem.BLL.csproj", "{57A2AE1B-34D5-4043-9A8F-667DC6D33935}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F8506A6-ACAC-4502-83DB-30DCCAE32CD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9B8C2D6-7CD6-44DC-BBC3-DC2B8540A210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9B8C2D6-7CD6-44DC-BBC3-DC2B8540A210}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9B8C2D6-7CD6-44DC-BBC3-DC2B8540A210}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9B8C2D6-7CD6-44DC-BBC3-DC2B8540A210}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B8D2012-2A6D-4FFD-96E4-1AB5E2904663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B8D2012-2A6D-4FFD-96E4-1AB5E2904663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B8D2012-2A6D-4FFD-96E4-1AB5E2904663}.Release|Any CPU.ActiveCfg = Release|Any CPU

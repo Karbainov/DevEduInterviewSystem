@@ -12,6 +12,9 @@ namespace tesd
 {
     public class Tests
     {
+
+        AllInformationAboutTheCandidateByIDDTO allInfoCandidate;
+
         CandidateDTO candidate;
         CandidatePersonalInfoDTO candidatePersonalInfo;
         StageDTO stage;
@@ -64,7 +67,7 @@ namespace tesd
             
             DateTime date = new DateTime(1995,5,3);
             
-            candidate = new CandidateDTO(40, stageID, statusID, cityID, "123456789", "email", "vasa", "pupkin", date);            
+            candidate = new CandidateDTO(1, stageID, statusID, cityID, "123456789", "email", "vasa", "pupkin", date);            
             candidateID = cRUD.Add(candidate);
 
             stageChanged = new StageChangedDTO(1, stageID, candidateID, DateTime.Now);            
@@ -88,38 +91,35 @@ namespace tesd
             groupCandidate = new GroupCandidateDTO(1, groupID, candidateID);
             groupCandidateID = groupCandidateCRUD.Add(groupCandidate);
 
+
+            allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO(candidateID,stage.Name,status.Name,city.CityName,candidate.Phone,candidate.Email,candidate.FirstName,candidate.LastName,candidate.BirthDay,
+                feedback.Message,course.Name,group.Name,candidatePersonalInfo.MaritalStatus,candidatePersonalInfo.Education,candidatePersonalInfo.WorkPlace,candidatePersonalInfo.ITExperience, candidatePersonalInfo.Hobbies,
+                candidatePersonalInfo.InfoSourse, candidatePersonalInfo.Expectations);
         }
-        //[OneTimeTearDown]
-        //public void TearDown()
-        //{
-        //    cRUD.DeleteByID(candidateID);
+        public void TearDown()
+        {
+            stageCRUD.DeleteByID(stageID);
+            statusCRUD.DeleteByID(statusID);
+            cityCRUD.DeleteByID(cityID);
+            cRUD.DeleteByID(candidateID);
+            stageChangedCRUD.DeleteByID(stagechangedID);
+            userCRUD.DeleteByID(userID);
+            feedbackCRUD.DeleteByID(feedBackID);
+            candidatePersonalInfoCRUD.DeleteByID(candedatepersonalinfoID);
+            courseCRUD.DeleteByID(courseID);
+            groupCRUD.DeleteByID(groupID);
+            groupCandidateCRUD.DeleteByID(groupCandidateID);
+        }
 
-        //    feedbackCRUD.DeleteByID(feedBackID);
-        //}
-
-        [Test]
-        public void Test1()
+        [TestCase(true)]
+        public void Test1(bool expected)
         {
             AllInformationAboutTheCandidateByIDProcedure candidateByIDProcedure = new AllInformationAboutTheCandidateByIDProcedure();
-            AllInformationAboutTheCandidateByIDDTO allInfoCandidate = candidateByIDProcedure.AllInformationAboutTheCandidateByID(candidateID);
-            Assert.AreEqual(candidateID, allInfoCandidate.ID);
-            Assert.AreEqual(stage.Name, allInfoCandidate.TypeOfStage);
-            Assert.AreEqual(status.Name, allInfoCandidate.TypeOfStatus);
-            Assert.AreEqual(city.CityName, allInfoCandidate.CityName);
-            Assert.AreEqual(candidate.Phone, allInfoCandidate.Phone);
-            Assert.AreEqual(candidate.Email, allInfoCandidate.Email);
-            Assert.AreEqual(candidate.FirstName, allInfoCandidate.FirstName);
-            Assert.AreEqual(candidate.LastName, allInfoCandidate.LastName);
-            Assert.AreEqual(candidate.BirthDay, allInfoCandidate.Birthday);
-            Assert.AreEqual(feedback.Message, allInfoCandidate.FeedBack);
-            Assert.AreEqual(candidatePersonalInfo.WorkPlace, allInfoCandidate.WorkPlace);
-            Assert.AreEqual(candidatePersonalInfo.MaritalStatus, allInfoCandidate.MaritalStatus);
-            Assert.AreEqual(candidatePersonalInfo.ITExperience, allInfoCandidate.ITExperience);
-            Assert.AreEqual(candidatePersonalInfo.InfoSourse, allInfoCandidate.InfoSourse);
-            Assert.AreEqual(candidatePersonalInfo.Hobbies, allInfoCandidate.Hobbies);
-            Assert.AreEqual(candidatePersonalInfo.Expectations, allInfoCandidate.Expectations);
-            Assert.AreEqual(group.Name, allInfoCandidate.GroupName);
-            Assert.AreEqual(course.Name, allInfoCandidate.CourseName);
+
+
+            bool actual = allInfoCandidate.Equals(candidateByIDProcedure.AllInformationAboutTheCandidateByID(candidateID));
+
+            Assert.AreEqual(expected, actual);
 
         }
     }
