@@ -55,11 +55,32 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             Expectations = expectations;
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    var tmp = (AllInformationAboutTheCandidateByIDDTO)obj;
-        //    if(tmp.ID == ID && 
-        //        tmp.)
-        //}
+        public override bool Equals(object obj)
+        {
+            var tmp = (AllInformationAboutTheCandidateByIDDTO)obj;
+            if (tmp.ID == ID &&
+                tmp.TypeOfStage == TypeOfStage &&
+                tmp.TypeOfStatus == TypeOfStatus &&
+                tmp.CityName == CityName &&
+                tmp.Phone == Phone && 
+                tmp.Email == Email &&
+                tmp.FirstName == FirstName &&
+                tmp.LastName == LastName &&
+                tmp.Birthday == Birthday &&
+                tmp.FeedBack == FeedBack &&
+                tmp.CourseName == CourseName &&
+                tmp.GroupName == GroupName &&
+                tmp.MaritalStatus == MaritalStatus &&
+                tmp.Education == Education &&
+                tmp.WorkPlace == WorkPlace &&
+                tmp.ITExperience == ITExperience &&
+                tmp.Hobbies == Hobbies &&
+                tmp.InfoSourse == InfoSourse &&
+                tmp.Expectations == Expectations)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

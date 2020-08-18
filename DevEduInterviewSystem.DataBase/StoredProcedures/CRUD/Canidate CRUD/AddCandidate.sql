@@ -1,4 +1,5 @@
 ﻿CREATE Procedure [dbo].[AddCandidate]
+  
   @StageID int, 
   @StatusID int,
   @CityID int,
