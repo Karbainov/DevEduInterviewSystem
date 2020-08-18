@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[AllStudentsOfCourse]
+﻿CREATE PROCEDURE [dbo].[AllCandidateOfCourse]
 @CourseID int
 AS
 	SELECT Course.[Name], C.FirstName, C.LastName

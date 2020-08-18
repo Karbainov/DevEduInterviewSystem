@@ -3,6 +3,7 @@ using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Tests.Mocks;
 using NUnit.Framework;
@@ -70,30 +71,30 @@ namespace DevEduInterviewSystem.DAL.Tests
             int count = 0;
             foreach (CourseDTO dto in courseDTOMock)
             {
-                _mockCourseID.Add(courseCRUD.Add(dto));
-                _mockCourseID.Add(courseCRUD.Add(dto));
+                courseCRUD.Add(dto);
                 count++;
             }
 
-            Course_CandidateCRUD userInterviewCRUD = new Course_CandidateCRUD();
+            Course_CandidateCRUD сourseСandidateCRUD = new Course_CandidateCRUD();
             for (int i = 0; i < _mockCourseID.Count; i++)
             {
                 Course_CandidateDTO candidateOfCourse = new Course_CandidateDTO(1, _mockCandidateID[i], _mockCourseID[i]);
                 Course_CandidateDTO candidateOfCourse2 = new Course_CandidateDTO(2, _mockCourseID[_mockCourseID.Count - i - 1], _mockCourseID[i]);
-                userInterviewCRUD.Add(candidateOfCourse);
-                userInterviewCRUD.Add(candidateOfCourse2);
+                сourseСandidateCRUD.Add(candidateOfCourse);
+                сourseСandidateCRUD.Add(candidateOfCourse2);
             }
 
 
         }
 
-        [Test, TestCaseSource(typeof(AllInterviewsByDateIntervalAndUserQueryDataSource))]
-        public void SelectAllInterviewsByDateIntervalTest(int idnumber, DateTime startDateTime, DateTime finishDateTime, List<AllInterviewsDTO> expected)
+        [Test, TestCaseSource(typeof(AllCandidateOfAllCoursesQueryDataSource))]
+        public void SelectAllCandidateOfAllCoursesTest(int idnumber, List<AllCandidateOfCourseDTO> expected)
         {
-            AllInterviewsByDateIntervalAndUserQuery _allInterviewsQuery = new AllInterviewsByDateIntervalAndUserQuery();
-            List<AllInterviewsDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateIntervalAndUser(startDateTime, finishDateTime, _mockCourseID[idnumber]);
+            AllCandidateOfAllCoursesQuery _allCandidateOfAllCoursesQuery = new AllCandidateOfAllCoursesQuery();
+            List<AllCandidateOfCourseDTO> actual = _allCandidateOfAllCoursesQuery.SelectAllCandidateOfCourse();
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual); 
+
         }
 
         [TearDown]
@@ -103,99 +104,81 @@ namespace DevEduInterviewSystem.DAL.Tests
 
         }
 
-        public class AllInterviewsByDateIntervalAndUserQueryDataSource : IEnumerable
+        public class AllCandidateOfAllCoursesQueryDataSource : IEnumerable
         {
-            List<AllInterviewsDTO> firstTest = new List<AllInterviewsDTO>();
+            List<AllCandidateOfCourseDTO> firstTest = new List<AllCandidateOfCourseDTO>();
 
-            AllInterviewsDTO interviewSergey1 = new AllInterviewsDTO()
+            AllCandidateOfCourseDTO courseSergey1 = new AllCandidateOfCourseDTO()
             {
-                UserFirstName = "Sergey",
-                UserLastName = "Timofeev",
+                Name = "FrontEnd",
+                CandidateID = 1,
                 CandidateFirstName = "Vasya",
-                CandidateLastName = "Pupkin",
-                CandidatePhone = "911",
-                DateTimeInterview = new DateTime(2020, 07, 20, 18, 30, 00),
-                Attempt = 1,
-                InterviewStatus = "success"
+                CandidateLastName = "Pupkin"
+
             };
 
-            AllInterviewsDTO interviewSergey2 = new AllInterviewsDTO()
+            AllCandidateOfCourseDTO courseSergey2 = new AllCandidateOfCourseDTO()
             {
-                UserFirstName = "Sergey",
-                UserLastName = "Timofeev",
+                Name = "Base course",
+                CandidateID = 2,
                 CandidateFirstName = "Elena",
                 CandidateLastName = "Kac",
-                CandidatePhone = "8",
-                DateTimeInterview = new DateTime(2020, 09, 12, 15, 00, 00),
-                Attempt = 1,
-                InterviewStatus = "fail"
+
             };
 
-            List<AllInterviewsDTO> secondTest = new List<AllInterviewsDTO>();
+            List<AllCandidateOfCourseDTO> secondTest = new List<AllCandidateOfCourseDTO>();
 
-            AllInterviewsDTO interviewPolina1 = new AllInterviewsDTO()
+            AllCandidateOfCourseDTO coursePolina1 = new AllCandidateOfCourseDTO()
             {
-                UserFirstName = "Polina",
-                UserLastName = "Matveevna",
+                Name = "Base course",
+                CandidateID = 3,
                 CandidateFirstName = "Ivan",
                 CandidateLastName = "Sidorov",
-                CandidatePhone = "821",
-                DateTimeInterview = new DateTime(2020, 8, 20, 10, 30, 00),
-                Attempt = 2,
-                InterviewStatus = "fail"
+
             };
 
-            AllInterviewsDTO interviewPolina2 = new AllInterviewsDTO()
+            AllCandidateOfCourseDTO coursePolina2 = new AllCandidateOfCourseDTO()
             {
-                UserFirstName = "Polina",
-                UserLastName = "Matveevna",
+                Name = "Mobile Xamarin",
+                CandidateID = 4,
                 CandidateFirstName = "Yana",
                 CandidateLastName = "Smirnova",
-                CandidatePhone = "8921",
-                DateTimeInterview = new DateTime(2020, 9, 20, 12, 00, 00),
-                Attempt = 1,
-                InterviewStatus = "canceled"
+
             };
 
-            List<AllInterviewsDTO> thirdTest = new List<AllInterviewsDTO>();
+            List<AllCandidateOfCourseDTO> thirdTest = new List<AllCandidateOfCourseDTO>();
 
-            AllInterviewsDTO interviewSvetlana1 = new AllInterviewsDTO()
+            AllCandidateOfCourseDTO courseSvetlana1 = new AllCandidateOfCourseDTO()
             {
-                UserFirstName = "Svetlana",
-                UserLastName = "Fokina",
+                Name = "Mobile Xamarin",
+                CandidateID = 3,
                 CandidateFirstName = "Ivan",
                 CandidateLastName = "Sidorov",
-                CandidatePhone = "821",
-                DateTimeInterview = new DateTime(2020, 08, 20, 10, 30, 00),
-                Attempt = 2,
-                InterviewStatus = "fail"
+
             };
 
-            AllInterviewsDTO interviewSvetlana2 = new AllInterviewsDTO()
+            AllCandidateOfCourseDTO courseSvetlana2 = new AllCandidateOfCourseDTO()
             {
-                UserFirstName = "Svetlana",
-                UserLastName = "Fokina",
+                Name = "Base course",
+                CandidateID = 4,
                 CandidateFirstName = "Yana",
                 CandidateLastName = "Smirnova",
-                CandidatePhone = "8921",
-                DateTimeInterview = new DateTime(2020, 09, 20, 12, 00, 00),
-                Attempt = 1,
-                InterviewStatus = "canceled"
+
             };
 
 
             public IEnumerator GetEnumerator()
             {
-                firstTest.Add(interviewSergey1);
-                firstTest.Add(interviewSergey2);
-                secondTest.Add(interviewPolina1);
-                secondTest.Add(interviewPolina2);
-                thirdTest.Add(interviewSvetlana1);
-                thirdTest.Add(interviewSvetlana2);
+                firstTest.Add(courseSergey1);
+                firstTest.Add(courseSergey2);
+                secondTest.Add(coursePolina1);
+                secondTest.Add(coursePolina2);
+                thirdTest.Add(courseSvetlana1);
+                thirdTest.Add(courseSvetlana2);
 
-                yield return new object[] { 0, new DateTime(2019, 7, 20, 18, 30, 00), new DateTime(2021, 9, 20, 12, 00, 00), firstTest };
-                yield return new object[] { 1, new DateTime(2019, 8, 20, 10, 30, 00), new DateTime(2021, 8, 20, 10, 30, 00), secondTest };
-                yield return new object[] { 2, new DateTime(2019, 8, 20, 10, 30, 00), new DateTime(2021, 9, 12, 15, 00, 00), thirdTest };
+                yield return new object[] { 0, firstTest };
+                yield return new object[] { 1, secondTest };
+                yield return new object[] { 2, thirdTest };
             }
         }
     }
