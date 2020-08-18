@@ -1,7 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[AllOverdueHomework]
 @DateCurrent datetime2
 AS
-	SELECT  HW.[CandidateID], HW.[HomeWorkDate], C.[FirstName] AS CandidateFirstName, C.[LastName] AS CandidateLastName, HS.[Name] AS [HomeWorkStatus], TS.[Name] AS [TestStatus]
+	SELECT  HW.[CandidateID], HW.[HomeWorkDate], C.[FirstName] AS CandidateFirstName, C.[LastName] AS CandidateLastName, 
+	HS.[Name] AS [HomeWorkStatus], TS.[Name] AS [TestStatus]
+
 	FROM [dbo].[Homework] AS HW
 
 	JOIN dbo.[Candidate] AS C ON HW.[CandidateID] = C.[ID]

@@ -63,7 +63,7 @@ namespace DevEduInterviewSystem.DAL.Tests
             TestStatusDTOMock testStatusDTOMock = new TestStatusDTOMock();
             foreach (TestStatusDTO dto in testStatusDTOMock)
             {
-                _mockTestStatusID.Add(testkStatusCRUD.Add(dto));
+                testkStatusCRUD.Add(dto);
             }
 
             CandidateCRUD candidateCRUD = new CandidateCRUD();
@@ -89,7 +89,9 @@ namespace DevEduInterviewSystem.DAL.Tests
         public void GetAllOverdueHomeworksAndTestsTest(int idnumber, List<AllOverdueHomeworkDTO> expected)
         {
             AllOverdueHomework _allOverdueHomework = new AllOverdueHomework();
-            List<AllOverdueHomeworkDTO> actual = _allOverdueHomework.GetAllOverdueHomework(new DateTime(2020, 07, 20, 18, 30, 00));
+            DateTime date1 = new DateTime();
+            date1 = DateTime.Now;
+            List<AllOverdueHomeworkDTO> actual = _allOverdueHomework.GetAllOverdueHomework(date1);
             Assert.AreEqual(expected, actual);
         }
 
@@ -103,19 +105,48 @@ namespace DevEduInterviewSystem.DAL.Tests
         {
             List<AllOverdueHomeworkDTO> firstTest = new List<AllOverdueHomeworkDTO>();
 
-            AllOverdueHomeworkDTO result = new AllOverdueHomeworkDTO()
+            AllOverdueHomeworkDTO result1 = new AllOverdueHomeworkDTO()
             {
                 CandidateID = 1,
                 CandidateFirstName = "Vasya",
                 CandidateLastName = "Pupkin",
-                HomeWorkDate = new DateTime(2020, 07, 20, 18, 30, 00),
+                HomeWorkDate = new DateTime(2020, 10, 20, 18, 30, 00),
                 HomeWorkStatus = "Done",
                 TestStatus = "Not Done"
             };
-
+            AllOverdueHomeworkDTO result2 = new AllOverdueHomeworkDTO()
+            {
+                CandidateID = 2,
+                CandidateFirstName = "Ivan",
+                CandidateLastName = "Sidorov",
+                HomeWorkDate = new DateTime(2020, 10, 20, 18, 30, 00),
+                HomeWorkStatus = "Done",
+                TestStatus = "Not Done"
+            };
+            AllOverdueHomeworkDTO result3 = new AllOverdueHomeworkDTO()
+            {
+                CandidateID = 3,
+                CandidateFirstName = "Yana",
+                CandidateLastName = "Smirnova",
+                HomeWorkDate = new DateTime(2020, 10, 20, 18, 30, 00),
+                HomeWorkStatus = "Done",
+                TestStatus = "Not Done"
+            };
+            AllOverdueHomeworkDTO result4 = new AllOverdueHomeworkDTO()
+            {
+                CandidateID = 4,
+                CandidateFirstName = "Elena",
+                CandidateLastName = "Kac",
+                HomeWorkDate = new DateTime(2020, 10, 20, 18, 30, 00),
+                HomeWorkStatus = "Done",
+                TestStatus = "Not Done"
+            };
             public IEnumerator GetEnumerator()
             {
-                firstTest.Add(result);
+                firstTest.Add(result1);
+                firstTest.Add(result2);
+                firstTest.Add(result3);
+                firstTest.Add(result4);
                 yield return new object[] { 0, firstTest };
             }
         }
