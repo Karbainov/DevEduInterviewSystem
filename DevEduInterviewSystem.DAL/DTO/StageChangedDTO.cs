@@ -23,5 +23,12 @@ namespace DevEduInterviewSystem.DAL.DTO
             CandidateID = candidateID;
             ChangedDate = changedDate;
         }
+
+        public StageChangedDTO(int stageID, int candidateID, DateTime changedDate)
+        {
+            StageID = stageID;
+            CandidateID = candidateID;
+            ChangedDate = changedDate;
+        }
     }
 }
