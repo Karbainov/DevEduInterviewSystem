@@ -28,7 +28,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
                         Login = (string)reader["Login"],
                         Password = (string)reader["Password"],
                         FirstName = (string)reader["FirstName"],
-                        LastName = (string)reader["LastName"]
+                        LastName = (string)reader["LastName"],
+                        
                     };
                     users.Add(user);
                 }
@@ -44,5 +45,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 
             return command;
         }
+
     }
 }

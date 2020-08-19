@@ -76,6 +76,8 @@ namespace DevEduInterviewSystem.BLL
             {
                 throw new Exception("The interviews limit is exceeded");
             }
+
+            //To do: try catch in controller (catch - exception=> IActionResult bad request)
         }
     }
 }
