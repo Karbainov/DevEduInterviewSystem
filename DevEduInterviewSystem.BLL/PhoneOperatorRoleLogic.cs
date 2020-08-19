@@ -24,7 +24,7 @@ namespace DevEduInterviewSystem.BLL
             StageChangedDTO stageDTO = new StageChangedDTO(candidateID, candidateDTO.StageID, DateTime.Now);
             StageChangedCRUD stageChanged = new StageChangedCRUD();
             stageChanged.Add(stageDTO);
-            
+
             if (taskDTO != null)
             {
                 AddTask(taskDTO, feedbackDTO);
