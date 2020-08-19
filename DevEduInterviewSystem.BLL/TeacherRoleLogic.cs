@@ -8,24 +8,20 @@ namespace DevEduInterviewSystem.BLL
 {
     public class TeacherRoleLogic : IRoleLogic
     {
-        public void DoUpdatesAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID, FeedbackDTO feedbackDTO)
+        public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID, FeedbackDTO feedbackDTO)
         {
             CandidateCRUD candidate = new CandidateCRUD();
-            int candidateID = candidate.UpdateByID(candidateDTO);
+            candidate.UpdateByID(candidateDTO);
 
-            StageChangedDTO stageDTO = new StageChangedDTO(candidateID, candidateDTO.StageID, DateTime.Now);
+            StageChangedDTO stageDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
             StageChangedCRUD stageChanged = new StageChangedCRUD();
-            stageChanged.UpdateByID(stageDTO);
+            stageChanged.Add(stageDTO);
 
-            StatusDTO statusDTO = new StatusDTO(candidateDTO.StatusID);
-            StatusCRUD status = new StatusCRUD();
-            status.UpdateByID(statusDTO);
-
-            InterviewDTO _interviewDTO = new InterviewDTO(candidateID, interviewDTO.InterviewStatusID, DateTime.Now);
+            InterviewDTO _interviewDTO = new InterviewDTO(candidateDTO.ID, interviewDTO.InterviewStatusID, DateTime.Now);
             InterviewCRUD interview = new InterviewCRUD();
             interview.UpdateByID(_interviewDTO);
 
-            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateID);
+            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateDTO.ID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
 
