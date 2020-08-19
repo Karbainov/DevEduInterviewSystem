@@ -64,7 +64,6 @@ namespace DevEduInterviewSystem.BLL
             interview.Add(interviewDTO);
             ChangeStageAddFeedback(stageChangedDTO, feedbackDTO);
 
-
         }
     }
 }

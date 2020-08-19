@@ -13,29 +13,54 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddCandidatePersonalInfo");
 
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
+            if (dto.CandidateID > 0)
+            {
+                SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
+                command.Parameters.Add(CandidateIDParam);
+            }
 
-            SqlParameter MaritalStatusParam = new SqlParameter("MaritalStatus", dto.MaritalStatus);
-            command.Parameters.Add(MaritalStatusParam);
+            if (dto.MaritalStatus == true || dto.MaritalStatus == false )
+            {
+                SqlParameter MaritalStatusParam = new SqlParameter("@MaritalStatus", dto.MaritalStatus);
+                command.Parameters.Add(MaritalStatusParam);
+            }
 
-            SqlParameter EducationParam = new SqlParameter("@Education", dto.Education);
-            command.Parameters.Add(EducationParam);
+            if (dto.Education != null)
+            {
+                SqlParameter EducationParam = new SqlParameter("@Education", dto.Education);
+                command.Parameters.Add(EducationParam);
+            }
 
-            SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", dto.WorkPlace);
-            command.Parameters.Add(WorkPlaceParam);
+            if (dto.WorkPlace != null)
+            {
+                SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", dto.WorkPlace);
+                command.Parameters.Add(WorkPlaceParam);
+            }
 
-            SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", dto.ITExperience);
-            command.Parameters.Add(ITExperienceParam);
+            if (dto.ITExperience != null)
+            {
+                SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", dto.ITExperience);
+                command.Parameters.Add(ITExperienceParam);
+            }
 
-            SqlParameter HobbiesParam = new SqlParameter("@Hobbies", dto.Hobbies);
-            command.Parameters.Add(HobbiesParam);
+            if (dto.Hobbies != null)
+            {
+                SqlParameter HobbiesParam = new SqlParameter("@Hobbies", dto.Hobbies);
+                command.Parameters.Add(HobbiesParam);
+            }
 
-            SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", dto.InfoSourse);
-            command.Parameters.Add(InfoSourseParam);
+            if (dto.InfoSourse != null)
+            {
+                SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", dto.InfoSourse);
+                command.Parameters.Add(InfoSourseParam);
+            }
 
-            SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
-            command.Parameters.Add(ExpectationsParam);
+            if (dto.Expectations != null)
+            {
+                SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
+                command.Parameters.Add(ExpectationsParam);
+            }
+             
 
             command.ExecuteNonQuery();
 
