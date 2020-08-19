@@ -28,7 +28,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int DeleteByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@DeleteCityByID");
+            SqlCommand command = ReferenceToProcedure("DeleteCityByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
@@ -41,7 +41,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(CityDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@UpdateCityByID");
+            SqlCommand command = ReferenceToProcedure("UpdateCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
             command.Parameters.Add(IDParam);
 
@@ -53,7 +53,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<CityDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@SelectAllCity");
+            SqlCommand command = ReferenceToProcedure("SelectAllCity");
             SqlDataReader reader = command.ExecuteReader();
 
             List<CityDTO> cities = new List<CityDTO>();
@@ -64,7 +64,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     CityDTO city = new CityDTO()
                     {
                         ID = (int)reader["id"],
-                        CityName = (string)reader["City"],
+                        CityName = (string)reader["Name"],
                     };
                     cities.Add(city);
                 }
@@ -77,21 +77,20 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override CityDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@SelectCityByID");
+            SqlCommand command = ReferenceToProcedure("SelectCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-            CityDTO city = new CityDTO();
+            CityDTO city = null;
             
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    {
-                        city.ID = (int)reader["id"];
-                        city.CityName = (string)reader["City"];
-                    }
+                    city = new CityDTO();
+                    city.ID = (int)reader["id"];
+                    city.CityName = (string)reader["Name"]; 
                 }
             }
             reader.Close();
