@@ -46,6 +46,7 @@ namespace DevEduInterviewSystem.BLL
         public void ChangeStageAddFeedback(StageChangedDTO stageChangedDTO, FeedbackDTO feedbackDTO = null)
         {
             StageChangedCRUD stage = new StageChangedCRUD();
+            stageChangedDTO.ChangedDate = DateTime.Now;
             int stageChangedID = stage.Add(stageChangedDTO);
             
             if (feedbackDTO != null)
