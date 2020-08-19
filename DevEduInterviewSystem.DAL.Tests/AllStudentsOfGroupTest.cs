@@ -14,12 +14,12 @@ using System.Text;
 namespace DevEduInterviewSystem.DAL.Tests
 {
     [TestFixture]
-   public class AllStudentsOfGroupTest
+    public class AllStudentsOfGroupTest
     {
         private List<int> _mockGroupID;
         private List<int> _mockGroupCandidateID;
         private List<int> _mockCandidateID;
-        
+
         SqlConnection Connection;
 
         [SetUp]
@@ -31,8 +31,16 @@ namespace DevEduInterviewSystem.DAL.Tests
             _mockCandidateID = new List<int>();
             _mockGroupCandidateID = new List<int>();
 
+            CourseCRUD courseCRUD = new CourseCRUD();
+            CourseDTOMock courseDTOMock = new CourseDTOMock();
+            foreach (CourseDTO dto in courseDTOMock)
+            {
+                courseCRUD.Add(dto);
+            }
+
             GroupCRUD groupCRUD = new GroupCRUD();
             GroupDTOMock groupDTOMock = new GroupDTOMock();
+
             foreach (GroupDTO dto in groupDTOMock)
             {
                 _mockGroupID.Add(groupCRUD.Add(dto));
@@ -44,17 +52,21 @@ namespace DevEduInterviewSystem.DAL.Tests
             {
                 _mockCandidateID.Add(candidateCRUD.Add(dto));
             }
-           
+
             GroupCandidateCRUD groupCandidateCRUD = new GroupCandidateCRUD();
             for (int i = 0; i < _mockGroupID.Count; i++)
             {
-                GroupCandidateDTO groupCandidate1 = new GroupCandidateDTO(1, _mockGroupCandidateID[i], _mockGroupID[i]);
-                GroupCandidateDTO groupCandidate2 = new GroupCandidateDTO(2, _mockGroupCandidateID[_mockGroupID.Count - i - 1], _mockGroupID[i]);
+                GroupCandidateDTO groupCandidate1 = new GroupCandidateDTO(1, _mockGroupID[i], _mockCandidateID[i]);
+                GroupCandidateDTO groupCandidate2 = new GroupCandidateDTO(2, _mockGroupID[_mockGroupID.Count - i - 1], _mockCandidateID[i]);
+                GroupCandidateDTO groupCandidate3 = new GroupCandidateDTO(3, _mockGroupID[_mockGroupID.Count - i - 1], _mockCandidateID[i]);
+                GroupCandidateDTO groupCandidate4 = new GroupCandidateDTO(4, _mockGroupID[_mockGroupID.Count - i - 1], _mockCandidateID[i]);
                 groupCandidateCRUD.Add(groupCandidate1);
-                groupCandidateCRUD.Add (groupCandidate2);
+                groupCandidateCRUD.Add(groupCandidate2);
+                groupCandidateCRUD.Add(groupCandidate3);
+                groupCandidateCRUD.Add(groupCandidate4);
             }
         }
-        
+
         [Test, TestCaseSource(typeof(AllStudentsOfGroupProcedureDataSourse))]
         public void SelectAllStudentsOfGroupTest(int idnumber, List<AllStudentsOfGroupDTO> expected)
         {
@@ -68,115 +80,116 @@ namespace DevEduInterviewSystem.DAL.Tests
         public void TearDown()
         {
 
+
         }
-
-        public class AllStudentsOfGroupProcedureDataSourse : IEnumerable
-        {
-
-            List<AllStudentsOfGroupDTO> firstTest = new List<AllStudentsOfGroupDTO>();
-
-           AllStudentsOfGroupDTO groupTest1 = new AllStudentsOfGroupDTO()
-            {               
-                Name = "baseC#",
-                StudentFirstName = "Vasya",
-                StudentLastName = "Petrov"
-            };
-
-            AllStudentsOfGroupDTO groupTest2 = new AllStudentsOfGroupDTO()
-            {
-                Name = "FrontEnd",
-                StudentFirstName = "Aleksey",
-                StudentLastName = "Pupkin"
-            };
-            AllStudentsOfGroupDTO groupTest3 = new AllStudentsOfGroupDTO()
-            {
-                Name = "backEnd",
-                StudentFirstName = "Tyga",
-                StudentLastName = "Brendovich"
-            };
-            AllStudentsOfGroupDTO groupTest4 = new AllStudentsOfGroupDTO()
-            {
-                Name = "baseC#",
-                StudentFirstName = "Anatoliy",
-                StudentLastName = "Kashpirovskiy"
-            };
-
-            List<AllStudentsOfGroupDTO> secondTest = new List<AllStudentsOfGroupDTO>();
-
-            AllStudentsOfGroupDTO groupTest5 = new AllStudentsOfGroupDTO()
-            {
-                Name = "baseC#",
-                StudentFirstName = "Vasya",
-                StudentLastName = "Petrov"
-            };
-
-            AllStudentsOfGroupDTO groupTest6 = new AllStudentsOfGroupDTO()
-            {
-                Name = "FrontEnd",
-                StudentFirstName = "Aleksey",
-                StudentLastName = "Pupkin"
-            };
-            AllStudentsOfGroupDTO groupTest7 = new AllStudentsOfGroupDTO()
-            {
-                Name = "FrontEnd",
-                StudentFirstName = "Tyga",
-                StudentLastName = "Brendovich"
-            };
-            AllStudentsOfGroupDTO groupTest8 = new AllStudentsOfGroupDTO()
-            {
-                Name = "FrontEnd",
-                StudentFirstName = "Anatoliy",
-                StudentLastName = "Kashpirovskiy"
-            };
-
-            List<AllStudentsOfGroupDTO> thirdTest = new List<AllStudentsOfGroupDTO>();
-
-            AllStudentsOfGroupDTO groupTest9 = new AllStudentsOfGroupDTO()
-            {
-                Name = "backEnd",
-                StudentFirstName = "Vasya",
-                StudentLastName = "Petrov"
-            };
-
-            AllStudentsOfGroupDTO groupTest10 = new AllStudentsOfGroupDTO()
-            {
-                Name = "backEnd",
-                StudentFirstName = "Aleksey",
-                StudentLastName = "Pupkin"
-            };
-            AllStudentsOfGroupDTO groupTest11 = new AllStudentsOfGroupDTO()
-            {
-                Name = "backEnd",
-                StudentFirstName = "Tyga",
-                StudentLastName = "Brendovich"
-            };
-            AllStudentsOfGroupDTO groupTest12 = new AllStudentsOfGroupDTO()
-            {
-                Name = "baseC#",
-                StudentFirstName = "Anatoliy",
-                StudentLastName = "Kashpirovskiy"
-            };
-
-
-            public IEnumerator GetEnumerator()
-            {
-                firstTest.Add(groupTest1);
-                firstTest.Add(groupTest2);
-                firstTest.Add(groupTest3);
-                firstTest.Add(groupTest4);
-                secondTest.Add(groupTest5);
-                secondTest.Add(groupTest6);
-                secondTest.Add(groupTest7);
-                secondTest.Add(groupTest8);
-                thirdTest.Add(groupTest9);
-                thirdTest.Add(groupTest10);
-                thirdTest.Add(groupTest11);
-                thirdTest.Add(groupTest12);
-
-                yield return new object[] { 0, firstTest };
-                yield return new object[] { 1, secondTest };
-                yield return new object[] { 2, thirdTest };
-            }
-        };
     }
+
+    public class AllStudentsOfGroupProcedureDataSourse : IEnumerable
+    {
+
+        List<AllStudentsOfGroupDTO> firstTest = new List<AllStudentsOfGroupDTO>();
+
+        AllStudentsOfGroupDTO groupTest1 = new AllStudentsOfGroupDTO()
+        {
+            Name = "baseC#",
+            StudentFirstName = "Vasya",
+            StudentLastName = "Petrov"
+        };
+
+        AllStudentsOfGroupDTO groupTest2 = new AllStudentsOfGroupDTO()
+        {
+            Name = "FrontEnd",
+            StudentFirstName = "Aleksey",
+            StudentLastName = "Pupkin"
+        };
+        AllStudentsOfGroupDTO groupTest3 = new AllStudentsOfGroupDTO()
+        {
+            Name = "backEnd",
+            StudentFirstName = "Tyga",
+            StudentLastName = "Brendovich"
+        };
+        AllStudentsOfGroupDTO groupTest4 = new AllStudentsOfGroupDTO()
+        {
+            Name = "baseC#",
+            StudentFirstName = "Anatoliy",
+            StudentLastName = "Kashpirovskiy"
+        };
+
+        List<AllStudentsOfGroupDTO> secondTest = new List<AllStudentsOfGroupDTO>();
+
+        AllStudentsOfGroupDTO groupTest5 = new AllStudentsOfGroupDTO()
+        {
+            Name = "baseC#",
+            StudentFirstName = "Vasya",
+            StudentLastName = "Petrov"
+        };
+
+        AllStudentsOfGroupDTO groupTest6 = new AllStudentsOfGroupDTO()
+        {
+            Name = "FrontEnd",
+            StudentFirstName = "Aleksey",
+            StudentLastName = "Pupkin"
+        };
+        AllStudentsOfGroupDTO groupTest7 = new AllStudentsOfGroupDTO()
+        {
+            Name = "FrontEnd",
+            StudentFirstName = "Tyga",
+            StudentLastName = "Brendovich"
+        };
+        AllStudentsOfGroupDTO groupTest8 = new AllStudentsOfGroupDTO()
+        {
+            Name = "FrontEnd",
+            StudentFirstName = "Anatoliy",
+            StudentLastName = "Kashpirovskiy"
+        };
+
+        List<AllStudentsOfGroupDTO> thirdTest = new List<AllStudentsOfGroupDTO>();
+
+        AllStudentsOfGroupDTO groupTest9 = new AllStudentsOfGroupDTO()
+        {
+            Name = "backEnd",
+            StudentFirstName = "Vasya",
+            StudentLastName = "Petrov"
+        };
+
+        AllStudentsOfGroupDTO groupTest10 = new AllStudentsOfGroupDTO()
+        {
+            Name = "backEnd",
+            StudentFirstName = "Aleksey",
+            StudentLastName = "Pupkin"
+        };
+        AllStudentsOfGroupDTO groupTest11 = new AllStudentsOfGroupDTO()
+        {
+            Name = "backEnd",
+            StudentFirstName = "Tyga",
+            StudentLastName = "Brendovich"
+        };
+        AllStudentsOfGroupDTO groupTest12 = new AllStudentsOfGroupDTO()
+        {
+            Name = "baseC#",
+            StudentFirstName = "Anatoliy",
+            StudentLastName = "Kashpirovskiy"
+        };
+
+
+        public IEnumerator GetEnumerator()
+        {
+            firstTest.Add(groupTest1);
+            firstTest.Add(groupTest2);
+            firstTest.Add(groupTest3);
+            firstTest.Add(groupTest4);
+            secondTest.Add(groupTest5);
+            secondTest.Add(groupTest6);
+            secondTest.Add(groupTest7);
+            secondTest.Add(groupTest8);
+            thirdTest.Add(groupTest9);
+            thirdTest.Add(groupTest10);
+            thirdTest.Add(groupTest11);
+            thirdTest.Add(groupTest12);
+
+            yield return new object[] { 1, firstTest };
+            yield return new object[] { 2, secondTest };
+            yield return new object[] { 3, thirdTest };
+        }
+    };
 }
