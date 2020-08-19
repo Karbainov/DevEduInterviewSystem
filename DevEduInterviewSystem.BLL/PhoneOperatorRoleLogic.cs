@@ -19,9 +19,9 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.Add(courseCandidateDTO);
 
-            StageChangedDTO stageDTO = new StageChangedDTO(candidateID, candidateDTO.StageID, DateTime.Now);
-            StageChangedCRUD stageChanged = new StageChangedCRUD();
-            stageChanged.Add(stageDTO);
+            //StageChangedDTO stageDTO = new StageChangedDTO(candidateID, candidateDTO.StageID, DateTime.Now);
+            //StageChangedCRUD stageChanged = new StageChangedCRUD();
+            //stageChanged.Add(stageDTO);
             
             if (taskDTO != null)
             {
