@@ -10,18 +10,21 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : IRoleLogic
     {
-        public InterviewsNumber interviewsLimit { get; set; }
+        //public InterviewsNumber interviewsLimit { get; set; }
         public void ChangeNumberOfInterviewsInOnePeriod(int number)
         {
-            interviewsLimit = new InterviewsNumber(number);
+            
+            InterviewsNumber interviewsLimit =  InterviewsNumber.GetInstance();
+            interviewsLimit.InterviewsLimit = number;
+
         }
 
         #region Methods for adding fields in system tables
-        public void AddRole(RoleDTO role)
-        {
-            RoleCRUD crud = new RoleCRUD();
-            crud.Add(role);
-        }
+        //public void AddRole(RoleDTO role)
+        //{
+        //    RoleCRUD crud = new RoleCRUD();
+        //    crud.Add(role);
+        //}
         public void AddStage(StageDTO stage)
         {
             StageCRUD crud = new StageCRUD();
@@ -55,7 +58,8 @@ namespace DevEduInterviewSystem.BLL
         }
 
         public void ShowDeletedUsers()
-        {
+        { 
+            //+роли
             AllDeletedUsers users = new AllDeletedUsers();
             users.SelectAllDeletedUsers();
         }
