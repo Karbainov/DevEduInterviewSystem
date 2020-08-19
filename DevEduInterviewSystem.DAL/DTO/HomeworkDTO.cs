@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace DevEduInterviewSystem.DAL.DTO
 {
     public class HomeworkDTO : IDTO
@@ -17,7 +18,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public HomeworkDTO(int ID, int CandidateID, int HomeworkStatusID, int TestStatusID, DateTime HomeworkDate)
+        public HomeworkDTO(int ID, int? CandidateID, int? HomeworkStatusID, int? TestStatusID, DateTime HomeworkDate)
         {
             this.ID = ID;
             this.CandidateID = CandidateID;
