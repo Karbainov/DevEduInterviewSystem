@@ -12,15 +12,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddStageChanged");
+            if (dto.StageID > 0)
+            {
+                SqlParameter StageIDParam = new SqlParameter("@StageID", dto.StageID);
+                command.Parameters.Add(StageIDParam);
+            }
 
-            SqlParameter StageIDParam = new SqlParameter("@StageID", dto.StageID);
-            command.Parameters.Add(StageIDParam);
-
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
+            if(dto.CandidateID > 0)
+            {
+                SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
+                command.Parameters.Add(CandidateParam);
+            }
+  
             SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
             command.Parameters.Add(ChangedDateParam);
+            
+            
 
             command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[StageChanged]", Connection);

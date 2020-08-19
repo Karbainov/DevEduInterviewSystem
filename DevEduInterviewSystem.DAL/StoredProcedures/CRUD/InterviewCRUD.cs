@@ -37,6 +37,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             }
                 
 
+                
+
             command.ExecuteNonQuery();
 
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Interview]", Connection);

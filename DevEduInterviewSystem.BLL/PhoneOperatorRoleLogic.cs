@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
 using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 
@@ -60,11 +62,21 @@ namespace DevEduInterviewSystem.BLL
 
         public void ScheduleInterview(InterviewDTO interviewDTO, StageChangedDTO stageChangedDTO, FeedbackDTO feedbackDTO = null)
         {
-            InterviewCRUD interview = new InterviewCRUD();
-            interview.Add(interviewDTO);
-            ChangeStageAddFeedback(stageChangedDTO, feedbackDTO);
+            List <AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
+            AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
+            interviewsList = interviews.SelectAllInterviewsByDate(interviewDTO.DateTimeInterview);
 
-
+            InterviewsNumber interviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
+            if (interviewsList.Count < interviewsLimit.InterviewsLimit)
+            {
+                InterviewCRUD interview = new InterviewCRUD();
+                interview.Add(interviewDTO);
+                ChangeStageAddFeedback(stageChangedDTO, feedbackDTO);
+            }
+            else
+            {
+                throw new Exception("The interviews limit is exceeded");
+            }
         }
     }
 }
