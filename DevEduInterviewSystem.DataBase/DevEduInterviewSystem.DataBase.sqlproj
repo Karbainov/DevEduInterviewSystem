@@ -288,9 +288,14 @@
     <Build Include="StoredProcedures\StudentsOfGroup\AllStudentsOfGroup.sql" />
     <Build Include="StoredProcedures\StudentsOfGroup\AllStudentsOfGroupByStart.sql" />
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateIntervalAndUser.sql" />
-    <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfAllCourses.sql" />
+    <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfAllCourses.sql">
+      <QuotedIdentifier>On</QuotedIdentifier>
+    </Build>
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
     <Build Include="StoredProcedures\OneUserRole.sql" />
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="StoredProcedures\AllOverdueHomework.sql" />
   </ItemGroup>
 </Project>
