@@ -4,7 +4,7 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
 {
     public class AllOverdueHomeworksDTO : IDTO
     {
-        //public int CandidateID { get; set; }
+        public int CandidateID { get; set; }
         public DateTime HomeWorkDate { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
@@ -15,10 +15,10 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
 
         }
 
-        public AllOverdueHomeworksDTO(/*int candidateID,*/ DateTime homeWorkDate, string candidateFirstName, string candidateLastName,
-            string homeWorkStatus)
+        public AllOverdueHomeworksDTO(int candidateID, DateTime homeWorkDate, string candidateFirstName,
+            string candidateLastName, string homeWorkStatus)
         {
-            //CandidateID = candidateID;
+            CandidateID = candidateID;
             HomeWorkDate = homeWorkDate;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
@@ -30,8 +30,8 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             if (obj.GetType() != this.GetType()) return false;
 
             AllOverdueHomeworksDTO dto = (AllOverdueHomeworksDTO)obj;
-            return (/* this.CandidateID == dto.CandidateID
-                &&*/ this.CandidateFirstName == dto.CandidateFirstName
+            return (this.CandidateID == dto.CandidateID
+                && this.CandidateFirstName == dto.CandidateFirstName
                 && this.CandidateLastName == dto.CandidateLastName
                 && this.HomeWorkStatus == dto.HomeWorkStatus
                 && this.HomeWorkDate.ToShortDateString() == dto.HomeWorkDate.ToShortDateString());
