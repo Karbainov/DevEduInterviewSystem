@@ -13,16 +13,24 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlCommand command = ReferenceToProcedure("AddInterview");
 
             SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
+            command.Parameters.Add(CandidateParam);         
 
-            SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", dto.InterviewStatusID);
-            command.Parameters.Add(InterviewStatusParam);
+            if (dto.InterviewStatusID!= null)
+            {
+                SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", dto.InterviewStatusID);
+                command.Parameters.Add(InterviewStatusParam);
+            }
 
-            SqlParameter AttemptParam = new SqlParameter("@Attempt", dto.Attempt);
-            command.Parameters.Add(AttemptParam);
+            if (dto.Attempt != null)
+            {
+                SqlParameter AttemptParam = new SqlParameter("@Attempt", dto.Attempt);
+                command.Parameters.Add(AttemptParam);
+            }
 
             SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
             command.Parameters.Add(DateTimeInterviewParam);
+
+                
 
             command.ExecuteNonQuery();
 

@@ -77,21 +77,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override CityDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("@SelectCityByID");
+            SqlCommand command = ReferenceToProcedure("SelectCityByID");
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-            CityDTO city = new CityDTO();
+            CityDTO city = null;
             
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    {
+                    
+                        city = new CityDTO();
                         city.ID = (int)reader["id"];
-                        city.CityName = (string)reader["City"];
-                    }
+                        city.CityName = (string)reader["Name"];
+                    
                 }
             }
             reader.Close();
