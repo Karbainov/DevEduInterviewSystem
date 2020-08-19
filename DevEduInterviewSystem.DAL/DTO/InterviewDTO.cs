@@ -24,6 +24,13 @@ namespace DevEduInterviewSystem.DAL.DTO
             this.DateTimeInterview = DateTimeInterview;
 
         }
+        public InterviewDTO(int? CandidateID, int? InterviewStatusID, DateTime DateTimeInterview)
+        {            
+            this.CandidateID = CandidateID;
+            this.InterviewStatusID = InterviewStatusID;            
+            this.DateTimeInterview = DateTimeInterview;
+
+        }
     }
 }
 

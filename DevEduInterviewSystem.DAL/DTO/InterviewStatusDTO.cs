@@ -17,5 +17,10 @@ namespace DevEduInterviewSystem.DAL.DTO
             this.ID = ID;
             this.Name = Name;
         }
+        public InterviewStatusDTO(int ID)
+        {
+            this.ID = ID;
+           
+        }
     }
 }

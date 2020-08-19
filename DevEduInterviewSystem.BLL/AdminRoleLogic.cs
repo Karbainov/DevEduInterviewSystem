@@ -1,5 +1,6 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -31,19 +32,40 @@ namespace DevEduInterviewSystem.BLL
             StatusCRUD crud = new StatusCRUD();
             crud.Add(status);
         }
-        public void InsertCity(CityDTO city)
+        public void AddCity(CityDTO city)
         {
             CityCRUD crud = new CityCRUD();
             crud.Add(city);
         }
+        public void AddCourse(CourseDTO course)
+        {
+            CourseCRUD crud = new CourseCRUD();
+            crud.Add(course);
+        }
         #endregion
 
-        public void AddNewUser(UserDTO userDTO, UserRoleDTO roleDTO)
+        public void AddNewUser(UserDTO userDTO, int roleID)
         {
             UserCRUD user = new UserCRUD();
-            UserRoleCRUD role = new UserRoleCRUD();
             user.Add(userDTO);
-            role.UpdateByID(roleDTO);
+           
+            UserRoleDTO roleDTO = new UserRoleDTO(userDTO.ID, roleID);
+            UserRoleCRUD role = new UserRoleCRUD();
+            role.Add(roleDTO);
         }
+
+        public void ShowDeletedUsers()
+        {
+            AllDeletedUsers users = new AllDeletedUsers();
+            users.SelectAllDeletedUsers();
+        }
+
+        //public void AddUser(UserDTO userDTO, UserRoleDTO roleDTO)
+        //{
+        //    UserCRUD user = new UserCRUD();
+        //    UserRoleCRUD role = new UserRoleCRUD();
+        //    user.Add(userDTO);
+        //    role.UpdateByID(roleDTO);
+        //}
     }
 }
