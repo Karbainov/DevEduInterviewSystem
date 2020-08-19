@@ -13,11 +13,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddCandidate");
 
-            SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
-            command.Parameters.Add(StageParam);
+            if (dto.StageID > 0)
+            {
+                SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
+                command.Parameters.Add(StageParam);
+            }
 
-            SqlParameter StatusParam = new SqlParameter("@StatusID", dto.StatusID);
-            command.Parameters.Add(StatusParam);
+            if (dto.StatusID > 0)
+            {
+                SqlParameter StatusParam = new SqlParameter("@StatusID", dto.StatusID);
+                command.Parameters.Add(StatusParam);
+            }
+                
 
             SqlParameter CityParam = new SqlParameter("@CityID", dto.CityID);
             command.Parameters.Add(CityParam);
@@ -25,8 +32,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter PhoneParam = new SqlParameter("@Phone", dto.Phone);
             command.Parameters.Add(PhoneParam);
 
-            SqlParameter EmailParam = new SqlParameter("@Email", dto.Email);
-            command.Parameters.Add(EmailParam);
+            if (dto.Email != null)
+            {
+                SqlParameter EmailParam = new SqlParameter("@Email", dto.Email);
+                command.Parameters.Add(EmailParam);
+            }
+               
 
             SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
             command.Parameters.Add(FirstNameParam);
@@ -37,9 +48,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             if (dto.BirthDay != null)
             {
                 SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
-                command.Parameters.Add(BDParam); 
+                command.Parameters.Add(BDParam);
             }
-            
             command.ExecuteNonQuery();
 
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Candidate]", Connection);

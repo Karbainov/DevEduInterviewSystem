@@ -13,6 +13,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddUser");
 
+
             SqlParameter LoginParam = new SqlParameter("@Login", dto.Login);
             command.Parameters.Add(LoginParam);
 
@@ -25,8 +26,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
             command.Parameters.Add(LastNameParam);
 
-            SqlParameter IsDeletedParam = new SqlParameter("@IsDeleted", dto.IsDeleted);
-            command.Parameters.Add(IsDeletedParam);
+            if (dto.IsDeleted == true || dto.IsDeleted == false)
+            {
+                SqlParameter IsDeletedParam = new SqlParameter("@IsDeleted", dto.IsDeleted);
+                command.Parameters.Add(IsDeletedParam);
+            }
 
             command.ExecuteNonQuery();
 

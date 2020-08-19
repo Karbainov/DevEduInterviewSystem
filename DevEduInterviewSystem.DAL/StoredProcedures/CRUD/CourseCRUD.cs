@@ -90,7 +90,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlDataReader reader = command.ExecuteReader();
             CourseDTO stage = null;
-
             if (reader.HasRows)
             {
                 while (reader.Read())

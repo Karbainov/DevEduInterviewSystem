@@ -13,17 +13,30 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddFeedback");
 
-            SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
-            command.Parameters.Add(StageChangedIDParam);
+            if (dto.StageChangedID > 0)
+            {
+                SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
+                command.Parameters.Add(StageChangedIDParam);
+            }
 
-            SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(UserParam);
+            if (dto.UserID > 0)
+            {
+                SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
+                command.Parameters.Add(UserParam);
+            }
 
-            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
-            command.Parameters.Add(MessageParam);
+            if (dto.Message != null)
+            {
+                SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
+                command.Parameters.Add(MessageParam);
+            }
 
-            SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
-            command.Parameters.Add(TimeFeedbackParam);
+            if (dto.TimeFeedback != null)
+            {
+                SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
+                command.Parameters.Add(TimeFeedbackParam);
+            }
+               
 
             command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Feedback]", Connection);
