@@ -13,7 +13,7 @@ namespace DevEduInterviewSystem.DAL.Shared
 
         public string ConnectionString { get { return _connectionString; } set { _connectionString = value; } }
 
-        //public SqlConnection Connection { get { return new SqlConnection(ConnectionString); } private set { Connection = value; } }
+        public SqlConnection Connection { get { return new SqlConnection(ConnectionString); } private set { Connection = value; } }
 
         private ConnectionSingleTone() { }
 

@@ -79,7 +79,7 @@
     <Folder Include="StoredProcedures\CRUD\User_RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\RoleProcedure" />
     <Folder Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD" />
-    <Folder Include="StoredProcedures\CRUD\Canidate CRUD" />
+    <Folder Include="StoredProcedures\CRUD\Candidate CRUD" />
     <Folder Include="StoredProcedures\CRUD\TaskProcedure" />
     <Folder Include="StoredProcedures\CRUD\StageChangedProcedure" />
     <Folder Include="StoredProcedures\CRUD\InterviewProcedure" />
@@ -95,6 +95,7 @@
     <Folder Include="StoredProcedures\InterviewHistory\" />
     <Folder Include="StoredProcedures\StudentsOfGroup" />
     <Folder Include="StoredProcedures\AllStudentsOfCourse" />
+    <Folder Include="StoredProcedures\CandidateSelectionProcessInfoQuery" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -206,11 +207,11 @@
     <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\SelectAllCandidatePersonalInfo.sql" />
     <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\SelectCandidatePersonalInfoByID.sql" />
     <Build Include="StoredProcedures\CRUD\CandidatePersonalInfo CRUD\UpdateCandidatePersonalInfoByID.sql" />
-    <Build Include="StoredProcedures\CRUD\Canidate CRUD\AddCandidate.sql" />
-    <Build Include="StoredProcedures\CRUD\Canidate CRUD\DeleteCandidateByID.sql" />
-    <Build Include="StoredProcedures\CRUD\Canidate CRUD\SelectAllCandidate.sql" />
-    <Build Include="StoredProcedures\CRUD\Canidate CRUD\SelectCandidateByID.sql" />
-    <Build Include="StoredProcedures\CRUD\Canidate CRUD\UpdateCandidateByID.sql" />
+    <Build Include="StoredProcedures\CRUD\Candidate CRUD\AddCandidate.sql" />
+    <Build Include="StoredProcedures\CRUD\Candidate CRUD\DeleteCandidateByID.sql" />
+    <Build Include="StoredProcedures\CRUD\Candidate CRUD\SelectAllCandidate.sql" />
+    <Build Include="StoredProcedures\CRUD\Candidate CRUD\SelectCandidateByID.sql" />
+    <Build Include="StoredProcedures\CRUD\Candidate CRUD\UpdateCandidateByID.sql" />
     <Build Include="StoredProcedures\CRUD\TaskProcedure\AddTask.sql" />
     <Build Include="StoredProcedures\CRUD\TaskProcedure\DeleteTaskByID.sql" />
     <Build Include="StoredProcedures\CRUD\TaskProcedure\SelectAllTask.sql" />
@@ -294,6 +295,10 @@
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
     <Build Include="StoredProcedures\OneUserRole.sql" />
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
+    <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\AllSelectionProcess.sql" />
+    <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByCourse.sql" />
+    <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByID.sql" />
+    <Build Include="StoredProcedures\AllDeletedUsers.sql" />
     <Build Include="StoredProcedures\AllOverdueHomeworks.sql" />
     <Build Include="StoredProcedures\AllOverdueTests.sql" />
   </ItemGroup>

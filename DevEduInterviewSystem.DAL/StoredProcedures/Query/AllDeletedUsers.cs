@@ -1,43 +1,42 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
-using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
-using DevEduInterviewSystem.DAL.DTO.QueryDTO;
+﻿using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class OneUserRoleQuery
+    public class AllDeletedUsers
     {
-
-        public List<OneUserRoleDTO> SelectOneUserRole(int id)
+        public List<UserDTO> SelectAllDeletedUsers()
         {
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("OneUserRole", connection);
-            SqlParameter userParam = new SqlParameter("@UserID", id);
-            command.Parameters.Add(userParam);
+            SqlCommand command = ReferenceToProcedure("[AllDeletedUsers]", connection);
             SqlDataReader reader = command.ExecuteReader();
-            List<OneUserRoleDTO> roles = new List<OneUserRoleDTO>();
+            List<UserDTO> users = new List<UserDTO>();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    OneUserRoleDTO role = new OneUserRoleDTO()
+                    UserDTO user = new UserDTO()
                     {
                         Login = (string)reader["Login"],
+                        Password = (string)reader["Password"],
                         FirstName = (string)reader["FirstName"],
                         LastName = (string)reader["LastName"],
-                        Password = (string)reader["Password"],
-                        Role = (string)reader["Role"],
+                        
                     };
-                    roles.Add(role);
+                    users.Add(user);
                 }
             }
             reader.Close();
-            return roles;
+            return users;
+
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
         {
@@ -46,5 +45,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 
             return command;
         }
+
     }
 }

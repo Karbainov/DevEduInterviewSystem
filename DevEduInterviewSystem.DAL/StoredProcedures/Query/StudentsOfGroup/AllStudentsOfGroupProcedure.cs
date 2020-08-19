@@ -11,12 +11,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
     public class AllStudentsOfGroupProcedure
     {
 
-        public List<AllStudentsOfGroupDTO> SelectAllStudentsOfGroup(string name )
+        public List<AllStudentsOfGroupDTO> SelectAllStudentsOfGroup(int idnumber )
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfGroup", Connection);
-            SqlParameter GroupParam = new SqlParameter("@GroupID", name);
+            SqlParameter GroupParam = new SqlParameter("@GroupID", idnumber);
             command.Parameters.Add(GroupParam);
 
             List<AllStudentsOfGroupDTO> allStudentsOfGroups = new List<AllStudentsOfGroupDTO>();

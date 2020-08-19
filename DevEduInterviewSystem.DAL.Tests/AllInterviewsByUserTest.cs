@@ -22,7 +22,7 @@ namespace DevEduInterviewSystem.DAL.Tests
         [SetUp]
         public void Setup()
         {
-            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            
             Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             _mockUserID = new List<int>();
             _mockInterviewID = new List<int>();

@@ -1,4 +1,5 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using DevEduInterviewSystem.BLL;
+using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     abstract public class AbstractCRUD<T> where T : IDTO
     {
         public SqlConnection Connection { get; set; }
+        //public InterviewsNumber InterviewsLimit { get; set; }
         public AbstractCRUD()
         {
-            Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);            
+            Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            //InterviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
         }
         abstract public int Add(T dto);
         abstract public int DeleteByID(int id);
