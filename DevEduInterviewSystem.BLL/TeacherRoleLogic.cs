@@ -8,7 +8,8 @@ namespace DevEduInterviewSystem.BLL
 {
     public class TeacherRoleLogic : IRoleLogic
     {
-        public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID, FeedbackDTO feedbackDTO)
+        public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID, 
+            FeedbackDTO feedbackDTO)
         {
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);
@@ -32,5 +33,31 @@ namespace DevEduInterviewSystem.BLL
             }
             feedback.Add(feedbackDTO);
         }
+        // Препод(после получения дз от кандидата): обновить статус домашки  
+        // +обновить стадию + обновить статус + добавить фидбэк
+        public void UpdateHomeworkAfterDoneHomework(CandidateDTO candidateDTO, HomeworkDTO homeworkDTO, 
+            int homeworkStatusID, int testStatusID, FeedbackDTO feedbackDTO)
+        {
+            HomeworkDTO homework = new HomeworkDTO(homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
+                testStatusID, DateTime.Now);
+            HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
+            homeworkCRUD.Add(homework);
+
+            StageChangedDTO stageChangedDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
+            StageChangedCRUD stageChanged = new StageChangedCRUD();
+            stageChanged.Add(stageChangedDTO);
+
+            CandidateCRUD candidate = new CandidateCRUD();
+            candidate.UpdateByID(candidateDTO);
+
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            if (feedbackDTO != null)
+            {
+                feedback.UpdateByID(feedbackDTO);
+            }
+            feedback.Add(feedbackDTO);
+        }
+        
+        
     }
 }
