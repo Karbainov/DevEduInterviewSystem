@@ -26,7 +26,7 @@ namespace DevEduInterviewSystem.BLL
             candidateCRUD.Add(candidate);
         }
 
-        public void AddCourseCandidate(Course_CandidateDTO course_Candidate )
+        public void AddCourseCandidate(Course_CandidateDTO course_Candidate)
         {
             Course_CandidateCRUD course_CandidateCRUD = new Course_CandidateCRUD();
             course_CandidateCRUD.Add(course_Candidate);
@@ -35,11 +35,19 @@ namespace DevEduInterviewSystem.BLL
         public void UpdateCandidate(CandidateDTO candidateDTO)
         {
             CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);            
+            candidate.UpdateByID(candidateDTO);
         }
 
-       public string GetOneTimePassword()
-       {
+        public void AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
+        {
+            string password = GetOneTimePassword();
+            oneTimePasswordDTO.OneTimePassword = password;
+            OneTimePasswordCRUD otp = new OneTimePasswordCRUD();
+            otp.Add(oneTimePasswordDTO);
+        }
+
+        private string GetOneTimePassword()
+        {
             Random randomKey = new Random();
             string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
             int lenghtPass = 12;
@@ -51,7 +59,7 @@ namespace DevEduInterviewSystem.BLL
             }
 
             return password;
-       }
+        }
 
 
 
