@@ -301,5 +301,6 @@
     <Build Include="StoredProcedures\AllDeletedUsers.sql" />
     <Build Include="StoredProcedures\AllOverdueHomeworks.sql" />
     <Build Include="StoredProcedures\AllOverdueTests.sql" />
+    <Build Include="StoredProcedures\DeleteOneTimePasswordByCandidateID_1.sql" />
   </ItemGroup>
 </Project>

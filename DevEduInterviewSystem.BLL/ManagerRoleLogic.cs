@@ -111,5 +111,18 @@ namespace DevEduInterviewSystem.BLL
             }
         }
 
+        // Грант получен, группа есть
+
+        public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
+        {
+            GroupCandidateDTO candidate = new GroupCandidateDTO();
+            candidate.CandidateID = candidateID;
+            candidate.GroupID = groupID;
+            GroupCandidateCRUD group = new GroupCandidateCRUD();
+            group.Add(candidate);
+
+
+
+        }
     }
 }
