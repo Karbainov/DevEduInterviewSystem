@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
-
+using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -37,11 +38,11 @@ namespace DevEduInterviewSystem.BLL
             candidate.UpdateByID(candidateDTO);            
         }
 
-       public string GetRandomPassword()
-        {
+       public string GetOneTimePassword()
+       {
             Random randomKey = new Random();
             string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
-            int lenghtPass = 8;
+            int lenghtPass = 12;
             char[] letters = simvol.ToCharArray();
             string password = "";
             for (int i = 0; i < lenghtPass; i++)
@@ -50,6 +51,15 @@ namespace DevEduInterviewSystem.BLL
             }
 
             return password;
+       }
+
+
+
+        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutCandidate(int id)
+        {
+            AllInformationAboutTheCandidateByIDProcedure infoCandidate = new AllInformationAboutTheCandidateByIDProcedure();
+            AllInformationAboutTheCandidateByIDDTO q = infoCandidate.AllInformationAboutTheCandidateByID(id);
+            return q;
         }
     }
 }

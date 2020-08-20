@@ -1,4 +1,6 @@
 ﻿using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
+using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using System;
@@ -44,11 +46,18 @@ namespace DevEduInterviewSystem.BLL
         public void AddNewUser(UserDTO userDTO, int roleID)
         {
             UserCRUD user = new UserCRUD();
-            user.Add(userDTO);
+            int id = user.Add(userDTO);
            
-            UserRoleDTO roleDTO = new UserRoleDTO(userDTO.ID, roleID);
+            UserRoleDTO roleDTO = new UserRoleDTO(id, roleID);
             UserRoleCRUD role = new UserRoleCRUD();
             role.Add(roleDTO);
+        }
+
+        public void ShowAllUsersWithHisRole()
+        {
+            UsersWithRoleProcedure usersWithRole = new UsersWithRoleProcedure();
+            usersWithRole.SelectUsersWithRole();
+
         }
 
         public void ShowDeletedUsers()
