@@ -121,8 +121,10 @@ namespace DevEduInterviewSystem.BLL
             GroupCandidateCRUD group = new GroupCandidateCRUD();
             group.Add(candidate);
 
+            DeleteCandidateFromCourseCandidateByCandidateID deletion = new DeleteCandidateFromCourseCandidateByCandidateID();
+            deletion.DeleteCandidateFromCourseByCandidateID(candidateID);
 
-
+            ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
         }
     }
 }
