@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
             connection.Open();
             SqlCommand command = ReferenceToProcedure("DeleteOneTimePasswordByCandidateID", connection);
 
-            SqlParameter IDParam = new SqlParameter("@CandidateID", id);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             int a = command.ExecuteNonQuery();

@@ -6,13 +6,14 @@ using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class DeleteCandidateFromCourseCandidateByCandidateID
+    public class DeleteCandidateFromGroupCandidateByCandidateID
     {
-        public int DeleteCandidateFromCourseByCandidateID(int id)
+
+        public int DeleteCandidateFromGroupByCandidateID(int id)
         {
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
-            SqlCommand command = ReferenceToProcedure("DeleteCandidateFromCourseCandidateByCandidateID", connection);
+            SqlCommand command = ReferenceToProcedure("DeleteCandidateFromGroupCandidateByCandidateID", connection);
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
