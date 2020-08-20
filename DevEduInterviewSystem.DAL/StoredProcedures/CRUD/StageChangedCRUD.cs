@@ -23,10 +23,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
                 command.Parameters.Add(CandidateParam);
             }
-  
-            SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
-            command.Parameters.Add(ChangedDateParam);
-            
+
+            if (dto.ChangedDate != null)
+            {
+                SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
+                command.Parameters.Add(ChangedDateParam);
+            }
             
 
             command.ExecuteNonQuery();
