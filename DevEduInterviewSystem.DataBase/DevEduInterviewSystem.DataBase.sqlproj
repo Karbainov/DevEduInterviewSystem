@@ -299,5 +299,7 @@
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByCourse.sql" />
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByID.sql" />
     <Build Include="StoredProcedures\AllDeletedUsers.sql" />
+    <Build Include="StoredProcedures\AllOverdueHomeworks.sql" />
+    <Build Include="StoredProcedures\AllOverdueTests.sql" />
   </ItemGroup>
 </Project>

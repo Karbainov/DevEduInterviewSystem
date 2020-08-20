@@ -12,6 +12,11 @@ namespace DevEduInterviewSystem.DAL.DTO
         public StatusDTO()
         {
         }
+        public StatusDTO(int ID)
+        {
+            this.ID = ID;
+           
+        }
 
         public StatusDTO(int ID, string Name)
         {

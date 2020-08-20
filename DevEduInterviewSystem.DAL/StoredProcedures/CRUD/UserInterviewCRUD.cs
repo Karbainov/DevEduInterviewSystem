@@ -16,8 +16,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", dto.InterviewID);
             command.Parameters.Add(InterviewIDParam);
 
-            SqlParameter userInterviewParam = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(userInterviewParam);
+            if (dto.UserID > 0)
+            {
+                SqlParameter userInterviewParam = new SqlParameter("@UserID", dto.UserID);
+                command.Parameters.Add(userInterviewParam);
+            }
 
             command.ExecuteNonQuery();
 

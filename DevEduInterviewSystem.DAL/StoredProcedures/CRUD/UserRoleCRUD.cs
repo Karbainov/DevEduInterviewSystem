@@ -13,11 +13,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddUserRole");
 
-            SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(UserID);
+           
+                SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
+                command.Parameters.Add(UserID);
+         
 
-            SqlParameter RoleID = new SqlParameter("@RoleID", dto.RoleID);
-            command.Parameters.Add(RoleID);
+           
+                SqlParameter RoleID = new SqlParameter("@RoleID", dto.RoleID);
+                command.Parameters.Add(RoleID);
+            
 
             command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[UserRole]", Connection);
