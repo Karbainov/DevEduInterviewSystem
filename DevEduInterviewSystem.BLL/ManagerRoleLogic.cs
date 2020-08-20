@@ -18,5 +18,23 @@ namespace DevEduInterviewSystem.BLL
             CandidatePersonalInfoCRUD candidatePersonalInfo = new CandidatePersonalInfoCRUD();
             candidatePersonalInfo.UpdateByID(candidatePersonalInfoDTO);
         }
+
+        public void AddCandidate(CandidateDTO candidate)
+        {
+            CandidateCRUD candidateCRUD = new CandidateCRUD();
+            candidateCRUD.Add(candidate);
+        }
+
+        public void AddCourseCandidate(Course_CandidateDTO course_Candidate )
+        {
+            Course_CandidateCRUD course_CandidateCRUD = new Course_CandidateCRUD();
+            course_CandidateCRUD.Add(course_Candidate);
+        }
+
+        public void UpdateCandidate(CandidateDTO candidateDTO)
+        {
+            CandidateCRUD candidate = new CandidateCRUD();
+            candidate.UpdateByID(candidateDTO);            
+        }
     }
 }
