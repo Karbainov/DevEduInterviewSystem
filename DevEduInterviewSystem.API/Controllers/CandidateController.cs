@@ -21,7 +21,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         // Manager and phoneoperator
         [HttpPost]
-        public IActionResult GetAllCandidate(CandidateInputModel candidateInputModel)
+        public IActionResult GetAllCandidate(CandidateInputModel candidateInputModel) //Почему GET?
         {
             if( new CityCRUD().SelectByID(candidateInputModel.CandidateDTO.CityID) == null)
             {
@@ -90,5 +90,8 @@ namespace DevEduInterviewSystem.API.Controllers
             //    return BadRequest("Fields meesing");
             //}
         }
+
+        
+
     }
 }
