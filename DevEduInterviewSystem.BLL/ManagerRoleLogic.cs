@@ -126,5 +126,20 @@ namespace DevEduInterviewSystem.BLL
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
         }
+
+        // Грант получен, нет вохможности начать с текущей группой
+        public void ReturnAwaitingCandidateToCourse(int candidateID, int courseID, int stageID, FeedbackDTO feedbackDTO = null)
+        {
+            Course_CandidateDTO candidate = new Course_CandidateDTO();
+            candidate.CandidateID = candidateID;
+            candidate.CourseID = courseID;
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.Add(candidate);
+
+            DeleteCandidateFromGroupCandidateByCandidateID deletion = new DeleteCandidateFromGroupCandidateByCandidateID();
+            deletion.DeleteCandidateFromGroupByCandidateID(candidateID);
+
+            ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
+        }
     }
 }
