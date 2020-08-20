@@ -36,5 +36,20 @@ namespace DevEduInterviewSystem.BLL
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);            
         }
+
+       public string GetRandomPassword()
+        {
+            Random randomKey = new Random();
+            string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
+            int lenghtPass = 8;
+            char[] letters = simvol.ToCharArray();
+            string s = "";
+            for (int i = 0; i < lenghtPass; i++)
+            {
+                s += letters[randomKey.Next(letters.Length)].ToString();
+            }
+
+            return s;
+        }
     }
 }
