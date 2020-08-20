@@ -61,7 +61,34 @@ namespace DevEduInterviewSystem.API.Controllers
             return new JsonResult(w);                   // ?????????????????????????????????????
         }
 
-       
+        [HttpPut("qwer")]
+        public IActionResult UpdateCandidatePersonalInfo(CandidateInputModel candidateInputModel)
+        {
+            _manager.UpdateCandidatePersonalInfo(candidateInputModel.CandidateDTO, candidateInputModel.CandidatePersonalInfoDTO);
+            return new OkResult();
+        }
 
+
+
+        [HttpPut("rewq")]
+        public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
+        {
+            //if ((candidateInputModel.CandidateDTO.FirstName != null &&
+            //     candidateInputModel.CandidateDTO.LastName != null &&
+            //     candidateInputModel.CandidateDTO.Phone != null &&
+            //     candidateInputModel.CandidateDTO.CityID > 0 &&               
+            //     candidateInputModel.CandidateDTO.StageID > 0 &&
+            //     candidateInputModel.CandidateDTO.StatusID > 0 &&
+            //     candidateInputModel.CandidateDTO.Email != null ))
+            //{
+            
+                _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
+                return new OkResult();
+            //}
+            //else
+            //{
+            //    return BadRequest("Fields meesing");
+            //}
+        }
     }
 }

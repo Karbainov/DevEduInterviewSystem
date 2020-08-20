@@ -9,6 +9,7 @@ namespace DevEduInterviewSystem.API.Models.Input
     public class CandidateInputModel
     {
         public CandidateDTO CandidateDTO { get; set; }
+        public CandidatePersonalInfoDTO CandidatePersonalInfoDTO { get; set; }
         public int? CourseID { get; set; }
     }
 }
