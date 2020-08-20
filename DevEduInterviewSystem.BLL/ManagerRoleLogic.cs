@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks.Dataflow;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 
 
@@ -44,5 +47,32 @@ namespace DevEduInterviewSystem.BLL
             }
             feedback.Add(feedbackDTO);
         }
+
+        //  добавить кандидатов.
+        public void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            Connection.Open();
+            SqlCommand exceptionGroupID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Stage]", Connection);
+            int count = (int)exceptionGroupID.ExecuteScalar();
+            if (groupCandidateDTO.ID > count || groupCandidateDTO.ID < 0)
+            {
+                GroupCandidateCRUD group = new GroupCandidateCRUD();
+                group.Add(groupCandidateDTO);
+            }
+            else
+            {
+                throw new Exception("Group can't found!");
+            }
+            Connection.Close();
+
+        }
+        // Менеджер(запуск группы): создать группу
+        public void CreateGroup(GroupDTO groupDTO)
+        {
+            GroupCRUD group = new GroupCRUD();
+            group.Add(groupDTO);
+        }
+
     }
 }
