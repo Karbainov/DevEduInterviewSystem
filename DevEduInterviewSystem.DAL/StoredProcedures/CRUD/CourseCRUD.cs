@@ -89,12 +89,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-            CourseDTO stage = new CourseDTO();
-
+            CourseDTO stage = null;
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
+                    stage = new CourseDTO();
                     stage.ID = (int)reader["id"];
                     stage.Name = (string)reader["Name"];
                 }

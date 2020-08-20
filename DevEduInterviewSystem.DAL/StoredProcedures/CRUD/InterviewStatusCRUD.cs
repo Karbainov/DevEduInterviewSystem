@@ -12,8 +12,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddInterviewStatus");
 
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
+            if (dto.Name != null)
+            {
+                SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
+                command.Parameters.Add(NameParam);
+            }
+                
 
             command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[InterviewStatus]", Connection);
