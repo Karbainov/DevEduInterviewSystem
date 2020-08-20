@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.DAL.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.BLL", "DevEduInterviewSystem.BLL\DevEduInterviewSystem.BLL.csproj", "{57A2AE1B-34D5-4043-9A8F-667DC6D33935}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevEduInterviewSystem.API", "DevEduInterviewSystem.API\DevEduInterviewSystem.API.csproj", "{FF883C14-B171-4A2E-AC9A-4249620CE184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevEduInterviewSystem.API", "DevEduInterviewSystem.API\DevEduInterviewSystem.API.csproj", "{FF883C14-B171-4A2E-AC9A-4249620CE184}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +49,10 @@ Global
 		{57A2AE1B-34D5-4043-9A8F-667DC6D33935}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A2AE1B-34D5-4043-9A8F-667DC6D33935}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57A2AE1B-34D5-4043-9A8F-667DC6D33935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF883C14-B171-4A2E-AC9A-4249620CE184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF883C14-B171-4A2E-AC9A-4249620CE184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF883C14-B171-4A2E-AC9A-4249620CE184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF883C14-B171-4A2E-AC9A-4249620CE184}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
