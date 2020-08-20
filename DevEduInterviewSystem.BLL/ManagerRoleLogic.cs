@@ -43,13 +43,13 @@ namespace DevEduInterviewSystem.BLL
             string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
             int lenghtPass = 8;
             char[] letters = simvol.ToCharArray();
-            string s = "";
+            string password = "";
             for (int i = 0; i < lenghtPass; i++)
             {
-                s += letters[randomKey.Next(letters.Length)].ToString();
+                password += letters[randomKey.Next(letters.Length)].ToString();
             }
 
-            return s;
+            return password;
         }
     }
 }
