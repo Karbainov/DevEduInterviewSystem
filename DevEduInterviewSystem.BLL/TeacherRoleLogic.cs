@@ -9,7 +9,7 @@ namespace DevEduInterviewSystem.BLL
     public class TeacherRoleLogic : IRoleLogic
     {
         public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID, 
-            FeedbackDTO feedbackDTO)
+            FeedbackDTO feedbackDTO = null)
         {
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);

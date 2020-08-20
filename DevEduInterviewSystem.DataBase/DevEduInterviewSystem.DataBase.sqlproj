@@ -303,5 +303,6 @@
     <Build Include="StoredProcedures\AllOverdueTests.sql" />
     <Build Include="StoredProcedures\DeleteOneTimePasswordByCandidateID_1.sql" />
     <Build Include="StoredProcedures\DeleteCandidateFromCourseCandidateByCandidateID.sql" />
+    <Build Include="StoredProcedures\DeleteCandidateFromGroupCandidateByCandidateID.sql" />
   </ItemGroup>
 </Project>

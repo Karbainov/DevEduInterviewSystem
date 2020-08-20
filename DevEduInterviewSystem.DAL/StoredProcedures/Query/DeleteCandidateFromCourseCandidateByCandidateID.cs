@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
             connection.Open();
             SqlCommand command = ReferenceToProcedure("DeleteCandidateFromCourseCandidateByCandidateID", connection);
 
-            SqlParameter IDParam = new SqlParameter("@CandidateID", id);
+            SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
 
             int a = command.ExecuteNonQuery();

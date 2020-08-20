@@ -14,6 +14,11 @@ namespace DevEduInterviewSystem.BLL
 {
     public class ManagerRoleLogic : IRoleLogic
     {
+        public void UpdateCandidate(CandidateDTO candidateDTO)
+        {
+            CandidateCRUD candidate = new CandidateCRUD();
+            candidate.UpdateByID(candidateDTO);
+        }
         // Менеджер может обновить данные кандидата и personal info.
         public void UpdateCandidatePersonalInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
         {
@@ -24,14 +29,11 @@ namespace DevEduInterviewSystem.BLL
         }
         // Менеджер(после интервью): обновить интервью статус + обновить стадию + создать фидбэк + обновить курс.
         public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID,
-            FeedbackDTO feedbackDTO)
+            FeedbackDTO feedbackDTO = null)
         {
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
+            UpdateCandidate(candidateDTO);
 
-            StageChangedDTO stageDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
-            StageChangedCRUD stageChanged = new StageChangedCRUD();
-            stageChanged.Add(stageDTO);
+            ChangeStageAddFeedback(candidateDTO.ID, candidateDTO.StageID, feedbackDTO);
 
             InterviewDTO _interviewDTO = new InterviewDTO(candidateDTO.ID, interviewDTO.InterviewStatusID, DateTime.Now);
             InterviewCRUD interview = new InterviewCRUD();
@@ -40,34 +42,10 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateDTO.ID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
-
-            FeedbackCRUD feedback = new FeedbackCRUD();
-            if (feedbackDTO != null)
-            {
-                feedback.UpdateByID(feedbackDTO);
-            }
-            feedback.Add(feedbackDTO);
         }
 
-        //  добавить кандидатов.
-        public void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
-        {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            Connection.Open();
-            SqlCommand exceptionGroupID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Stage]", Connection);
-            int count = (int)exceptionGroupID.ExecuteScalar();
-            if (groupCandidateDTO.ID > count || groupCandidateDTO.ID < 0)
-            {
-                GroupCandidateCRUD group = new GroupCandidateCRUD();
-                group.Add(groupCandidateDTO);
-            }
-            else
-            {
-                throw new Exception("Group can't found!");
-            }
-            Connection.Close();
-
-        }
+        
+        
         // Менеджер(запуск группы): создать группу
         public void CreateGroup(GroupDTO groupDTO)
         {
@@ -75,11 +53,7 @@ namespace DevEduInterviewSystem.BLL
             group.Add(groupDTO);
         }
 
-        public void UpdateCandidate(CandidateDTO candidateDTO)
-        {
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
-        }
+        // Добавить одноразовы пароль
         public void AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
@@ -88,7 +62,7 @@ namespace DevEduInterviewSystem.BLL
             otp.Add(oneTimePasswordDTO);
         }
 
-        private string GetOneTimePassword()
+        public string GetOneTimePassword()
         {
             Random randomKey = new Random();
             string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
@@ -109,20 +83,8 @@ namespace DevEduInterviewSystem.BLL
             AllInformationAboutTheCandidateByIDDTO q = infoCandidate.AllInformationAboutTheCandidateByID(id);
             return q;
         }
-        
 
-        public void AddCourseCandidate(Course_CandidateDTO course_Candidate)
-        {
-            Course_CandidateCRUD course_CandidateCRUD = new Course_CandidateCRUD();
-            course_CandidateCRUD.Add(course_Candidate);
-        }
-        public void AddCandidate(CandidateDTO candidate)
-        {
-            CandidateCRUD candidateCRUD = new CandidateCRUD();
-            candidateCRUD.Add(candidate);
-        }
-
-        // WHICH ONE?
+        //  добавить кандидатов.
 
         public void AddCandidate(CandidateDTO candidateDTO, int courseID, TaskDTO taskDTO = null, FeedbackDTO feedbackDTO = null)
         {
@@ -166,7 +128,7 @@ namespace DevEduInterviewSystem.BLL
                 AddFeedback(feedbackDTO);
             }
         }
-
+       
         // Грант получен, группа есть
 
         public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
@@ -175,12 +137,30 @@ namespace DevEduInterviewSystem.BLL
             candidate.CandidateID = candidateID;
             candidate.GroupID = groupID;
             GroupCandidateCRUD group = new GroupCandidateCRUD();
-            group.Add(candidate);
+
+            AddCandidateInGroupCandidate(candidate);
 
             DeleteCandidateFromCourseCandidateByCandidateID deletion = new DeleteCandidateFromCourseCandidateByCandidateID();
             deletion.DeleteCandidateFromCourseByCandidateID(candidateID);
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
+        }
+        private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            Connection.Open();
+            SqlCommand exceptionGroupID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
+            int count = (int)exceptionGroupID.ExecuteScalar();
+            if (groupCandidateDTO.ID > count || groupCandidateDTO.ID < 0)
+            {
+                GroupCandidateCRUD group = new GroupCandidateCRUD();
+                group.Add(groupCandidateDTO);
+            }
+            else
+            {
+                throw new Exception("Group not found!");
+            }
+            Connection.Close();
         }
 
         // Грант получен, нет вохможности начать с текущей группой
