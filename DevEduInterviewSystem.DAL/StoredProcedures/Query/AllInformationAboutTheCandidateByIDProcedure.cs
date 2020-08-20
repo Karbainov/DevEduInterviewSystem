@@ -20,18 +20,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
             IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             var procedure = "[AllInformationAboutTheCandidateByID]";
         
-            var allInfo = connection.Query<AllInformationAboutTheCandidateByIDDTO>(procedure,new {ID},
+            var allInfo = connection.Query<AllInformationAboutTheCandidateByIDDTO>(procedure, new {ID},
             commandType: CommandType.StoredProcedure
             ).SingleOrDefault();
 
             return allInfo;
-        }
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            return command;
-        }
+        }       
     }
 }

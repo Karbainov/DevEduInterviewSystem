@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         // Manager and phoneoperator
         [HttpPost]
-        public IActionResult GetAllCandidate(AddCandidateInputModel candidateInputModel)
+        public IActionResult GetAllCandidate(CandidateInputModel candidateInputModel)
         {
             if( new CityCRUD().SelectByID(candidateInputModel.CandidateDTO.CityID) == null)
             {
@@ -33,7 +34,7 @@ namespace DevEduInterviewSystem.API.Controllers
             if ((candidateInputModel.CandidateDTO.FirstName != null 
                 || candidateInputModel.CandidateDTO.LastName != null) 
                 && candidateInputModel.CandidateDTO.Phone != null 
-                && candidateInputModel.CandidateDTO.CityID !=null
+                && candidateInputModel.CandidateDTO.CityID > 0
                 && candidateInputModel.CourseID != null)
             {
                 candidateInputModel.CandidateDTO.BirthDay = DateTime.Now;
@@ -45,10 +46,22 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest("Fields meesing");
             }
         }
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("k")]
+        public IActionResult GetOneTimePassword()
         {
-            return Ok(new AddCandidateInputModel() { CandidateDTO = new CandidateDTO() { FirstName = "Vasy", LastName = "Pupkin", Phone = "242424124", CityID = 1 }, CourseID = 1 });
+           string password =  _manager.GetOneTimePassword(); 
+            return new JsonResult(password);            // ?????????????????????????????????????
         }
+
+        [HttpGet("q")]
+        public IActionResult AllInformationAboutCandidate(int candidateID)
+        {
+            candidateID = 68;
+            AllInformationAboutTheCandidateByIDDTO w =_manager.AllInformationAboutCandidate(candidateID);
+            return new JsonResult(w);                   // ?????????????????????????????????????
+        }
+
+       
+
     }
 }
