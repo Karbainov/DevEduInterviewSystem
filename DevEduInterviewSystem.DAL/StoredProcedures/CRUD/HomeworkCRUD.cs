@@ -3,7 +3,8 @@ using System;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Text;
-
+using Dapper;
+using System.Data;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -11,26 +12,21 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(HomeworkDTO dto)
         {
+            var procedure = "[AddHomework]";
+            var values = new
+            {
+                CandidateID = dto.CandidateID,
+                HomeworkStatusID = dto.HomeworkStatusID,
+                TestStatusID = dto.TestStatusID,
+                HomeworkDate = dto.HomeworkDate
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddHomework");
-
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            SqlParameter InterviewStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
-            command.Parameters.Add(InterviewStatusParam);
-
-            SqlParameter AttemptParam = new SqlParameter("TestStatusID", dto.TestStatusID);
-            command.Parameters.Add(AttemptParam);
-
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
-            command.Parameters.Add(DateTimeInterviewParam);
-
-            command.ExecuteNonQuery();
-
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Homework]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
+
             return count;
         }
 
@@ -111,28 +107,19 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(HomeworkDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateHomeworkByID");
+            var procedure = "[UpdateHomeworkByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                CandidateID = dto.CandidateID,
+                HomeworkStatusID = dto.HomeworkStatusID,
+                TestStatusID = dto.TestStatusID,
+                HomeworkDate = dto.HomeworkDate
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
-            command.Parameters.Add(HomeworkStatusParam);
-
-            SqlParameter TestStatusIDParam = new SqlParameter("@Attempt", dto.TestStatusID);
-            command.Parameters.Add(TestStatusIDParam);
-
-            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
-            command.Parameters.Add(HomeworkDateParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;
 
         }
     }

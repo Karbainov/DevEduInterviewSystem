@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Dapper;
 using DevEduInterviewSystem.DAL.DTO;
-using System.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -9,41 +11,23 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(InterviewDTO dto)
         {
+            var procedure = "[AddInterview]";
+            var values = new
+            {
+                CandidateID = dto.CandidateID,
+                InterviewStatusID = dto.InterviewStatusID,
+                Attempt = dto.Attempt,
+                DateTimeInterview = dto.DateTimeInterview
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddInterview");
-
-            if(dto.CandidateID != null)
-            {
-                SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-                command.Parameters.Add(CandidateParam);
-            }
-
-            if (dto.InterviewStatusID!= null)
-            {
-                SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", dto.InterviewStatusID);
-                command.Parameters.Add(InterviewStatusParam);
-            }
-
-            if (dto.Attempt != null)
-            {
-                SqlParameter AttemptParam = new SqlParameter("@Attempt", dto.Attempt);
-                command.Parameters.Add(AttemptParam);
-            }
-
-            if (dto.DateTimeInterview != null)
-            {
-                SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
-                command.Parameters.Add(DateTimeInterviewParam);
-            }
-                
-
-                
-
-            command.ExecuteNonQuery();
-
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Interview]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
+
             Connection.Close();
+
             return count;
         }
 
@@ -204,29 +188,19 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(InterviewDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateInterviewByID");
+            var procedure = "[UpdateInterviewByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                CandidateID = dto.CandidateID,
+                InterviewStatusID = dto.InterviewStatusID,
+                Attempt = dto.Attempt,
+                DateTimeInterview = dto.DateTimeInterview
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            SqlParameter InterviewStatusParam = new SqlParameter("@InterviewStatusID", dto.InterviewStatusID);
-            command.Parameters.Add(InterviewStatusParam);
-
-            SqlParameter AttemptParam = new SqlParameter("@Attempt", dto.Attempt);
-            command.Parameters.Add(AttemptParam);
-
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
-            command.Parameters.Add(DateTimeInterviewParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
-
+            return (int)dto.ID;
         }
     }
 }

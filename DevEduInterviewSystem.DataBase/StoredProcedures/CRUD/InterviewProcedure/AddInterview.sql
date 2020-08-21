@@ -1,10 +1,10 @@
 ﻿Create Procedure [dbo].[AddInterview]
-@CandidateID int,
-@InterviewStatusID int,
-@Attempt int,
-@DateTimeInterview datetime2
+@CandidateID int null,
+@InterviewStatusID int null,
+@Attempt int null,
+@DateTimeInterview datetime2 null
 AS
 INSERT INTO [dbo].[Interview]
 VALUES (@CandidateID, @InterviewStatusID, @Attempt, @DateTimeInterview)
-  SELECT SCOPE_IDENTITY()
+--SELECT SCOPE_IDENTITY()
 

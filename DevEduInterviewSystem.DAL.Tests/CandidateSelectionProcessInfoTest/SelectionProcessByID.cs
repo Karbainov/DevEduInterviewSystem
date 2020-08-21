@@ -82,8 +82,6 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
         {
             SelectionProcessByIDQuery _selectionProcessByIDQuery = new SelectionProcessByIDQuery();
 
-
-
             List<AllSelectionProcessDTO> actual = _selectionProcessByIDQuery.SelectProcessByCandidate(_mockCandidateID[idNumber]);
 
             CollectionAssert.AreEqual(expected, actual);

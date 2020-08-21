@@ -21,7 +21,7 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.Add(courseCandidateDTO);
 
-            ChangeStageAddFeedback(candidateID, candidateDTO.StageID, feedbackDTO);
+            ChangeStageAddFeedback(candidateID, (int)candidateDTO.StageID, feedbackDTO);
 
             if (taskDTO != null)
             {
@@ -60,7 +60,7 @@ namespace DevEduInterviewSystem.BLL
         {
             List<AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
             AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
-            interviewsList = interviews.SelectAllInterviewsByDate(interviewDTO.DateTimeInterview);
+            interviewsList = interviews.SelectAllInterviewsByDate((DateTime)interviewDTO.DateTimeInterview);
 
             InterviewsNumber interviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
             if (interviewsList.Count < interviewsLimit.InterviewsLimit)
