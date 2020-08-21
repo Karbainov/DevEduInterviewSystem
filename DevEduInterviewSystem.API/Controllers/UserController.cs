@@ -6,6 +6,7 @@ using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,19 @@ namespace DevEduInterviewSystem.API.Controllers
             }
 
             _admin.DeleteUser((int)userID);
+            return new OkResult();
+        }
+
+        [HttpPut("Users")]
+        public IActionResult RestoreUser(int? userID)
+        {
+            if (userID == null || userID != null && new AllDeletedUsers().SelectDeletedUserByID((int)userID) == null)
+            {
+                return new NotFoundObjectResult("User not found");
+            }
+
+            _admin.RestoreUser((int)userID);
+
             return new OkResult();
         }
 

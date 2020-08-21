@@ -44,7 +44,7 @@ namespace DevEduInterviewSystem.BLL
         #endregion
 
         #region Methods for user
-        public void AddNewUser(UserDTO userDTO, int roleID)
+        public void AddNewUser(UserDTO userDTO, int? roleID)
         {
             UserCRUD user = new UserCRUD();
             int id = user.Add(userDTO);
@@ -66,10 +66,16 @@ namespace DevEduInterviewSystem.BLL
             users.SelectAllDeletedUsers();
         }
 
-        public void DeleteUser(int userID)
+        public void DeleteUser(int? userID)
         {
             UserCRUD deletion = new UserCRUD();
-            deletion.DeleteByID(userID);
+            deletion.DeleteByID((int)userID);
+        }
+
+        public void RestoreUser(int? userID)
+        {
+            RestoreDeletedUserByID restoration = new RestoreDeletedUserByID();
+            restoration.RestoreUserByID((int)userID);
         }
         #endregion
 

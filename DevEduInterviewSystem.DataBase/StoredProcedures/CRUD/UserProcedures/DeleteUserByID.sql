@@ -4,5 +4,5 @@ AS
 BEGIN
 UPDATE [dbo].[User]
 SET IsDeleted = 1
-WHERE (@ID = ID)
+WHERE (@ID = ID AND IsDeleted = 0)
 END
