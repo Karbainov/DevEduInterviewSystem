@@ -57,12 +57,10 @@ namespace DevEduInterviewSystem.BLL
         {
             UsersWithRoleProcedure usersWithRole = new UsersWithRoleProcedure();
             usersWithRole.SelectUsersWithRole();
-
         }
 
         public void ShowDeletedUsers()
         { 
-            //+роли
             AllDeletedUsers users = new AllDeletedUsers();
             users.SelectAllDeletedUsers();
         }

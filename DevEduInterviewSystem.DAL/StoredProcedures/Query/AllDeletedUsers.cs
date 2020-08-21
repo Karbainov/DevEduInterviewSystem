@@ -51,7 +51,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
             );
 
             return result;
-
         }
     }
 }
