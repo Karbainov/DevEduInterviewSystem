@@ -23,5 +23,15 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO.StudentsOfGroup
             StudentFirstName = firstName;
             StudentLastName = lastName;
         }
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType()) return false;
+
+            AllStudentsOfGroupByStartDTO dto = (AllStudentsOfGroupByStartDTO)obj;
+            return (Name == dto.Name
+                && this.StudentFirstName == dto.StudentFirstName
+                && this.StudentLastName == dto.StudentLastName
+                && this.StartDate.ToShortTimeString() == dto.StartDate.ToShortTimeString());
+        }
     }
 }

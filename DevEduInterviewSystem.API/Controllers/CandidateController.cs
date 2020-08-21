@@ -96,7 +96,28 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (updateCandidateAfterInterviewModel.CourseID == null)
             {
-                return BadRequest("course not found");
+                return new NotFoundResult();
+            }
+
+            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)
+            {
+                return new NotFoundResult();
+            }
+            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)
+            {
+                return new NotFoundResult();
+            }
+            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)
+            {
+                return new NotFoundResult();
+            }
+            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)
+            {
+                return new NotFoundResult();
+            }
+            if(updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)
+            {
+                return new NotFoundResult();
             }
             _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,
               updateCandidateAfterInterviewModel.interviewDTO,
