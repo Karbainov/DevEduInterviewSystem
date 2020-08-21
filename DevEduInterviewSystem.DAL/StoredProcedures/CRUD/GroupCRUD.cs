@@ -88,7 +88,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     groups.ID = (int)reader["id"];
                     groups.CourseID = (int)reader["CourseID"];

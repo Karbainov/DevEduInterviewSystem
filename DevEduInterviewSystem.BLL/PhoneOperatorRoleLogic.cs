@@ -60,7 +60,7 @@ namespace DevEduInterviewSystem.BLL
         {
             List<AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
             AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
-            interviewsList = interviews.SelectAllInterviewsByDate(interviewDTO.DateTimeInterview);
+            interviewsList = interviews.SelectAllInterviewsByDate((DateTime)interviewDTO.DateTimeInterview);
 
             InterviewsNumber interviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
             if (interviewsList.Count < interviewsLimit.InterviewsLimit)

@@ -10,7 +10,7 @@ namespace DevEduInterviewSystem.DAL.DTO
         public int? StageChangedID { get; set; }
         public int? UserID { get; set; }
         public string Message { get; set; }
-        public DateTime TimeFeedback { get; set; }
+        public DateTime? TimeFeedback { get; set; }
 
         public FeedbackDTO()
         {

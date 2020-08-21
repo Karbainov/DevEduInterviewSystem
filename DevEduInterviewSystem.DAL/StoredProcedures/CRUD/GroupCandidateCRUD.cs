@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(GroupCandidateDTO dto)
         {
-            var procedure = "[AddCandidate]";
+            var procedure = "[AddGroup_Candidate]";
             var values = new
             {
                 GroupID = dto.GroupID,
@@ -82,9 +82,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             GroupCandidateDTO groupCandidate = new GroupCandidateDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     groupCandidate.ID = (int)reader["id"];
                     groupCandidate.GroupID = (int)reader["GroupID"];

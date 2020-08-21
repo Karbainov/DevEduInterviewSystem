@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.DTO
         public int? CandidateID { get; set; }
         public int? HomeworkStatusID { get; set; }
         public int? TestStatusID { get; set; }
-        public DateTime HomeworkDate { get; set; }
+        public DateTime? HomeworkDate { get; set; }
 
         public HomeworkDTO()
         {
