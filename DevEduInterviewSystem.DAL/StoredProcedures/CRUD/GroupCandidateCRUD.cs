@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -10,16 +12,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(GroupCandidateDTO dto)
         {
+            var procedure = "[AddCandidate]";
+            var values = new
+            {
+                GroupID = dto.GroupID,
+                CandidateID = dto.CandidateID     
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddGroup_Candidate");
-
-            SqlParameter GroupParam = new SqlParameter("@GroupID", dto.GroupID);
-            command.Parameters.Add(GroupParam);
-
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group_Candidate]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -97,21 +99,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(GroupCandidateDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateGroup_CandidateByID");
+            var procedure = "[UpdateGroup_CandidateByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                GroupID = dto.GroupID,
+                CandidateID = dto.CandidateID
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter GroupParam = new SqlParameter("@InterviewID", dto.GroupID);
-            command.Parameters.Add(GroupParam);
-
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            int a = command.ExecuteNonQuery();
-            Connection.Close();
-            return a;
+            return (int)dto.ID;
         }
     }
 }
