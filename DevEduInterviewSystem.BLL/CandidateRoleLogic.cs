@@ -20,7 +20,7 @@ namespace DevEduInterviewSystem.BLL
             candidatePersonalInfo.UpdateByID(candidatePersonalInfoDTO);
 
             DeleteOneTimePasswordByCandidateIDQuery password = new DeleteOneTimePasswordByCandidateIDQuery();
-            password.DeleteOneTimePasswordByCandidateID(candidateDTO.ID);
+            password.DeleteOneTimePasswordByCandidateID((int)candidateDTO.ID);
 
         }
     }
