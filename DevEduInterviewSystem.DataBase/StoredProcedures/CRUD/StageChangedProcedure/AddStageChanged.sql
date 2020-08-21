@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[AddStageChanged]
-@CandidateID int,
-@StageID int,
-@ChangedDate datetime2
+@CandidateID int null,
+@StageID int null,
+@ChangedDate datetime2 null
 AS
 INSERT INTO [dbo].[StageChanged]
 VALUES (@CandidateID, @StageID, @ChangedDate)
-SELECT SCOPE_IDENTITY()
+--SELECT SCOPE_IDENTITY()
