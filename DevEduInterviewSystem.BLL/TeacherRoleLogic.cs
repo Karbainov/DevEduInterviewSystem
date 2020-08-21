@@ -39,7 +39,7 @@ namespace DevEduInterviewSystem.BLL
         public void UpdateHomeworkAfterDoneHomework(CandidateDTO candidateDTO, HomeworkDTO homeworkDTO, 
             int homeworkStatusID, int testStatusID, FeedbackDTO feedbackDTO)
         {
-            HomeworkDTO homework = new HomeworkDTO(homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
+            HomeworkDTO homework = new HomeworkDTO((int)homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
                 testStatusID, DateTime.Now);
             HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
             homeworkCRUD.Add(homework);
