@@ -6,7 +6,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 {
     public class CandidatePersonalInfoDTO : IDTO
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public int? CandidateID { get; set; }
         public bool MaritalStatus { get; set; }
         public string Education { get; set; }

@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.BLL
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);
 
-            StageChangedDTO stageDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
+            StageChangedDTO stageDTO = new StageChangedDTO((int)candidateDTO.ID, (int)candidateDTO.StageID, DateTime.Now);
             StageChangedCRUD stageChanged = new StageChangedCRUD();
             stageChanged.Add(stageDTO);
 
@@ -22,7 +22,7 @@ namespace DevEduInterviewSystem.BLL
             InterviewCRUD interview = new InterviewCRUD();
             interview.UpdateByID(_interviewDTO);
 
-            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateDTO.ID);
+            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, (int)candidateDTO.ID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
            
@@ -44,7 +44,7 @@ namespace DevEduInterviewSystem.BLL
             HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
             homeworkCRUD.Add(homework);
 
-            StageChangedDTO stageChangedDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
+            StageChangedDTO stageChangedDTO = new StageChangedDTO((int)candidateDTO.ID, (int)candidateDTO.StageID, DateTime.Now);
             StageChangedCRUD stageChanged = new StageChangedCRUD();
             stageChanged.Add(stageChangedDTO);
 

@@ -23,7 +23,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost]
         public IActionResult GetAllCandidate(CandidateInputModel candidateInputModel)
         {
-            if( new CityCRUD().SelectByID(candidateInputModel.CandidateDTO.CityID) == null)
+            if( new CityCRUD().SelectByID((int)candidateInputModel.CandidateDTO.CityID) == null)
             {
                 return new NotFoundObjectResult("City not found");
             }

@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
@@ -9,16 +11,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(CityDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCity");
-          
-            SqlParameter CityNameParam = new SqlParameter("@Name", dto.CityName);
-            command.Parameters.Add(CityNameParam);
-           
-                
-            
-            command.ExecuteNonQuery();
+            var procedure = "[AddCity]";
+            var values = new
+            {
+                Name = dto.Name
+            };
 
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
+            Connection.Open();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[City]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -42,14 +43,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(CityDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCityByID");
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            var procedure = "[UpdateCityByID]";
+            var values = new
+            {
+                dto.ID,
+                dto.Name
+            };
 
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-            return rows;
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
+            return (int)dto.ID;
         }
 
         public override List<CityDTO> SelectAll()
@@ -59,14 +62,14 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
 
             List<CityDTO> cities = new List<CityDTO>();
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows)
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read())
                 {
                     CityDTO city = new CityDTO()
                     {
                         ID = (int)reader["id"],
-                        CityName = (string)reader["Name"],
+                        Name = (string)reader["Name"],
                     };
                     cities.Add(city);
                 }
@@ -92,7 +95,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     city = new CityDTO();
                     city.ID = (int)reader["id"];
-                    city.CityName = (string)reader["Name"]; 
+                    city.Name = (string)reader["Name"]; 
                 }
             }
             reader.Close();

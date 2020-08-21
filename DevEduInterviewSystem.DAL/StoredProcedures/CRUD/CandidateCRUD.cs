@@ -1,6 +1,8 @@
+using Dapper;
 using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 
@@ -10,48 +12,19 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(CandidateDTO dto)
         {
+            var procedure = "[AddCandidate]";
+            var values = new { StageID = dto.StageID, 
+                StatusID = dto.StatusID, 
+                CityID = dto.CityID,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                BirthDay = dto.BirthDay};
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCandidate");
-
-            if (dto.StageID > 0)
-            {
-                SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
-                command.Parameters.Add(StageParam);
-            }
-
-            if (dto.StatusID > 0)
-            {
-                SqlParameter StatusParam = new SqlParameter("@StatusID", dto.StatusID);
-                command.Parameters.Add(StatusParam);
-            }
-                
-
-            SqlParameter CityParam = new SqlParameter("@CityID", dto.CityID);
-            command.Parameters.Add(CityParam);
-
-            SqlParameter PhoneParam = new SqlParameter("@Phone", dto.Phone);
-            command.Parameters.Add(PhoneParam);
-
-            if (dto.Email != null)
-            {
-                SqlParameter EmailParam = new SqlParameter("@Email", dto.Email);
-                command.Parameters.Add(EmailParam);
-            }
-               
-
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
-            command.Parameters.Add(FirstNameParam);
-
-            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
-            command.Parameters.Add(LastNameParam);
-
-            if (dto.BirthDay != null)
-            {
-                SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
-                command.Parameters.Add(BDParam);
-            }
-            command.ExecuteNonQuery();
-
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Candidate]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -142,40 +115,23 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(CandidateDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCandidateByID");
+            var procedure = "[UpdateCandidateByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                StageID = dto.StageID,
+                StatusID = dto.StatusID,
+                CityID = dto.CityID,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                BirthDay = dto.BirthDay
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);           
 
-            SqlParameter StageParam = new SqlParameter("@StageID", dto.StageID);
-            command.Parameters.Add(StageParam);
-
-            SqlParameter StatusParam = new SqlParameter("@StatusID", dto.StatusID);
-            command.Parameters.Add(StatusParam);
-
-            SqlParameter CityParam = new SqlParameter("@CityID", dto.CityID);
-            command.Parameters.Add(CityParam);
-
-            SqlParameter PhoneParam = new SqlParameter("@Phone", dto.Phone);
-            command.Parameters.Add(PhoneParam);
-
-            SqlParameter EmailParam = new SqlParameter("@Email", dto.Email);
-            command.Parameters.Add(EmailParam);
-
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
-            command.Parameters.Add(FirstNameParam);
-
-            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
-            command.Parameters.Add(LastNameParam);
-
-            SqlParameter BDParam = new SqlParameter("@BirthDay", dto.BirthDay);
-            command.Parameters.Add(BDParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;            
         }    
     }
 }
