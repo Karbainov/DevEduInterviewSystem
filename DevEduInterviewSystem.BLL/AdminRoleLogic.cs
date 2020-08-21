@@ -54,7 +54,7 @@ namespace DevEduInterviewSystem.BLL
             role.Add(roleDTO);
         }
 
-        public void ShowAllUsersWithHisRole()
+        public void ShowAllUsersWithRoles()
         {
             UsersWithRoleProcedure usersWithRole = new UsersWithRoleProcedure();
             usersWithRole.SelectUsersWithRole();

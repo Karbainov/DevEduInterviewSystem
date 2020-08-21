@@ -38,7 +38,7 @@ namespace DevEduInterviewSystem.API.Controllers
             }
             else
             {
-                return BadRequest("Fields meesing");
+                return BadRequest("Fields missing");
             }
         }
 
@@ -54,7 +54,21 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-       
+        [HttpGet("Users")]
+        public IActionResult GetAllUsersWithRoles()
+        {
+            _admin.ShowAllUsersWithRoles();
+
+            return new OkResult();
+        }
+
+        [HttpGet("Users")]
+        public IActionResult GetAllDeletedUsers()
+        {
+            _admin.ShowDeletedUsers();
+
+            return new OkResult();
+        }
 
     }
 }
