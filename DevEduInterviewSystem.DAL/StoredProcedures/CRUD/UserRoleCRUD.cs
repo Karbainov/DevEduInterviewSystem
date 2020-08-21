@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int Add(UserRoleDTO dto)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUserRole");
+            SqlCommand command = ReferenceToProcedure("AddUser_Role");
 
            
                 SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
@@ -24,7 +24,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             
 
             command.ExecuteNonQuery();
-            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[UserRole]", Connection);
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User_Role]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();

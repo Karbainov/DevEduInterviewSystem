@@ -35,13 +35,13 @@ namespace DevEduInterviewSystem.DAL.Tests
                 _mockUserID.Add(userCRUD.Add(dto));
             }
 
-            CityCRUD cityCRUD = new CityCRUD();
-            CityDTOMock cityDTOMock = new CityDTOMock();
-            Connection.Close();
-            foreach (CityDTO dto in cityDTOMock)
-            {
-                cityCRUD.Add(dto);
-            }
+            //CityCRUD cityCRUD = new CityCRUD();
+            //CityDTOMock cityDTOMock = new CityDTOMock();
+            //Connection.Close();
+            //foreach (CityDTO dto in cityDTOMock)
+            //{
+            //    cityCRUD.Add(dto);
+            //}
 
             StatusCRUD statusCRUD = new StatusCRUD();
             StatusDTOMock statusDTOMock = new StatusDTOMock();
