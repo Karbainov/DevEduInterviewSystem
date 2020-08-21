@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     public class CandidateController : Controller
     {
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
-        private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
+        private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         // Manager and phoneoperator
         [HttpPost]
@@ -89,6 +89,14 @@ namespace DevEduInterviewSystem.API.Controllers
             //{
             //    return BadRequest("Fields meesing");
             //}
+        }
+
+        [HttpPut("update")]
+        public IActionResult UpdateCandidateAfterInterview(CandidateInputModel candidateInputModel)
+        {
+            _teacher.UpdateCandidateAfterInterview(candidateInputModel.CandidateDTO, candidateInputModel.interviewDTO, (int)candidateInputModel.CourseID, candidateInputModel.feedbackDTO);
+            return new OkResult();
+            
         }
     }
 }
