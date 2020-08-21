@@ -17,10 +17,12 @@ namespace DevEduInterviewSystem.API.Controllers
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [HttpGet("Interviews")]
 
-        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, DateTime? finishDateTime, DateTime? dateTime) //Добавить всем кроме Админа 
+        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, 
+            DateTime? finishDateTime, DateTime? dateTime) 
         {
             if (new UserCRUD().SelectByID((int)userID) == null && userID != null)
             {
@@ -30,6 +32,20 @@ namespace DevEduInterviewSystem.API.Controllers
             List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
 
             return new JsonResult(interviews);
+        }
+        //TO DO: Добавить всем кроме Админа 
+
+        [HttpPut("Interviews")]
+        public IActionResult ChangeInterviewsLimit(int? number) 
+        {
+            if (number == null)
+            {
+                return BadRequest();
+            }
+
+            _admin.ChangeNumberOfInterviewsInOnePeriod((int)number);
+
+            return new OkResult();
         }
     }
 }

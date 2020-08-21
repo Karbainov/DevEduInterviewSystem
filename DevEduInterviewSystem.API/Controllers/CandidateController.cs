@@ -23,7 +23,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost]
         public IActionResult GetAllCandidate(CandidateInputModel candidateInputModel) //Почему GET?
         {
-            if( new CityCRUD().SelectByID((int)candidateInputModel.CandidateDTO.CityID) == null)
+            if (new CityCRUD().SelectByID((int)candidateInputModel.CandidateDTO.CityID) == null)
             {
                 return new NotFoundObjectResult("City not found");
             }
@@ -31,9 +31,9 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return new NotFoundObjectResult("Course not found");
             }
-            if ((candidateInputModel.CandidateDTO.FirstName != null 
-                || candidateInputModel.CandidateDTO.LastName != null) 
-                && candidateInputModel.CandidateDTO.Phone != null 
+            if ((candidateInputModel.CandidateDTO.FirstName != null
+                || candidateInputModel.CandidateDTO.LastName != null)
+                && candidateInputModel.CandidateDTO.Phone != null
                 && candidateInputModel.CandidateDTO.CityID > 0
                 && candidateInputModel.CourseID != null)
             {
@@ -48,8 +48,10 @@ namespace DevEduInterviewSystem.API.Controllers
         }
         [HttpGet("k")]
         public IActionResult GetOneTimePassword()
-        {
-           string password =  _manager.GetOneTimePassword(); 
+        {
+
+            string password = _manager.GetOneTimePassword();
+
             return new JsonResult(password);            // ?????????????????????????????????????
         }
 
@@ -57,7 +59,7 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult AllInformationAboutCandidate(int candidateID)
         {
             candidateID = 68;
-            AllInformationAboutTheCandidateByIDDTO w =_manager.AllInformationAboutCandidate(candidateID);
+            AllInformationAboutTheCandidateByIDDTO w = _manager.AllInformationAboutCandidate(candidateID);
             return new JsonResult(w);                   // ?????????????????????????????????????
         }
 
@@ -72,18 +74,25 @@ namespace DevEduInterviewSystem.API.Controllers
 
         [HttpPut("rewq")]
         public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
-        {
-            //if ((candidateInputModel.CandidateDTO.FirstName != null &&
-            //     candidateInputModel.CandidateDTO.LastName != null &&
-            //     candidateInputModel.CandidateDTO.Phone != null &&
+        {
+
+            //if ((candidateInputModel.CandidateDTO.FirstName != null &&
+
+            //     candidateInputModel.CandidateDTO.LastName != null &&
+
+            //     candidateInputModel.CandidateDTO.Phone != null &&
+
             //     candidateInputModel.CandidateDTO.CityID > 0 &&               
             //     candidateInputModel.CandidateDTO.StageID > 0 &&
             //     candidateInputModel.CandidateDTO.StatusID > 0 &&
             //     candidateInputModel.CandidateDTO.Email != null ))
-            //{
-            
-                _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
-                return new OkResult();
+            //{
+
+
+
+            _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
+
+            return new OkResult();
             //}
             //else
             //{
@@ -92,40 +101,7 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateCandidateAfterInterview(UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)
-        {
-            if (updateCandidateAfterInterviewModel.CourseID == null)
-            {
-                return new NotFoundResult();
-            }
-
-            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)
-            {
-                return new NotFoundResult();
-            }
-            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)
-            {
-                return new NotFoundResult();
-            }
-            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)
-            {
-                return new NotFoundResult();
-            }
-            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)
-            {
-                return new NotFoundResult();
-            }
-            if(updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)
-            {
-                return new NotFoundResult();
-            }
-            _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,
-              updateCandidateAfterInterviewModel.interviewDTO,
-              (int)updateCandidateAfterInterviewModel.CourseID,
-              updateCandidateAfterInterviewModel.feedbackDTO);
-
-            return new OkResult();
-
-        }
+        public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null )            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }
+            _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,                updateCandidateAfterInterviewModel.interviewDTO,                (int)updateCandidateAfterInterviewModel.CourseID,                updateCandidateAfterInterviewModel.feedbackDTO);            return new OkResult();        }
     }
 }
