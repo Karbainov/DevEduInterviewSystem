@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -10,35 +12,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {      
         public override int Add(FeedbackDTO dto)
         {
+            var procedure = "[AddFeedback]";
+            var values = new
+            {
+                StageChangedID = dto.StageChangedID,
+                UserID = dto.UserID,
+                Message = dto.Message,
+                TimeFeedback = dto.TimeFeedback        
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddFeedback");
-
-            if (dto.StageChangedID > 0)
-            {
-                SqlParameter StageChangedIDParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
-                command.Parameters.Add(StageChangedIDParam);
-            }
-
-            if (dto.UserID > 0)
-            {
-                SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
-                command.Parameters.Add(UserParam);
-            }
-
-            if (dto.Message != null)
-            {
-                SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
-                command.Parameters.Add(MessageParam);
-            }
-
-            if (dto.TimeFeedback != null)
-            {
-                SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.TimeFeedback);
-                command.Parameters.Add(TimeFeedbackParam);
-            }
-               
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Feedback]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -126,28 +110,19 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(FeedbackDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectFeedbackByID");
+            var procedure = "[UpdateFeedbackByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                StageChangedID = dto.StageChangedID,
+                UserID = dto.UserID,
+                Message = dto.Message,
+                TimeFeedback = dto.TimeFeedback
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter StageChangedParam = new SqlParameter("@StageChangedID", dto.StageChangedID);
-            command.Parameters.Add(StageChangedParam);
-
-
-            SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(UserParam);
-
-            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
-            command.Parameters.Add(MessageParam);
-
-            SqlParameter TimeFeedbackParam = new SqlParameter("@TimeFeedback", dto.Message);
-            command.Parameters.Add(TimeFeedbackParam);
-
-            int a = command.ExecuteNonQuery();
-            Connection.Close();
-            return a;
+            return (int)dto.ID;
         }
     }
 }
