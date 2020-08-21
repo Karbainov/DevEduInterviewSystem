@@ -20,15 +20,11 @@ namespace DevEduInterviewSystem.API.Controllers
 
         [HttpGet("Interviews")]
 
-        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, DateTime? finishDateTime, DateTime? dateTime) //Кто может смотреть интерью?
+        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, DateTime? finishDateTime, DateTime? dateTime) //Добавить всем кроме Админа 
         {
-            if(userID != null)
+            if (new UserCRUD().SelectByID((int)userID) == null && userID != null)
             {
-                if( new UserCRUD().SelectByID((int)userID) == null)
-                {
-                    return new NotFoundObjectResult("User not found");
-                }
-
+                return new NotFoundObjectResult("User not found");
             }
 
             List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);

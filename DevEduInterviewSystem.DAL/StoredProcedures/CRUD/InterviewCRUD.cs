@@ -100,7 +100,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return interview;
         }
 
-        public List<InterviewDTO> SelectByUser(int UserID) //Нужно ли делать override?
+        public List<InterviewDTO> SelectByUser(int UserID) 
         {
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllInterviewsByUser");

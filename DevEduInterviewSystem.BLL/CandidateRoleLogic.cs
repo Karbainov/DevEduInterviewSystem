@@ -23,5 +23,6 @@ namespace DevEduInterviewSystem.BLL
             password.DeleteOneTimePasswordByCandidateID(candidateDTO.ID);
 
         }
+
     }
 }
