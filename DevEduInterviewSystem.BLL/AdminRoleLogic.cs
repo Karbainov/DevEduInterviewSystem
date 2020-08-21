@@ -12,10 +12,10 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : IRoleLogic
     {
-        public void ChangeNumberOfInterviewsInOnePeriod(int number)
+        public void ChangeNumberOfInterviewsInOnePeriod(int? number)
         {
             InterviewsNumber interviewsLimit =  InterviewsNumber.GetInstance();
-            interviewsLimit.InterviewsLimit = number;
+            interviewsLimit.InterviewsLimit = (int)number;
         }
 
         #region Methods for adding fields in system tables
@@ -43,7 +43,8 @@ namespace DevEduInterviewSystem.BLL
 
         #endregion
 
-        public void AddNewUser(UserDTO userDTO, int roleID)
+        #region Methods for user
+        public void AddNewUser(UserDTO userDTO, int? roleID)
         {
             UserCRUD user = new UserCRUD();
             int id = user.Add(userDTO);
@@ -53,7 +54,7 @@ namespace DevEduInterviewSystem.BLL
             role.Add(roleDTO);
         }
 
-        public void ShowAllUsersWithHisRole()
+        public void ShowAllUsersWithRoles()
         {
             UsersWithRoleProcedure usersWithRole = new UsersWithRoleProcedure();
             usersWithRole.SelectUsersWithRole();
@@ -64,5 +65,25 @@ namespace DevEduInterviewSystem.BLL
             AllDeletedUsers users = new AllDeletedUsers();
             users.SelectAllDeletedUsers();
         }
+
+        public void DeleteUser(int? userID)
+        {
+            UserCRUD deletion = new UserCRUD();
+            deletion.DeleteByID((int)userID);
+        }
+
+        public void RestoreUser(int? userID)
+        {
+            RestoreDeletedUserByID restoration = new RestoreDeletedUserByID();
+            restoration.RestoreUserByID((int)userID);
+        }
+
+        public void UpdateUser(UserDTO dto)
+        {
+            UserCRUD user = new UserCRUD();
+            user.UpdateByID(dto);
+        }
+        #endregion
+
     }
 }
