@@ -21,7 +21,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
             Connection.Open();
-            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[UserInterview]", Connection);
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User_Interview]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
