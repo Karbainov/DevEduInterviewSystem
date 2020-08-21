@@ -7,7 +7,7 @@ namespace DevEduInterviewSystem.DAL.DTO
    public  class UserInterviewDTO : IDTO
    {
 
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public int? InterviewID { get; set; }
         public int? UserID { get; set; }
 
@@ -16,7 +16,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public UserInterviewDTO(int ID, int? InterviewID, int? UserID)
+        public UserInterviewDTO(int? ID, int? InterviewID, int? UserID)
         {
             this.ID = ID;
             this.InterviewID = InterviewID;
