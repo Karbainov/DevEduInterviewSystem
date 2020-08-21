@@ -6,14 +6,14 @@ namespace DevEduInterviewSystem.DAL.DTO
 {
     public class TestStatusDTO : IDTO
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string Name { get; set; }
 
         public TestStatusDTO()
         {
         }
 
-        public TestStatusDTO(int ID, string Name)
+        public TestStatusDTO(int? ID, string Name)
         {
             this.ID = ID;
             this.Name = Name;

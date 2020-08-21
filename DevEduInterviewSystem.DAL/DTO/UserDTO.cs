@@ -7,7 +7,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 {
     public class UserDTO : IDTO
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public string FirstName { get; set; }
@@ -16,7 +16,7 @@ namespace DevEduInterviewSystem.DAL.DTO
         public UserDTO()
         {
         }
-        public UserDTO(int ID, string Login, string Password, string FirstName, string LastName, bool isDeleted = false)
+        public UserDTO(int? ID, string Login, string Password, string FirstName, string LastName, bool isDeleted = false)
         {
             this.ID = ID;
             this.Login = Login;

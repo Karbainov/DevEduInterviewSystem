@@ -25,13 +25,14 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, (int)candidateDTO.ID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
-
+           
             FeedbackCRUD feedback = new FeedbackCRUD();
+           
             if (feedbackDTO != null)
-            {                
-                feedback.UpdateByID(feedbackDTO);
+            {
+                feedback.Add(feedbackDTO);
             }
-            feedback.Add(feedbackDTO);
+            
         }
         // Препод(после получения дз от кандидата): обновить статус домашки  
         // +обновить стадию + обновить статус + добавить фидбэк
@@ -57,7 +58,11 @@ namespace DevEduInterviewSystem.BLL
             }
             feedback.Add(feedbackDTO);
         }
-        
-        
+
+        public void AddFeedback(FeedbackDTO feedbackDTO)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.Add(feedbackDTO);
+        }
     }
 }

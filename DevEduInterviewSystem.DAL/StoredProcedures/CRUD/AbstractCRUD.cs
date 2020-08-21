@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using Dapper;
+using System.Data;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -34,3 +36,4 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         }
     }
 }
+

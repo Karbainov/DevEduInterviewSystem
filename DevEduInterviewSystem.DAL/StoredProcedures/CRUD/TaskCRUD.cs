@@ -5,43 +5,31 @@ using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.Shared;
+using System.Data;
+using Dapper;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures
 {
     public class TaskCRUD : AbstractCRUD<TaskDTO>
     {
         public override int Add(TaskDTO dto)
-        {            
+        {
+            var procedure = "[AddTask]";
+            var values = new
+            {
+                dto.CandidateID,
+                dto.UserID,
+                dto.Message,
+                IsComleted = dto.IsCompleted
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddTask");
-
-            if(dto.UserID > 0)
-            {
-                SqlParameter UserParam = new SqlParameter("@UserID", dto.UserID);
-                command.Parameters.Add(UserParam);
-            }
-
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
-
-            if(dto.Message != null)
-            {
-                SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
-                command.Parameters.Add(MessageParam);
-            }
-
-            if(dto.IsCompleted != null)
-            {
-                SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", dto.IsCompleted);
-                command.Parameters.Add(IsCompletedParam);
-            }
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Task]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
 
-            return count;
+            return count;          
         }
         public override int DeleteByID(int id)
         {
@@ -117,28 +105,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
 
         public override int UpdateByID(TaskDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateTaskByID");
-
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            SqlParameter StatusParam = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(StatusParam);
-
-            SqlParameter MessageParam = new SqlParameter("@Message", dto.Message);
-            command.Parameters.Add(MessageParam);
-
-            SqlParameter IsCompletedParam = new SqlParameter("@IsCompleted", dto.IsCompleted);
-            command.Parameters.Add(IsCompletedParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            var procedure = "[UpdateTaskByID]";
+            var values = new
+            {
+                dto.ID,
+                dto.CandidateID,
+                dto.UserID,
+                dto.Message,
+                IsComleted = dto.IsCompleted
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+            return (int)dto.ID;           
         }
     }
 }

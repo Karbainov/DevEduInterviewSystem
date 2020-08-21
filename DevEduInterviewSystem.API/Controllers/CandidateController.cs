@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     public class CandidateController : Controller
     {
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
-        private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
+        private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         // Manager and phoneoperator
         [HttpPost]
@@ -89,6 +89,43 @@ namespace DevEduInterviewSystem.API.Controllers
             //{
             //    return BadRequest("Fields meesing");
             //}
+        }
+
+        [HttpPut("update")]
+        public IActionResult UpdateCandidateAfterInterview(UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)
+        {
+            if (updateCandidateAfterInterviewModel.CourseID == null)
+            {
+                return new NotFoundResult();
+            }
+
+            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)
+            {
+                return new NotFoundResult();
+            }
+            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)
+            {
+                return new NotFoundResult();
+            }
+            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)
+            {
+                return new NotFoundResult();
+            }
+            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)
+            {
+                return new NotFoundResult();
+            }
+            if(updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)
+            {
+                return new NotFoundResult();
+            }
+            _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,
+              updateCandidateAfterInterviewModel.interviewDTO,
+              (int)updateCandidateAfterInterviewModel.CourseID,
+              updateCandidateAfterInterviewModel.feedbackDTO);
+
+            return new OkResult();
+
         }
     }
 }

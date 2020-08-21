@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.DTO;
 using System.Collections.Generic;
 using System.Text;
+using Dapper;
+using System.Data;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -10,21 +12,20 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(StatusDTO dto)
         {
+            var procedure = "[AddStatus]";
+            var values = new
+            {
+                dto.Name
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddStatus");
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Status]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
 
-            return count;
+            return count;          
         }
-        
 
         public override int DeleteByID(int id)
         {
@@ -39,8 +40,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return a;
         }
 
-       
-
         public override List<StatusDTO> SelectAll()
         {
             Connection.Open();
@@ -50,9 +49,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<StatusDTO> statuses = new List<StatusDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     StatusDTO status = new StatusDTO()
                     {
@@ -68,8 +67,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return statuses;
         }
 
-       
-
         public override StatusDTO SelectByID(int id)
         {
             Connection.Open();
@@ -81,9 +78,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             StatusDTO status = new StatusDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     status.ID = (int)reader["id"];
                     status.Name = (string)reader["Name"];
@@ -94,22 +91,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return status;
         }
 
-        
-
         public override int UpdateByID(StatusDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateStatusByID");
-
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            int a = command.ExecuteNonQuery();
-            Connection.Close();
-            return a;
+            var procedure = "[UpdateStatusByID]";
+            var values = new
+            {
+                dto.ID,
+                dto.Name
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+            return (int)dto.ID;          
         }      
     }
 }
