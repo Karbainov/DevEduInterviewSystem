@@ -48,33 +48,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override List<InterviewDTO> SelectAll()
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllInterview");
+            SqlCommand command = ReferenceToProcedure("AllInterviews");
 
             SqlDataReader reader = command.ExecuteReader();
 
-            List<InterviewDTO> interviews = new List<InterviewDTO>();
-
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-
-                    InterviewDTO interview = new InterviewDTO()
-                    {
-                        ID = (int)reader["id"],
-                        CandidateID = (int)reader["CandidateID"],
-                        InterviewStatusID = (int)reader["InterviewStatusID"],
-                        Attempt = (int)reader["Attempt"],
-                        DateTimeInterview = (DateTime)reader["DateTimeInterview"]
-                    };
-
-                    interviews.Add(interview);
-                }
-            }
-            reader.Close();
-            Connection.Close();
-
-            return interviews;
+            return AllFromReader(reader);
 
         }
 
@@ -104,6 +82,108 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             reader.Close();
             Connection.Close();
             return interview;
+        }
+
+        public List<InterviewDTO> SelectByUser(int UserID) 
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByUser");
+
+            SqlParameter userIDParam = new SqlParameter("@UserID", UserID);
+            command.Parameters.Add(userIDParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            return AllFromReader(reader);
+        }
+
+        public List<InterviewDTO> SelectByDateTime(DateTime datetime)
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDate");
+
+            SqlParameter DateTimeParam = new SqlParameter("@DateTimeInterview", datetime);
+            command.Parameters.Add(DateTimeParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            return AllFromReader(reader);
+        }
+        public List<InterviewDTO> SelectByUserAndDateTime (DateTime datetime, int UserID)
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByUserAndDate");
+
+            SqlParameter DateTimeParam = new SqlParameter("@DateTimeInterview", datetime);
+            command.Parameters.Add(DateTimeParam);
+
+            SqlParameter userIDParam = new SqlParameter("@UserID", UserID);
+            command.Parameters.Add(userIDParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            return AllFromReader(reader);
+        }
+        public List<InterviewDTO> SelectByDateTimeInterval(DateTime startDateTimeInterview, DateTime finishDateTimeInterview) 
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDateInterval");
+
+            SqlParameter startDateTimeParam = new SqlParameter("@startDateTimeInterview", startDateTimeInterview);
+            command.Parameters.Add(startDateTimeParam);
+
+            SqlParameter finishDateTimeParam = new SqlParameter("@finishDateTimeInterview", finishDateTimeInterview);
+            command.Parameters.Add(finishDateTimeParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            return AllFromReader(reader);
+        }
+
+        public List<InterviewDTO> SelectByDateTimeIntervalAndUser(int UserID, DateTime startDateTimeInterview, DateTime finishDateTimeInterview) 
+        {
+            Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AllInterviewsByDateIntervalAndUser");
+
+            SqlParameter userIDParam = new SqlParameter("@UserID", UserID);
+            command.Parameters.Add(userIDParam);
+
+            SqlParameter startDateTimeParam = new SqlParameter("@startDateTimeInterview", startDateTimeInterview);
+            command.Parameters.Add(startDateTimeParam);
+
+            SqlParameter finishDateTimeParam = new SqlParameter("@finishDateTimeInterview", finishDateTimeInterview);
+            command.Parameters.Add(finishDateTimeParam);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            return AllFromReader(reader);
+        }
+
+        private List<InterviewDTO> AllFromReader(SqlDataReader reader)
+        {
+            List<InterviewDTO> interviews = new List<InterviewDTO>();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+
+                    InterviewDTO interview = new InterviewDTO()
+                    {
+                        ID = (int)reader["id"],
+                        CandidateID = (int)reader["CandidateID"],
+                        InterviewStatusID = (int)reader["InterviewStatusID"],
+                        Attempt = (int)reader["Attempt"],
+                        DateTimeInterview = (DateTime)reader["DateTimeInterview"]
+                    };
+
+                    interviews.Add(interview);
+                }
+            }
+            reader.Close();
+            Connection.Close();
+
+            return interviews;
         }
 
         public override int UpdateByID(InterviewDTO dto)
