@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Data.SqlClient;
+﻿using Dapper;
 using DevEduInterviewSystem.DAL.DTO;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -10,28 +11,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(StageChangedDTO dto)
         {
+            var procedure = "[AddStageChanged]";
+            var values = new
+            {
+                StageID = dto.StageID,
+                CandidateID = dto.CandidateID,
+                ChangedDate = dto.ChangedDate
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddStageChanged");
-            if (dto.StageID > 0)
-            {
-                SqlParameter StageIDParam = new SqlParameter("@StageID", dto.StageID);
-                command.Parameters.Add(StageIDParam);
-            }
-
-            if(dto.CandidateID > 0)
-            {
-                SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-                command.Parameters.Add(CandidateParam);
-            }
-
-            if (dto.ChangedDate != null)
-            {
-                SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
-                command.Parameters.Add(ChangedDateParam);
-            }
-            
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[StageChanged]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -65,7 +55,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             List<StageChangedDTO> stages = new List<StageChangedDTO>();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
 
                 while (reader.Read())
@@ -98,9 +88,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             SqlDataReader reader = command.ExecuteReader();
             StageChangedDTO stage = new StageChangedDTO();
 
-            if (reader.HasRows) // если есть данные
+            if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     stage.ID = (int)reader["ID"];
                     stage.StageID = (int)reader["StageID"];
@@ -116,25 +106,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         
         public override int UpdateByID(StageChangedDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateStageChangedByID");
+            var procedure = "[UpdateStageChangedByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                StageID = dto.StageID,
+                CandidateID = dto.CandidateID,
+                ChangedDate = dto.ChangedDate
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter StatusParam = new SqlParameter("@StageID", dto.StageID);
-            command.Parameters.Add(StatusParam);
-
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            SqlParameter ChangedDateParam = new SqlParameter("@ChangedDate", dto.ChangedDate);
-            command.Parameters.Add(ChangedDateParam);
-
-            int a = command.ExecuteNonQuery();
-            Connection.Close();
-            return a;
+            return (int)dto.ID;
         }
-
     }
 }
