@@ -54,7 +54,11 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
 
-       
+        [HttpPut]
+        public IActionResult UpdateCandidateAfterInterview(UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)
+        {
+
+        }
     }
 }
 
