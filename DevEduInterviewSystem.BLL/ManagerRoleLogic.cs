@@ -33,13 +33,13 @@ namespace DevEduInterviewSystem.BLL
         {
             UpdateCandidate(candidateDTO);
 
-            ChangeStageAddFeedback(candidateDTO.ID, candidateDTO.StageID, feedbackDTO);
+            ChangeStageAddFeedback((int)candidateDTO.ID, (int)candidateDTO.StageID, feedbackDTO);
 
             InterviewDTO _interviewDTO = new InterviewDTO(candidateDTO.ID, interviewDTO.InterviewStatusID, DateTime.Now);
             InterviewCRUD interview = new InterviewCRUD();
             interview.UpdateByID(_interviewDTO);
 
-            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateDTO.ID);
+            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, (int)candidateDTO.ID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
         }
@@ -95,7 +95,7 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.Add(courseCandidateDTO);
 
-            ChangeStageAddFeedback(candidateID, candidateDTO.StageID, feedbackDTO);
+            ChangeStageAddFeedback(candidateID, (int)candidateDTO.StageID, feedbackDTO);
 
             if (taskDTO != null)
             {

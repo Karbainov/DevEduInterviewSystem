@@ -15,12 +15,22 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            //ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
 
-            UsersWithRoleProcedure test = new UsersWithRoleProcedure();
-            List<UsersWithRoleDTO> result = test.SelectUsersWithRole();
+            //UsersWithRoleProcedure test = new UsersWithRoleProcedure();
+            //List<UsersWithRoleDTO> result = test.SelectUsersWithRole();
 
+            CandidateCRUD crud = new CandidateCRUD();
+            //crud.Add(new CandidateDTO(1, null, null, null, "911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now));
+
+            CandidateDTO candidate = new CandidateDTO();
+            candidate.Phone = "911";
+            candidate.LastName = "Pupkin";
+            //candidate.BirthDay = DateTime.Now;
+            //crud.Add(candidate);
+
+            crud.UpdateByID(new CandidateDTO(232, null, null, null, "911", "v@ya.ru", "Vasya", "Pupkin", DateTime.Now));
 
             connection.Open();
             Console.WriteLine("Подключение к серверу");

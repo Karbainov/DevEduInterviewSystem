@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -9,23 +11,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     public class GroupCRUD : AbstractCRUD<GroupDTO>
     {
         public override int Add(GroupDTO dto)
-        {
+        {         
+            var procedure = "[AddGroup]";
+            var values = new
+            {
+                CourseID = dto.CourseID,
+                Name = dto.Name,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddGroup");
-
-            SqlParameter CourseParam = new SqlParameter("@CourceID", dto.CourseID);
-            command.Parameters.Add(CourseParam);
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            SqlParameter StartDateParam = new SqlParameter("@StartDate", dto.StartDate);
-            command.Parameters.Add(StartDateParam);
-
-            SqlParameter EndDateParam = new SqlParameter("@EndDate", dto.EndDate);
-            command.Parameters.Add(EndDateParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -91,7 +88,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             if (reader.HasRows) 
             {
-                while (reader.Read()) // построчно считываем данные
+                while (reader.Read()) 
                 {
                     groups.ID = (int)reader["id"];
                     groups.CourseID = (int)reader["CourseID"];
@@ -107,27 +104,19 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(GroupDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateGroupByID");
+            var procedure = "[UpdateGroupByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                CourseID = dto.CourseID,
+                Name = dto.Name,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter CourseParam = new SqlParameter("@CourseID", dto.CourseID);
-            command.Parameters.Add(CourseParam);
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            SqlParameter StartDateParam = new SqlParameter("@StartDate", dto.StartDate);
-            command.Parameters.Add(StartDateParam);
-
-            SqlParameter EndDateParam = new SqlParameter("@EndDate", dto.EndDate);
-            command.Parameters.Add(EndDateParam);
-
-            int a = command.ExecuteNonQuery();
-            Connection.Close();
-            return a;
+            return (int)dto.ID;
         }
     }
 }

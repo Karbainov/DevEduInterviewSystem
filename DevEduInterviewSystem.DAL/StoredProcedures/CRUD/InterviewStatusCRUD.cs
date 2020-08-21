@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Dapper;
 using DevEduInterviewSystem.DAL.DTO;
-using System.Data.SqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -9,17 +11,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(InterviewStatusDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddInterviewStatus");
-
-            if (dto.Name != null)
+            var procedure = "[AddInterviewStatus]";
+            var values = new
             {
-                SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-                command.Parameters.Add(NameParam);
-            }
-                
+                Name = dto.Name
+            };
 
-            command.ExecuteNonQuery();
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
+            Connection.Open();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[InterviewStatus]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -97,21 +97,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             return interviewstatus;
         }
 
-        public override int UpdateByID(InterviewStatusDTO interviewStatus)
+        public override int UpdateByID(InterviewStatusDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateInterviewStatusByID");
+            var procedure = "[UpdateInterviewStatusByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                Name = dto.Name
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", interviewStatus.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter NameParam = new SqlParameter("@Name", interviewStatus.Name);
-            command.Parameters.Add(NameParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;
         }
     }
 }

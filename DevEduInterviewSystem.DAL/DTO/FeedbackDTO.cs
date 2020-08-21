@@ -6,11 +6,11 @@ namespace DevEduInterviewSystem.DAL.DTO
 {
     public class FeedbackDTO : IDTO
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public int? StageChangedID { get; set; }
         public int? UserID { get; set; }
         public string Message { get; set; }
-        public DateTime TimeFeedback { get; set; }
+        public DateTime? TimeFeedback { get; set; }
 
         public FeedbackDTO()
         {

@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.DTO;
 using System.Collections.Generic;
 using System.Text;
+using Dapper;
+using System.Data;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -10,19 +12,19 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(TestStatusDTO dto)
         {
+            var procedure = "[AddTestStatus]";
+            var values = new
+            {
+                dto.Name              
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddTestStatus");
-
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(CandidateIDParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[TestStatus]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
 
-            return count;
+            return count;           
         }
 
         public override int DeleteByID(int id)
@@ -92,20 +94,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(TestStatusDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateTestStatusByID");
-
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter CandidateIDParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(CandidateIDParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            var procedure = "[UpdateTestStatus]";
+            var values = new
+            {
+                dto.ID,
+                dto.Name
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+            return (int)dto.ID;
         }
+            
 
     }
 }

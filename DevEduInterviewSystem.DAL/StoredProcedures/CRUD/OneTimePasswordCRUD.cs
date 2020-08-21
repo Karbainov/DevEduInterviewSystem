@@ -1,8 +1,9 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -10,19 +11,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(OneTimePasswordDTO dto)
         {
+            var procedure = "[AddOneTimePassword]";
+            var values = new
+            {
+                CandidateID = dto.CandidateID,
+                DateOfPasswordIssue = dto.DateOfPasswordIssue,
+                OneTimePassword = dto.OneTimePassword
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddOneTimePassword");
-
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
-
-            SqlParameter DateOfPasswordIssueParam = new SqlParameter("@DateOfPasswordIssue", dto.DateOfPasswordIssue);
-            command.Parameters.Add(DateOfPasswordIssueParam);
-
-            SqlParameter OneTimePasswordParam = new SqlParameter("@OneTimePassword", dto.OneTimePassword);
-            command.Parameters.Add(OneTimePasswordParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[OneTimePassword]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -98,25 +97,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(OneTimePasswordDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateOneTimePasswordByID");
+            var procedure = "[UpdateOneTimePasswordByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                CandidateID = dto.CandidateID,
+                DateOfPasswordIssue = dto.DateOfPasswordIssue,
+                OneTimePassword = dto.OneTimePassword
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);
-
-            SqlParameter DateOfPasswordIssueParam = new SqlParameter("@DateOfPasswordIssue", dto.DateOfPasswordIssue);
-            command.Parameters.Add(DateOfPasswordIssueParam);
-
-            SqlParameter OneTimePasswordParam = new SqlParameter("@OneTimePassword", dto.OneTimePassword);
-            command.Parameters.Add(OneTimePasswordParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;
         }
     }
 }

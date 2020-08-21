@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -9,14 +11,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     public class CourseCRUD : AbstractCRUD<CourseDTO>
     {
         public override int Add(CourseDTO dto)
-        {
+        {     
+            var procedure = "[AddCourse]";
+            var values = new
+            {
+                Name = dto.Name
+                
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCourse");
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Course]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -40,18 +45,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(CourseDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCourseByID");
+            var procedure = "[UpdateCourseByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                Name = dto.Name
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-            return rows;
+            return (int)dto.ID;
         }
 
         public override List<CourseDTO> SelectAll()

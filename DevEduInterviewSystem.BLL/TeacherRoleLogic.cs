@@ -14,7 +14,7 @@ namespace DevEduInterviewSystem.BLL
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);
 
-            StageChangedDTO stageDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
+            StageChangedDTO stageDTO = new StageChangedDTO((int)candidateDTO.ID, (int)candidateDTO.StageID, DateTime.Now);
             StageChangedCRUD stageChanged = new StageChangedCRUD();
             stageChanged.Add(stageDTO);
 
@@ -22,28 +22,29 @@ namespace DevEduInterviewSystem.BLL
             InterviewCRUD interview = new InterviewCRUD();
             interview.UpdateByID(_interviewDTO);
 
-            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateDTO.ID);
+            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, (int)candidateDTO.ID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
-
+           
             FeedbackCRUD feedback = new FeedbackCRUD();
+           
             if (feedbackDTO != null)
-            {                
-                feedback.UpdateByID(feedbackDTO);
+            {
+                feedback.Add(feedbackDTO);
             }
-            feedback.Add(feedbackDTO);
+            
         }
         // Препод(после получения дз от кандидата): обновить статус домашки  
         // +обновить стадию + обновить статус + добавить фидбэк
         public void UpdateHomeworkAfterDoneHomework(CandidateDTO candidateDTO, HomeworkDTO homeworkDTO, 
             int homeworkStatusID, int testStatusID, FeedbackDTO feedbackDTO)
         {
-            HomeworkDTO homework = new HomeworkDTO(homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
+            HomeworkDTO homework = new HomeworkDTO((int)homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
                 testStatusID, DateTime.Now);
             HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
             homeworkCRUD.Add(homework);
 
-            StageChangedDTO stageChangedDTO = new StageChangedDTO(candidateDTO.ID, candidateDTO.StageID, DateTime.Now);
+            StageChangedDTO stageChangedDTO = new StageChangedDTO((int)candidateDTO.ID, (int)candidateDTO.StageID, DateTime.Now);
             StageChangedCRUD stageChanged = new StageChangedCRUD();
             stageChanged.Add(stageChangedDTO);
 
@@ -57,7 +58,11 @@ namespace DevEduInterviewSystem.BLL
             }
             feedback.Add(feedbackDTO);
         }
-        
-        
+
+        public void AddFeedback(FeedbackDTO feedbackDTO)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.Add(feedbackDTO);
+        }
     }
 }

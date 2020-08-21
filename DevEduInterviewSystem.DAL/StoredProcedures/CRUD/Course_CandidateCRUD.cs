@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
@@ -9,17 +11,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(Course_CandidateDTO dto)
         {
+            var procedure = "[AddCourse_Candidate]";
+            var values = new
+            {
+                CourseID = dto.CourseID,
+                CandidateID = dto.CandidateID
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCourse_Candidate");
-
-            SqlParameter CourseIDParam = new SqlParameter("@CourseID", dto.CourseID);
-            command.Parameters.Add(CourseIDParam);
-
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
-
-            command.ExecuteNonQuery();
-
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Course_Candidate]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -44,22 +45,17 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(Course_CandidateDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCourse_CandidateByID");
+            var procedure = "[UpdateCourse_CandidateByID]";
+            var values = new
+            {
+                ID = dto.ID,
+                CourseID = dto.CourseID,
+                CandidateID = dto.CandidateID
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);           
 
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
-
-            SqlParameter CourseIDParam = new SqlParameter("@CourseID", dto.CourseID);
-            command.Parameters.Add(CandidateIDParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;
         }
 
         public override List<Course_CandidateDTO> SelectAll()
