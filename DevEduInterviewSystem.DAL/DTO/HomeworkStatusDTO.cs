@@ -6,7 +6,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 {
     public class HomeworkStatusDTO : IDTO
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string Name { get; set; }
 
         public HomeworkStatusDTO()
