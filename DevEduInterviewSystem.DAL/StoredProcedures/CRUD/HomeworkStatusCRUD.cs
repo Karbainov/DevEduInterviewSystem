@@ -1,7 +1,9 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -10,19 +12,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     public class HomeworkStatusCRUD : AbstractCRUD<HomeworkStatusDTO>
     {
         public override int Add(HomeworkStatusDTO dto)
-        {
+        {        
+            var procedure = "[AddHomeworkStatus]";
+            var values = new { Name = dto.Name };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddHomeworkStatus");
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-
-            command.ExecuteNonQuery();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[HomeworkStatus]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
-
             return count;
         }
 
@@ -98,19 +97,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override int UpdateByID(HomeworkStatusDTO dto)
         {
 
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateHomeworkStatusByID");
+            var procedure = "[UpdateHomeworkStatusByID]";
+            var values = new { Name = dto.Name };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter NameParam = new SqlParameter("@Name", dto.Name);
-            command.Parameters.Add(NameParam);
-           
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;
         }
     }
 }
