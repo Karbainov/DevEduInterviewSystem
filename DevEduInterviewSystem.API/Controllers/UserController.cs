@@ -68,6 +68,19 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [HttpPut("Users")]
+        public IActionResult UpdateUser(UserDTO user)
+        {
+            if (user.IsDeleted == true || user.ID == null || new UserCRUD().SelectByID((int)user.ID) == null)
+            {
+                return new NotFoundObjectResult("User not found");
+            }
+
+            _admin.UpdateUser(user);
+
+            return new OkResult();
+        }
+
         [HttpGet("Users")]
         public IActionResult GetAllUsersWithRoles()
         {

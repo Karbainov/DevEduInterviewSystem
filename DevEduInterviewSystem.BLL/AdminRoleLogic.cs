@@ -77,6 +77,12 @@ namespace DevEduInterviewSystem.BLL
             RestoreDeletedUserByID restoration = new RestoreDeletedUserByID();
             restoration.RestoreUserByID((int)userID);
         }
+
+        public void UpdateUser(UserDTO dto)
+        {
+            UserCRUD user = new UserCRUD();
+            user.UpdateByID(dto);
+        }
         #endregion
 
     }
