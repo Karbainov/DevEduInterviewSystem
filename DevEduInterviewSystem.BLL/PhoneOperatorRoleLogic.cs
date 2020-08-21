@@ -21,48 +21,44 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.Add(courseCandidateDTO);
 
-            //StageChangedDTO stageDTO = new StageChangedDTO(candidateID, candidateDTO.StageID, DateTime.Now);
-            //StageChangedCRUD stageChanged = new StageChangedCRUD();
-            //stageChanged.Add(stageDTO);
-            
+            ChangeStageAddFeedback(candidateID, candidateDTO.StageID, feedbackDTO);
+
             if (taskDTO != null)
             {
-                AddTask(taskDTO, feedbackDTO);
+                AddTask(taskDTO);
             }
-
-
         }
 
-        public void AddTask(TaskDTO taskDTO, FeedbackDTO feedbackDTO = null)
+        public void AddTask(TaskDTO taskDTO)
         {
             TaskCRUD task = new TaskCRUD();
             task.Add(taskDTO);
-
-            if (feedbackDTO != null)
-            {
-                FeedbackCRUD feedback = new FeedbackCRUD();
-                feedback.Add(feedbackDTO);
-            }
+        }
+        public void AddFeedback(FeedbackDTO feedbackDTO)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.Add(feedbackDTO);
         }
 
-        public void ChangeStageAddFeedback(StageChangedDTO stageChangedDTO, FeedbackDTO feedbackDTO = null)
+        public void ChangeStageAddFeedback(int candidateID, int stageID, FeedbackDTO feedbackDTO = null)
         {
-            StageChangedCRUD stage = new StageChangedCRUD();
+            StageChangedDTO stageChangedDTO = new StageChangedDTO();
+            stageChangedDTO.CandidateID = candidateID;
             stageChangedDTO.ChangedDate = DateTime.Now;
-            int stageChangedID = stage.Add(stageChangedDTO);
-            
+            stageChangedDTO.StageID = stageID;
+
+            StageChangedCRUD stage = new StageChangedCRUD();
+            stage.Add(stageChangedDTO);
             if (feedbackDTO != null)
             {
-                FeedbackCRUD feedback = new FeedbackCRUD();
-                feedbackDTO.StageChangedID = stageChangedID;
-                feedback.Add(feedbackDTO);
+                AddFeedback(feedbackDTO);
             }
-            
+
         }
 
-        public void ScheduleInterview(InterviewDTO interviewDTO, StageChangedDTO stageChangedDTO, FeedbackDTO feedbackDTO = null)
+        public void ScheduleInterview(InterviewDTO interviewDTO, int stageID, FeedbackDTO feedbackDTO = null)
         {
-            List <AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
+            List<AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
             AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
             interviewsList = interviews.SelectAllInterviewsByDate(interviewDTO.DateTimeInterview);
 
@@ -71,12 +67,14 @@ namespace DevEduInterviewSystem.BLL
             {
                 InterviewCRUD interview = new InterviewCRUD();
                 interview.Add(interviewDTO);
-                ChangeStageAddFeedback(stageChangedDTO, feedbackDTO);
+                ChangeStageAddFeedback((int)interviewDTO.CandidateID, stageID, feedbackDTO);
             }
             else
             {
                 throw new Exception("The interviews limit is exceeded");
             }
+
+            //To do: try catch in controller (catch - exception=> IActionResult bad request)
         }
     }
 }

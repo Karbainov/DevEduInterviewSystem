@@ -12,37 +12,46 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
     public class AllDeletedUsers
     {
-        public List<UserDTO> SelectAllDeletedUsers()
+        public List<UsersWithRoleDTO> SelectAllDeletedUsers()
         {
-            SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            connection.Open();
-            SqlCommand command = ReferenceToProcedure("[AllDeletedUsers]", connection);
-            SqlDataReader reader = command.ExecuteReader();
-            List<UserDTO> users = new List<UserDTO>();
-            if (reader.HasRows)
+            IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            var procedure = "[AllDeletedUsers]";
+
+            List<UsersWithRoleDTO> result = new List<UsersWithRoleDTO>();
+
+            connection.Query<UsersWithRoleDTO, RoleDTO, UsersWithRoleDTO>(procedure, (user, role) =>
             {
-                while (reader.Read())
+                UsersWithRoleDTO userDTO = null;
+                foreach (UsersWithRoleDTO u in result)
                 {
-                    UserDTO user = new UserDTO()
+                    if (u.ID == user.ID)
                     {
-                        Login = (string)reader["Login"],
-                        Password = (string)reader["Password"],
-                        FirstName = (string)reader["FirstName"],
-                        LastName = (string)reader["LastName"]
-                    };
-                    users.Add(user);
+                        userDTO = u;
+                    }
                 }
-            }
-            reader.Close();
-            return users;
+                if (userDTO == null)
+                {
+                    userDTO = user;
+                    result.Add(userDTO);
+                }
 
-        }
-        private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
-        {
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+                if (userDTO.Roles == null)
+                {
+                    userDTO.Roles = new List<RoleDTO>();
+                }
+                if (!userDTO.Roles.Contains(role))
+                {
+                    userDTO.Roles.Add(role);
+                }
 
-            return command;
+                return userDTO;
+            },
+            splitOn: "TypeOfRole",
+            commandType: CommandType.StoredProcedure
+            );
+
+            return result;
+
         }
     }
 }

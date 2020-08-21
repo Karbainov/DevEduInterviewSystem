@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,49 +17,78 @@ namespace DevEduInterviewSystem.API.Controllers
     public class CandidateController : Controller
     {
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
-        private TeacherRoleLogic _teacher = new TeacherRoleLogic();
+        private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
-        [HttpPost]  // manager and  phone operator
-        public IActionResult AddCandidate(AddCandidateInoutModel candidateInoutModel)  
+        // Manager and phoneoperator
+        [HttpPost]
+        public IActionResult GetAllCandidate(CandidateInputModel candidateInputModel)
         {
-            if( new CityCRUD().SelectByID(candidateInoutModel.CandidateDTO.CityID) == null)
+            if( new CityCRUD().SelectByID(candidateInputModel.CandidateDTO.CityID) == null)
             {
                 return new NotFoundObjectResult("City not found");
             }
-
-            if( new CourseCRUD().SelectByID((int)candidateInoutModel.CourseID) == null)
+            if (new CourseCRUD().SelectByID((int)candidateInputModel.CourseID) == null)
             {
                 return new NotFoundObjectResult("Course not found");
             }
-
-            if((candidateInoutModel.CandidateDTO.FirstName != null || candidateInoutModel.CandidateDTO.LastName != null ) &&
-                candidateInoutModel.CandidateDTO.Phone != null &&
-                candidateInoutModel.CandidateDTO.CityID != null &&
-                candidateInoutModel.CourseID != null)
+            if ((candidateInputModel.CandidateDTO.FirstName != null 
+                || candidateInputModel.CandidateDTO.LastName != null) 
+                && candidateInputModel.CandidateDTO.Phone != null 
+                && candidateInputModel.CandidateDTO.CityID > 0
+                && candidateInputModel.CourseID != null)
             {
-              
-                _phoneOperator.AddCandidate(candidateInoutModel.CandidateDTO, (int)candidateInoutModel.CourseID);
-                return Ok();
+                candidateInputModel.CandidateDTO.BirthDay = DateTime.Now;
+                _phoneOperator.AddCandidate(candidateInputModel.CandidateDTO, (int)candidateInputModel.CourseID);
+                return new OkResult();
             }
             else
             {
-                return BadRequest("Fields missing");
+                return BadRequest("Fields meesing");
             }
         }
-
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("k")]
+        public IActionResult GetOneTimePassword()
         {
-            return Ok(new AddCandidateInoutModel() { CandidateDTO = new CandidateDTO() { FirstName = "Vasa", LastName = "Pupkin", Phone = "123123454", CityID = 1 }, CourseID = 1 });
-            
+           string password =  _manager.GetOneTimePassword(); 
+            return new JsonResult(password);            // ?????????????????????????????????????
+        }
+
+        [HttpGet("q")]
+        public IActionResult AllInformationAboutCandidate(int candidateID)
+        {
+            candidateID = 68;
+            AllInformationAboutTheCandidateByIDDTO w =_manager.AllInformationAboutCandidate(candidateID);
+            return new JsonResult(w);                   // ?????????????????????????????????????
+        }
+
+        [HttpPut("qwer")]
+        public IActionResult UpdateCandidatePersonalInfo(CandidateInputModel candidateInputModel)
+        {
+            _manager.UpdateCandidatePersonalInfo(candidateInputModel.CandidateDTO, candidateInputModel.CandidatePersonalInfoDTO);
+            return new OkResult();
         }
 
 
-        [HttpPut]
-        public IActionResult UpdateCandidateAfterInterview(UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)
-        {
 
+        [HttpPut("rewq")]
+        public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
+        {
+            //if ((candidateInputModel.CandidateDTO.FirstName != null &&
+            //     candidateInputModel.CandidateDTO.LastName != null &&
+            //     candidateInputModel.CandidateDTO.Phone != null &&
+            //     candidateInputModel.CandidateDTO.CityID > 0 &&               
+            //     candidateInputModel.CandidateDTO.StageID > 0 &&
+            //     candidateInputModel.CandidateDTO.StatusID > 0 &&
+            //     candidateInputModel.CandidateDTO.Email != null ))
+            //{
+            
+                _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
+                return new OkResult();
+            //}
+            //else
+            //{
+            //    return BadRequest("Fields meesing");
+            //}
         }
     }
 }
-

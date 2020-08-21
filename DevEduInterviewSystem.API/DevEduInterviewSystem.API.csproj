@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Output\**" />
+    <Content Remove="Models\Output\**" />
+    <EmbeddedResource Remove="Models\Output\**" />
+    <None Remove="Models\Output\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DevEduInterviewSystem.BLL\DevEduInterviewSystem.BLL.csproj" />
     <ProjectReference Include="..\DevEduInterviewSystem.DAL\DevEduInterviewSystem.DAL.csproj" />
   </ItemGroup>

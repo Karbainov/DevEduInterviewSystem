@@ -12,8 +12,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AddInterview");
 
-            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateParam);         
+            if(dto.CandidateID != null)
+            {
+                SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
+                command.Parameters.Add(CandidateParam);
+            }
 
             if (dto.InterviewStatusID!= null)
             {
@@ -27,8 +30,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 command.Parameters.Add(AttemptParam);
             }
 
-            SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
-            command.Parameters.Add(DateTimeInterviewParam);
+            if (dto.DateTimeInterview != null)
+            {
+                SqlParameter DateTimeInterviewParam = new SqlParameter("@DateTimeInterview", dto.DateTimeInterview);
+                command.Parameters.Add(DateTimeInterviewParam);
+            }
+                
 
                 
 

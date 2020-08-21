@@ -11,11 +11,11 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     abstract public class AbstractCRUD<T> where T : IDTO
     {
         public SqlConnection Connection { get; set; }
-        public InterviewsNumber InterviewsLimit { get; set; }
+        //public InterviewsNumber InterviewsLimit { get; set; }
         public AbstractCRUD()
         {
             Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            InterviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
+            //InterviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
         }
         abstract public int Add(T dto);
         abstract public int DeleteByID(int id);
