@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DevEduInterviewSystem.API.Models.Input
 {
-    public class UpdateCandidateAfterInterviewModel // Можно ли недостающие свойства добавить в кандидатМодель?????
+    public class UpdateCandidateAfterInterviewModel 
     {
         public CandidateDTO CandidateDTO { get; set; }
         public InterviewDTO interviewDTO { get; set; }

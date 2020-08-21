@@ -92,11 +92,19 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateCandidateAfterInterview(CandidateInputModel candidateInputModel)
+        public IActionResult UpdateCandidateAfterInterview(UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)
         {
-            _teacher.UpdateCandidateAfterInterview(candidateInputModel.CandidateDTO, candidateInputModel.interviewDTO, (int)candidateInputModel.CourseID, candidateInputModel.feedbackDTO);
+            if (updateCandidateAfterInterviewModel.CourseID == null)
+            {
+                return BadRequest("course not found");
+            }
+            _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,
+              updateCandidateAfterInterviewModel.interviewDTO,
+              (int)updateCandidateAfterInterviewModel.CourseID,
+              updateCandidateAfterInterviewModel.feedbackDTO);
+
             return new OkResult();
-            
+
         }
     }
 }
