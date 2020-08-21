@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using DevEduInterviewSystem.DAL.DTO;
 using System.Collections.Generic;
 using System.Text;
+using Dapper;
+using System.Data;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 {
@@ -10,60 +12,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(CandidatePersonalInfoDTO dto)
         {
+            var procedure = "[AddCandidatePersonalInfo]";
+            var values = new
+            {
+                dto.CandidateID,
+                dto.MaritalStatus,
+                dto.Education,
+                dto.WorkPlace,
+                dto.ITExperience,
+                dto.Hobbies,
+                dto.InfoSourse,
+                dto.Expectations
+            };
+
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddCandidatePersonalInfo");
-
-            if (dto.CandidateID > 0)
-            {
-                SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-                command.Parameters.Add(CandidateIDParam);
-            }
-
-            if (dto.MaritalStatus == true || dto.MaritalStatus == false )
-            {
-                SqlParameter MaritalStatusParam = new SqlParameter("@MaritalStatus", dto.MaritalStatus);
-                command.Parameters.Add(MaritalStatusParam);
-            }
-
-            if (dto.Education != null)
-            {
-                SqlParameter EducationParam = new SqlParameter("@Education", dto.Education);
-                command.Parameters.Add(EducationParam);
-            }
-
-            if (dto.WorkPlace != null)
-            {
-                SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", dto.WorkPlace);
-                command.Parameters.Add(WorkPlaceParam);
-            }
-
-            if (dto.ITExperience != null)
-            {
-                SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", dto.ITExperience);
-                command.Parameters.Add(ITExperienceParam);
-            }
-
-            if (dto.Hobbies != null)
-            {
-                SqlParameter HobbiesParam = new SqlParameter("@Hobbies", dto.Hobbies);
-                command.Parameters.Add(HobbiesParam);
-            }
-
-            if (dto.InfoSourse != null)
-            {
-                SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", dto.InfoSourse);
-                command.Parameters.Add(InfoSourseParam);
-            }
-
-            if (dto.Expectations != null)
-            {
-                SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
-                command.Parameters.Add(ExpectationsParam);
-            }
-             
-
-            command.ExecuteNonQuery();
-
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[CandidatePersonalInfo]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
@@ -156,40 +120,23 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
         public override int UpdateByID(CandidatePersonalInfoDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateCandidatePersonalInfoByID");
+            var procedure = "[UpdateCandidatePersonalInfoByID]";
+            var values = new
+            {
+                dto.ID,
+                dto.CandidateID,
+                dto.MaritalStatus,
+                dto.Education,
+                dto.WorkPlace,
+                dto.ITExperience,
+                dto.Hobbies,
+                dto.InfoSourse,
+                dto.Expectations
+            };
 
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);           
 
-            SqlParameter CandidateIDParam = new SqlParameter("@CandidateID", dto.CandidateID);
-            command.Parameters.Add(CandidateIDParam);
-
-            SqlParameter MaritalStatusParam = new SqlParameter("MaritalStatus", dto.MaritalStatus);
-            command.Parameters.Add(MaritalStatusParam);
-
-            SqlParameter EducationParam = new SqlParameter("@Education", dto.Education);
-            command.Parameters.Add(EducationParam);
-
-            SqlParameter WorkPlaceParam = new SqlParameter("@WorkPlace", dto.WorkPlace);
-            command.Parameters.Add(WorkPlaceParam);
-
-            SqlParameter ITExperienceParam = new SqlParameter("@ITExperience", dto.ITExperience);
-            command.Parameters.Add(ITExperienceParam);
-
-            SqlParameter HobbiesParam = new SqlParameter("@Hobbies", dto.Hobbies);
-            command.Parameters.Add(HobbiesParam);
-
-            SqlParameter InfoSourseParam = new SqlParameter("@InfoSourse", dto.InfoSourse);
-            command.Parameters.Add(InfoSourseParam);
-
-            SqlParameter ExpectationsParam = new SqlParameter("@Expectations", dto.Expectations);
-            command.Parameters.Add(ExpectationsParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            return (int)dto.ID;
         }       
        
     }
