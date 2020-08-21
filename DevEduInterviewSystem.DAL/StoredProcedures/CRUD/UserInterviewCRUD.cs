@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -10,26 +12,21 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(UserInterviewDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUser_Interview");
-
-            SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", dto.InterviewID);
-            command.Parameters.Add(InterviewIDParam);
-
-            if (dto.UserID > 0)
+            var procedure = "[AddUser_Interview]";
+            var values = new
             {
-                SqlParameter userInterviewParam = new SqlParameter("@UserID", dto.UserID);
-                command.Parameters.Add(userInterviewParam);
-            }
+                dto.InterviewID,
+                dto.UserID    
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            command.ExecuteNonQuery();
-
-            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User_Interview]", Connection);
+            Connection.Open();
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[UserInterview]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
 
-            return count;
+            return count;          
         }
 
        
@@ -105,22 +102,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
        
         public override int UpdateByID(UserInterviewDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUser_InterviewByID");
-
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter InterviewIDParam = new SqlParameter("@InterviewID", dto.InterviewID);
-            command.Parameters.Add(InterviewIDParam);
-
-            SqlParameter UserIDParam = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(UserIDParam);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            var procedure = "[UpdateUser_InterviewByID]";
+            var values = new
+            {
+                dto.ID,
+                dto.InterviewID,
+                dto.UserID
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+            return (int)dto.ID;
         }
 
        

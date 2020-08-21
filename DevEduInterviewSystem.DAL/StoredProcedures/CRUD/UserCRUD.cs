@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -10,35 +12,24 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(UserDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUser");
-
-
-            SqlParameter LoginParam = new SqlParameter("@Login", dto.Login);
-            command.Parameters.Add(LoginParam);
-
-            SqlParameter PasswordParam = new SqlParameter("@Password", dto.Password);
-            command.Parameters.Add(PasswordParam);
-
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
-            command.Parameters.Add(FirstNameParam);
-
-            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
-            command.Parameters.Add(LastNameParam);
-
-            if (dto.IsDeleted == true || dto.IsDeleted == false)
+            var procedure = "[AddUser]";
+            var values = new
             {
-                SqlParameter IsDeletedParam = new SqlParameter("@IsDeleted", dto.IsDeleted);
-                command.Parameters.Add(IsDeletedParam);
-            }
+                dto.Login,
+                dto.Password,
+                dto.FirstName,
+                dto.LastName,
+                dto.IsDeleted
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
 
-            command.ExecuteNonQuery();
-
+            Connection.Open();
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
-            return count;
+
+            return count;         
         }
 
         public override int DeleteByID(int id)
@@ -107,27 +98,18 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         }
         public override int UpdateByID(UserDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUserByID");
-
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter LoginParam = new SqlParameter("@StageID", dto.Login);
-            command.Parameters.Add(LoginParam);
-
-            SqlParameter PasswordParam = new SqlParameter("@StatusID", dto.Password);
-            command.Parameters.Add(PasswordParam);
-
-            SqlParameter FirstNameParam = new SqlParameter("@FirstName", dto.FirstName);
-            command.Parameters.Add(FirstNameParam);
-
-            SqlParameter LastNameParam = new SqlParameter("@LastName", dto.LastName);
-            command.Parameters.Add(LastNameParam);
-
-            int a = command.ExecuteNonQuery();
-            Connection.Close();
-            return a;
+            var procedure = "[UpdateUserByID]";
+            var values = new
+            {
+              dto.ID,
+              dto.Login,
+              dto.Password,
+              dto.FirstName,
+              dto.LastName,
+              dto.IsDeleted
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+            return (int)dto.ID;
         }
     }
 }

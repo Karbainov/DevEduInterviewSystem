@@ -1,6 +1,8 @@
-﻿using DevEduInterviewSystem.DAL.DTO;
+﻿using Dapper;
+using DevEduInterviewSystem.DAL.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -10,21 +12,16 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(UserRoleDTO dto)
         {
+           var procedure = "[AddUserRole]";
+                var values = new
+                {
+                    dto.UserID,
+                    dto.RoleID
+                };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AddUser_Role");
-
-           
-                SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
-                command.Parameters.Add(UserID);
-         
-
-           
-                SqlParameter RoleID = new SqlParameter("@RoleID", dto.RoleID);
-                command.Parameters.Add(RoleID);
-            
-
-            command.ExecuteNonQuery();
-            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[User_Role]", Connection);
+            SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[UserRole]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
             Connection.Close();
@@ -95,22 +92,15 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         }
         public override int UpdateByID(UserRoleDTO dto)
         {
-            Connection.Open();
-            SqlCommand command = ReferenceToProcedure("UpdateUserRoleByID");
-
-            SqlParameter IDParam = new SqlParameter("@ID", dto.ID);
-            command.Parameters.Add(IDParam);
-
-            SqlParameter UserID = new SqlParameter("@UserID", dto.UserID);
-            command.Parameters.Add(UserID);
-
-            SqlParameter RoleID = new SqlParameter("@RoleID", dto.RoleID);
-            command.Parameters.Add(RoleID);
-
-            int rows = command.ExecuteNonQuery();
-            Connection.Close();
-
-            return rows;
+            var procedure = "[UpdateUserRoleByID]";
+            var values = new
+            {
+                dto.ID,
+                dto.UserID,
+                dto.RoleID             
+            };
+            IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
+            return (int) dto.ID;
         }
     }
 }
