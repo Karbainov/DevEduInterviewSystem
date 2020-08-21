@@ -4,7 +4,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 {
     public class InterviewStatusDTO : IDTO
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string Name { get; set; }
 
         public InterviewStatusDTO()
@@ -16,11 +16,6 @@ namespace DevEduInterviewSystem.DAL.DTO
         {
             this.ID = ID;
             this.Name = Name;
-        }
-        public InterviewStatusDTO(int ID)
-        {
-            this.ID = ID;
-           
         }
     }
 }
