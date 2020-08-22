@@ -12,40 +12,25 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.User
 {
     public class GetRolesByUserID
     {
-        public List<string> GetRoles(int ID)
+        public List<dynamic> GetRoles(int ID)
         {
+
             IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+
             var procedure = "[GetRolesByUserID]";
+            var result = connection.Query(procedure, ID, commandType: CommandType.StoredProcedure).ToList();
+            return result;
 
-            var allInfo = connection.Query<List<string>>(procedure, new { ID },
-            commandType: CommandType.StoredProcedure
-            ).SingleOrDefault();
-
-            return allInfo;
-
+            // DIDN"T WORk
             //IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-
             //var procedure = "[GetRolesByUserID]";
-            ////var result = connection.Query(procedure, id, commandType: CommandType.StoredProcedure).ToList();
-            ////return result;
 
-            //List<string> result = new List<string>();
+            //var allInfo = connection.Query<List<string>>(procedure, new { ID },
+            //commandType: CommandType.StoredProcedure
+            //).SingleOrDefault();
 
-            //using (connection)
-            //{
-            //    connection.Open();
+            //return allInfo;
 
-            //    var roles = connection.Query<string, int, string>(
-            //           procedure,  (role, id) =>
-            //            {
-            //                result.Add(role);
-            //                return role;
-            //            },
-            //            splitOn: "TypeOfRole",
-            //            commandType: CommandType.StoredProcedure);
-            //        //.ToList();
-            //}
-            //return result;
         }
     }
 }
