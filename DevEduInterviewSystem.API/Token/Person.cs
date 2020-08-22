@@ -11,5 +11,10 @@ namespace DevEduInterviewSystem.API.Token
         public string Password { get; set; }
         public string Role { get; set; }
 
+        public Person(string login, string password)
+        {
+            Login = login;
+            Password = password;
+        }
     }
 }
