@@ -26,18 +26,24 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
-            //if(new CourseCRUD().SelectByID((int)groupDTO.CourseID) == null)
-            //{
-            //    return new NotFoundObjectResult("This course not found");
-            //}
+            if (new CourseCRUD().SelectByID((int)groupDTO.CourseID) == null)
+            {
+                return new NotFoundObjectResult("This course not found");
+            }
             if (groupDTO.Name == null)
             {
                 return BadRequest("Name field missing");
             }
-            GroupCRUD groupCRUD = new GroupCRUD();
             _manager.CreateGroup(groupDTO);
             return new OkResult();
         }
+        [HttpPut("update-group")]
+        public IActionResult UpdateGroup(GroupDTO groupDTO)
+        {
+            _manager.UpdateGroup(groupDTO);
+            return new OkResult();
+        }
+
     }
     
 }

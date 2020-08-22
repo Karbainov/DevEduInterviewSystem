@@ -60,6 +60,11 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.Add(groupDTO);
         }
+        public void UpdateGroup(GroupDTO groupDTO)
+        {
+            GroupCRUD group = new GroupCRUD();
+            group.UpdateByID(groupDTO);
+        }
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
