@@ -55,10 +55,10 @@ namespace DevEduInterviewSystem.API.Controllers
             return new JsonResult(password);            // ?????????????????????????????????????
         }
 
-        [HttpGet("q")]
+        [HttpGet("{candidateID}")]
         public IActionResult AllInformationAboutCandidate(int candidateID)
         {
-            candidateID = 68;
+            //candidateID = 68;
             AllInformationAboutTheCandidateByIDDTO w = _manager.AllInformationAboutCandidate(candidateID);
             return new JsonResult(w);                   // ?????????????????????????????????????
         }
@@ -103,5 +103,11 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update")]
         public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null )            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }
             _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,                updateCandidateAfterInterviewModel.interviewDTO,                (int)updateCandidateAfterInterviewModel.CourseID,                updateCandidateAfterInterviewModel.feedbackDTO);            return new OkResult();        }
+        [HttpPost]
+        public IActionResult WriteCandidateToCourse(CandidateToCourseModel candidateToCourseModel)
+        {
+            
+            return new OkResult();
+        }
     }
 }

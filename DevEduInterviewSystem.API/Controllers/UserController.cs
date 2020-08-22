@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [HttpPost("Users")]
+        [HttpPost("users")]
         public IActionResult AddUser(UserInputModel user)
         {
             if (new RoleCRUD().SelectByID((int)user.RoleID) == null)
@@ -43,7 +44,7 @@ namespace DevEduInterviewSystem.API.Controllers
             }
         }
 
-        [HttpDelete("Users")]
+        [HttpDelete("users")]
         public IActionResult DeleteUser(int? userID)
         {
             if (userID == null || userID != null && new UserCRUD().SelectByID((int)userID) == null)
@@ -55,7 +56,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpPut("Users")]
+        [HttpPut("users/deleted")]
         public IActionResult RestoreUser(int? userID)
         {
             if (userID == null || userID != null && new AllDeletedUsers().SelectDeletedUserByID((int)userID) == null)
@@ -68,7 +69,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpPut("Users")]
+        [HttpPut("users")]
         public IActionResult UpdateUser(UserDTO user)
         {
             if (user.IsDeleted == true || user.ID == null || new UserCRUD().SelectByID((int)user.ID) == null)
@@ -81,15 +82,15 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpGet("Users")]
+        [HttpGet("users")]
         public IActionResult GetAllUsersWithRoles()
         {
-            _admin.ShowAllUsersWithRoles();
+            List<UsersWithRoleDTO> users = _admin.ShowAllUsersWithRoles();
 
-            return new OkResult();
+            return new JsonResult(users);
         }
 
-        [HttpGet("Users")]
+        [HttpGet("users/deleted")]
         public IActionResult GetAllDeletedUsers()
         {
             _admin.ShowDeletedUsers();

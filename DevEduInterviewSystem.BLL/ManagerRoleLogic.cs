@@ -52,12 +52,6 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.Add(groupDTO);
         }
-
-        public void UpdateCandidate(CandidateDTO candidateDTO)
-        {
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
-        }
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
