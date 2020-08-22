@@ -54,10 +54,11 @@ namespace DevEduInterviewSystem.BLL
             role.Add(roleDTO);
         }
 
-        public void ShowAllUsersWithRoles()
+        public List<UsersWithRoleDTO> ShowAllUsersWithRoles()
         {
             UsersWithRoleProcedure usersWithRole = new UsersWithRoleProcedure();
-            usersWithRole.SelectUsersWithRole();
+            List<UsersWithRoleDTO> allUsers = usersWithRole.SelectUsersWithRole();
+            return allUsers;
         }
 
         public void ShowDeletedUsers()

@@ -20,6 +20,13 @@ namespace DevEduInterviewSystem.BLL
             candidate.UpdateByID(candidateDTO);
         }
 
+        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
+        {
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.UpdateByID(course_CandidateDTO);
+        }
+
+
         // Менеджер может обновить данные кандидата и personal info.
         public void UpdateCandidatePersonalInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
         {
@@ -52,6 +59,8 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.Add(groupDTO);
         }
+
+        // Добавить одноразовы пароль
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
@@ -64,11 +73,10 @@ namespace DevEduInterviewSystem.BLL
         public string GetOneTimePassword()
         {
             Random randomKey = new Random();
-            string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
-            int lenghtPass = 12;
+            string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";           
             char[] letters = simvol.ToCharArray();
             string password = "";
-            for (int i = 0; i < lenghtPass; i++)
+            for (int i = 0; i < Consts.passwordLength; i++)
             {
                 password += letters[randomKey.Next(letters.Length)].ToString();
             }

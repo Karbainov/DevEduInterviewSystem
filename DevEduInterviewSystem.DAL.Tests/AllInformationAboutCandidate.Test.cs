@@ -5,6 +5,7 @@ using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
@@ -76,9 +77,12 @@ namespace tesd
             user = new UserDTO(1,"qwer","1234","rewq","tarf");            
             userID = userCRUD.Add(user);
 
-            feedback = new FeedbackDTO(2, stagechangedID, userID, "Норм парень, второй илон макс!", DateTime.Now);            
+            List<FeedbackDTO> list = new List<FeedbackDTO>();
+            feedback = new FeedbackDTO(2, stagechangedID, userID, "пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!", DateTime.Now);            
             feedBackID = feedbackCRUD.Add(feedback);
+            list.Add(feedback);
 
+            
             candidatePersonalInfo = new CandidatePersonalInfoDTO(1, candidateID, false, "da", "macduck", "Da", "rubis cube", "like song", "123");
             candedatepersonalinfoID = candidatePersonalInfoCRUD.Add(candidatePersonalInfo);
 
@@ -92,8 +96,8 @@ namespace tesd
             groupCandidateID = groupCandidateCRUD.Add(groupCandidate);
 
 
-            allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO(candidateID,stage.Name,status.Name,city.Name,candidate.Phone,candidate.Email,candidate.FirstName,candidate.LastName,(DateTime)candidate.BirthDay,
-                feedback.Message,course.Name,group.Name,candidatePersonalInfo.MaritalStatus,candidatePersonalInfo.Education,candidatePersonalInfo.WorkPlace,candidatePersonalInfo.ITExperience, candidatePersonalInfo.Hobbies,
+            allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO(candidateID,stage.Name,status.Name,city.CityName,candidate.Phone,candidate.Email,candidate.FirstName,candidate.LastName,candidate.BirthDay,
+                list,course.Name,group.Name,candidatePersonalInfo.MaritalStatus,candidatePersonalInfo.Education,candidatePersonalInfo.WorkPlace,candidatePersonalInfo.ITExperience, candidatePersonalInfo.Hobbies,
                 candidatePersonalInfo.InfoSourse, candidatePersonalInfo.Expectations);
         }
         public void TearDown()
