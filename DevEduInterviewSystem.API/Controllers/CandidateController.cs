@@ -90,7 +90,7 @@ namespace DevEduInterviewSystem.API.Controllers
 
 
 
-            _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
+           // _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
 
             return new OkResult();
             //}
