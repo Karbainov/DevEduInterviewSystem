@@ -8,10 +8,7 @@ namespace DevEduInterviewSystem.API.Models.Input
 {
     public class HomeworkInputModel
     {
-        public CandidateDTO CandidateDTO { get; set; }
+        public HomeworkDTO HomeworkDTO { get; set; }
         public FeedbackDTO FeedbackDTO { get; set; }
-        public int? HomeworkStatusID { get; set; }
-        public int? TestStatusID { get; set; }
-        public int? CourseID { get; set; }
     }
 }

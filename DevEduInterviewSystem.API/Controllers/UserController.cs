@@ -87,7 +87,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             List<UsersWithRoleDTO> users = _admin.ShowAllUsersWithRoles();
 
-            return new JsonResult(users); // ????????
+            return new OkObjectResult(users);
         }
 
         [HttpGet("users/deleted")]
