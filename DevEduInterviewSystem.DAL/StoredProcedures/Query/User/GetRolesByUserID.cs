@@ -14,14 +14,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.User
     {
         public List<string> GetListOfRoles(int ID)
         {
-
-            //IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-
-            //var procedure = "[GetRolesByUserID]";
-            //var result = connection.Query(procedure, ID, commandType: CommandType.StoredProcedure).ToList();
-            //return result;
-
-            // DIDN"T WORk
             IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             var procedure = "[GetRolesByUserID]";
             List<string> list = new List<string>();
@@ -42,6 +34,12 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.User
 
             return allInfo;
 
+            // DIDN'T WORK
+            //IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+
+            //var procedure = "[GetRolesByUserID]";
+            //var result = connection.Query(procedure, ID, commandType: CommandType.StoredProcedure).ToList();
+            //return result;
         }
     }
 }
