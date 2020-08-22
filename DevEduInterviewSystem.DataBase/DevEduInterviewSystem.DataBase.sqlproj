@@ -306,5 +306,6 @@
     <Build Include="StoredProcedures\User\RestoreDeletedUser.sql" />
     <Build Include="StoredProcedures\User\AllDeletedUsers.sql" />
     <Build Include="StoredProcedures\User\SelectDeletedUserByID.sql" />
+    <Build Include="StoredProcedures\User\SelectUser_RoleByUserID.sql" />
   </ItemGroup>
 </Project>

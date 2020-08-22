@@ -10,6 +10,7 @@ using DevEduInterviewSystem.API.Token;
 using System.Threading.Tasks.Dataflow;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query.User;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
@@ -52,7 +53,7 @@ namespace DevEduInterviewSystem.API.Controllers
             List<UserDTO> users = user.SelectAll();
             foreach (UserDTO u in users)
             {
-                if(u.Login == username && u.Password == password)
+                if (u.Login == username && u.Password == password)
                 {
                     authorizingUser = u;
                 }
@@ -60,24 +61,27 @@ namespace DevEduInterviewSystem.API.Controllers
             Person person = new Person(authorizingUser.Login, authorizingUser.Password);
 
             // Выбор роли пользователя
-
-            List<RoleDTO> personRoles = new List<RoleDTO>();
-
-
+            SelectUserRoleByUserID select = new SelectUserRoleByUserID();
+            List<UserRoleDTO> personRoles = select.SelectUserRoleByUser((int)authorizingUser.ID);
 
             if (person != null)
             {
-                var claims = new List<Claim>
+                if (personRoles.Count > 1)
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
+                    RoleDTO chosenRole = new RoleDTO();
+                    RoleCRUD role = new RoleCRUD();
+                    // TO DO: как опрокинуть выбор роли при авторизации на фронт?? 
+                    // Как захардкодить роли?
+                    person.Role = (role.SelectByID((int)chosenRole.ID)).TypeOfRole;
+                }
+                var claims = new List<Claim>
+                { new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
                 };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                                                                      ClaimsIdentity.DefaultRoleClaimType);
                 return claimsIdentity;
             }
-
             return null;
         }
     }
