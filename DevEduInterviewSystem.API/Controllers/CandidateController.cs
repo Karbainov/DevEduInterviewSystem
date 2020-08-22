@@ -46,6 +46,8 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest("Fields missing");
             }
         }
+
+
         [HttpGet("one-time-password")]
         public IActionResult GetOneTimePassword()
         {

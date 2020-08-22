@@ -36,27 +36,28 @@ namespace DevEduInterviewSystem.BLL
         }
         // Препод(после получения дз от кандидата): обновить статус домашки  
         // +обновить стадию + обновить статус + добавить фидбэк
-        public void UpdateHomeworkAfterDoneHomework(CandidateDTO candidateDTO, HomeworkDTO homeworkDTO, 
-            int homeworkStatusID, int testStatusID, FeedbackDTO feedbackDTO)
+        public void UpdateHomeworkAfterDoneHomework(int candidateID, int stageID, 
+            int homeworkStatusID, int testStatusID, FeedbackDTO feedbackDTO=null)
         {
-            HomeworkDTO homework = new HomeworkDTO((int)homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
-                testStatusID, DateTime.Now);
+            HomeworkDTO homework = new HomeworkDTO();
+            homework.CandidateID = candidateID;
+            homework.HomeworkStatusID = homeworkStatusID;
+            homework.TestStatusID = testStatusID;
             HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
-            homeworkCRUD.Add(homework);
+            homeworkCRUD.UpdateByID(homework);
 
-            StageChangedDTO stageChangedDTO = new StageChangedDTO((int)candidateDTO.ID, (int)candidateDTO.StageID, DateTime.Now);
+            StageChangedDTO stageChangedDTO = new StageChangedDTO();
+            stageChangedDTO.CandidateID = candidateID;
+            stageChangedDTO.StageID = stageID;
+            stageChangedDTO.ChangedDate = DateTime.Now;
             StageChangedCRUD stageChanged = new StageChangedCRUD();
-            stageChanged.Add(stageChangedDTO);
-
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
+            stageChanged.UpdateByID(stageChangedDTO);
 
             FeedbackCRUD feedback = new FeedbackCRUD();
             if (feedbackDTO != null)
             {
-                feedback.UpdateByID(feedbackDTO);
+                feedback.Add(feedbackDTO);
             }
-            feedback.Add(feedbackDTO);
         }
 
         public List<InterviewDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
