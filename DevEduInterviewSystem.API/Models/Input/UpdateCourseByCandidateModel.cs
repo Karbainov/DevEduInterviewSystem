@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DevEduInterviewSystem.API.Models.Input
 {
-    public class CandidateToCourseModel
+    public class UpdateCourseByCandidateModel
     {
-        public CandidateDTO CandidateDTO { get; set; }
-        public Course_CandidateDTO CandidatePersonalInfoDTO { get; set; }
         public int? CourseID { get; set; }
+        public int? CandidateID { get; set; }
     }
 }
