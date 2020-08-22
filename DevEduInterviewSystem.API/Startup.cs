@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using DevEduInterviewSystem.API.Token;
 
 namespace DevEduInterviewSystem.API
 {
@@ -25,6 +28,23 @@ namespace DevEduInterviewSystem.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                   .AddJwtBearer(options =>
+                   {
+                       options.RequireHttpsMetadata = false;
+                       options.TokenValidationParameters = new TokenValidationParameters
+                       {
+                            ValidateIssuer = true,
+                            ValidIssuer = AuthenticationOptions.ISSUER,
+
+                            ValidateAudience = true,
+                            ValidAudience = AuthenticationOptions.AUDIENCE,
+                            ValidateLifetime = true,
+
+                            IssuerSigningKey = AuthenticationOptions.GetSymmetricSecurityKey(),
+                            ValidateIssuerSigningKey = true,
+                       };
+                   });
             services.AddControllers();
         }
 
@@ -39,6 +59,8 @@ namespace DevEduInterviewSystem.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
