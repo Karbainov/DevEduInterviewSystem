@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.User
 {
     public class GetRolesByUserID
     {
-        public List<dynamic> GetRoles(int ID)
+        public List<dynamic> GetListOfRoles(int ID)
         {
 
             IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);

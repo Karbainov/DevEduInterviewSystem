@@ -43,7 +43,7 @@ namespace DevEduInterviewSystem.API.Controllers
 
             return Json(response);
         }
-        
+
         [HttpGet("/token")]
 
         public IActionResult GetRole(string username, string password)
@@ -52,7 +52,7 @@ namespace DevEduInterviewSystem.API.Controllers
 
             UserDTO authorizingUser = new UserDTO();
             UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll(); // возвращает список юзер дтошек
+            List<UserDTO> users = user.SelectAll(); 
             foreach (UserDTO u in users)
             {
                 if (u.Login == username && u.Password == password)
@@ -60,30 +60,34 @@ namespace DevEduInterviewSystem.API.Controllers
                     authorizingUser = u;
                 }
             }
-            Person person = new Person(authorizingUser.Login, authorizingUser.Password);
-
-            // Выбор роли пользователя
-            SelectUserRoleByUserID select = new SelectUserRoleByUserID();  
-            List<UserRoleDTO> personRoles = select.SelectUserRoleByUser((int)authorizingUser.ID); // возвращает список user_role
-            List<string> roles = new List<string>();
-            foreach (UserRoleDTO ur in personRoles)
+            if (authorizingUser == null)
             {
-
-                if (u.Login == username && u.Password == password)
-                {
-                    authorizingUser = u;
-                }
+                return BadRequest(new { errorText = "Invalid username or password." });
             }
 
+            // Выбор роли пользователя
+            GetRolesByUserID role = new GetRolesByUserID();
+            List<dynamic> roles = role.GetListOfRoles((int)authorizingUser.ID);
 
-            return OkObjectResult;
+            var roleList = roles.SelectMany(d =>
+            {
+                if (d is string)
+                {
+                    return new List<string>() { d };
+                }
+                else
+                {
+                    return (d as List<string>);
+                }
+            });
+            return new OkObjectResult(roleList);
         }
 
 
         private ClaimsIdentity GetIdentity(string username, string password)
         {
-            
 
+            //Person person = new Person(authorizingUser.Login, authorizingUser.Password);
             if (person != null)
             {
                 if (personRoles.Count > 1)
