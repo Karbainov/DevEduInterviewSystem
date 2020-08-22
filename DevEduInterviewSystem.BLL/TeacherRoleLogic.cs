@@ -34,30 +34,22 @@ namespace DevEduInterviewSystem.BLL
             }
             
         }
-        // Препод(после получения дз от кандидата): обновить статус домашки  
-        // +обновить стадию + обновить статус + добавить фидбэк
-        public void UpdateHomeworkAfterDoneHomework(CandidateDTO candidateDTO, HomeworkDTO homeworkDTO, 
-            int homeworkStatusID, int testStatusID, FeedbackDTO feedbackDTO)
+        public void UpdateHomeworkAfterDoneHomework(HomeworkDTO homeworkDTO, FeedbackDTO feedbackDTO)
         {
-            HomeworkDTO homework = new HomeworkDTO((int)homeworkDTO.ID, homeworkDTO.CandidateID, homeworkStatusID,
-                testStatusID, DateTime.Now);
+           
             HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
-            homeworkCRUD.Add(homework);
-
-            StageChangedDTO stageChangedDTO = new StageChangedDTO((int)candidateDTO.ID, (int)candidateDTO.StageID, DateTime.Now);
-            StageChangedCRUD stageChanged = new StageChangedCRUD();
-            stageChanged.Add(stageChangedDTO);
-
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
-
+            homeworkCRUD.UpdateByID(homeworkDTO);
             FeedbackCRUD feedback = new FeedbackCRUD();
-            if (feedbackDTO != null)
+            if (new FeedbackCRUD().SelectByID((int)feedbackDTO.ID)==null)
+            {
+                feedback.Add(feedbackDTO);
+            }
+            else
             {
                 feedback.UpdateByID(feedbackDTO);
             }
-            feedback.Add(feedbackDTO);
         }
+
 
         public List<InterviewDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
         {
@@ -87,13 +79,6 @@ namespace DevEduInterviewSystem.BLL
 
             return interviewCRUD.SelectAll();
         }
-
-        
-
-       
-
-
-
 
         public void AddFeedback(FeedbackDTO feedbackDTO)
         {

@@ -27,22 +27,5 @@ namespace DevEduInterviewSystem.BLL
         private int _interviewsLimit = 3;
         private InterviewsNumber() { }
 
-
-
-        //public int _interviewsLimit = 3;
-
-        //public InterviewsNumber(int interviewsLimit)
-        //{
-        //    _interviewsLimit = interviewsLimit;
-        //}
-
-        //public int GetNumber()
-        //{
-        //    return _interviewsLimit;
-        //}
-
-
-
-
     }
 }

@@ -96,6 +96,7 @@
     <Folder Include="StoredProcedures\StudentsOfGroup" />
     <Folder Include="StoredProcedures\AllStudentsOfCourse" />
     <Folder Include="StoredProcedures\CandidateSelectionProcessInfoQuery" />
+    <Folder Include="StoredProcedures\User" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Stage.sql" />
@@ -282,7 +283,6 @@
     <Build Include="StoredProcedures\CRUD\TestStatus\SelectTestStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\DeleteTestStatusByID.sql" />
     <Build Include="StoredProcedures\CRUD\TestStatus\UpdateTestStatusByID.sql" />
-    <Build Include="StoredProcedures\UsersWithRole.sql" />
     <Build Include="StoredProcedures\InterviewHistory\AttemptsInterviewCandidate.sql" />
     <Build Include="StoredProcedures\InterviewHistory\AllInformationAboutTheCandidateByID.sql" />
     <Build Include="StoredProcedures\CalendarInterviews\AllInterviewsByDateInterval.sql" />
@@ -293,16 +293,19 @@
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
     <Build Include="StoredProcedures\AllStudentsOfCourse\AllStudentsOfCourse.sql" />
-    <Build Include="StoredProcedures\OneUserRole.sql" />
     <Build Include="StoredProcedures\AllTasksByUser.sql" />
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\AllSelectionProcess.sql" />
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByCourse.sql" />
     <Build Include="StoredProcedures\CandidateSelectionProcessInfoQuery\SelectionProcessByID.sql" />
-    <Build Include="StoredProcedures\AllDeletedUsers.sql" />
     <Build Include="StoredProcedures\AllOverdueHomeworks.sql" />
     <Build Include="StoredProcedures\AllOverdueTests.sql" />
     <Build Include="StoredProcedures\DeleteOneTimePasswordByCandidateID_1.sql" />
     <Build Include="StoredProcedures\DeleteCandidateFromCourseCandidateByCandidateID.sql" />
     <Build Include="StoredProcedures\DeleteCandidateFromGroupCandidateByCandidateID.sql" />
+    <Build Include="StoredProcedures\User\UsersWithRole.sql" />
+    <Build Include="StoredProcedures\User\RestoreDeletedUser.sql" />
+    <Build Include="StoredProcedures\User\AllDeletedUsers.sql" />
+    <Build Include="StoredProcedures\User\SelectDeletedUserByID.sql" />
+    <Build Include="StoredProcedures\User\SelectUser_RoleByUserID.sql" />
   </ItemGroup>
 </Project>
