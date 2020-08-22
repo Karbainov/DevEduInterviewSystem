@@ -11,6 +11,7 @@ using System.Threading.Tasks.Dataflow;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.User;
+using System.Globalization;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
@@ -45,7 +46,6 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
         [HttpGet("/token")]
-
         public IActionResult GetRole(string username, string password)
         {
             // Запрос к базе: существует ли пользователь с таким логином и паролем
@@ -80,17 +80,29 @@ namespace DevEduInterviewSystem.API.Controllers
                     return (d as List<string>);
                 }
             });
-            return new OkObjectResult(roleList);
+            Person authorizingPerson = new Person(username, password, roleList);
+
+            return new OkObjectResult(authorizingPerson);
         }
 
-
-        private ClaimsIdentity GetIdentity(string username, string password)
+        [HttpGet("token/{role}")]
+        public IActionResult ChooseRole(string role, string username, string password)
         {
-
-            //Person person = new Person(authorizingUser.Login, authorizingUser.Password);
-            if (person != null)
+            List<string> roles = (List<string>)GetRole(username, password);
+            string chosenRole = role;
+            foreach (string r in roles)
             {
-                if (personRoles.Count > 1)
+                if (r == role)
+                {
+                    chosenRole = r;
+                }
+            }
+            return new OkObjectResult(chosenRole);
+        }
+
+        private ClaimsIdentity GetIdentity(string username, List<string> roles)
+        {
+                if (roles.Count > 1)
                 {
                     RoleDTO chosenRole = new RoleDTO();
                     RoleCRUD role = new RoleCRUD();
@@ -99,7 +111,7 @@ namespace DevEduInterviewSystem.API.Controllers
                     person.Role = (role.SelectByID((int)chosenRole.ID)).TypeOfRole;
                 }
                 var claims = new List<Claim>
-                { new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
+                { new Claim(ClaimsIdentity.DefaultNameClaimType, username),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
                 };
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
