@@ -62,8 +62,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                         ID = (int)reader["id"],
                         CourseID = (int)reader["CourseID"],
                         Name = (string)reader["Name"],
-                        StartDate = (DateTime)reader["StartName"],
-                        EndDate = (DateTime)reader["EndName"]
+                        StartDate = (DateTime)reader["StartDate"],
+                        EndDate = (DateTime)reader["EndDate"]
                     };
 
                     groups.Add(group);                   
