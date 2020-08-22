@@ -19,6 +19,14 @@ namespace DevEduInterviewSystem.BLL
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);
         }
+
+        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
+        {
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.UpdateByID(course_CandidateDTO);
+        }
+
+
         // Менеджер может обновить данные кандидата и personal info.
         public void UpdateCandidatePersonalInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
         {
@@ -51,12 +59,6 @@ namespace DevEduInterviewSystem.BLL
         {
             GroupCRUD group = new GroupCRUD();
             group.Add(groupDTO);
-        }
-
-        public void UpdateCandidate(CandidateDTO candidateDTO)
-        {
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
         }
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {

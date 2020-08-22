@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using Microsoft.AspNetCore.Http;
@@ -84,9 +85,9 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpGet("users")]
         public IActionResult GetAllUsersWithRoles()
         {
-            _admin.ShowAllUsersWithRoles();
+            List<UsersWithRoleDTO> users = _admin.ShowAllUsersWithRoles();
 
-            return new OkResult();
+            return new OkObjectResult(users);
         }
 
         [HttpGet("users/deleted")]

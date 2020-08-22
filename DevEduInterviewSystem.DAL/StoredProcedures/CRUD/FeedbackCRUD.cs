@@ -83,7 +83,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
         public override FeedbackDTO SelectByID(int id)
         {
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("SelectAllFeedbackByID");
+            SqlCommand command = ReferenceToProcedure("SelectFeedbackByID");
 
             SqlParameter IDParam = new SqlParameter("@ID", id);
             command.Parameters.Add(IDParam);
