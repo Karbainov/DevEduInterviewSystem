@@ -96,7 +96,7 @@ namespace tesd
             groupCandidateID = groupCandidateCRUD.Add(groupCandidate);
 
 
-            allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO(candidateID,stage.Name,status.Name,city.CityName,candidate.Phone,candidate.Email,candidate.FirstName,candidate.LastName,candidate.BirthDay,
+            allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO(candidateID,stage.Name,status.Name, city.Name,candidate.Phone,candidate.Email,candidate.FirstName,candidate.LastName, (DateTime)candidate.BirthDay,
                 list,course.Name,group.Name,candidatePersonalInfo.MaritalStatus,candidatePersonalInfo.Education,candidatePersonalInfo.WorkPlace,candidatePersonalInfo.ITExperience, candidatePersonalInfo.Hobbies,
                 candidatePersonalInfo.InfoSourse, candidatePersonalInfo.Expectations);
         }
