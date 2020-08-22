@@ -53,13 +53,18 @@ namespace DevEduInterviewSystem.BLL
             group.Add(groupDTO);
         }
 
-        // Добавить одноразовы пароль
-        public void AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
+        public void UpdateCandidate(CandidateDTO candidateDTO)
+        {
+            CandidateCRUD candidate = new CandidateCRUD();
+            candidate.UpdateByID(candidateDTO);
+        }
+        public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
             oneTimePasswordDTO.OneTimePassword = password;
             OneTimePasswordCRUD otp = new OneTimePasswordCRUD();
             otp.Add(oneTimePasswordDTO);
+            return password;
         }
 
         public string GetOneTimePassword()
