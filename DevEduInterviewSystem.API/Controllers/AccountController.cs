@@ -43,13 +43,16 @@ namespace DevEduInterviewSystem.API.Controllers
 
             return Json(response);
         }
+        
+        [HttpGet("/token")]
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        public IActionResult GetRole(string username, string password)
         {
             // Запрос к базе: существует ли пользователь с таким логином и паролем
+
             UserDTO authorizingUser = new UserDTO();
             UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll();
+            List<UserDTO> users = user.SelectAll(); // возвращает список юзер дтошек
             foreach (UserDTO u in users)
             {
                 if (u.Login == username && u.Password == password)
@@ -60,8 +63,26 @@ namespace DevEduInterviewSystem.API.Controllers
             Person person = new Person(authorizingUser.Login, authorizingUser.Password);
 
             // Выбор роли пользователя
-            SelectUserRoleByUserID select = new SelectUserRoleByUserID();
-            List<UserRoleDTO> personRoles = select.SelectUserRoleByUser((int)authorizingUser.ID);
+            SelectUserRoleByUserID select = new SelectUserRoleByUserID();  
+            List<UserRoleDTO> personRoles = select.SelectUserRoleByUser((int)authorizingUser.ID); // возвращает список user_role
+            List<string> roles = new List<string>();
+            foreach (UserRoleDTO ur in personRoles)
+            {
+
+                if (u.Login == username && u.Password == password)
+                {
+                    authorizingUser = u;
+                }
+            }
+
+
+            return OkObjectResult;
+        }
+
+
+        private ClaimsIdentity GetIdentity(string username, string password)
+        {
+            
 
             if (person != null)
             {

@@ -9,7 +9,7 @@ namespace DevEduInterviewSystem.API.Token
     {
         public string Login { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
+        public List<string> Role { get; set; }
 
         public Person(string login, string password)
         {
