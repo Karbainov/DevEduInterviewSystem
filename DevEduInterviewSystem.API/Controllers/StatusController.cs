@@ -8,9 +8,11 @@ using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("[controller]")]
     [ApiController]
     public class StatusController : Controller

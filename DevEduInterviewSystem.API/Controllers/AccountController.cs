@@ -26,7 +26,7 @@ namespace DevEduInterviewSystem.API.Controllers
             }
 
             var now = DateTime.UtcNow;
-            // создаем JWT-токен
+
             var jwt = new JwtSecurityToken(
                     issuer: AuthenticationOptions.ISSUER,
                     audience: AuthenticationOptions.AUDIENCE,
@@ -38,8 +38,7 @@ namespace DevEduInterviewSystem.API.Controllers
 
             var response = new
             {
-                access_token = encodedJwt,
-                username = identity.Name
+                access_token = encodedJwt
             };
 
             return Json(response);
