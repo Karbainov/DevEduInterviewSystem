@@ -86,5 +86,11 @@ namespace DevEduInterviewSystem.BLL
         }
         #endregion
 
+        public void DeleteCity(CityDTO cityDTO)
+        {
+            CityCRUD city = new CityCRUD();
+            city.DeleteByID((int)cityDTO.ID);
+        }
+
     }
 }

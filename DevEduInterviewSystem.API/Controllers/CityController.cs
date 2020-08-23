@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [HttpPost("City")]
+        [HttpPost("add-city")]
         public IActionResult AddCity(CityDTO city)
         {
             if (city.Name == null)
@@ -26,6 +26,25 @@ namespace DevEduInterviewSystem.API.Controllers
             }
             _admin.AddCity(city);
             return new OkResult();
+        }
+
+        [HttpPost("delete-city")]
+        public IActionResult DeleteCity(CityDTO city)
+        {
+            if (new CityCRUD().SelectByID((int)city.ID) == null)
+            {
+                return new NotFoundObjectResult("City not found");
+            }
+            _admin.DeleteCity(new CityCRUD().SelectByID((int)city.ID));
+            return new OkResult();
+        }
+
+        [HttpGet("all-city")]
+        public IActionResult GetAllCity()
+        {
+            CityCRUD cityCRUD = new CityCRUD();
+            List<CityDTO> citys = cityCRUD.SelectAll();
+            return new ObjectResult(citys);
         }
     }
 }

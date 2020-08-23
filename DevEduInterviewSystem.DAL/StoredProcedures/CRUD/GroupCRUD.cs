@@ -21,8 +21,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 EndDate = dto.EndDate,
             };
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
-
             Connection.Open();
+
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
