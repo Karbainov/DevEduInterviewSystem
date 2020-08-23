@@ -72,6 +72,11 @@ namespace DevEduInterviewSystem.BLL
         #endregion
 
         #region OneTimePassword
+        public void DeleteGroup(int? groupID)
+        {
+            GroupCRUD groupCRUD = new GroupCRUD();
+            groupCRUD.DeleteByID((int)groupID);
+        }
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
@@ -104,7 +109,12 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.Add(groupDTO);
         }
-       
+        public void UpdateGroup(GroupDTO groupDTO)
+        {
+            GroupCRUD group = new GroupCRUD();
+            group.UpdateByID(groupDTO);
+        }
+
         // Грант получен, группа есть
         public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
         {
