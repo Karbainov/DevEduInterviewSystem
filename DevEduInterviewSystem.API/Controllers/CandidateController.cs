@@ -92,8 +92,8 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
         {
             CandidateCRUD candidateCRUD = new CandidateCRUD();
-
-            if (candidateCRUD.SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
+            
+            if(candidateCRUD.SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
             {
                 _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
                 return new OkResult();

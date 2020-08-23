@@ -54,21 +54,21 @@ namespace DevEduInterviewSystem.DAL.Tests
         //    userRoleDTO = new UserRoleDTO(userID, roleID);
         //    userRoleID = userRole.Add(userRoleDTO);
 
-        //    oneUserRolesDTO = new OneUserRolesDTO("Login", "Polina", "Polikarpovna", roles);
-        //}
-        //public void TearDown()
-        //{
-        //    user.DeleteByID(userID);
-        //}
+            oneUserRolesDTO = new OneUserRolesDTO("Login", "Polina", "Polikarpovna", roles);
+        }
+        public void TearDown()
+        {
+            user.DeleteByID(userID);
+        }
 
-        //[TestCase(true)]
-        //public void Test1(bool expected)
-        //{
-        //    OneUserRolesQuery query = new OneUserRolesQuery();
+        [TestCase(true)]
+        public void Test1(bool expected)
+        {
+            OneUserRolesQuery query = new OneUserRolesQuery();
 
-        //    bool actual = oneUserRolesDTO.Equals(query.SelectUserWithAllRoles(userID));
+            bool actual = oneUserRolesDTO.Equals(query.SelectUserWithAllRoles(userID));
 
-        //    Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, actual);
 
         //}
 

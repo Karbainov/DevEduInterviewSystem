@@ -34,9 +34,9 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
                 
                 return info;
             }, new {ID},
-          splitOn: "Message",
+          splitOn: "TypeOfStage,TypeOfStatus,CityName,Message,CourseName,GroupName,MaritalStatus",
             commandType: CommandType.StoredProcedure
-            ).SingleOrDefault();
+            ).FirstOrDefault();
 
             return allInfo;
         }       

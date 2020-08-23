@@ -11,7 +11,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
     {
         public override int Add(StageDTO dto)
         {
-            var procedure = "[AddStage]";
+            var procedure = "AddStage";
             var values = new
             {
                 Name = dto.Name,
