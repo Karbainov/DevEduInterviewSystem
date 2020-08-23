@@ -54,16 +54,23 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult GetOneTimePassword(int candidateID)
         {
             CandidateCRUD candidateCRUD = new CandidateCRUD();
-
-            if (candidateCRUD.SelectByID(candidateID) != null)
-            {
-                string password = _manager.GetOneTimePassword();
-                return Ok(password);
-            }
-            else
+            string password = null;
+            if (candidateCRUD.SelectByID(candidateID) == null)
             {
                 return new NotFoundResult();
             }
+            password = _manager.GetOneTimePassword();
+
+            OneTimePasswordCRUD pass = new OneTimePasswordCRUD();
+            List<OneTimePasswordDTO> passwords = pass.SelectAll();
+            foreach (OneTimePasswordDTO otp in passwords)
+            {
+                if (otp.OneTimePassword == password)
+                {
+                    return BadRequest(new { errorText = "Same OneTimePassword already exists" });
+                }
+            }
+            return Ok(password);
         }
 
         [HttpGet("{candidateID}")]
