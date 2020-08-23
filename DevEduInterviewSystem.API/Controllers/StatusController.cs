@@ -12,13 +12,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     [Route("[controller]")]
     [ApiController]
     public class StatusController : Controller
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
+        [Authorize(Roles = "admin")]
         [HttpPost("Status")]
         public IActionResult AddStatus(StatusDTO status)
         {

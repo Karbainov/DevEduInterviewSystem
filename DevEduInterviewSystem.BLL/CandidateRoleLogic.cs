@@ -7,7 +7,7 @@ using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 
 namespace DevEduInterviewSystem.BLL
 {
-    public class CandidateRoleLogicL : IRoleLogic
+    public class CandidateRoleLogic : IRoleLogic
     {
         // Во время собседеования кандидат может обновить свои данные, а одноразовый пароль должен удалиться
 

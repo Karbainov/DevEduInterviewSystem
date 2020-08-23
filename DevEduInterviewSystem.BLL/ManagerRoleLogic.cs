@@ -14,85 +14,8 @@ namespace DevEduInterviewSystem.BLL
 {
     public class ManagerRoleLogic : IRoleLogic
     {
-        public void UpdateCandidate(CandidateDTO candidateDTO)
-        {
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
-        }
 
-        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
-        {
-            Course_CandidateCRUD course = new Course_CandidateCRUD();
-            course.UpdateByID(course_CandidateDTO);
-        }
-
-
-        // Менеджер может обновить данные кандидата и personal info.
-        public void UpdateCandidatePersonalInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
-        {
-            UpdateCandidate(candidateDTO);
-
-            CandidatePersonalInfoCRUD candidatePersonalInfo = new CandidatePersonalInfoCRUD();
-            candidatePersonalInfo.UpdateByID(candidatePersonalInfoDTO);
-        }
-        // Менеджер(после интервью): обновить интервью статус + обновить стадию + создать фидбэк + обновить курс.
-        public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID,
-            FeedbackDTO feedbackDTO = null)
-        {
-            UpdateCandidate(candidateDTO);
-
-            ChangeStageAddFeedback((int)candidateDTO.ID, (int)candidateDTO.StageID, feedbackDTO);
-
-            InterviewDTO _interviewDTO = new InterviewDTO(candidateDTO.ID, interviewDTO.InterviewStatusID, DateTime.Now);
-            InterviewCRUD interview = new InterviewCRUD();
-            interview.UpdateByID(_interviewDTO);
-
-            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, (int)candidateDTO.ID);
-            Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
-            courseCandidate.UpdateByID(courseCandidateDTO);
-        }
-
-        
-        
-        // Менеджер(запуск группы): создать группу
-        public void CreateGroup(GroupDTO groupDTO)
-        {
-            GroupCRUD group = new GroupCRUD();
-            group.Add(groupDTO);
-        }
-        public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
-        {
-            string password = GetOneTimePassword();
-            oneTimePasswordDTO.OneTimePassword = password;
-            OneTimePasswordCRUD otp = new OneTimePasswordCRUD();
-            otp.Add(oneTimePasswordDTO);
-            return password;
-        }
-
-        public string GetOneTimePassword()
-        {
-            Random randomKey = new Random();
-            string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM!@#$%^&*()qwertyuiopasdfghjklzxcvbnm1234567890-=[];'./,";
-            int lenghtPass = 12;
-            char[] letters = simvol.ToCharArray();
-            string password = "";
-            for (int i = 0; i < lenghtPass; i++)
-            {
-                password += letters[randomKey.Next(letters.Length)].ToString();
-            }
-
-            return password;
-        }
-
-        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutCandidate(int id)
-        {
-            AllInformationAboutTheCandidateByIDProcedure infoCandidate = new AllInformationAboutTheCandidateByIDProcedure();
-            AllInformationAboutTheCandidateByIDDTO q = infoCandidate.AllInformationAboutTheCandidateByID(id);
-            return q;
-        }
-
-        //  добавить кандидатов.
-
+        #region Candidate
         public void AddCandidate(CandidateDTO candidateDTO, int courseID, TaskDTO taskDTO = null, FeedbackDTO feedbackDTO = null)
         {
             CandidateCRUD candidate = new CandidateCRUD();
@@ -109,35 +32,80 @@ namespace DevEduInterviewSystem.BLL
                 AddTask(taskDTO);
             }
         }
-
-        public void AddTask(TaskDTO taskDTO)
+        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutCandidate(int id)
         {
-            TaskCRUD task = new TaskCRUD();
-            task.Add(taskDTO);
+            AllInformationAboutTheCandidateByIDProcedure infoCandidate = new AllInformationAboutTheCandidateByIDProcedure();
+            AllInformationAboutTheCandidateByIDDTO q = infoCandidate.AllInformationAboutTheCandidateByID(id);
+            return q;
         }
-        public void AddFeedback(FeedbackDTO feedbackDTO)
+        public void UpdateCandidate(CandidateDTO candidateDTO)
         {
-            FeedbackCRUD feedback = new FeedbackCRUD();
-            feedback.Add(feedbackDTO);
+            CandidateCRUD candidate = new CandidateCRUD();
+            candidate.UpdateByID(candidateDTO);
         }
 
-        public void ChangeStageAddFeedback(int candidateID, int stageID, FeedbackDTO feedbackDTO = null)
+        // Менеджер может обновить данные кандидата и personal info.
+        public void UpdateCandidatePersonalInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
         {
-            StageChangedDTO stageChangedDTO = new StageChangedDTO();
-            stageChangedDTO.CandidateID = candidateID;
-            stageChangedDTO.ChangedDate = DateTime.Now;
-            stageChangedDTO.StageID = stageID;
+            UpdateCandidate(candidateDTO);
 
-            StageChangedCRUD stage = new StageChangedCRUD();
-            stage.Add(stageChangedDTO);
-            if (feedbackDTO != null)
+            CandidatePersonalInfoCRUD candidatePersonalInfo = new CandidatePersonalInfoCRUD();
+            candidatePersonalInfo.UpdateByID(candidatePersonalInfoDTO);
+        }
+
+        // Менеджер(после интервью): обновить интервью статус + обновить стадию + создать фидбэк + обновить курс.
+        public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID,
+            FeedbackDTO feedbackDTO = null)
+        {
+            UpdateCandidate(candidateDTO);
+
+            ChangeStageAddFeedback((int)candidateDTO.ID, (int)candidateDTO.StageID, feedbackDTO);
+
+            InterviewDTO _interviewDTO = new InterviewDTO(candidateDTO.ID, interviewDTO.InterviewStatusID, DateTime.Now);
+            InterviewCRUD interview = new InterviewCRUD();
+            interview.UpdateByID(_interviewDTO);
+
+            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, (int)candidateDTO.ID);
+            Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
+            courseCandidate.UpdateByID(courseCandidateDTO);
+        }
+        #endregion
+
+        #region OneTimePassword
+        public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
+        {
+            string password = GetOneTimePassword();
+            oneTimePasswordDTO.OneTimePassword = password;
+            OneTimePasswordCRUD otp = new OneTimePasswordCRUD();
+            otp.Add(oneTimePasswordDTO);
+            return password;
+        }
+
+        public string GetOneTimePassword()
+        {
+            Random randomKey = new Random();
+            string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";           
+            char[] letters = simvol.ToCharArray();
+            string password = "";
+            for (int i = 0; i < Consts.passwordLength; i++)
             {
-                AddFeedback(feedbackDTO);
+                password += letters[randomKey.Next(letters.Length)].ToString();
             }
+
+            return password;
+        }
+        #endregion
+
+        #region Course&Group
+
+        // Менеджер(запуск группы): создать группу
+        public void CreateGroup(GroupDTO groupDTO)
+        {
+            GroupCRUD group = new GroupCRUD();
+            group.Add(groupDTO);
         }
        
         // Грант получен, группа есть
-
         public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
         {
             GroupCandidateDTO candidate = new GroupCandidateDTO();
@@ -152,6 +120,12 @@ namespace DevEduInterviewSystem.BLL
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
         }
+        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
+        {
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.UpdateByID(course_CandidateDTO);
+        }
+
         private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
@@ -183,6 +157,32 @@ namespace DevEduInterviewSystem.BLL
             deletion.DeleteCandidateFromGroupByCandidateID(candidateID);
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
+        }
+        #endregion
+
+        public void AddTask(TaskDTO taskDTO)
+        {
+            TaskCRUD task = new TaskCRUD();
+            task.Add(taskDTO);
+        }
+        public void AddFeedback(FeedbackDTO feedbackDTO)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.Add(feedbackDTO);
+        }
+        public void ChangeStageAddFeedback(int candidateID, int stageID, FeedbackDTO feedbackDTO = null)
+        {
+            StageChangedDTO stageChangedDTO = new StageChangedDTO();
+            stageChangedDTO.CandidateID = candidateID;
+            stageChangedDTO.ChangedDate = DateTime.Now;
+            stageChangedDTO.StageID = stageID;
+
+            StageChangedCRUD stage = new StageChangedCRUD();
+            stage.Add(stageChangedDTO);
+            if (feedbackDTO != null)
+            {
+                AddFeedback(feedbackDTO);
+            }
         }
     }
 }

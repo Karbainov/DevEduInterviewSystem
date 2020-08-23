@@ -11,19 +11,35 @@ using System.Threading.Tasks.Dataflow;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.User;
+using System.Globalization;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
     public class AccountController : Controller
     {
-        [HttpPost("/token")]
-        public IActionResult Token(string username, string password)
+        [HttpPost("/token{role}")]
+        public IActionResult Token(string role, Person authorizingPerson)
         {
-            var identity = GetIdentity(username, password);
-            if (identity == null)
+            List<string> roles = authorizingPerson.Roles;
+            string chosenRole = null;
+            foreach (string r in roles)
             {
-                return BadRequest(new { errorText = "Invalid username or password." });
+                if (r == role)
+                {
+                    chosenRole = r;
+                }
             }
+            if (chosenRole == null)
+            {
+                return BadRequest(new { errorText = "Role not found" });
+            }
+
+            var claims = new List<Claim>
+                { new Claim(ClaimsIdentity.DefaultNameClaimType, authorizingPerson.Login),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, chosenRole)
+                };
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                                                                  ClaimsIdentity.DefaultRoleClaimType);
 
             var now = DateTime.UtcNow;
 
@@ -31,7 +47,7 @@ namespace DevEduInterviewSystem.API.Controllers
                     issuer: AuthenticationOptions.ISSUER,
                     audience: AuthenticationOptions.AUDIENCE,
                     notBefore: now,
-                    claims: identity.Claims,
+                    claims: claimsIdentity.Claims,
                     expires: now.Add(TimeSpan.FromMinutes(AuthenticationOptions.LIFETIME)),
                     signingCredentials: new SigningCredentials(AuthenticationOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -44,12 +60,14 @@ namespace DevEduInterviewSystem.API.Controllers
             return Json(response);
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        [HttpGet("/token")]
+        public IActionResult GetRole(string username, string password)
         {
             // Запрос к базе: существует ли пользователь с таким логином и паролем
+
             UserDTO authorizingUser = new UserDTO();
             UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll();
+            List<UserDTO> users = user.SelectAll(); 
             foreach (UserDTO u in users)
             {
                 if (u.Login == username && u.Password == password)
@@ -57,31 +75,16 @@ namespace DevEduInterviewSystem.API.Controllers
                     authorizingUser = u;
                 }
             }
-            Person person = new Person(authorizingUser.Login, authorizingUser.Password);
-
-            // Выбор роли пользователя
-            SelectUserRoleByUserID select = new SelectUserRoleByUserID();
-            List<UserRoleDTO> personRoles = select.SelectUserRoleByUser((int)authorizingUser.ID);
-
-            if (person != null)
+            if (authorizingUser == null)
             {
-                if (personRoles.Count > 1)
-                {
-                    RoleDTO chosenRole = new RoleDTO();
-                    RoleCRUD role = new RoleCRUD();
-                    // TO DO: как опрокинуть выбор роли при авторизации на фронт?? 
-                    // Как захардкодить роли?
-                    person.Role = (role.SelectByID((int)chosenRole.ID)).TypeOfRole;
-                }
-                var claims = new List<Claim>
-                { new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
-                };
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                                                                      ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
+                return BadRequest(new { errorText = "Invalid username or password." });
             }
-            return null;
+
+            GetRolesByUserID role = new GetRolesByUserID();
+            List<string> roles = role.GetListOfRoles((int)authorizingUser.ID);
+            Person authorizingPerson = new Person(username, password, roles);
+
+            return new OkObjectResult(authorizingPerson);
         }
     }
 }
