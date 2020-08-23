@@ -26,9 +26,9 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
-            if (new CourseCRUD().SelectByID((int)groupDTO.CourseID) == null)
+            if (new GroupCRUD().SelectByID((int)groupDTO.CourseID) == null)
             {
-                return new NotFoundObjectResult("This course not found");
+                return new NotFoundObjectResult("Group not found");
             }
             if (groupDTO.Name == null)
             {
@@ -40,6 +40,10 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update-group")]
         public IActionResult UpdateGroup(GroupDTO groupDTO)
         {
+            if (new GroupCRUD().SelectByID((int)groupDTO.CourseID) == null)
+            {
+                return new NotFoundObjectResult("Group not found");
+            }
             _manager.UpdateGroup(groupDTO);
             return new OkResult();
         }
