@@ -121,22 +121,24 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }
             _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,                updateCandidateAfterInterviewModel.interviewDTO,                (int)updateCandidateAfterInterviewModel.CourseID,                updateCandidateAfterInterviewModel.feedbackDTO);            return new OkResult();        }
 
-        //[HttpPut("{candidateID}/fill-the-form")]
-        //public IActionResult UpdateCandidateUponFormFilling(CandidateDTO candidate, CandidatePersonalInfoDTO info)        //{
-        //    CandidateCRUD candidateCRUD = new CandidateCRUD();
-        //    if (candidate.ID <= 0 || candidateCRUD.SelectByID((int)candidate.ID) == null)
-        //    {
-        //        return new NotFoundResult();
-        //    }
-        //    if (info.MaritalStatus == null || info.ITExperience == null || info.Education == null || info.Expectations == null
-        //        || info.WorkPlace == null || info.InfoSourse == null || info.Hobbies == null)
-        //    {
-        //        return BadRequest("Fields missing");
-        //    }
-        //    _tmpCandidate.UpdateCandidateInfo(candidate, info);
+        [HttpPut("{candidateID}/fill-the-form")]
+        public IActionResult UpdateCandidateUponFormFilling(CandidateFormModel candidate)        {
+            CandidateCRUD candidateCRUD = new CandidateCRUD();
+            if (candidate.CandidateDTO.ID <= 0 || candidateCRUD.SelectByID((int)candidate.CandidateDTO.ID) == null)
+            {
+                return new NotFoundResult();
+            }
+            if (candidate.CandidatePersonalInfoDTO.MaritalStatus == null || candidate.CandidatePersonalInfoDTO.ITExperience == null ||
+                candidate.CandidatePersonalInfoDTO.Education == null || candidate.CandidatePersonalInfoDTO.Expectations == null || 
+                candidate.CandidatePersonalInfoDTO.WorkPlace == null || candidate.CandidatePersonalInfoDTO.InfoSourse == null ||
+                candidate.CandidatePersonalInfoDTO.Hobbies == null)
+            {
+                return BadRequest("Fields missing");
+            }
+            _tmpCandidate.UpdateCandidateInfo(candidate.CandidateDTO, candidate.CandidatePersonalInfoDTO);
 
-        //    return new OkResult();
-        //}
+            return new OkResult();
+        }
     }
 }
 
