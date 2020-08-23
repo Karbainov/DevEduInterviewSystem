@@ -24,7 +24,7 @@ namespace DevEduInterviewSystem.DAL.Tests.CandidateSelectionProcessInfoTest
         [SetUp]
         public void Setup()
         {
-            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.MainConnectionString;
+            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
             Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             _mockCandidateID = new List<int>();
             _mockCourseID = new List<int>();
