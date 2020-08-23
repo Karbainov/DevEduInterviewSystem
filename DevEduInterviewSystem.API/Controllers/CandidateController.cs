@@ -19,8 +19,9 @@ namespace DevEduInterviewSystem.API.Controllers
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private CandidateRoleLogic _tmpCandidate = new CandidateRoleLogic();
+
         // Manager and phoneoperator
-        
         [HttpPost]
         public IActionResult CreateCandidate(CandidateInputModel candidateInputModel)
         {
@@ -112,5 +113,24 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update-candidate-after-interview")]
         public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }
             _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,                updateCandidateAfterInterviewModel.interviewDTO,                (int)updateCandidateAfterInterviewModel.CourseID,                updateCandidateAfterInterviewModel.feedbackDTO);            return new OkResult();        }
+
+        [HttpPut("{candidateID}/fill-the-form")]
+        public IActionResult UpdateCandidateUponFormFilling(CandidateDTO candidate, CandidatePersonalInfoDTO info)        {
+            CandidateCRUD candidateCRUD = new CandidateCRUD();
+            if (candidate.ID <= 0 || candidateCRUD.SelectByID((int)candidate.ID) == null)
+            {
+                return new NotFoundResult();
+            }
+            if (info.MaritalStatus == null || info.ITExperience == null || info.Education == null || info.Expectations == null
+                || info.WorkPlace == null || info.InfoSourse == null || info.Hobbies == null)
+            {
+                return BadRequest("Fields missing");
+            }
+            _tmpCandidate.UpdateCandidateInfo(candidate, info);
+
+            return new OkResult();
+        }
     }
 }
+
+
