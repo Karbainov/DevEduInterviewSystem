@@ -3,6 +3,7 @@ using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.Shared;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.CalendarInterviews;
+using DevEduInterviewSystem.DAL.Tests.Mocks;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -14,92 +15,20 @@ namespace DevEduInterviewSystem.DAL.Tests
     [TestFixture]
     public class AllInterviewsByDateIntervalAndUserTest
     {
-        private List<int> _mockUserID;
-        private List<int> _mockInterviewID;
-        private List<int> _mockCandidateID;
-
-        SqlConnection Connection;
+        AllTablesMock AllTablesMock = new AllTablesMock();
 
         [SetUp]
         public void Setup()
         {
-           
-            Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            _mockUserID = new List<int>();
-            _mockInterviewID = new List<int>();
-            _mockCandidateID = new List<int>();
-
-            UserCRUD userCRUD = new UserCRUD(); //заполнение таблиц 
-            UserDTOMock userDTOMock = new UserDTOMock();
-            foreach (UserDTO dto in userDTOMock) //Нужно начинать с таблиц у которых нет форен кей.
-            {
-                _mockUserID.Add(userCRUD.Add(dto)); //заполнение таблицы mock и дабавление id в лист (Нужно изменить CRUD файл, что бы сохранить id)
-                
-            }
-
-            CityCRUD cityCRUD = new CityCRUD();
-            CityDTOMock cityDTOMock = new CityDTOMock();
-            Connection.Close();
-            foreach (CityDTO dto in cityDTOMock)
-            {
-                cityCRUD.Add(dto);
-            }
-
-            StatusCRUD statusCRUD = new StatusCRUD();
-            StatusDTOMock statusDTOMock = new StatusDTOMock();
-            foreach (StatusDTO dto in statusDTOMock)
-            {
-                statusCRUD.Add(dto);
-            }
-
-            StageCRUD stageCRUD = new StageCRUD();
-            StageDTOMock stageDTOMock = new StageDTOMock();
-            foreach (StageDTO dto in stageDTOMock)
-            {
-                stageCRUD.Add(dto);
-            }
-
-            InterviewStatusCRUD interviewStatusCRUD = new InterviewStatusCRUD();
-            InterviewStatusDTOMock interviewStatusDTOMock = new InterviewStatusDTOMock();
-            foreach (InterviewStatusDTO dto in interviewStatusDTOMock)
-            {
-                interviewStatusCRUD.Add(dto);
-            }
-
-            CandidateCRUD candidateCRUD = new CandidateCRUD();
-            CandidateDTOMock candidateDTOMock = new CandidateDTOMock();
-            foreach (CandidateDTO dto in candidateDTOMock)
-            {
-                _mockCandidateID.Add(candidateCRUD.Add(dto));
-            }
-
-            InterviewCRUD interviewCRUD = new InterviewCRUD();
-            InterviewDTOMock interviewDTOMock = new InterviewDTOMock();
-            int count = 0;
-            foreach (InterviewDTO dto in interviewDTOMock)
-            {
-                dto.CandidateID = _mockCandidateID[count];
-                _mockInterviewID.Add(interviewCRUD.Add(dto));
-                count++;
-            }
-
-            UserInterviewCRUD userInterviewCRUD = new UserInterviewCRUD();
-            for (int i = 0; i < _mockUserID.Count; i++)
-            {
-                UserInterviewDTO userInterview = new UserInterviewDTO(1, _mockInterviewID[i], _mockUserID[i]);
-                UserInterviewDTO userInterview2 = new UserInterviewDTO(2, _mockInterviewID[_mockUserID.Count - i - 1], _mockUserID[i]);
-                userInterviewCRUD.Add(userInterview);
-                userInterviewCRUD.Add(userInterview2);
-            }
-
-
+            ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;
+            AllTablesMock.AddData();
         }
 
         [Test, TestCaseSource(typeof(AllInterviewsByDateIntervalAndUserQueryDataSource))]
         public void SelectAllInterviewsByDateIntervalTest(int idnumber, DateTime startDateTime, DateTime finishDateTime, List<AllInterviewsDTO> expected)
         {
             AllInterviewsByDateIntervalAndUserQuery _allInterviewsQuery = new AllInterviewsByDateIntervalAndUserQuery();
-            List<AllInterviewsDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateIntervalAndUser(startDateTime, finishDateTime, _mockUserID[idnumber]);
+            List<AllInterviewsDTO> actual = _allInterviewsQuery.SelectAllInterviewsByDateIntervalAndUser(startDateTime, finishDateTime, AllTablesMock.UserID[idnumber]);
 
             Assert.AreEqual(expected, actual);
         }
@@ -107,8 +36,7 @@ namespace DevEduInterviewSystem.DAL.Tests
         [TearDown]
         public void TearDown()
         {
-            //Удаление добавленных элементов
-
+            AllTablesMock.DeleteData();
         }
 
         public class AllInterviewsByDateIntervalAndUserQueryDataSource : IEnumerable
@@ -131,12 +59,12 @@ namespace DevEduInterviewSystem.DAL.Tests
             {
                 UserFirstName = "Sergey",
                 UserLastName = "Timofeev",
-                CandidateFirstName = "Elena",
-                CandidateLastName = "Kac",
-                CandidatePhone = "8",
+                CandidateFirstName = "Vasya",
+                CandidateLastName = "Pupkin",
+                CandidatePhone = "911",
                 DateTimeInterview = new DateTime(2020, 09, 12, 15, 00, 00),
                 Attempt = 1,
-                InterviewStatus = "fail"
+                InterviewStatus = "success"
             };
 
             List<AllInterviewsDTO> secondTest = new List<AllInterviewsDTO>();

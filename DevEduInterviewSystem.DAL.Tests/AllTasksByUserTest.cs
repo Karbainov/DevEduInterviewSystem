@@ -21,15 +21,17 @@ namespace DevEduInterviewSystem.DAL.Tests
         private List<int> _mockUserID;
         private List<int> _mockTaskID;
         private List<int> _mockCandidateID;
-        SqlConnection Connection;
+        //SqlConnection Connection;
 
         [SetUp]
         public void Setup()
         {
            
-            Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            //Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             _mockUserID = new List<int>();
             _mockTaskID = new List<int>();
+
+
             _mockCandidateID = new List<int>();
 
             UserCRUD userCRUD = new UserCRUD();
@@ -41,7 +43,6 @@ namespace DevEduInterviewSystem.DAL.Tests
 
             CityCRUD cityCRUD = new CityCRUD();
             CityDTOMock cityDTOMock = new CityDTOMock();
-            Connection.Close();
             foreach (CityDTO dto in cityDTOMock)
             {
                 cityCRUD.Add(dto);
