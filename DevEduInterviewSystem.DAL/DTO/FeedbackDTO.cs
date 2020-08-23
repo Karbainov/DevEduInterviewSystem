@@ -26,7 +26,14 @@ namespace DevEduInterviewSystem.DAL.DTO
             this.TimeFeedback = TimeFeedback;
         }
 
-
+        public FeedbackDTO( int StageChangedID, int UserID, string Message, DateTime TimeFeedback)
+        {
+           
+            this.StageChangedID = StageChangedID;
+            this.UserID = UserID;
+            this.Message = Message;
+            this.TimeFeedback = TimeFeedback;
+        }
         public override bool Equals(object obj)
         {
 
