@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AddStage]
-@Name nvarchar(30) null
+@Name nvarchar(30)
 as
 
 insert into [dbo].[Stage]

@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[AddStageChanged]
-@CandidateID int null,
-@StageID int null,
-@ChangedDate datetime2 null
+@CandidateID int,
+@StageID int,
+@ChangedDate datetime2
 AS
 INSERT INTO [dbo].[StageChanged]
 VALUES (@CandidateID, @StageID, @ChangedDate)

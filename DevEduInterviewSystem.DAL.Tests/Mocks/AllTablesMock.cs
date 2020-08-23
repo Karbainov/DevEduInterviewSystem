@@ -119,6 +119,7 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
                         dto.StatusID = null;
                         dto.CityID = null;
                     }
+                    id++;
 
                     CandidateID.Add(candidateCRUD.Add(dto));
                 }
