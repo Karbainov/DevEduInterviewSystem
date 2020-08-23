@@ -18,9 +18,9 @@ namespace Test
         {
             ConnectionSingleTone.GetInstance().ConnectionString = SQLConnectionPaths.TestConnectionString;            
 
-            AllTablesMock allTablesMock = new AllTablesMock();
+            //AllTablesMock allTablesMock = new AllTablesMock();
             //allTablesMock.AddData();
-            allTablesMock.DeleteData();
+            //allTablesMock.DeleteData();
 
             SqlConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             connection.Open();
