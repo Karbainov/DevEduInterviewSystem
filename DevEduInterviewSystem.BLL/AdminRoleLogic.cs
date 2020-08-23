@@ -30,11 +30,6 @@ namespace DevEduInterviewSystem.BLL
             StatusCRUD crud = new StatusCRUD();
             crud.Add(status);
         }
-        public void AddCity(CityDTO city)
-        {
-            CityCRUD crud = new CityCRUD();
-            crud.Add(city);
-        }
         public void AddCourse(CourseDTO course)
         {
             CourseCRUD crud = new CourseCRUD();
@@ -86,5 +81,17 @@ namespace DevEduInterviewSystem.BLL
         }
         #endregion
 
+        #region Methods for City
+        public void AddCity(CityDTO city)
+        {
+            CityCRUD crud = new CityCRUD();
+            crud.Add(city);
+        }
+        public void DeleteCity(CityDTO cityDTO)
+        {
+            CityCRUD city = new CityCRUD();
+            city.DeleteByID((int)cityDTO.ID);
+        }
+        #endregion
     }
 }

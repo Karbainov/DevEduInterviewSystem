@@ -20,7 +20,7 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateID);
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.Add(courseCandidateDTO);
-
+            
             ChangeStageAddFeedback(candidateID, (int)candidateDTO.StageID, feedbackDTO);
 
             if (taskDTO != null)
