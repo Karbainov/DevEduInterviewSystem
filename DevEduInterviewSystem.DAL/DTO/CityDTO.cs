@@ -14,6 +14,11 @@ namespace DevEduInterviewSystem.DAL.DTO
         {
             this.Name = City;
         }
+        public CityDTO(int id, string City)
+        {
+            this.ID = id;
+            this.Name = City;
+        }
         public CityDTO(int id, string city, bool isDeleted) 
         {
             this.ID = id;

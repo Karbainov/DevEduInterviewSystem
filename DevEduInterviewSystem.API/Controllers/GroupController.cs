@@ -54,7 +54,7 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.UpdateGroup(groupDTO);
             return new OkResult();
         }
-        // TODO Доделать удаление по ID
+
         [HttpDelete("delete-group/{groupID}")]
         public IActionResult DeleteGroup(int groupID)
         {
