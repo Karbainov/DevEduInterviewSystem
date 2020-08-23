@@ -55,16 +55,16 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
         // TODO Доделать удаление по ID
-        //[HttpDelete("delete-group/{groupID}")]
-        //public IActionResult DeleteGroup(int groupID)
-        //{
-        //    if (new GroupCRUD().SelectByID(groupID) == null)
-        //    {
-        //        return new NotFoundObjectResult("Group not found");
-        //    }
-        //    _manager.DeleteGroup(new GroupCRUD().SelectByID(groupID));
-        //    return new OkResult();
-        //}
+        [HttpDelete("delete-group/{groupID}")]
+        public IActionResult DeleteGroup(int groupID)
+        {
+            if (new GroupCRUD().SelectByID(groupID) == null)
+            {
+                return new NotFoundObjectResult("Group not found");
+            }
+            _manager.DeleteGroup(groupID);
+            return new OkResult();
+        }
 
     }
     

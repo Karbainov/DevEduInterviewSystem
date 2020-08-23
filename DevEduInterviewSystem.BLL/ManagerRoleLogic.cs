@@ -14,20 +14,39 @@ namespace DevEduInterviewSystem.BLL
 {
     public class ManagerRoleLogic : IRoleLogic
     {
+        #region Metods for Candidate and Grant
+        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutCandidate(int candidateID)
+        {
+            AllInformationAboutTheCandidateByIDProcedure infoCandidate = new AllInformationAboutTheCandidateByIDProcedure();
+            AllInformationAboutTheCandidateByIDDTO candidateInfo = infoCandidate.AllInformationAboutTheCandidateByID(candidateID);
+            return candidateInfo;
+        }
+        public void AddCandidate(CandidateDTO candidateDTO, int courseID, TaskDTO taskDTO = null, FeedbackDTO feedbackDTO = null)
+        {
+            CandidateCRUD candidate = new CandidateCRUD();
+            int candidateID = candidate.Add(candidateDTO);
+
+            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateID);
+            Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
+            courseCandidate.Add(courseCandidateDTO);
+
+            ChangeStageAddFeedback(candidateID, (int)candidateDTO.StageID, feedbackDTO);
+
+            if (taskDTO != null)
+            {
+                AddTask(taskDTO);
+            }
+        }
         public void UpdateCandidate(CandidateDTO candidateDTO)
         {
             CandidateCRUD candidate = new CandidateCRUD();
             candidate.UpdateByID(candidateDTO);
         }
-
         public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
         {
             Course_CandidateCRUD course = new Course_CandidateCRUD();
             course.UpdateByID(course_CandidateDTO);
         }
-
-
-        // Менеджер может обновить данные кандидата и personal info.
         public void UpdateCandidatePersonalInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
         {
             UpdateCandidate(candidateDTO);
@@ -35,7 +54,6 @@ namespace DevEduInterviewSystem.BLL
             CandidatePersonalInfoCRUD candidatePersonalInfo = new CandidatePersonalInfoCRUD();
             candidatePersonalInfo.UpdateByID(candidatePersonalInfoDTO);
         }
-        // Менеджер(после интервью): обновить интервью статус + обновить стадию + создать фидбэк + обновить курс.
         public void UpdateCandidateAfterInterview(CandidateDTO candidateDTO, InterviewDTO interviewDTO, int courseID,
             FeedbackDTO feedbackDTO = null)
         {
@@ -51,10 +69,55 @@ namespace DevEduInterviewSystem.BLL
             Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
             courseCandidate.UpdateByID(courseCandidateDTO);
         }
+        // Грант получен, нет возможности начать с текущей группой
+        public void ReturnAwaitingCandidateToCourse(int candidateID, int courseID, int stageID, FeedbackDTO feedbackDTO = null)
+        {
+            Course_CandidateDTO candidate = new Course_CandidateDTO();
+            candidate.CandidateID = candidateID;
+            candidate.CourseID = courseID;
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.Add(candidate);
 
-        
-        
-        // Менеджер(запуск группы): создать группу
+            DeleteCandidateFromGroupCandidateByCandidateID deletion = new DeleteCandidateFromGroupCandidateByCandidateID();
+            deletion.DeleteCandidateFromGroupByCandidateID(candidateID);
+
+            ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
+        }
+        public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
+        {
+            GroupCandidateDTO candidate = new GroupCandidateDTO();
+            candidate.CandidateID = candidateID;
+            candidate.GroupID = groupID;
+            GroupCandidateCRUD group = new GroupCandidateCRUD();
+
+            AddCandidateInGroupCandidate(candidate);
+
+            DeleteCandidateFromCourseCandidateByCandidateID deletion = new DeleteCandidateFromCourseCandidateByCandidateID();
+            deletion.DeleteCandidateFromCourseByCandidateID(candidateID);
+
+            ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
+        }
+        // Какой правильный метод?
+        private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
+            Connection.Open();
+            SqlCommand exceptionGroupID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
+            int count = (int)exceptionGroupID.ExecuteScalar();
+            if (groupCandidateDTO.ID > count || groupCandidateDTO.ID < 0)
+            {
+                GroupCandidateCRUD group = new GroupCandidateCRUD();
+                group.Add(groupCandidateDTO);
+            }
+            else
+            {
+                throw new Exception("Group not found!");
+            }
+            Connection.Close();
+        }
+        #endregion
+
+        #region Methods for Groups
         public void CreateGroup(GroupDTO groupDTO)
         {
             GroupCRUD group = new GroupCRUD();
@@ -65,6 +128,14 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.UpdateByID(groupDTO);
         }
+        public void DeleteGroup(int? groupID)
+        {
+            GroupCRUD groupCRUD = new GroupCRUD();
+            groupCRUD.DeleteByID((int)groupID);
+        }
+        #endregion
+
+        #region Methods for Password
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
@@ -88,33 +159,9 @@ namespace DevEduInterviewSystem.BLL
 
             return password;
         }
+        #endregion
 
-        public AllInformationAboutTheCandidateByIDDTO AllInformationAboutCandidate(int id)
-        {
-            AllInformationAboutTheCandidateByIDProcedure infoCandidate = new AllInformationAboutTheCandidateByIDProcedure();
-            AllInformationAboutTheCandidateByIDDTO q = infoCandidate.AllInformationAboutTheCandidateByID(id);
-            return q;
-        }
-
-        //  добавить кандидатов.
-
-        public void AddCandidate(CandidateDTO candidateDTO, int courseID, TaskDTO taskDTO = null, FeedbackDTO feedbackDTO = null)
-        {
-            CandidateCRUD candidate = new CandidateCRUD();
-            int candidateID = candidate.Add(candidateDTO);
-
-            Course_CandidateDTO courseCandidateDTO = new Course_CandidateDTO(courseID, candidateID);
-            Course_CandidateCRUD courseCandidate = new Course_CandidateCRUD();
-            courseCandidate.Add(courseCandidateDTO);
-
-            ChangeStageAddFeedback(candidateID, (int)candidateDTO.StageID, feedbackDTO);
-
-            if (taskDTO != null)
-            {
-                AddTask(taskDTO);
-            }
-        }
-
+        #region Methods for Tasks and Feedback
         public void AddTask(TaskDTO taskDTO)
         {
             TaskCRUD task = new TaskCRUD();
@@ -125,11 +172,7 @@ namespace DevEduInterviewSystem.BLL
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
         }
-        public void DeleteGroup(GroupDTO groupDTO)
-        {
-            GroupCRUD groupCRUD = new GroupCRUD();
-            groupCRUD.DeleteByID((int)groupDTO.ID);
-        }
+       
         public void ChangeStageAddFeedback(int candidateID, int stageID, FeedbackDTO feedbackDTO = null)
         {
             StageChangedDTO stageChangedDTO = new StageChangedDTO();
@@ -144,54 +187,6 @@ namespace DevEduInterviewSystem.BLL
                 AddFeedback(feedbackDTO);
             }
         }
-       
-        // Грант получен, группа есть
-
-        public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
-        {
-            GroupCandidateDTO candidate = new GroupCandidateDTO();
-            candidate.CandidateID = candidateID;
-            candidate.GroupID = groupID;
-            GroupCandidateCRUD group = new GroupCandidateCRUD();
-
-            AddCandidateInGroupCandidate(candidate);
-
-            DeleteCandidateFromCourseCandidateByCandidateID deletion = new DeleteCandidateFromCourseCandidateByCandidateID();
-            deletion.DeleteCandidateFromCourseByCandidateID(candidateID);
-
-            ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
-        }
-        private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
-        {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            Connection.Open();
-            SqlCommand exceptionGroupID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
-            int count = (int)exceptionGroupID.ExecuteScalar();
-            if (groupCandidateDTO.ID > count || groupCandidateDTO.ID < 0)
-            {
-                GroupCandidateCRUD group = new GroupCandidateCRUD();
-                group.Add(groupCandidateDTO);
-            }
-            else
-            {
-                throw new Exception("Group not found!");
-            }
-            Connection.Close();
-        }
-
-        // Грант получен, нет вохможности начать с текущей группой
-        public void ReturnAwaitingCandidateToCourse(int candidateID, int courseID, int stageID, FeedbackDTO feedbackDTO = null)
-        {
-            Course_CandidateDTO candidate = new Course_CandidateDTO();
-            candidate.CandidateID = candidateID;
-            candidate.CourseID = courseID;
-            Course_CandidateCRUD course = new Course_CandidateCRUD();
-            course.Add(candidate);
-
-            DeleteCandidateFromGroupCandidateByCandidateID deletion = new DeleteCandidateFromGroupCandidateByCandidateID();
-            deletion.DeleteCandidateFromGroupByCandidateID(candidateID);
-
-            ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
-        }
+        #endregion
     }
 }

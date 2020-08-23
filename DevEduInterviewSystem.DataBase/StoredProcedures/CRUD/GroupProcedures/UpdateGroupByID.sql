@@ -5,9 +5,11 @@ Create Procedure dbo.[UpdateGroupByID]
 @StartDate datetime2,
 @EndDate datetime2
 AS
+BEGIN
 UPDATE dbo.[Group]
 SET 
 Name = @Name,
 StartDate = @StartDate,
 EndDate = @EndDate
-where (@ID = ID)
+WHERE (@ID = ID) AND (IsDeleted = 0)
+END

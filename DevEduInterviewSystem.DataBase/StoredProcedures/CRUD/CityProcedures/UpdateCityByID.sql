@@ -5,5 +5,5 @@ AS
 BEGIN
 UPDATE [dbo].[City]
 SET Name = @Name
-where (@ID = ID)
+WHERE (@ID = ID) AND (IsDeleted = 0)
 end
