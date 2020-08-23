@@ -26,6 +26,24 @@ namespace DevEduInterviewSystem.DAL.DTO
             this.TimeFeedback = TimeFeedback;
         }
 
+
+        public override bool Equals(object obj)
+        {
+
+            if (obj.GetType() != GetType()) return false;
+
+            var tmp = (FeedbackDTO)obj;
+            if (tmp.ID == ID &&
+                tmp.StageChangedID == StageChangedID &&
+                tmp.UserID == UserID &&
+                tmp.Message == Message &&
+                tmp.TimeFeedback == TimeFeedback)
+                
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
 

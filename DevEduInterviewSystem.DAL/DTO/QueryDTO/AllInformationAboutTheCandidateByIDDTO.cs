@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
@@ -15,7 +16,6 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
-        public string FeedBack { get; set; }
         public string CourseName { get; set; }
         public string GroupName { get; set; }
         public bool MaritalStatus { get; set; }
@@ -25,13 +25,16 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         public string Hobbies { get; set; }
         public string InfoSourse { get; set; }
         public string Expectations { get; set; }
+        
+        public List<FeedbackDTO> FeedBack { get; set; }
+
 
         public AllInformationAboutTheCandidateByIDDTO()
         {
 
         }
 
-        public AllInformationAboutTheCandidateByIDDTO(int id, string stage, string status, string city, string phone, string email,string firstName, string lastName, DateTime birthDay, string feedBack,
+        public AllInformationAboutTheCandidateByIDDTO(int id, string stage, string status, string city, string phone, string email,string firstName, string lastName, DateTime birthDay, List<FeedbackDTO> feedBack,
             string curseName, string groupName, bool maritalStatus, string education, string work, string itExperience, string hobbies, string infoSourse, string expectations)
         {
             ID = id;
@@ -53,6 +56,8 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
             Hobbies = hobbies;
             InfoSourse = infoSourse;
             Expectations = expectations;
+            
+           
         }
 
         public override bool Equals(object obj)
@@ -62,12 +67,12 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
                 tmp.TypeOfStage == TypeOfStage &&
                 tmp.TypeOfStatus == TypeOfStatus &&
                 tmp.CityName == CityName &&
-                tmp.Phone == Phone && 
+                tmp.Phone == Phone &&
                 tmp.Email == Email &&
                 tmp.FirstName == FirstName &&
                 tmp.LastName == LastName &&
                 tmp.Birthday == Birthday &&
-                tmp.FeedBack == FeedBack &&
+                CheckFeedBack(tmp.FeedBack) &&
                 tmp.CourseName == CourseName &&
                 tmp.GroupName == GroupName &&
                 tmp.MaritalStatus == MaritalStatus &&
@@ -81,6 +86,26 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
                 return true;
             }
             return false;
+        }
+
+       public bool CheckFeedBack(List<FeedbackDTO> feedbacks)
+        {
+            if(feedbacks.Count == FeedBack.Count)
+            {
+                foreach (var item in feedbacks)
+                {
+                    if(!FeedBack.Any(x => item.Equals(x)))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

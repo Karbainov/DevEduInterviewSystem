@@ -8,7 +8,7 @@ namespace DevEduInterviewSystem.DAL.DTO
     {
         public int? ID { get; set; }
         public int? CandidateID { get; set; }
-        public bool MaritalStatus { get; set; }
+        public bool? MaritalStatus { get; set; }
         public string Education { get; set; }
         public string WorkPlace { get; set; }
         public string ITExperience { get; set; }
@@ -21,7 +21,8 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public CandidatePersonalInfoDTO(int ID, int CandidateID, bool MaritalStatus, string Education, string WorkPlace, string ITExperience, string Hobbies, string InfoSourse, string Expectations)
+        public CandidatePersonalInfoDTO(int ID, int CandidateID, bool MaritalStatus, string Education, string WorkPlace, 
+            string ITExperience, string Hobbies, string InfoSourse, string Expectations)
         {
             this.ID = ID;
             this.CandidateID = CandidateID;
