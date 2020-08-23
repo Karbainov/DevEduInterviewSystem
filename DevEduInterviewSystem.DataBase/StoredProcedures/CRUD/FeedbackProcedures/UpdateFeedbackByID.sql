@@ -10,7 +10,7 @@ Update dbo.[Feedback]
 
 set StageChangedID = @StageChangedID,
 UserID = @UserID,
-Message = @Message,
+[Message] = @Message,
 TimeFeedback  = @TimeFeedback
 	
 where (ID = @ID)

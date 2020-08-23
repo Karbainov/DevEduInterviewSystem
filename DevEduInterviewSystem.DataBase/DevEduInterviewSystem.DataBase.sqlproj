@@ -304,4 +304,7 @@
     <Build Include="StoredProcedures\DeleteCandidateFromCourseCandidateByCandidateID.sql" />
     <Build Include="StoredProcedures\DeleteCandidateFromGroupCandidateByCandidateID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="StoredProcedures\AllFeedbacksByUser.sql" />
+  </ItemGroup>
 </Project>

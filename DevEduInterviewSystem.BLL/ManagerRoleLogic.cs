@@ -9,6 +9,7 @@ using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
+using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -176,6 +177,21 @@ namespace DevEduInterviewSystem.BLL
             deletion.DeleteCandidateFromGroupByCandidateID(candidateID);
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
+        }
+
+        public List<FeedbackDTO> GetAllFeedbacks()
+        {
+            //FeedbackDTO feedbackDTO = new FeedbackDTO();
+            FeedbackCRUD feedbackCRUD = new FeedbackCRUD();
+            List<FeedbackDTO> feedbacks = feedbackCRUD.SelectAll();
+            return feedbacks;
+        }
+
+        public List<AllFeedbackByUserDTO> GetAllFeedbacksByUser(int userID)
+        {
+            AllFeedbackByUserQuery tmp = new AllFeedbackByUserQuery();
+            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
+            return feedbacks;
         }
     }
 }
