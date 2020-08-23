@@ -28,16 +28,18 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpPost("delete-city")]
-        public IActionResult DeleteCity(CityDTO city)
-        {
-            if (new CityCRUD().SelectByID((int)city.ID) == null)
-            {
-                return new NotFoundObjectResult("City not found");
-            }
-            _admin.DeleteCity(new CityCRUD().SelectByID((int)city.ID));
-            return new OkResult();
-        }
+        // TODO Доделать удаление по ID
+
+        //[HttpDelete("delete-city/{cityID}")]
+        //public IActionResult DeleteCity(int cityID)
+        //{
+        //    if (new CityCRUD().SelectByID(cityID) == null)
+        //    {
+        //        return new NotFoundObjectResult("City not found");
+        //    }
+        //    _admin.DeleteCity(new CityCRUD().SelectByID(cityID));
+        //    return new OkResult();
+        //}
 
         [HttpGet("all-city")]
         public IActionResult GetAllCity()

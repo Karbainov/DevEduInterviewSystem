@@ -13,7 +13,6 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class GroupController : Controller
     {
-        private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
         [HttpGet("all-groups")]
@@ -26,9 +25,9 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
-            if (new GroupCRUD().SelectByID((int)groupDTO.CourseID) == null)
+            if (new CourseCRUD().SelectByID((int)groupDTO.CourseID) == null)
             {
-                return new NotFoundObjectResult("Group not found");
+                return new NotFoundObjectResult("Course not found");
             }
             if (groupDTO.Name == null)
             {
@@ -40,13 +39,32 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update-group")]
         public IActionResult UpdateGroup(GroupDTO groupDTO)
         {
-            if (new GroupCRUD().SelectByID((int)groupDTO.CourseID) == null)
+            if (groupDTO.Name == null)
+            {
+                return BadRequest("Name field missing");
+            }
+            if (new GroupCRUD().SelectByID((int)groupDTO.ID) == null)
             {
                 return new NotFoundObjectResult("Group not found");
+            }
+            if (new CourseCRUD().SelectByID((int)groupDTO.ID) == null)
+            {
+                return new NotFoundObjectResult("Course not found");
             }
             _manager.UpdateGroup(groupDTO);
             return new OkResult();
         }
+        // TODO Доделать удаление по ID
+        //[HttpDelete("delete-group/{groupID}")]
+        //public IActionResult DeleteGroup(int groupID)
+        //{
+        //    if (new GroupCRUD().SelectByID(groupID) == null)
+        //    {
+        //        return new NotFoundObjectResult("Group not found");
+        //    }
+        //    _manager.DeleteGroup(new GroupCRUD().SelectByID(groupID));
+        //    return new OkResult();
+        //}
 
     }
     

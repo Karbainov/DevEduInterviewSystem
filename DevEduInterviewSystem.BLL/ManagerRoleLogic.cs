@@ -125,7 +125,11 @@ namespace DevEduInterviewSystem.BLL
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
         }
-
+        public void DeleteGroup(GroupDTO groupDTO)
+        {
+            GroupCRUD groupCRUD = new GroupCRUD();
+            groupCRUD.DeleteByID((int)groupDTO.ID);
+        }
         public void ChangeStageAddFeedback(int candidateID, int stageID, FeedbackDTO feedbackDTO = null)
         {
             StageChangedDTO stageChangedDTO = new StageChangedDTO();
