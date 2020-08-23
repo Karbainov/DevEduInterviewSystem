@@ -12,7 +12,7 @@ namespace DevEduInterviewSystem.DAL.Tests
         {
 			yield return new UserDTO(1, "Login", "***", "Sergey", "Timofeev", false);
 			yield return new UserDTO(2, "Terminator", "***", "Polina", "Matveevna", false);
-			yield return new UserDTO(3, "Admin", "***", "Svetlana", "Fokina", false);
+			yield return new UserDTO(3, "Qwery", "***", "Svetlana", "Fokina", false);
 			yield return new UserDTO(4, "Ringer", "***", "Ekaterina", "Petrova", false);
 		}
     }

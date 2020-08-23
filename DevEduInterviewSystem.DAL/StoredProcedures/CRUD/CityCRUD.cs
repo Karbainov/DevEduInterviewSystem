@@ -14,7 +14,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             var procedure = "[AddCity]";
             var values = new
             {
-                Name = dto.Name
+                Name = dto.Name,
+                IsDeleted = dto.IsDeleted
             };
 
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
@@ -47,7 +48,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             var values = new
             {
                 dto.ID,
-                dto.Name
+                dto.Name,
+                dto.IsDeleted
             };
 
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
@@ -70,6 +72,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                     {
                         ID = (int)reader["id"],
                         Name = (string)reader["Name"],
+                        IsDeleted = (bool)reader["IsDeleted"]
                     };
                     cities.Add(city);
                 }
@@ -95,7 +98,8 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
                 {
                     city = new CityDTO();
                     city.ID = (int)reader["id"];
-                    city.Name = (string)reader["Name"]; 
+                    city.Name = (string)reader["Name"];
+                    city.IsDeleted = (bool)reader["IsDeleted"];
                 }
             }
             reader.Close();

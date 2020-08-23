@@ -20,7 +20,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                 dto.CandidateID,
                 dto.UserID,
                 dto.Message,
-                IsComleted = dto.IsCompleted
+                dto.IsCompleted
             };
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             Connection.Open();

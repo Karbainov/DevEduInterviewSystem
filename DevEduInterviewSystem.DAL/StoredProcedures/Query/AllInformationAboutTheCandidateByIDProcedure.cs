@@ -19,10 +19,28 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
         {           
             IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             var procedure = "[AllInformationAboutTheCandidateByID]";
-        
-            var allInfo = connection.Query<AllInformationAboutTheCandidateByIDDTO>(procedure, new {ID},
+
+            List<FeedbackDTO> feedbackDTOs = new List<FeedbackDTO>();
+
+           var allInfo = connection.Query< AllInformationAboutTheCandidateByIDDTO, FeedbackDTO,AllInformationAboutTheCandidateByIDDTO>(procedure,(info, feedback) => 
+            {
+               
+                if (info.FeedBack == null)
+                {
+                    info.FeedBack = new List<FeedbackDTO>();
+                }
+
+
+                if (!info.FeedBack.Any(x => feedback.Equals(x)))
+                {
+                    info.FeedBack.Add(feedback);
+                }
+
+                return info;
+            }, new {ID},
+         splitOn: "Message",
             commandType: CommandType.StoredProcedure
-            ).SingleOrDefault();
+            ).FirstOrDefault();
 
             return allInfo;
         }       

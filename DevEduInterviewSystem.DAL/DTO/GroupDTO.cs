@@ -11,19 +11,21 @@ namespace DevEduInterviewSystem.DAL.DTO
         public string Name { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-
+        public bool? IsDeleted { get; set; }
         public GroupDTO()
         {
 
         }
 
-        public GroupDTO(int ID, int CourseID, string Name, DateTime StartDate, DateTime EndDate)
+        public GroupDTO(int id, int courseID, string name, DateTime startDate, DateTime endDate, bool isDeleted=false)
         {
-            this.ID = ID;
-            this.CourseID = CourseID;
-            this.Name = Name;
-            this.StartDate = StartDate;
-            this.EndDate = EndDate;
+            this.ID = id;
+            this.CourseID = courseID;
+            this.Name = name;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+            this.IsDeleted = isDeleted;
         }
+
     }
 }

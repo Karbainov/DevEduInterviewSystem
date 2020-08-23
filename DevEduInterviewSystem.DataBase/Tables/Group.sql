@@ -4,5 +4,6 @@
 	[CourseID] int NULL FOREIGN KEY ([CourseID]) REFERENCES [dbo].[Course]([ID]),
 	[Name] nvarchar(50),
 	[StartDate] datetime2,
-	[EndDate] datetime2
+	[EndDate] datetime2,
+	[IsDeleted] BIT default 0
 )
