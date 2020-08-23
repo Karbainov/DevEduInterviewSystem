@@ -47,7 +47,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpDelete("delete-user/{userID}")]
         public IActionResult DeleteUser(int userID)
         {
-            if (userID == null || userID != null && new UserCRUD().SelectByID((int)userID) == null)
+            if ((int)userID == null || (int)userID != null && new UserCRUD().SelectByID((int)userID) == null)
             {
                 return new NotFoundObjectResult("User not found");
             }

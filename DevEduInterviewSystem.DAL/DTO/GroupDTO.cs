@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public GroupDTO(int id, int courseID, string name, DateTime startDate, DateTime endDate, bool isDeleted)
+        public GroupDTO(int id, int courseID, string name, DateTime startDate, DateTime endDate, bool isDeleted=false)
         {
             this.ID = id;
             this.CourseID = courseID;
@@ -26,5 +26,6 @@ namespace DevEduInterviewSystem.DAL.DTO
             this.EndDate = endDate;
             this.IsDeleted = isDeleted;
         }
+
     }
 }
