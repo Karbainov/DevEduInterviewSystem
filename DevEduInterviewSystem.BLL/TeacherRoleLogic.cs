@@ -80,10 +80,17 @@ namespace DevEduInterviewSystem.BLL
             return interviewCRUD.SelectAll();
         }
 
-        public void AddFeedback(FeedbackDTO feedbackDTO)
+
+        public void AddFeedback(FeedbackDTO feedbackDTO, StatusDTO status = null)
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
+
+            if(status != null)
+            {
+                StatusCRUD statusCRUD = new StatusCRUD();
+                statusCRUD.UpdateByID(status);
+            }
         }
     }
 }
