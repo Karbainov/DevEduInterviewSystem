@@ -20,9 +20,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
-        [Authorize(Roles = "Phone Operator")]
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpGet("Interviews")]
         public IActionResult GetInterviews(int? userID, DateTime? startDateTime, 
             DateTime? finishDateTime, DateTime? dateTime) 

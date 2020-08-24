@@ -21,9 +21,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
-        [Authorize(Roles = "Phone Operator")]
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpGet("all-feedbacks")]
         public IActionResult GetAllFeedbacks()
         {
@@ -32,10 +30,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(listFeedback);
         }
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
-        [Authorize(Roles = "Phone Operator")]
-
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpGet("all-feedbacks-By-User/{userID}")]
         public IActionResult GetAllFeedbacksByUser(int userID)
         {
@@ -44,9 +39,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(listFeedback);
         }
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
-        [Authorize(Roles = "Phone Operator")]
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpPost]
         public IActionResult CreateFeedback(FeedbackDTO feedbackDTO)
         {
@@ -70,9 +63,7 @@ namespace DevEduInterviewSystem.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
-        [Authorize(Roles = "Phone Operator")]
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpPut]
         public IActionResult ChangeFeedback(FeedbackInputModel feedbackInputModel)
         {

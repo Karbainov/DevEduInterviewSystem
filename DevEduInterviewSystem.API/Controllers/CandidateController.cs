@@ -22,9 +22,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private CandidateRoleLogic _tmpCandidate = new CandidateRoleLogic();
         
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Phone Operator")]
-        
+        [Authorize(Roles = "Manager, Phone Operator")]
         [HttpPost]
         public IActionResult CreateCandidate(CandidateInputModel candidateInputModel)
         {
@@ -77,8 +75,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return Ok(password);
         }
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("{candidateID}")]
         public IActionResult AllInformationAboutCandidate(int candidateID)
         {
@@ -125,7 +122,7 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
         
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Manager, Teacher")]
         [HttpPut("update-candidate-after-interview")]
         public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }
             _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,                updateCandidateAfterInterviewModel.interviewDTO,                (int)updateCandidateAfterInterviewModel.CourseID,                updateCandidateAfterInterviewModel.feedbackDTO);            return new OkResult();        }

@@ -16,8 +16,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("all-groups")]
         public IActionResult GetAllGroup()
         {
