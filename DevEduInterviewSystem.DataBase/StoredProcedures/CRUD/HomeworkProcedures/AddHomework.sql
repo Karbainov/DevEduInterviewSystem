@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[AddHomework]
 @CandidateID int,
 @HomeworkStatusID int,
-@TestStatusID int NULL,
+@TestStatusID int,
 @HomeworkDate datetime2
 
 

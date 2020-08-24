@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -80,10 +82,28 @@ namespace DevEduInterviewSystem.BLL
             return interviewCRUD.SelectAll();
         }
 
+        public FeedbackDTO GetFeedback(int id)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            return feedback.SelectByID(id);
+        }
+
         public void AddFeedback(FeedbackDTO feedbackDTO)
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
+        }
+        public void UpdateFeedback(FeedbackDTO feedbackDTO) //нужно проверить
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.UpdateByID(feedbackDTO);
+        }
+
+        public List<AllFeedbackByUserDTO> GetAllFeedbacksByUser(int userID)
+        {
+            AllFeedbackByUserQuery tmp = new AllFeedbackByUserQuery();
+            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
+            return feedbacks;
         }
     }
 }

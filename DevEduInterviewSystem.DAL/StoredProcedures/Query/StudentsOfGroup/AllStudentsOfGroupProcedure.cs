@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllStudentsOfGroupProcedure
+    public class AllStudentsOfGroup
     {
 
         public List<AllStudentsOfGroupDTO> SelectAllStudentsOfGroup(int idnumber )

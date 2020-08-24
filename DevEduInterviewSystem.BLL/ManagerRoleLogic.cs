@@ -9,6 +9,7 @@ using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
+using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -72,6 +73,11 @@ namespace DevEduInterviewSystem.BLL
         #endregion
 
         #region OneTimePassword
+        public void DeleteGroup(int? groupID)
+        {
+            GroupCRUD groupCRUD = new GroupCRUD();
+            groupCRUD.DeleteByID((int)groupID);
+        }
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
@@ -104,7 +110,12 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.Add(groupDTO);
         }
-       
+        public void UpdateGroup(GroupDTO groupDTO)
+        {
+            GroupCRUD group = new GroupCRUD();
+            group.UpdateByID(groupDTO);
+        }
+
         // Грант получен, группа есть
         public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
         {
@@ -183,6 +194,20 @@ namespace DevEduInterviewSystem.BLL
             {
                 AddFeedback(feedbackDTO);
             }
+        }
+
+        public List<FeedbackDTO> GetAllFeedbacks()
+        {
+            FeedbackCRUD feedbackCRUD = new FeedbackCRUD();
+            List<FeedbackDTO> feedbacks = feedbackCRUD.SelectAll();
+            return feedbacks;
+        }
+
+        public List<AllFeedbackByUserDTO> GetAllFeedbacksByUser(int userID)
+        {
+            AllFeedbackByUserQuery tmp = new AllFeedbackByUserQuery();
+            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
+            return feedbacks;
         }
     }
 }

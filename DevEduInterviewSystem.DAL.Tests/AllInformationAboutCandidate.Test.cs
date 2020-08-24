@@ -63,7 +63,7 @@ namespace tesd
             status = new StatusDTO(40,"Like");            
             statusID = statusCRUD.Add(status);
 
-            city = new CityDTO(40, "Saint-Petersburg");            
+            city = new CityDTO( "Saint-Petersburg",false);            
             cityID = cityCRUD.Add(city);
             
             DateTime date = new DateTime(1995,5,3);
@@ -77,10 +77,11 @@ namespace tesd
             user = new UserDTO(1,"qwer","1234","rewq","tarf");            
             userID = userCRUD.Add(user);
 
-            List<FeedbackDTO> list = new List<FeedbackDTO>();
-            feedback = new FeedbackDTO(2, stagechangedID, userID, "���� ������, ������ ���� ����!", DateTime.Now);            
+            List<FeedbackDTO> feedBacks = new List<FeedbackDTO>();
+            feedback = new FeedbackDTO( stagechangedID, userID, "ПРосто илон маск!!!", date);            
             feedBackID = feedbackCRUD.Add(feedback);
-            list.Add(feedback);
+            feedback.ID = feedBackID;
+            feedBacks.Add(feedback);
 
             
             candidatePersonalInfo = new CandidatePersonalInfoDTO(1, candidateID, false, "da", "macduck", "Da", "rubis cube", "like song", "123");
@@ -97,7 +98,7 @@ namespace tesd
 
 
             allInfoCandidate = new AllInformationAboutTheCandidateByIDDTO(candidateID,stage.Name,status.Name, city.Name,candidate.Phone,candidate.Email,candidate.FirstName,candidate.LastName, (DateTime)candidate.BirthDay,
-                list,course.Name,group.Name,candidatePersonalInfo.MaritalStatus,candidatePersonalInfo.Education,candidatePersonalInfo.WorkPlace,candidatePersonalInfo.ITExperience, candidatePersonalInfo.Hobbies,
+                feedBacks,course.Name,group.Name,(bool)candidatePersonalInfo.MaritalStatus,candidatePersonalInfo.Education,candidatePersonalInfo.WorkPlace,candidatePersonalInfo.ITExperience, candidatePersonalInfo.Hobbies,
                 candidatePersonalInfo.InfoSourse, candidatePersonalInfo.Expectations);
         }
         public void TearDown()

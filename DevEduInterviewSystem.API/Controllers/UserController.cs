@@ -22,7 +22,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [HttpPost("users")]
+        [HttpPost("add-user")]
         public IActionResult AddUser(UserInputModel user)
         {
             if (new RoleCRUD().SelectByID((int)user.RoleID) == null)
@@ -44,10 +44,10 @@ namespace DevEduInterviewSystem.API.Controllers
             }
         }
 
-        [HttpDelete("users")]
-        public IActionResult DeleteUser(int? userID)
+        [HttpDelete("{userID}/delete-user")]
+        public IActionResult DeleteUser(int userID)
         {
-            if (userID == null || userID != null && new UserCRUD().SelectByID((int)userID) == null)
+            if ((int)userID <= 0 ||  new UserCRUD().SelectByID((int)userID) == null)
             {
                 return new NotFoundObjectResult("User not found");
             }
@@ -56,7 +56,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpPut("users/deleted")]
+        [HttpPut("deleted-users")]
         public IActionResult RestoreUser(int? userID)
         {
             if (userID == null || userID != null && new AllDeletedUsers().SelectDeletedUserByID((int)userID) == null)
@@ -69,7 +69,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpPut("users")]
+        [HttpPut("update-user")]
         public IActionResult UpdateUser(UserDTO user)
         {
             if (user.IsDeleted == true || user.ID == null || new UserCRUD().SelectByID((int)user.ID) == null)
@@ -82,7 +82,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpGet("users")]
+        [HttpGet("all-users-with-role")]
         public IActionResult GetAllUsersWithRoles()
         {
             List<UsersWithRoleDTO> users = _admin.ShowAllUsersWithRoles();
@@ -90,13 +90,21 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(users);
         }
 
-        [HttpGet("users/deleted")]
+        [HttpGet("all-deleted-users")]
         public IActionResult GetAllDeletedUsers()
         {
             _admin.ShowDeletedUsers();
 
             return new OkResult();
         }
+        // TODO: метод для тестов в постман, потом можно его наверно убрать
+        [HttpGet("all-users")]
+        public IActionResult GetAllUsers()
+        {
+            UserCRUD users = new UserCRUD();
+            List<UserDTO> allUsers = users.SelectAll();
 
+            return new OkObjectResult(allUsers);
+        }
     }
 }

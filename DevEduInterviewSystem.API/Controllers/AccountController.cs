@@ -67,7 +67,7 @@ namespace DevEduInterviewSystem.API.Controllers
 
             UserDTO authorizingUser = new UserDTO();
             UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll(); 
+            List<UserDTO> users = user.SelectAll();
             foreach (UserDTO u in users)
             {
                 if (u.Login == username && u.Password == password)

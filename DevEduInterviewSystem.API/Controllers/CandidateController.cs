@@ -19,8 +19,9 @@ namespace DevEduInterviewSystem.API.Controllers
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private CandidateRoleLogic _tmpCandidate = new CandidateRoleLogic();
+
         // Manager and phoneoperator
-        
         [HttpPost]
         public IActionResult CreateCandidate(CandidateInputModel candidateInputModel)
         {
@@ -53,16 +54,23 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult GetOneTimePassword(int candidateID)
         {
             CandidateCRUD candidateCRUD = new CandidateCRUD();
-
-            if (candidateCRUD.SelectByID(candidateID) != null)
-            {
-                string password = _manager.GetOneTimePassword();
-                return Ok(password);
-            }
-            else
+            string password = null;
+            if (candidateCRUD.SelectByID(candidateID) == null)
             {
                 return new NotFoundResult();
             }
+            password = _manager.GetOneTimePassword();
+
+            OneTimePasswordCRUD pass = new OneTimePasswordCRUD();
+            List<OneTimePasswordDTO> passwords = pass.SelectAll();
+            foreach (OneTimePasswordDTO otp in passwords)
+            {
+                if (otp.OneTimePassword == password)
+                {
+                    return BadRequest(new { errorText = "Same OneTimePassword already exists" });
+                }
+            }
+            return Ok(password);
         }
 
         [HttpGet("{candidateID}")]
@@ -84,8 +92,8 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
         {
             CandidateCRUD candidateCRUD = new CandidateCRUD();
-
-            if (candidateCRUD.SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
+            
+            if(candidateCRUD.SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
             {
                 _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
                 return new OkResult();
@@ -112,5 +120,26 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update-candidate-after-interview")]
         public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }
             _teacher.UpdateCandidateAfterInterview(updateCandidateAfterInterviewModel.CandidateDTO,                updateCandidateAfterInterviewModel.interviewDTO,                (int)updateCandidateAfterInterviewModel.CourseID,                updateCandidateAfterInterviewModel.feedbackDTO);            return new OkResult();        }
+
+        [HttpPut("{candidateID}/fill-the-form")]
+        public IActionResult UpdateCandidateUponFormFilling(CandidateFormModel candidate)        {
+            CandidateCRUD candidateCRUD = new CandidateCRUD();
+            if (candidate.CandidateDTO.ID <= 0 || candidateCRUD.SelectByID((int)candidate.CandidateDTO.ID) == null)
+            {
+                return new NotFoundResult();
+            }
+            if (candidate.CandidatePersonalInfoDTO.MaritalStatus == null || candidate.CandidatePersonalInfoDTO.ITExperience == null ||
+                candidate.CandidatePersonalInfoDTO.Education == null || candidate.CandidatePersonalInfoDTO.Expectations == null || 
+                candidate.CandidatePersonalInfoDTO.WorkPlace == null || candidate.CandidatePersonalInfoDTO.InfoSourse == null ||
+                candidate.CandidatePersonalInfoDTO.Hobbies == null)
+            {
+                return BadRequest("Fields missing");
+            }
+            _tmpCandidate.UpdateCandidateInfo(candidate.CandidateDTO, candidate.CandidatePersonalInfoDTO);
+
+            return new OkResult();
+        }
     }
 }
+
+

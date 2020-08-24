@@ -22,6 +22,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             };
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             Connection.Open();
+            SqlCommand command = ReferenceToProcedure("AddHomework");
+
+            SqlParameter CandidateParam = new SqlParameter("@CandidateID", dto.CandidateID);
+            command.Parameters.Add(CandidateParam);
+
+            SqlParameter HomeworkStatusParam = new SqlParameter("@HomeworkStatusID", dto.HomeworkStatusID);
+            command.Parameters.Add(HomeworkStatusParam);
+
+            SqlParameter TestStatusIDParam = new SqlParameter("@TestStatusID", dto.TestStatusID);
+            command.Parameters.Add(TestStatusIDParam);
+
+            SqlParameter HomeworkDateParam = new SqlParameter("@HomeworkDate", dto.HomeworkDate);
+            command.Parameters.Add(HomeworkDateParam);
+
+            command.ExecuteNonQuery();
+
             SqlCommand returnCurrentID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Homework]", Connection);
             int count = (int)returnCurrentID.ExecuteScalar();
 
