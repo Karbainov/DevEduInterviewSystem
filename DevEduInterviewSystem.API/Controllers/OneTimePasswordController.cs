@@ -21,7 +21,7 @@ namespace DevEduInterviewSystem.API.Controllers
 
         [Authorize(Roles = "Manager")]
         [HttpGet("{candidateID}/one-time-password")]
-        public IActionResult GetOneTimePassword(int candidateID)
+        public IActionResult AddOneTimePassword(int candidateID)
         {
             CandidateCRUD candidateCRUD = new CandidateCRUD();
             string password = null;
