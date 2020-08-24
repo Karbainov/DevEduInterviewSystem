@@ -7,6 +7,7 @@ using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,9 @@ namespace DevEduInterviewSystem.API.Controllers
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Phone Operator")]
         [HttpGet("all-feedbacks")]
         public IActionResult GetAllFeedbacks()
         {
@@ -27,6 +31,10 @@ namespace DevEduInterviewSystem.API.Controllers
             listFeedback = _manager.GetAllFeedbacks();
             return new OkObjectResult(listFeedback);
         }
+
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Phone Operator")]
 
         [HttpGet("all-feedbacks-By-User/{userID}")]
         public IActionResult GetAllFeedbacksByUser(int userID)
@@ -36,11 +44,12 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(listFeedback);
         }
 
-
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Phone Operator")]
         [HttpPost]
         public IActionResult CreateFeedback(FeedbackDTO feedbackDTO)
         {
-
             if (new StageChangedCRUD().SelectByID((int)feedbackDTO.StageChangedID) == null)
             {
                 return new NotFoundObjectResult("StageChangedID not found");
@@ -48,7 +57,6 @@ namespace DevEduInterviewSystem.API.Controllers
             if (new UserCRUD().SelectByID((int)feedbackDTO.UserID) == null)
             {
                 return  BadRequest("User not found");
-
             }
             if (feedbackDTO.Message != null)
             {
@@ -62,6 +70,9 @@ namespace DevEduInterviewSystem.API.Controllers
             }
         }
 
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Phone Operator")]
         [HttpPut]
         public IActionResult ChangeFeedback(FeedbackInputModel feedbackInputModel)
         {

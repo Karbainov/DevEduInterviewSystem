@@ -19,7 +19,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("Status")]
         public IActionResult AddStatus(StatusDTO status)
         {
