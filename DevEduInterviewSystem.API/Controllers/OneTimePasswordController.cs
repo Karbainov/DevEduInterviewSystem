@@ -39,6 +39,10 @@ namespace DevEduInterviewSystem.API.Controllers
                 {
                     return BadRequest(new { errorText = "Same OneTimePassword already exists" });
                 }
+                if (i.CandidateID == candidateID)
+                {
+                    return BadRequest(new { errorText = "This candidate already has a password" });
+                }
             }
 
             OneTimePasswordDTO otp = new OneTimePasswordDTO();
