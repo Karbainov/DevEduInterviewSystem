@@ -2,6 +2,7 @@
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
 
+        [Authorize(Roles = "Teacher")]
         [HttpGet]
         public IActionResult GetAllHomework()
         {
@@ -24,6 +26,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(h);
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpGet("homework-of-candidate/{candidateID}")]
         public IActionResult GetHomeworkOfCandidate(int candidateID)
         {
@@ -31,6 +34,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(homework.SelectByID(candidateID));
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpPut("update-homework-after-done")]
         public IActionResult UpdateHomeworkAfterDoneHomework(HomeworkInputModel homeworkInputModel)
         {

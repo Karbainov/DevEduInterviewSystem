@@ -103,7 +103,7 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
         // ДЛЯ ПРОВЕРКИ ТОКЕНА, УДАЛИТЬ ДО ЗАЩИТЫ
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager, Phone Operator")]
         [HttpGet("token/a")]
 
         public string GetA()

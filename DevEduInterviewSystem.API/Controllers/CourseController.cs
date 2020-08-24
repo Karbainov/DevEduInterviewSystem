@@ -6,6 +6,7 @@ using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     public class CourseController : Controller
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("Course")]
         public IActionResult AddCourse(CourseDTO course)
         {

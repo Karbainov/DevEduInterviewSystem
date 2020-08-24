@@ -1,6 +1,7 @@
 ﻿using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
+        [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("all-groups")]
         public IActionResult GetAllGroup()
         {
@@ -22,6 +24,8 @@ namespace DevEduInterviewSystem.API.Controllers
             List<GroupDTO> groups = groupCRUD.SelectAll();
             return new OkObjectResult(groups);
         }
+
+        [Authorize(Roles = "Manager")]
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
@@ -36,6 +40,8 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.CreateGroup(groupDTO);
             return new OkResult();
         }
+
+        [Authorize(Roles = "Manager")]
         [HttpPut("update-group")]
         public IActionResult UpdateGroup(GroupDTO groupDTO)
         {
@@ -55,6 +61,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpDelete("delete-group/{groupID}")]
         public IActionResult DeleteGroup(int groupID)
         {
