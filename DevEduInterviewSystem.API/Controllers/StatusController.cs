@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class StatusController : Controller
     {
-        private AdminRoleLogic _admin = new AdminRoleLogic();
+        private AdminRoleLogic _admin = new AdminRoleLogic(); //нет update
 
         [Authorize(Roles = "admin")]
         [HttpPost("Status")]

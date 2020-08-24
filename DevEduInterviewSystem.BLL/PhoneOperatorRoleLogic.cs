@@ -56,25 +56,47 @@ namespace DevEduInterviewSystem.BLL
 
         }
 
-        public void ScheduleInterview(InterviewDTO interviewDTO, int stageID, FeedbackDTO feedbackDTO = null)
+        //public void ScheduleInterview(InterviewDTO interviewDTO, int stageID, FeedbackDTO feedbackDTO = null) //Зачем отдельно Stage? Зачем при планировании Feedback? Где User? 
+        //{
+        //    List<AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
+        //    AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
+        //    interviewsList = interviews.SelectAllInterviewsByDate((DateTime)interviewDTO.DateTimeInterview);
+
+        //    InterviewsNumber interviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
+        //    if (interviewsList.Count < interviewsLimit.InterviewsLimit)
+        //    {
+        //        InterviewCRUD interview = new InterviewCRUD();
+        //        interview.Add(interviewDTO);
+        //        ChangeStageAddFeedback((int)interviewDTO.CandidateID, stageID, feedbackDTO);
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("The interviews limit is exceeded");
+        //    }
+        //    //To do: try catch in controller (catch - exception=> IActionResult bad request)
+        //}
+
+        public void ScheduleInterview(InterviewDTO interviewDTO, int userID) 
         {
-            List<AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
-            AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
-            interviewsList = interviews.SelectAllInterviewsByDate((DateTime)interviewDTO.DateTimeInterview);
+
+            InterviewCRUD interview = new InterviewCRUD();
+
+            int count = interview.CountInterviewsByDateTimeAndUser(userID, (DateTime)interviewDTO.DateTimeInterview);
 
             InterviewsNumber interviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
-            if (interviewsList.Count < interviewsLimit.InterviewsLimit)
+
+            if (count < interviewsLimit.InterviewsLimit)
             {
-                InterviewCRUD interview = new InterviewCRUD();
                 interview.Add(interviewDTO);
-                ChangeStageAddFeedback((int)interviewDTO.CandidateID, stageID, feedbackDTO);
+                UserInterviewCRUD userInterview = new UserInterviewCRUD();
+                userInterview.Add(new UserInterviewDTO(null, interviewDTO.ID, userID));
             }
             else
             {
                 throw new Exception("The interviews limit is exceeded");
             }
-
-            //To do: try catch in controller (catch - exception=> IActionResult bad request)
+            
         }
+
     }
 }

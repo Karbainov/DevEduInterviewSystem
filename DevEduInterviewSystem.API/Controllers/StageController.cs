@@ -18,7 +18,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [HttpPost("Stage")]
-        public IActionResult AddStage(StageDTO stage)
+        public IActionResult AddStage(StageDTO stage) //Почему нет update
         {
             if (stage.Name == null)
             {
