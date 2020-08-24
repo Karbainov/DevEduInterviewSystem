@@ -17,9 +17,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class AccountController : Controller
     {
-        [HttpPost("/token{role}")]
+        [HttpPost("token")]
         public IActionResult Token(PersonInputModel person)
         {
             UserDTO authorizingUser = new UserDTO();
@@ -74,7 +76,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return Json(response);
         }
 
-        [HttpGet("/token")]
+        [HttpGet("token")]
         public IActionResult GetRole(PersonInputModel person)
         {
             // Запрос к базе: существует ли пользователь с таким логином и паролем
