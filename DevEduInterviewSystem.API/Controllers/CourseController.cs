@@ -45,6 +45,14 @@ namespace DevEduInterviewSystem.API.Controllers
                     return BadRequest(new { errorText = "Course is used" });
                 }
             }
+            List<GroupDTO> group = new GroupCRUD().SelectAll();
+            foreach (GroupDTO g in group)
+            {
+                if ((int)g.CourseID == courseID)
+                {
+                    return BadRequest(new { errorText = "Course is used" });
+                }
+            }
             _admin.DeleteCourse(courseID);
             return Ok();
         }
