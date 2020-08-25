@@ -23,6 +23,7 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
             yield return new string("DELETE FROM dbo.[Interview]");
             yield return new string("DELETE FROM dbo.[Task]");
             yield return new string("DELETE FROM dbo.[CandidatePersonalInfo]");
+            yield return new string("DELETE FROM dbo.[OneTimePassword]");
             yield return new string("DELETE FROM dbo.[Candidate]");
             yield return new string("DELETE FROM dbo.[InterviewStatus]");
             yield return new string("DELETE FROM dbo.[Stage]");
@@ -31,6 +32,7 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
             yield return new string("DELETE FROM dbo.[User_role]");
             yield return new string("DELETE FROM dbo.[User]");
             yield return new string("DELETE FROM dbo.[Role]");
+
         }
     }
 }
