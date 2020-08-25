@@ -12,30 +12,64 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : IRoleLogic
     {
-        public void ChangeNumberOfInterviewsInOnePeriod(int? number)
+        public void ChangeNumberOfInterviewsInOnePeriod(int number)
         {
-            InterviewsNumber interviewsLimit =  InterviewsNumber.GetInstance();
-            interviewsLimit.InterviewsLimit = (int)number;
+            InterviewsNumber interviewsLimit = InterviewsNumber.GetInstance();
+            interviewsLimit.InterviewsLimit = number;
         }
 
-        #region Methods for adding fields in system tables
-       
-        public void AddStage(StageDTO stage)
+        #region Stage
+        public void AddStage(StageDTO stageDTO)
         {
-            StageCRUD crud = new StageCRUD();
-            crud.Add(stage);
+            StageCRUD stage = new StageCRUD();
+            stage.Add(stageDTO);
         }
-        public void AddStatus(StatusDTO status)
+        public void DeleteStage(int? stageID)
         {
-            StatusCRUD crud = new StatusCRUD();
-            crud.Add(status);
-        }
-        public void AddCourse(CourseDTO course)
-        {
-            CourseCRUD crud = new CourseCRUD();
-            crud.Add(course);
+            StageCRUD stage = new StageCRUD();
+            stage.DeleteByID((int)stageID);
         }
 
+        #endregion
+
+        #region Status
+        public void AddStatus(StatusDTO statusDTO)
+        {
+            StatusCRUD status = new StatusCRUD();
+            status.Add(statusDTO);
+        }
+        public void DeleteStatus(int? statusID)
+        {
+            StatusCRUD status = new StatusCRUD();
+            status.DeleteByID((int)statusID);
+        }
+        #endregion
+
+        #region Course
+        public void AddCourse(CourseDTO courseDTO)
+        {
+            CourseCRUD course = new CourseCRUD();
+            course.Add(courseDTO);
+        }
+        public void DeleteCourse(int? courseID)
+        {
+            CourseCRUD course = new CourseCRUD();
+            course.DeleteByID((int)courseID);
+        }
+
+        #endregion
+
+        #region City
+        public void AddCity(CityDTO city)
+        {
+            CityCRUD crud = new CityCRUD();
+            crud.Add(city);
+        }
+        public void DeleteCity(CityDTO cityDTO)
+        {
+            CityCRUD city = new CityCRUD();
+            city.DeleteByID((int)cityDTO.ID);
+        }
         #endregion
 
         #region Methods for user
@@ -43,7 +77,7 @@ namespace DevEduInterviewSystem.BLL
         {
             UserCRUD user = new UserCRUD();
             int id = user.Add(userDTO);
-           
+
             UserRoleDTO roleDTO = new UserRoleDTO(id, roleID);
             UserRoleCRUD role = new UserRoleCRUD();
             role.Add(roleDTO);
@@ -57,7 +91,7 @@ namespace DevEduInterviewSystem.BLL
         }
 
         public void ShowDeletedUsers()
-        { 
+        {
             AllDeletedUsers users = new AllDeletedUsers();
             users.SelectAllDeletedUsers();
         }
@@ -81,17 +115,6 @@ namespace DevEduInterviewSystem.BLL
         }
         #endregion
 
-        #region Methods for City
-        public void AddCity(CityDTO city)
-        {
-            CityCRUD crud = new CityCRUD();
-            crud.Add(city);
-        }
-        public void DeleteCity(CityDTO cityDTO)
-        {
-            CityCRUD city = new CityCRUD();
-            city.DeleteByID((int)cityDTO.ID);
-        }
-        #endregion
+        
     }
 }

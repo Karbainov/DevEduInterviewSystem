@@ -9,20 +9,21 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string HomeWorkStatus { get; set; }
-
+        public string TestStatus { get; set; }
         public AllOverdueHomeworksDTO()
         {
 
         }
 
         public AllOverdueHomeworksDTO(int candidateID, DateTime homeWorkDate, string candidateFirstName,
-            string candidateLastName, string homeWorkStatus)
+            string candidateLastName, string homeWorkStatus, string testStatus)
         {
             CandidateID = candidateID;
             HomeWorkDate = homeWorkDate;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
             HomeWorkStatus = homeWorkStatus;
+            TestStatus = testStatus;
         }
 
         public override bool Equals(object obj)

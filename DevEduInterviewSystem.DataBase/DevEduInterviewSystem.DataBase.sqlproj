@@ -309,4 +309,7 @@
     <Build Include="StoredProcedures\User\GetRolesByUserID.sql" />
     <Build Include="StoredProcedures\CalendarInterviews\CountInterviewsByDateTimeAndUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="StoredProcedures\AllFeedbacksByUser.sql" />
+  </ItemGroup>
 </Project>

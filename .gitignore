@@ -272,3 +272,5 @@ DevEduInterviewSystem/obj/
 DevEduInterviewSystem.DataBase/obj/
 
 *.cache
+
+DevEduInterviewSystem.API/Properties/Resources.Designer.cs

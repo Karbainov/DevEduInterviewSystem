@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevEduInterviewSystem.API.Models.Input;
+using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,23 +65,17 @@ namespace DevEduInterviewSystem.API.Controllers
             }
          
 
-            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
+            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(interview.UserID, interview.StartDateTime, 
+                interview.FinishDateTime, interview.DateTimeInterview);
 
-            return new JsonResult(interviews);
+            return Ok(interviews);
         }
-        //TO DO: Добавить всем кроме Админа 
 
-
-
-        [HttpPut("Interviews")]
-        public IActionResult ChangeInterviewsLimit(int? number) 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("limit")]
+        public IActionResult ChangeInterviewsLimit(int number) 
         {
-            if (number == null)
-            {
-                return BadRequest();
-            }
-
-            _admin.ChangeNumberOfInterviewsInOnePeriod((int)number);
+            _admin.ChangeNumberOfInterviewsInOnePeriod(number);
 
             return new OkResult();
         }

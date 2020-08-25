@@ -1,5 +1,5 @@
 ﻿using DevEduInterviewSystem.DAL.DTO.QuereDTO;
-using DevEduInterviewSystem.DAL.DTO.QuereDTO.StudentsOfGroup;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO.StudentsOfCourse;
 using DevEduInterviewSystem.DAL.Shared;
 using System;
 using System.Collections.Generic;
@@ -8,37 +8,37 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllStudentsOfGroup
+    public class AllStudentsOfCourse
     {
 
-        public List<AllStudentsOfGroupDTO> SelectAllStudentsOfGroup(int idnumber )
+        public List<DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO> SelectAllStudentsOfCourse(string name )
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
-            SqlCommand command = ReferenceToProcedure("AllStudentsOfGroup", Connection);
-            SqlParameter GroupParam = new SqlParameter("@GroupID", idnumber);
-            command.Parameters.Add(GroupParam);
+            SqlCommand command = ReferenceToProcedure("AllStudentsOfCourse", Connection);
+            SqlParameter CourseParam = new SqlParameter("@CourseID", name);
+            command.Parameters.Add(CourseParam);
 
-            List<AllStudentsOfGroupDTO> allStudentsOfGroups = new List<AllStudentsOfGroupDTO>();
+            List<DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO> allStudentsOfCourses = new List<DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllStudentsOfGroupDTO allStudentsOfGroup = new AllStudentsOfGroupDTO()
+                    DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO allStudentsOfCourse = new DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO()
                     {
                         Name = (string)reader["Name"],
                         StudentFirstName = (string)reader["FirstName"],
                         StudentLastName = (string)reader["LastName"]
                     };
 
-                    allStudentsOfGroups.Add(allStudentsOfGroup);
+                    allStudentsOfCourses.Add(allStudentsOfCourse);
                 }
             }
             reader.Close();
 
-            return allStudentsOfGroups;
+            return allStudentsOfCourses;
 
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)

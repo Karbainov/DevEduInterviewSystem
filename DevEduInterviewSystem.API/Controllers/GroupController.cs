@@ -1,6 +1,7 @@
 ﻿using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,9 @@ namespace DevEduInterviewSystem.API.Controllers
     public class GroupController : Controller
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private AdminRoleLogic _admin = new AdminRoleLogic();
 
+        [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("all-groups")]
         public IActionResult GetAllGroup()
         {
@@ -22,6 +25,9 @@ namespace DevEduInterviewSystem.API.Controllers
             List<GroupDTO> groups = groupCRUD.SelectAll();
             return new OkObjectResult(groups);
         }
+
+
+        [Authorize(Roles = "Manager")]
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
@@ -36,6 +42,9 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.CreateGroup(groupDTO);
             return new OkResult();
         }
+
+
+        [Authorize(Roles = "Manager")]
         [HttpPut("update-group")]
         public IActionResult UpdateGroup(GroupDTO groupDTO)
         {
@@ -55,6 +64,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpDelete("delete-group/{groupID}")]
         public IActionResult DeleteGroup(int groupID)
         {
@@ -65,7 +75,33 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.DeleteGroup(groupID);
             return new OkResult();
         }
+        // TODO: Возможно логично дописать в роль показ всех ранее удаленных групп.
 
+        [Authorize(Roles = "Manager")]
+        [HttpPut("update-group-by-candidateID")]
+        public IActionResult UpdateGroupByCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            int? groupID = groupCandidateDTO.GroupID;
+            int? candidateID = groupCandidateDTO.CandidateID;
+            if (new CandidateCRUD().SelectByID((int)candidateID).ID == null)
+            {
+                return new NotFoundObjectResult("candidate not found");
+            }
+            if (new GroupCRUD().SelectByID((int)groupID).ID == null)
+            {
+                return new NotFoundObjectResult("group not found");
+            }
+            _manager.UpdateGroupByCandidate(groupCandidateDTO);
+
+            return Ok();
+        }
+
+        //[Authorize(Roles = "Admin, Manager")]
+        //[HttpGet("all-deleted-groups")]
+        //public IActionResult GetAllDeletedGroups()
+        //{
+           
+        //}
     }
     
 }

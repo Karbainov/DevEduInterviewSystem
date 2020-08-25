@@ -2,7 +2,7 @@
 @ID int
 AS
 	SELECT C.ID, C.FirstName, C.LastName, C.Email, C.Phone, C.Birthday, S.[Name] AS TypeOfStage,St.[Name] AS TypeOfStatus, Ct.[Name] AS CityName,
-	Cu.[Name] AS CourseName, G.[Name] AS GroupName, CPI.MaritalStatus, CPI.Education, CPI.WorkPlace, CPI.ITExperience, CPI.Hobbies, CPI.InfoSourse, CPI.Expectations, 
+	Cu.[Name] AS CourseName, G.[Name] AS GroupName, G.StartDate, G.EndDate, CPI.MaritalStatus, CPI.Education, CPI.WorkPlace, CPI.ITExperience, CPI.Hobbies, CPI.InfoSourse, CPI.Expectations, 
 	F.[Message], F.UserID , F.TimeFeedback, F.[StageChangedID], F.ID 
 	FROM dbo.[Candidate]  AS C 	
 	JOIN dbo.[Stage] AS S ON S.ID = C.StageID
