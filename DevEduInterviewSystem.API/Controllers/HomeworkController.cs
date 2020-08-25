@@ -55,7 +55,7 @@ namespace DevEduInterviewSystem.API.Controllers
             _teacher.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
             return new OkResult();
         }
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher")]
         [HttpGet("get-all-overdue-homework")]
         public IActionResult GetAllOverdueHomework()
         {
