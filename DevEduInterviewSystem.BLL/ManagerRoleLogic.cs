@@ -128,8 +128,8 @@ namespace DevEduInterviewSystem.BLL
             candidate.CandidateID = candidateID;
             candidate.GroupID = groupID;
             GroupCandidateCRUD group = new GroupCandidateCRUD();
-
-            AddCandidateInGroupCandidate(candidate);
+         
+            group.Add(candidate);
 
             DeleteCandidateFromCourseCandidateByCandidateID deletion = new DeleteCandidateFromCourseCandidateByCandidateID();
             deletion.DeleteCandidateFromCourseByCandidateID(candidateID);
@@ -142,24 +142,6 @@ namespace DevEduInterviewSystem.BLL
             group.UpdateByID(groupCandidateDTO);
         }            
         
-        private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
-        {
-            SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            Connection.Open();
-            SqlCommand exceptionGroupID = new SqlCommand("SELECT MAX([ID]) FROM dbo.[Group]", Connection);
-            int count = (int)exceptionGroupID.ExecuteScalar();
-            if (groupCandidateDTO.ID > count || groupCandidateDTO.ID < 0)
-            {
-                GroupCandidateCRUD group = new GroupCandidateCRUD();
-                group.Add(groupCandidateDTO);
-            }
-            else
-            {
-                throw new Exception("Group not found!");
-            }
-            Connection.Close();
-        }
-
         // Грант получен, нет вохможности начать с текущей группой
         public void ReturnAwaitingCandidateToCourse(int candidateID, int courseID, int stageID, FeedbackDTO feedbackDTO = null)
         {

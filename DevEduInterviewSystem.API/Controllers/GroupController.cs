@@ -1,4 +1,5 @@
-﻿using DevEduInterviewSystem.BLL;
+﻿using DevEduInterviewSystem.API.Models.Input;
+using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using Microsoft.AspNetCore.Authorization;
@@ -92,6 +93,37 @@ namespace DevEduInterviewSystem.API.Controllers
                 return new NotFoundObjectResult("group not found");
             }
             _manager.UpdateGroupByCandidate(groupCandidateDTO);
+
+            return Ok();
+        }
+
+
+
+        [HttpPut("add-candidate")]
+        public IActionResult AddCandidateToGroup(GroupInputModel groupModel)
+        {
+            if( new CandidateCRUD().SelectByID(groupModel.CandidateID).FirstName == null)
+            {
+                return NotFound("candidate not found");
+            }
+
+            if(new GroupCRUD().SelectByID(groupModel.GroupID).Name == null)
+            {
+                return NotFound("group not found");
+            }
+
+            if (new StageCRUD().SelectByID(groupModel.StageID).Name == null)
+            {
+                return NotFound("Stage not found");
+            }
+
+
+            if (new CourseCRUD().SelectByID(groupModel.CourseID).Name == null)
+            {
+                return NotFound("Course not found");
+            }
+
+            _manager.AddCandidateToGroup(groupModel.CandidateID,groupModel.GroupID,groupModel.StageID, groupModel.feedbackDTO);
 
             return Ok();
         }
