@@ -51,8 +51,6 @@ namespace DevEduInterviewSystem.API.Controllers
 
         }
 
-    
-
         [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("{candidateID}")]
         public IActionResult AllInformationAboutCandidate(int candidateID)
