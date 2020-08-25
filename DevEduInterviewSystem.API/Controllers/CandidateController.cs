@@ -7,6 +7,7 @@ using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -104,18 +105,25 @@ namespace DevEduInterviewSystem.API.Controllers
             }
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPut("update-course-candidate")]
         public IActionResult UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
         {
             int? courseID = course_CandidateDTO.CourseID;
             int? candidateID = course_CandidateDTO.CandidateID;
-            if (new CandidateCRUD().SelectByID((int)candidateID) != null && new CourseCRUD().SelectByID((int)courseID) != null)
+            if (new CandidateCRUD().SelectByID((int)candidateID).ID == null)
             {
-                _manager.UpdateCourseByCandidate(course_CandidateDTO);
+                return new NotFoundObjectResult("candidate not found");
             }
-            return Ok();
-        }
+            if (new CourseCRUD().SelectByID((int)courseID).ID == null)
+            {
+                return new NotFoundObjectResult("group not found");
+            }
+            _manager.UpdateCourseByCandidate(course_CandidateDTO);
 
+            return Ok();
+
+        }
 
         [HttpPut("update-candidate-after-interview")]
         public IActionResult UpdateCandidateAfterInterview            (UpdateCandidateAfterInterviewModel updateCandidateAfterInterviewModel)        {            if (updateCandidateAfterInterviewModel.CourseID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.ID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.CandidateDTO.StatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.interviewDTO.InterviewStatusID == null)            {                return new NotFoundResult();            }            if (updateCandidateAfterInterviewModel.feedbackDTO.StageChangedID == null)            {                return new NotFoundResult();            }

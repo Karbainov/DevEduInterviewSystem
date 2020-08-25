@@ -1,6 +1,7 @@
 ﻿using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace DevEduInterviewSystem.API.Controllers
             List<GroupDTO> groups = groupCRUD.SelectAll();
             return new OkObjectResult(groups);
         }
+
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
@@ -36,6 +38,7 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.CreateGroup(groupDTO);
             return new OkResult();
         }
+
         [HttpPut("update-group")]
         public IActionResult UpdateGroup(GroupDTO groupDTO)
         {
@@ -64,6 +67,25 @@ namespace DevEduInterviewSystem.API.Controllers
             }
             _manager.DeleteGroup(groupID);
             return new OkResult();
+        }
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("update-group-by-candidateID")]
+        public IActionResult UpdateGroupByCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            int? groupID = groupCandidateDTO.GroupID;
+            int? candidateID = groupCandidateDTO.CandidateID;
+            if (new CandidateCRUD().SelectByID((int)candidateID).ID == null)
+            {
+                return new NotFoundObjectResult("candidate not found");
+            }
+            if (new GroupCRUD().SelectByID((int)groupID).ID == null)
+            {
+                return new NotFoundObjectResult("group not found");
+            }
+            _manager.UpdateGroupByCandidate(groupCandidateDTO);
+
+            return Ok();
         }
 
     }
