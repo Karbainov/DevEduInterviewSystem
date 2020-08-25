@@ -229,6 +229,11 @@ namespace DevEduInterviewSystem.BLL
             return interviewCRUD.SelectAll();
         }
 
+        public void UpdateFeedback(FeedbackDTO feedbackDTO)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.UpdateByID(feedbackDTO);
+        }
         public List<FeedbackDTO> GetAllFeedbacks()
         {
             FeedbackCRUD feedbackCRUD = new FeedbackCRUD();
@@ -238,8 +243,15 @@ namespace DevEduInterviewSystem.BLL
 
         public List<AllFeedbackByUserDTO> GetAllFeedbacksByUser(int userID)
         {
-            AllFeedbackByUserQuery tmp = new AllFeedbackByUserQuery();
-            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
+            AllFeedbacksByUserQuery tmp = new AllFeedbacksByUserQuery();
+            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbacksByUser(userID);
+            return feedbacks;
+        }
+
+        public List<AllFeedbackByCandidateDTO> GetAllFeedbacksByCandidate(int candidateID)
+        {
+            AllFeedbacksByCandidateQuery allFeedbacksByCandidate = new AllFeedbacksByCandidateQuery();
+            List<AllFeedbackByCandidateDTO> feedbacks = allFeedbacksByCandidate.AllFeedbacksByCandidate(candidateID);
             return feedbacks;
         }
     }

@@ -11,12 +11,12 @@ using System.Text;
 
 namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
 {
-    public class AllFeedbackByUserQuery
+    public class AllFeedbacksByUserQuery
     {
-        public List<AllFeedbackByUserDTO> AllFeedbackByUser(int ID)
+        public List<AllFeedbackByUserDTO> AllFeedbacksByUser(int ID)
         {
             IDbConnection connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
-            var procedure = "[AllFeedbackByUser]";
+            var procedure = "[AllFeedbacksByUser]";
 
             List<AllFeedbackByUserDTO> result = new List<AllFeedbackByUserDTO>();
          
