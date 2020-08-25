@@ -15,7 +15,9 @@ namespace DevEduInterviewSystem.API.Controllers
     public class GroupController : Controller
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private AdminRoleLogic _admin = new AdminRoleLogic();
 
+        [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("all-groups")]
         public IActionResult GetAllGroup()
         {
@@ -24,6 +26,8 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(groups);
         }
 
+
+        [Authorize(Roles = "Manager")]
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
@@ -39,6 +43,8 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+
+        [Authorize(Roles = "Manager")]
         [HttpPut("update-group")]
         public IActionResult UpdateGroup(GroupDTO groupDTO)
         {
@@ -58,6 +64,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpDelete("delete-group/{groupID}")]
         public IActionResult DeleteGroup(int groupID)
         {
@@ -68,6 +75,7 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.DeleteGroup(groupID);
             return new OkResult();
         }
+        // TODO: Возможно логично дописать в роль показ всех ранее удаленных групп.
 
         [Authorize(Roles = "Manager")]
         [HttpPut("update-group-by-candidateID")]
@@ -88,6 +96,12 @@ namespace DevEduInterviewSystem.API.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin, Manager")]
+        //[HttpGet("all-deleted-groups")]
+        //public IActionResult GetAllDeletedGroups()
+        //{
+           
+        //}
     }
     
 }

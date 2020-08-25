@@ -12,19 +12,32 @@ using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query.User;
 using System.Globalization;
+using DevEduInterviewSystem.API.Models.Input;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DevEduInterviewSystem.API.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class AccountController : Controller
     {
-        [HttpPost("/token{role}")]
-        public IActionResult Token(string role, Person authorizingPerson)
+        [HttpPost("token")]
+        public IActionResult Token(PersonInputModel person)
         {
-            List<string> roles = authorizingPerson.Roles;
+            UserDTO authorizingUser = new UserDTO();
+            List<UserDTO> users = new UserCRUD().SelectAll();
+            foreach (UserDTO u in users)
+            {
+                if (u.Login == person.Username && u.Password == person.Password)
+                {
+                    authorizingUser = u;
+                }
+            }
+            List<string> roles = new GetRolesByUserID().GetListOfRoles((int)authorizingUser.ID);
             string chosenRole = null;
             foreach (string r in roles)
             {
-                if (r == role)
+                if (r == person.Role)
                 {
                     chosenRole = r;
                 }
@@ -35,12 +48,11 @@ namespace DevEduInterviewSystem.API.Controllers
             }
 
             var claims = new List<Claim>
-                { new Claim(ClaimsIdentity.DefaultNameClaimType, authorizingPerson.Login),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, chosenRole)
+                { new Claim(ClaimsIdentity.DefaultNameClaimType, person.Username),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
                 };
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                                                                   ClaimsIdentity.DefaultRoleClaimType);
-
             var now = DateTime.UtcNow;
 
             var jwt = new JwtSecurityToken(
@@ -60,17 +72,16 @@ namespace DevEduInterviewSystem.API.Controllers
             return Json(response);
         }
 
-        [HttpGet("/token")]
-        public IActionResult GetRole(string username, string password)
+        [HttpGet("token")]
+        public IActionResult GetRole(PersonInputModel person)
         {
             // Запрос к базе: существует ли пользователь с таким логином и паролем
 
             UserDTO authorizingUser = new UserDTO();
-            UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll();
+            List<UserDTO> users = new UserCRUD().SelectAll();
             foreach (UserDTO u in users)
             {
-                if (u.Login == username && u.Password == password)
+                if (u.Login == person.Username && u.Password == person.Password)
                 {
                     authorizingUser = u;
                 }
@@ -80,11 +91,19 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest(new { errorText = "Invalid username or password." });
             }
 
-            GetRolesByUserID role = new GetRolesByUserID();
-            List<string> roles = role.GetListOfRoles((int)authorizingUser.ID);
-            Person authorizingPerson = new Person(username, password, roles);
+            List<string> roles = new GetRolesByUserID().GetListOfRoles((int)authorizingUser.ID);
 
-            return new OkObjectResult(authorizingPerson);
+            return new OkObjectResult(roles);
         }
+
+        // ДЛЯ ПРОВЕРКИ ТОКЕНА, УДАЛИТЬ ДО ЗАЩИТЫ
+        [Authorize(Roles = "Manager, Phone Operator")]
+        [HttpGet("token/a")]
+
+        public string GetA()
+        {
+            return "AAA";
+        }
+
     }
 }

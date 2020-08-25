@@ -8,6 +8,7 @@ using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("add-user")]
         public IActionResult AddUser(UserInputModel user)
         {
@@ -44,6 +46,7 @@ namespace DevEduInterviewSystem.API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{userID}/delete-user")]
         public IActionResult DeleteUser(int userID)
         {
@@ -56,6 +59,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("deleted-users")]
         public IActionResult RestoreUser(int? userID)
         {
@@ -69,6 +73,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("update-user")]
         public IActionResult UpdateUser(UserDTO user)
         {
@@ -82,6 +87,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("all-users-with-role")]
         public IActionResult GetAllUsersWithRoles()
         {
@@ -90,6 +96,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(users);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("all-deleted-users")]
         public IActionResult GetAllDeletedUsers()
         {
@@ -97,12 +104,11 @@ namespace DevEduInterviewSystem.API.Controllers
 
             return new OkResult();
         }
-        // TODO: метод для тестов в постман, потом можно его наверно убрать
+        
         [HttpGet("all-users")]
         public IActionResult GetAllUsers()
         {
-            UserCRUD users = new UserCRUD();
-            List<UserDTO> allUsers = users.SelectAll();
+            List<UserDTO> allUsers = new UserCRUD().SelectAll();
 
             return new OkObjectResult(allUsers);
         }

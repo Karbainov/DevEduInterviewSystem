@@ -6,6 +6,7 @@ using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,8 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [HttpPost("Stage")]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
         public IActionResult AddStage(StageDTO stage)
         {
             if (stage.Name == null)
@@ -27,5 +29,42 @@ namespace DevEduInterviewSystem.API.Controllers
             _admin.AddStage(stage);
             return new OkResult();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("all")]
+        public IActionResult GetAllStage()
+        {
+            List<StageDTO> stages = new StageCRUD().SelectAll();
+            return new ObjectResult(stages);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete/{stageID}")]
+        public IActionResult DeleteStage(int stageID)
+        {
+            if (new StageCRUD().SelectByID(stageID).Name == null)
+            {
+                return new NotFoundObjectResult("Stage not found");
+            }
+            List<CandidateDTO> candidates = new CandidateCRUD().SelectAll();
+            List<StageChangedDTO> stages = new StageChangedCRUD().SelectAll();
+            foreach (StageChangedDTO s in stages)
+            {
+                if ((int)s.StageID == stageID)
+                {
+                    return BadRequest(new { errorText = "Stage is used" });
+                }
+            }
+            foreach (CandidateDTO c in candidates)
+            {
+                if ((int)c.StageID == stageID)
+                {
+                    return BadRequest(new { errorText = "Stage is used" });
+                }
+            }
+            _admin.DeleteStage(stageID);
+            return Ok();
+        }
+
     }
 }
