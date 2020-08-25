@@ -57,8 +57,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpGet("{candidateID}")]
         public IActionResult AllInformationAboutCandidate(int candidateID)
         {
-            CandidateCRUD candidateCRUD = new CandidateCRUD();
-            if (candidateCRUD.SelectByID(candidateID) != null)
+            if (new CandidateCRUD().SelectByID(candidateID) != null)
             {
                 AllInformationAboutTheCandidateByIDDTO infoCandidate = _manager.AllInformationAboutCandidate(candidateID);
                 return Ok(infoCandidate);
@@ -73,9 +72,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("{candidateID}")]
         public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
         {
-            CandidateCRUD candidateCRUD = new CandidateCRUD();
-            
-            if(candidateCRUD.SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
+            if(new CandidateCRUD().SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
             {
                 _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
                 return new OkResult();
@@ -108,8 +105,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [Authorize(Roles = "CandidateTMP")]
         [HttpPut("{candidateID}/fill-the-form")]
         public IActionResult UpdateCandidateUponFormFilling(CandidateFormModel candidate)        {
-            CandidateCRUD candidateCRUD = new CandidateCRUD();
-            if (candidate.CandidateDTO.ID <= 0 || candidateCRUD.SelectByID((int)candidate.CandidateDTO.ID) == null)
+            if (candidate.CandidateDTO.ID <= 0 || new CandidateCRUD().SelectByID((int)candidate.CandidateDTO.ID) == null)
             {
                 return new NotFoundResult();
             }

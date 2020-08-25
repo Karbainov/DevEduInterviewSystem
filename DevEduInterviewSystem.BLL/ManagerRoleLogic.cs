@@ -73,11 +73,6 @@ namespace DevEduInterviewSystem.BLL
         #endregion
 
         #region OneTimePassword
-        public void DeleteGroup(int? groupID)
-        {
-            GroupCRUD groupCRUD = new GroupCRUD();
-            groupCRUD.DeleteByID((int)groupID);
-        }
         public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
         {
             string password = GetOneTimePassword();
@@ -115,7 +110,16 @@ namespace DevEduInterviewSystem.BLL
             GroupCRUD group = new GroupCRUD();
             group.UpdateByID(groupDTO);
         }
-
+        public void DeleteGroup(int? groupID)
+        {
+            GroupCRUD groupCRUD = new GroupCRUD();
+            groupCRUD.DeleteByID((int)groupID);
+        }
+        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
+        {
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.UpdateByID(course_CandidateDTO);
+        }
         // Грант получен, группа есть
         public void AddCandidateToGroup(int candidateID, int groupID, int stageID, FeedbackDTO feedbackDTO = null)
         {
@@ -131,12 +135,6 @@ namespace DevEduInterviewSystem.BLL
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
         }
-        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
-        {
-            Course_CandidateCRUD course = new Course_CandidateCRUD();
-            course.UpdateByID(course_CandidateDTO);
-        }
-
         private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);

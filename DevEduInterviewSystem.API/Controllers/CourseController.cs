@@ -28,5 +28,17 @@ namespace DevEduInterviewSystem.API.Controllers
             _admin.AddCourse(course);
             return new OkResult();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("delete/{courseID}")]
+        public IActionResult DeleteCourse(int courseID)
+        {
+            if (new CourseCRUD().SelectByID(courseID) == null)
+            {
+                return new NotFoundObjectResult("Course not found");
+            }
+            _admin.DeleteCourse(courseID);
+            return Ok();
+        }
     }
 }

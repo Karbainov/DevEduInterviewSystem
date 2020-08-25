@@ -23,16 +23,14 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpGet("{candidateID}/one-time-password")]
         public IActionResult AddOneTimePassword(int candidateID)
         {
-            CandidateCRUD candidateCRUD = new CandidateCRUD();
             string password = null;
-            if (candidateCRUD.SelectByID(candidateID) == null)
+            if (new CandidateCRUD().SelectByID(candidateID) == null)
             {
                 return new NotFoundResult();
             }
             password = _manager.GetOneTimePassword();
 
-            OneTimePasswordCRUD pass = new OneTimePasswordCRUD();
-            List<OneTimePasswordDTO> passwords = pass.SelectAll();
+            List<OneTimePasswordDTO> passwords = new OneTimePasswordCRUD().SelectAll();
             foreach (OneTimePasswordDTO i in passwords)
             {
                 if (i.OneTimePassword == password)

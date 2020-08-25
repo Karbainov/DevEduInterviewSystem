@@ -20,7 +20,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [Authorize(Roles = "Admin")]
-        [HttpPost("Status")]
+        [HttpPost]
         public IActionResult AddStatus(StatusDTO status)
         {
             if (status.Name == null)
@@ -31,5 +31,24 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet("all")]
+        public IActionResult GetAllStatus()
+        {
+            List<StatusDTO> status = new StatusCRUD().SelectAll();
+            return new ObjectResult(status);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("delete/{statusID}")]
+        public IActionResult DeleteStage(int statusID)
+        {
+            if (new StatusCRUD().SelectByID(statusID) == null)
+            {
+                return new NotFoundObjectResult("Status not found");
+            }
+            _admin.DeleteStatus(statusID);
+            return Ok();
+        }
     }
 }

@@ -46,8 +46,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpGet("all-city")]
         public IActionResult GetAllCity()
         {
-            CityCRUD cityCRUD = new CityCRUD();
-            List<CityDTO> citys = cityCRUD.SelectAll();
+            List<CityDTO> citys = new CityCRUD().SelectAll();
             return new ObjectResult(citys);
         }
     }

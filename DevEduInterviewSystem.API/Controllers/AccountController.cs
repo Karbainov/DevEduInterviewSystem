@@ -25,8 +25,7 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult Token(PersonInputModel person)
         {
             UserDTO authorizingUser = new UserDTO();
-            UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll();
+            List<UserDTO> users = new UserCRUD().SelectAll();
             foreach (UserDTO u in users)
             {
                 if (u.Login == person.Username && u.Password == person.Password)
@@ -34,9 +33,7 @@ namespace DevEduInterviewSystem.API.Controllers
                     authorizingUser = u;
                 }
             }
-
-            GetRolesByUserID role = new GetRolesByUserID();
-            List<string> roles = role.GetListOfRoles((int)authorizingUser.ID);
+            List<string> roles = new GetRolesByUserID().GetListOfRoles((int)authorizingUser.ID);
             string chosenRole = null;
             foreach (string r in roles)
             {
@@ -56,7 +53,6 @@ namespace DevEduInterviewSystem.API.Controllers
                 };
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                                                                   ClaimsIdentity.DefaultRoleClaimType);
-
             var now = DateTime.UtcNow;
 
             var jwt = new JwtSecurityToken(
@@ -82,8 +78,7 @@ namespace DevEduInterviewSystem.API.Controllers
             // Запрос к базе: существует ли пользователь с таким логином и паролем
 
             UserDTO authorizingUser = new UserDTO();
-            UserCRUD user = new UserCRUD();
-            List<UserDTO> users = user.SelectAll();
+            List<UserDTO> users = new UserCRUD().SelectAll();
             foreach (UserDTO u in users)
             {
                 if (u.Login == person.Username && u.Password == person.Password)
@@ -96,8 +91,7 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest(new { errorText = "Invalid username or password." });
             }
 
-            GetRolesByUserID role = new GetRolesByUserID();
-            List<string> roles = role.GetListOfRoles((int)authorizingUser.ID);
+            List<string> roles = new GetRolesByUserID().GetListOfRoles((int)authorizingUser.ID);
 
             return new OkObjectResult(roles);
         }
