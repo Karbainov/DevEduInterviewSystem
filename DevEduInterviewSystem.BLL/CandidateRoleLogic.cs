@@ -13,14 +13,11 @@ namespace DevEduInterviewSystem.BLL
 
         public void UpdateCandidateInfo(CandidateDTO candidateDTO, CandidatePersonalInfoDTO candidatePersonalInfoDTO)
         {
-            CandidateCRUD candidate = new CandidateCRUD();
-            candidate.UpdateByID(candidateDTO);
+            new CandidateCRUD().UpdateByID(candidateDTO);
 
-            CandidatePersonalInfoCRUD candidatePersonalInfo = new CandidatePersonalInfoCRUD();
-            candidatePersonalInfo.UpdateByID(candidatePersonalInfoDTO);
+            new CandidatePersonalInfoCRUD().Add(candidatePersonalInfoDTO);
 
-            DeleteOneTimePasswordByCandidateIDQuery password = new DeleteOneTimePasswordByCandidateIDQuery();
-            password.DeleteOneTimePasswordByCandidateID((int)candidateDTO.ID);
+            new DeleteOneTimePasswordByCandidateIDQuery().DeleteOneTimePasswordByCandidateID((int)candidateDTO.ID);
 
         }
 
