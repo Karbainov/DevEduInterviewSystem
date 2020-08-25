@@ -18,7 +18,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
         [Authorize(Roles = "Admin")]
-        [HttpPost("Course")]
+        [HttpPost("add")]
         public IActionResult AddCourse(CourseDTO course)
         {
             if (course.Name == null)
