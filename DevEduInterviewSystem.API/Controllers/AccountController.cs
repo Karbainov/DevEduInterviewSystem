@@ -69,13 +69,12 @@ namespace DevEduInterviewSystem.API.Controllers
                 access_token = encodedJwt
             };
 
-            return Json(response);
+            return Ok(response);
         }
 
         [HttpGet("token")]
         public IActionResult GetRole(PersonInputModel person)
         {
-            // Запрос к базе: существует ли пользователь с таким логином и паролем
 
             UserDTO authorizingUser = new UserDTO();
             List<UserDTO> users = new UserCRUD().SelectAll();

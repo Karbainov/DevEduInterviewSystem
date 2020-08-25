@@ -17,13 +17,13 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public FeedbackDTO(int ID, int StageChangedID, int UserID, string Message, DateTime TimeFeedback)
+        public FeedbackDTO(int ID, int stageChangedID, int userID, string message, DateTime timeFeedback)
         {
             this.ID = ID;
-            this.StageChangedID = StageChangedID;
-            this.UserID = UserID;
-            this.Message = Message;
-            this.TimeFeedback = TimeFeedback;
+            this.StageChangedID = stageChangedID;
+            this.UserID = userID;
+            this.Message = message;
+            this.TimeFeedback = timeFeedback;
         }
 
         public FeedbackDTO( int StageChangedID, int UserID, string Message, DateTime TimeFeedback)

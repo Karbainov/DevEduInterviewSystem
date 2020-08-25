@@ -80,14 +80,6 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             SqlDataReader reader = command.ExecuteReader();
 
-            if (!reader.HasRows) 
-            {
-                reader.Close();
-                Connection.Close();
-
-                return null;
-            }
-
             UserDTO user = new UserDTO();
             while (reader.Read())
             {

@@ -10,9 +10,9 @@ namespace DevEduInterviewSystem.DAL.DTO
         public string Name { get; set; }
         public bool IsDeleted { get; set; }
         public CityDTO() { }
-        public CityDTO(string City, bool isDeleted = false)
+        public CityDTO(string city, bool isDeleted = false)
         {
-            this.Name = City;
+            this.Name = city;
             this.IsDeleted = isDeleted;
         }
         public CityDTO(int id, string city, bool isDeleted=false) 
