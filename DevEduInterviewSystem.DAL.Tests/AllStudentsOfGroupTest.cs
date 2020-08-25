@@ -73,8 +73,8 @@ namespace DevEduInterviewSystem.DAL.Tests
             AllStudentsOfGroup _allstudents = new AllStudentsOfGroup();
             List<AllStudentsOfGroupDTO> actual = _allstudents.SelectAllStudentsOfGroup(_mockGroupID[idnumber]);
 
-        //    CollectionAssert.AreEqual(expected, actual);
-        //}
+            CollectionAssert.AreEqual(expected, actual);
+        }
 
         [TearDown]
         public void TearDown()
