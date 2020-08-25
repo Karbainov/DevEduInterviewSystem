@@ -40,12 +40,20 @@ namespace DevEduInterviewSystem.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("delete/{statusID}")]
-        public IActionResult DeleteStage(int statusID)
+        [HttpDelete("delete/{statusID}")]
+        public IActionResult DeleteStatus(int statusID)
         {
-            if (new StatusCRUD().SelectByID(statusID) == null)
+            if (new StatusCRUD().SelectByID(statusID).Name == null)
             {
                 return new NotFoundObjectResult("Status not found");
+            }
+            List<CandidateDTO> candidates = new CandidateCRUD().SelectAll();
+            foreach (CandidateDTO c in candidates)
+            {
+                if ((int)c.StatusID == statusID)
+                {
+                    return BadRequest(new { errorText = "Status is used" });
+                }
             }
             _admin.DeleteStatus(statusID);
             return Ok();
