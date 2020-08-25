@@ -1,16 +1,15 @@
-using DevEduInterviewSystem.DAL.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DevEduInterviewSystem.DAL.DTO;
+
 
 namespace DevEduInterviewSystem.API.Models.Input
 {
     public class InterviewsInputModel
     {
+        public InterviewDTO InterviewDTO  { get; set;}
         public int? UserID { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime FinishDateTime { get; set; }
-        public DateTime DateTimeInterview { get; set; }
+
+        public int? StageID { get; set; }
+
+        public FeedbackDTO? FeedbackDTO  { get; set; }
     }
 }

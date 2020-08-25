@@ -26,6 +26,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(groups);
         }
 
+
         [Authorize(Roles = "Manager")]
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
@@ -41,6 +42,7 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.CreateGroup(groupDTO);
             return new OkResult();
         }
+
 
         [Authorize(Roles = "Manager")]
         [HttpPut("update-group")]
@@ -74,6 +76,25 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
         // TODO: Возможно логично дописать в роль показ всех ранее удаленных групп.
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("update-group-by-candidateID")]
+        public IActionResult UpdateGroupByCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            int? groupID = groupCandidateDTO.GroupID;
+            int? candidateID = groupCandidateDTO.CandidateID;
+            if (new CandidateCRUD().SelectByID((int)candidateID).ID == null)
+            {
+                return new NotFoundObjectResult("candidate not found");
+            }
+            if (new GroupCRUD().SelectByID((int)groupID).ID == null)
+            {
+                return new NotFoundObjectResult("group not found");
+            }
+            _manager.UpdateGroupByCandidate(groupCandidateDTO);
+
+            return Ok();
+        }
 
         //[Authorize(Roles = "Admin, Manager")]
         //[HttpGet("all-deleted-groups")]
