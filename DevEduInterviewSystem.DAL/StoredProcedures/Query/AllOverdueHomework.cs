@@ -8,37 +8,37 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
 {
     public class AllOverdueHomeworks
     {
-        public List<AllOverdueTestsDTO> GetAllOverdueHomeworks(DateTime dateTime)
+        public List<AllOverdueHomeworksDTO> GetAllOverdueHomeworks(DateTime dateTime)
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             DateTime dateCurrent = DateTime.Now;
-            SqlCommand command = ReferenceToProcedure("AllOverdueTests", Connection);
-            SqlParameter currentDateParam = new SqlParameter("@DateCurrent", new DateTime(2020, 07, 20, 18, 30, 00));
+            SqlCommand command = ReferenceToProcedure("AllOverdueHomeworks", Connection);
+            SqlParameter currentDateParam = new SqlParameter("@DateCurrent", dateCurrent);
             command.Parameters.Add(currentDateParam);
 
-            List<AllOverdueTestsDTO> allOverdueTests = new List<AllOverdueTestsDTO>();
+            List<AllOverdueHomeworksDTO> allOverdueList = new List<AllOverdueHomeworksDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllOverdueTestsDTO allOverdueTest = new AllOverdueTestsDTO()
+                    AllOverdueHomeworksDTO allOverdueTest = new AllOverdueHomeworksDTO()
                     {
-                        //CandidateID = (int)reader["CandidateID"],
                         HomeWorkDate = (DateTime)reader["HomeWorkDate"],
                         CandidateFirstName = (string)reader["CandidateFirstName"],
                         CandidateLastName = (string)reader["CandidateLastName"],
                         TestStatus = (string)reader["TestStatus"],
+                        HomeWorkStatus = (string)reader["HomeWorkStatus"]
                     };
 
-                    allOverdueTests.Add(allOverdueTest);
+                    allOverdueList.Add(allOverdueTest);
                 }
             }
             reader.Close();
             Connection.Close();
-            return allOverdueTests;
+            return allOverdueList;
 
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
