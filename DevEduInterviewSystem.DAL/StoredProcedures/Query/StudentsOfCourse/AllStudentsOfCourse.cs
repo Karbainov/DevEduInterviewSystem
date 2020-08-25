@@ -11,22 +11,22 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query
     public class AllStudentsOfCourse
     {
 
-        public List<DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO> SelectAllStudentsOfCourse(string name )
+        public List<AllStudentsOfCourseDTO> SelectAllStudentsOfCourse(int idnumber )
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             SqlCommand command = ReferenceToProcedure("AllStudentsOfCourse", Connection);
-            SqlParameter CourseParam = new SqlParameter("@CourseID", name);
+            SqlParameter CourseParam = new SqlParameter("@CourseID", idnumber);
             command.Parameters.Add(CourseParam);
 
-            List<DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO> allStudentsOfCourses = new List<DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO>();
+            List<AllStudentsOfCourseDTO> allStudentsOfCourses = new List<AllStudentsOfCourseDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO allStudentsOfCourse = new DTO.QuereDTO.StudentsOfCourse.AllStudentsOfCourseDTO()
+                    AllStudentsOfCourseDTO allStudentsOfCourse = new AllStudentsOfCourseDTO()
                     {
                         Name = (string)reader["Name"],
                         StudentFirstName = (string)reader["FirstName"],
