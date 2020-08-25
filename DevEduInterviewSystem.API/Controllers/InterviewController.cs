@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DevEduInterviewSystem.API.Models.Input;
+using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevEduInterviewSystem.API.Controllers
@@ -42,7 +39,7 @@ namespace DevEduInterviewSystem.API.Controllers
             if ((interviewsInputModel.InterviewDTO.Attempt != null &&
                 interviewsInputModel.InterviewDTO.DateTimeInterview != null))
             {
-                _phoneOperator.ScheduleInterview(interviewsInputModel.InterviewDTO, (int)interviewsInputModel.UserID);
+                _phoneOperator.ScheduleInterview(interviewsInputModel.InterviewDTO, (int)interviewsInputModel.UserID, (int)interviewsInputModel.StageID, interviewsInputModel.FeedbackDTO);
                     return new OkResult();
             }
             else
@@ -56,17 +53,14 @@ namespace DevEduInterviewSystem.API.Controllers
         [Authorize(Roles = "Teacher, Manager, PhoneOperator")]
         [HttpGet("Interviews")]
 
-        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, 
-            DateTime? finishDateTime, DateTime? dateTime) 
+        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, DateTime? finishDateTime, DateTime? dateTime) 
         {
             if (userID != null && new UserCRUD().SelectByID((int)userID) == null)
             {
                 return new NotFoundObjectResult("User not found");
             }
          
-
-            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(interview.UserID, interview.StartDateTime, 
-                interview.FinishDateTime, interview.DateTimeInterview);
+            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
 
             return Ok(interviews);
         }
