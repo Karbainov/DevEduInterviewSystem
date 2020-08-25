@@ -202,6 +202,20 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
 
             return (int)dto.ID;
         }
+
+        public int CountInterviewsByDateTimeAndUser(int userID, DateTime dateTime)
+        {
+            var procedure = "[CountInterviewsDyDateTime]";
+            var values = new
+            {
+                UserID = userID,
+                DateTimeInterview = dateTime
+            };
+
+            var countObject = IDbConnection.QuerySingle(procedure, values, commandType: CommandType.StoredProcedure);
+
+            return (int)countObject["count"];
+        }
     }
 }
 
