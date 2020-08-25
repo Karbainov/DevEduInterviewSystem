@@ -36,7 +36,7 @@ namespace DevEduInterviewSystem.BLL
             {
                 feedback.Add(feedbackDTO);
             }
-            
+           
         }
 
         public List<InterviewDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
@@ -91,13 +91,11 @@ namespace DevEduInterviewSystem.BLL
             List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
             return feedbacks;
         }
-        public List<AllOverdueTestsDTO> GetAllOverdueHomework()
+        public List<AllOverdueHomeworksDTO> GetAllOverdueHomework()
         {
             DateTime dateTimeNow = DateTime.Now;
             AllOverdueHomeworks allOverdueHomeworks = new AllOverdueHomeworks();
-            List<AllOverdueTestsDTO> overdueHomeworks = allOverdueHomeworks.GetAllOverdueHomeworks(dateTimeNow);
-
-
+            List<AllOverdueHomeworksDTO> overdueHomeworks = allOverdueHomeworks.GetAllOverdueHomeworks(dateTimeNow);
             return overdueHomeworks;
         }
         public void UpdateHomeworkAfterDoneHomework(HomeworkDTO homeworkDTO, FeedbackDTO feedbackDTO)
