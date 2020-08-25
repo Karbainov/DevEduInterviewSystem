@@ -86,8 +86,8 @@ namespace DevEduInterviewSystem.BLL
         public string GetOneTimePassword()
         {
             Random randomKey = new Random();
-            string simvol = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";           
-            char[] letters = simvol.ToCharArray();
+            string simbol = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";           
+            char[] letters = simbol.ToCharArray();
             string password = "";
             for (int i = 0; i < Consts.passwordLength; i++)
             {

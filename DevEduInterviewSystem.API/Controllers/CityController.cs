@@ -27,7 +27,7 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest("Name field missing");
             }
             _admin.AddCity(city);
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -36,10 +36,10 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new CityCRUD().SelectByID(cityID) == null)
             {
-                return new NotFoundObjectResult("City not found");
+                return NotFound("City not found");
             }
             _admin.DeleteCity(new CityCRUD().SelectByID(cityID));
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -47,7 +47,7 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult GetAllCity()
         {
             List<CityDTO> citys = new CityCRUD().SelectAll();
-            return new ObjectResult(citys);
+            return Ok(citys);
         }
     }
 }

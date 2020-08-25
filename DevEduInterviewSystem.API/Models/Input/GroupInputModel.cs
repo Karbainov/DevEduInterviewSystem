@@ -13,7 +13,6 @@ namespace DevEduInterviewSystem.API.Models.Input
         public int CourseID { get; set; }
         public int GroupID { get; set; }
         public FeedbackDTO feedbackDTO { get; set; }
-        //public GroupCandidateDTO GroupCandidateDTO { get; set; }
 
     }
 }

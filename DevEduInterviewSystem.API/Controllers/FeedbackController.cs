@@ -17,7 +17,6 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class FeedbackController : Controller
     {
-        private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
@@ -25,18 +24,16 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpGet("all-feedbacks")]
         public IActionResult GetAllFeedbacks()
         {
-            List<FeedbackDTO> listFeedback = new List<FeedbackDTO>();
-            listFeedback = _manager.GetAllFeedbacks();
-            return new OkObjectResult(listFeedback);
+            List<FeedbackDTO> listFeedback = _manager.GetAllFeedbacks();
+            return Ok(listFeedback);
         }
 
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpGet("all-feedbacks-By-User/{userID}")]
         public IActionResult GetAllFeedbacksByUser(int userID)
         {
-            List<AllFeedbackByUserDTO> listFeedback = new List<AllFeedbackByUserDTO>();
-            listFeedback = _manager.GetAllFeedbacksByUser(userID);
-            return new OkObjectResult(listFeedback);
+            List<AllFeedbackByUserDTO>listFeedback = _manager.GetAllFeedbacksByUser(userID);
+            return Ok(listFeedback);
         }
 
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
@@ -45,17 +42,17 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new StageChangedCRUD().SelectByID((int)feedbackDTO.StageChangedID) == null)
             {
-                return new NotFoundObjectResult("StageChangedID not found");
+                return NotFound("StageChangedID not found");
             }
             if (new UserCRUD().SelectByID((int)feedbackDTO.UserID) == null)
             {
-                return  BadRequest("User not found");
+                return BadRequest("User not found");
             }
             if (feedbackDTO.Message != null)
             {
                 feedbackDTO.TimeFeedback = DateTime.Now;
                 _teacher.AddFeedback(feedbackDTO);
-                return new OkResult();
+                return Ok();
             }
             else
             {
@@ -69,17 +66,17 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if(new FeedbackCRUD().SelectByID((int)feedbackInputModel.feedbackDTO.ID) == null)
             {
-                return new NotFoundObjectResult("Feedback not found");
+                return NotFound("Feedback not found");
             }
             if (new StageChangedCRUD().SelectByID((int)feedbackInputModel.feedbackDTO.StageChangedID) == null)
             {
-                return new NotFoundObjectResult("StageChangedID not found");
+                return NotFound("StageChangedID not found");
             }
             if (feedbackInputModel.feedbackDTO.Message != null)
             {
                 feedbackInputModel.feedbackDTO.TimeFeedback = DateTime.Now;
                 _teacher.UpdateFeedback(feedbackInputModel.feedbackDTO);
-                return new OkResult();
+                return Ok();
             }
             else
             {

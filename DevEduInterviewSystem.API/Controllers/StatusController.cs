@@ -28,7 +28,7 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest("Name field missing");
             }
             _admin.AddStatus(status);
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -36,7 +36,7 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult GetAllStatus()
         {
             List<StatusDTO> status = new StatusCRUD().SelectAll();
-            return new ObjectResult(status);
+            return  Ok(status);
         }
 
         [Authorize(Roles = "Admin")]
@@ -45,7 +45,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new StatusCRUD().SelectByID(statusID).Name == null)
             {
-                return new NotFoundObjectResult("Status not found");
+                return NotFound("Status not found");
             }
             List<CandidateDTO> candidates = new CandidateCRUD().SelectAll();
             foreach (CandidateDTO c in candidates)

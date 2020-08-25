@@ -16,7 +16,6 @@ namespace DevEduInterviewSystem.API.Controllers
     public class GroupController : Controller
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
-        private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("all-groups")]
@@ -24,7 +23,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             GroupCRUD groupCRUD = new GroupCRUD();
             List<GroupDTO> groups = groupCRUD.SelectAll();
-            return new OkObjectResult(groups);
+            return Ok(groups);
         }
 
 
@@ -34,14 +33,14 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new CourseCRUD().SelectByID((int)groupDTO.CourseID) == null)
             {
-                return new NotFoundObjectResult("Course not found");
+                return NotFound("Course not found");
             }
             if (groupDTO.Name == null)
             {
                 return BadRequest("Name field missing");
             }
             _manager.CreateGroup(groupDTO);
-            return new OkResult();
+            return  Ok();
         }
 
 
@@ -55,14 +54,14 @@ namespace DevEduInterviewSystem.API.Controllers
             }
             if (new GroupCRUD().SelectByID((int)groupDTO.ID) == null)
             {
-                return new NotFoundObjectResult("Group not found");
+                return NotFound("Group not found");
             }
             if (new CourseCRUD().SelectByID((int)groupDTO.ID) == null)
             {
-                return new NotFoundObjectResult("Course not found");
+                return NotFound("Course not found");
             }
             _manager.UpdateGroup(groupDTO);
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Manager")]
@@ -71,12 +70,12 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new GroupCRUD().SelectByID(groupID) == null)
             {
-                return new NotFoundObjectResult("Group not found");
+                return NotFound("Group not found");
             }
             _manager.DeleteGroup(groupID);
-            return new OkResult();
+            return Ok();
         }
-        // TODO: Возможно логично дописать в роль показ всех ранее удаленных групп.
+        
 
         [Authorize(Roles = "Manager")]
         [HttpPut("update-group-by-candidateID")]
@@ -86,37 +85,35 @@ namespace DevEduInterviewSystem.API.Controllers
             int? candidateID = groupCandidateDTO.CandidateID;
             if (new CandidateCRUD().SelectByID((int)candidateID).ID == null)
             {
-                return new NotFoundObjectResult("candidate not found");
+                return NotFound("Candidate not found");
             }
             if (new GroupCRUD().SelectByID((int)groupID).ID == null)
             {
-                return new NotFoundObjectResult("group not found");
+                return  NotFound("Group not found");
             }
             _manager.UpdateGroupByCandidate(groupCandidateDTO);
 
             return Ok();
         }
 
-
-
+        [Authorize(Roles = "Manager")]
         [HttpPut("add-candidate")]
         public IActionResult AddCandidateToGroup(GroupInputModel groupModel)
         {
             if( new CandidateCRUD().SelectByID(groupModel.CandidateID).FirstName == null)
             {
-                return NotFound("candidate not found");
+                return NotFound("Candidate not found");
             }
 
             if(new GroupCRUD().SelectByID(groupModel.GroupID).Name == null)
             {
-                return NotFound("group not found");
+                return NotFound("Group not found");
             }
 
             if (new StageCRUD().SelectByID(groupModel.StageID).Name == null)
             {
                 return NotFound("Stage not found");
             }
-
 
             if (new CourseCRUD().SelectByID(groupModel.CourseID).Name == null)
             {
@@ -128,12 +125,6 @@ namespace DevEduInterviewSystem.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "Admin, Manager")]
-        //[HttpGet("all-deleted-groups")]
-        //public IActionResult GetAllDeletedGroups()
-        //{
-           
-        //}
     }
     
 }

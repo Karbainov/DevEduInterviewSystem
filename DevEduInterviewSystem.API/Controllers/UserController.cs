@@ -18,9 +18,6 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
-        private TeacherRoleLogic _teacher = new TeacherRoleLogic();
-        private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [Authorize(Roles = "Admin")]
@@ -38,7 +35,7 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 user.UserDTO.IsDeleted = false;
                 _admin.AddNewUser(user.UserDTO, (int)user.RoleID);
-                return new OkResult();
+                return Ok();
             }
             else
             {
@@ -52,11 +49,11 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if ((int)userID <= 0 ||  new UserCRUD().SelectByID((int)userID) == null)
             {
-                return new NotFoundObjectResult("User not found");
+                return NotFound("User not found");
             }
 
             _admin.DeleteUser((int)userID);
-            return new OkResult();
+            return  Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -65,12 +62,12 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (userID == null || userID != null && new AllDeletedUsers().SelectDeletedUserByID((int)userID) == null)
             {
-                return new NotFoundObjectResult("User not found");
+                return NotFound("User not found");
             }
 
             _admin.RestoreUser((int)userID);
 
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -79,12 +76,12 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (user.IsDeleted == true || user.ID == null || new UserCRUD().SelectByID((int)user.ID) == null)
             {
-                return new NotFoundObjectResult("User not found");
+                return NotFound("User not found");
             }
 
             _admin.UpdateUser(user);
 
-            return new OkResult();
+            return  Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -93,7 +90,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             List<UsersWithRoleDTO> users = _admin.ShowAllUsersWithRoles();
 
-            return new OkObjectResult(users);
+            return  Ok(users);
         }
 
         [Authorize(Roles = "Admin")]
@@ -102,7 +99,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             _admin.ShowDeletedUsers();
 
-            return new OkResult();
+            return  Ok();
         }
         
         [HttpGet("all-users")]
@@ -110,7 +107,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             List<UserDTO> allUsers = new UserCRUD().SelectAll();
 
-            return new OkObjectResult(allUsers);
+            return Ok(allUsers);
         }
     }
 }

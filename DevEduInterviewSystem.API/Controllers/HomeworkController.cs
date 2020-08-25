@@ -23,7 +23,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             HomeworkCRUD homework = new HomeworkCRUD();
             List<HomeworkDTO> h = homework.SelectAll();
-            return new OkObjectResult(h);
+            return Ok(h);
         }
 
         [Authorize(Roles = "Teacher, Manager")]
@@ -31,7 +31,7 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult GetHomeworkOfCandidate(int candidateID)
         {
             HomeworkCRUD homework = new HomeworkCRUD();
-            return new OkObjectResult(homework.SelectByID(candidateID));
+            return Ok(homework.SelectByID(candidateID));
         }
 
         [Authorize(Roles = "Teacher")]
@@ -40,25 +40,25 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new HomeworkCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.ID) == null)
             {
-                return new NotFoundObjectResult("This homework not found");
+                return NotFound("This homework not found");
             }
             if (new HomeworkStatusCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.HomeworkStatusID) == null)
             {
-                return new NotFoundObjectResult("This status homework not found");
+                return NotFound("This status homework not found");
             }
             if (new TestStatusCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.TestStatusID) == null)
             {
-                return new NotFoundObjectResult("This test status not found");
+                return NotFound("This test status not found");
             }
             _teacher.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Teacher, Manager")]
         [HttpGet("get-all-overdue-homework")]
         public IActionResult GetAllOverdueHomework()
         {
-           return new OkObjectResult(_teacher.GetAllOverdueHomework());
+           return Ok(_teacher.GetAllOverdueHomework());
         }
     }
 }
