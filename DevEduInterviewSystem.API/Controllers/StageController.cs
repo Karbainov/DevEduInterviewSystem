@@ -38,11 +38,11 @@ namespace DevEduInterviewSystem.API.Controllers
             return new ObjectResult(stages);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{stageID}")]
         public IActionResult DeleteStage(int stageID)
         {
-            if (new StageCRUD().SelectByID(stageID) == null)
+            if (new StageCRUD().SelectByID(stageID).Name == null)
             {
                 return new NotFoundObjectResult("Stage not found");
             }
@@ -65,5 +65,6 @@ namespace DevEduInterviewSystem.API.Controllers
             _admin.DeleteStage(stageID);
             return Ok();
         }
+
     }
 }
