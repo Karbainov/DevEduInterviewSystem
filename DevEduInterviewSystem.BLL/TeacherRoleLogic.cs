@@ -107,14 +107,5 @@ namespace DevEduInterviewSystem.BLL
             List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
             return feedbacks;
         }
-        public List<AllOverdueTestsDTO> GetAllOverdueHomework()
-        {
-            DateTime dateTimeNow = DateTime.Now;
-            AllOverdueHomeworks allOverdueHomeworks = new AllOverdueHomeworks();
-            List<AllOverdueTestsDTO> overdueHomeworks = allOverdueHomeworks.GetAllOverdueHomeworks(dateTimeNow);
-
-
-            return overdueHomeworks;
-        }
     }
 }

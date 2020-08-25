@@ -10,6 +10,7 @@ using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -208,6 +209,15 @@ namespace DevEduInterviewSystem.BLL
             AllFeedbackByUserQuery tmp = new AllFeedbackByUserQuery();
             List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
             return feedbacks;
+        }
+        public List<AllOverdueTestsDTO> GetAllOverdueHomework()
+        {
+            DateTime dateTimeNow = DateTime.Now;
+            AllOverdueHomeworks allOverdueHomeworks = new AllOverdueHomeworks();
+            List<AllOverdueTestsDTO> overdueHomeworks = allOverdueHomeworks.GetAllOverdueHomeworks(dateTimeNow);
+
+
+            return overdueHomeworks;
         }
     }
 }
