@@ -31,17 +31,14 @@ namespace DevEduInterviewSystem.DAL.Tests
             _mockCandidateID = new List<int>();
             _mockCourseCandidateID = new List<int>();
 
-            /*
+            
             CourseCRUD courseCRUD = new CourseCRUD();
             CourseDTOMock courseDTOMock = new CourseDTOMock();
             foreach (CourseDTO dto in courseDTOMock)
             {
                 courseCRUD.Add(dto);
             }
-            */
-
-            CourseCRUD courseCRUD = new CourseCRUD();
-            CourseDTOMock courseDTOMock = new CourseDTOMock();
+                      
 
             foreach (CourseDTO dto in courseDTOMock)
             {
