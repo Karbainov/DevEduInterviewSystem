@@ -4,41 +4,41 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
+namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomeworks
 {
-    public class AllOverdueTests
+    public class AllOverdueHomeworks
     {
-        public List<AllOverdueTestsDTO> GetAllOverdueHomeworks(DateTime dateTime)
+        public List<AllOverdueHomeworksDTO> GetAllOverdueHomeworks(DateTime dateTime)
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
             Connection.Open();
             DateTime dateCurrent = DateTime.Now;
-            SqlCommand command = ReferenceToProcedure("AllOverdueTests", Connection);
+            SqlCommand command = ReferenceToProcedure("AllOverdueHomeworks", Connection);
             SqlParameter currentDateParam = new SqlParameter("@DateCurrent", new DateTime(2020, 07, 20, 18, 30, 00));
             command.Parameters.Add(currentDateParam);
 
-            List<AllOverdueTestsDTO> allOverdueTests = new List<AllOverdueTestsDTO>();
+            List<AllOverdueHomeworksDTO> allOverdueHomeworks = new List<AllOverdueHomeworksDTO>();
 
             SqlDataReader reader = command.ExecuteReader();
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    AllOverdueTestsDTO allOverdueTest = new AllOverdueTestsDTO()
+                    AllOverdueHomeworksDTO allOverdueHomework = new AllOverdueHomeworksDTO()
                     {
-                        CandidateID = (int)reader["CandidateID"],
+                        /*CandidateID = (int)reader["CandidateID"],*/
                         HomeWorkDate = (DateTime)reader["HomeWorkDate"],
                         CandidateFirstName = (string)reader["CandidateFirstName"],
                         CandidateLastName = (string)reader["CandidateLastName"],
-                        TestStatus = (string)reader["TestStatus"],
+                        HomeWorkStatus = (string)reader["HomeWorkStatus"],
                     };
 
-                    allOverdueTests.Add(allOverdueTest);
+                    allOverdueHomeworks.Add(allOverdueHomework);
                 }
             }
             reader.Close();
             Connection.Close();
-            return allOverdueTests;
+            return allOverdueHomeworks;
 
         }
         private SqlCommand ReferenceToProcedure(string sqlExpression, SqlConnection connection)
@@ -49,4 +49,10 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework
             return command;
         }
     }
+
 }
+
+    
+        
+    
+

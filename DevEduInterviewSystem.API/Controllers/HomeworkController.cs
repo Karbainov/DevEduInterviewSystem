@@ -15,9 +15,11 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class HomeworkController : Controller
     {
+        private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
 
-        [Authorize(Roles = "Teacher")]
+
+        [Authorize(Roles = "Teacher, Manager")]
         [HttpGet]
         public IActionResult GetAllHomework()
         {
@@ -26,7 +28,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(h);
         }
 
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher, Manager")]
         [HttpGet("homework-of-candidate/{candidateID}")]
         public IActionResult GetHomeworkOfCandidate(int candidateID)
         {
@@ -53,6 +55,11 @@ namespace DevEduInterviewSystem.API.Controllers
             _teacher.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
             return new OkResult();
         }
-
+        [Authorize(Roles = "Teacher")]
+        [HttpGet("get-all-overdue-homework")]
+        public IActionResult GetAllOverdueHomework()
+        {
+           return new OkObjectResult(_teacher.GetAllOverdueHomework());
+        }
     }
 }
