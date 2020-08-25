@@ -14,29 +14,29 @@ namespace DevEduInterviewSystem.API.Controllers
     public class InterviewController : Controller
     {
         private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
-        private AdminRoleLogic _admin = new AdminRoleLogic();
+        private AdminRoleLogic _admin = new AdminRoleLogic();        private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
 
-        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
+        [Authorize(Roles = "Manager, Phone Operator")]
         [HttpGet]
-        public IActionResult GetInterviews(InterviewsInputModel interview) 
+        public IActionResult CreateInterview(InterviewsInputModel interview) 
         {
-            if( new UserCRUD().SelectByID((int)interviewsInputModel.UserID) == null)
+            if( new UserCRUD().SelectByID((int)interview.UserID).ID == null)
             {
                 return new NotFoundObjectResult("User not found");
             }
-            if (new CandidateCRUD().SelectByID((int)interviewsInputModel.InterviewDTO.CandidateID) == null)
+            if (new CandidateCRUD().SelectByID((int)interview.InterviewDTO.CandidateID).ID == null)
             {
                 return new NotFoundObjectResult("Candidate not found");
             }
-            if (new InterviewStatusCRUD().SelectByID((int)interviewsInputModel.InterviewDTO.InterviewStatusID) == null)
+            if (new InterviewStatusCRUD().SelectByID((int)interview.InterviewDTO.InterviewStatusID).ID == null)
             {
                 return new NotFoundObjectResult("Interview Status not found");
             }
-            if ((interviewsInputModel.InterviewDTO.Attempt != null &&
-                interviewsInputModel.InterviewDTO.DateTimeInterview != null))
+            if ((interview.InterviewDTO.Attempt != null &&
+                interview.InterviewDTO.DateTimeInterview != null))
             {
-                _phoneOperator.ScheduleInterview(interviewsInputModel.InterviewDTO, (int)interviewsInputModel.UserID, (int)interviewsInputModel.StageID, interviewsInputModel.FeedbackDTO);
-                    return new OkResult();
+                _phoneOperator.ScheduleInterview(interview.InterviewDTO, (int)interview.UserID, (int)interview.StageID, interview.FeedbackDTO);
+                    return Ok();
             }
             else
             {

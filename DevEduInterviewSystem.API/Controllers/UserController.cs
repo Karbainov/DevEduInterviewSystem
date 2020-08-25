@@ -24,7 +24,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost("add-user")]
         public IActionResult AddUser(UserInputModel user)
         {
-            if (new RoleCRUD().SelectByID((int)user.RoleID) == null)
+            if (new RoleCRUD().SelectByID((int)user.RoleID).ID == null)
             {
                 return new NotFoundObjectResult("Role not found");
             }
@@ -47,7 +47,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpDelete("{userID}/delete-user")]
         public IActionResult DeleteUser(int userID)
         {
-            if ((int)userID <= 0 ||  new UserCRUD().SelectByID((int)userID) == null)
+            if ((int)userID <= 0 ||  new UserCRUD().SelectByID((int)userID).ID == null)
             {
                 return NotFound("User not found");
             }
@@ -60,7 +60,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("deleted-users")]
         public IActionResult RestoreUser(int? userID)
         {
-            if (userID == null || userID != null && new AllDeletedUsers().SelectDeletedUserByID((int)userID) == null)
+            if (userID == null || userID != null && new AllDeletedUsers().SelectDeletedUserByID((int)userID).ID == null)
             {
                 return NotFound("User not found");
             }
@@ -74,7 +74,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update-user")]
         public IActionResult UpdateUser(UserDTO user)
         {
-            if (user.IsDeleted == true || user.ID == null || new UserCRUD().SelectByID((int)user.ID) == null)
+            if (new UserCRUD().SelectByID((int)user.ID).ID == null)
             {
                 return NotFound("User not found");
             }

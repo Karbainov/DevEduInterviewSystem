@@ -31,7 +31,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost("add-group")]
         public IActionResult AddGroup(GroupDTO groupDTO)
         {
-            if (new CourseCRUD().SelectByID((int)groupDTO.CourseID) == null)
+            if (new CourseCRUD().SelectByID((int)groupDTO.CourseID).ID == null)
             {
                 return NotFound("Course not found");
             }
@@ -52,11 +52,11 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return BadRequest("Name field missing");
             }
-            if (new GroupCRUD().SelectByID((int)groupDTO.ID) == null)
+            if (new GroupCRUD().SelectByID((int)groupDTO.ID).ID == null)
             {
                 return NotFound("Group not found");
             }
-            if (new CourseCRUD().SelectByID((int)groupDTO.ID) == null)
+            if (new CourseCRUD().SelectByID((int)groupDTO.ID).ID == null)
             {
                 return NotFound("Course not found");
             }
@@ -100,22 +100,22 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("add-candidate")]
         public IActionResult AddCandidateToGroup(GroupInputModel groupModel)
         {
-            if( new CandidateCRUD().SelectByID(groupModel.CandidateID).FirstName == null)
+            if( new CandidateCRUD().SelectByID(groupModel.CandidateID).ID == null)
             {
                 return NotFound("Candidate not found");
             }
 
-            if(new GroupCRUD().SelectByID(groupModel.GroupID).Name == null)
+            if(new GroupCRUD().SelectByID(groupModel.GroupID).ID == null)
             {
                 return NotFound("Group not found");
             }
 
-            if (new StageCRUD().SelectByID(groupModel.StageID).Name == null)
+            if (new StageCRUD().SelectByID(groupModel.StageID).ID == null)
             {
                 return NotFound("Stage not found");
             }
 
-            if (new CourseCRUD().SelectByID(groupModel.CourseID).Name == null)
+            if (new CourseCRUD().SelectByID(groupModel.CourseID).ID == null)
             {
                 return NotFound("Course not found");
             }
