@@ -15,6 +15,7 @@ namespace DevEduInterviewSystem.API.Controllers
     public class GroupController : Controller
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [Authorize(Roles = "Manager, Teacher")]
         [HttpGet("all-groups")]
@@ -72,7 +73,14 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.DeleteGroup(groupID);
             return new OkResult();
         }
+        // TODO: Возможно логично дописать в роль показ всех ранее удаленных групп.
 
+        //[Authorize(Roles = "Admin, Manager")]
+        //[HttpGet("all-deleted-groups")]
+        //public IActionResult GetAllDeletedGroups()
+        //{
+           
+        //}
     }
     
 }
