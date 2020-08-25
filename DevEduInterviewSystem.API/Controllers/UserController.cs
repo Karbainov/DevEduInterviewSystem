@@ -105,12 +105,10 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkResult();
         }
         
-        // TODO: метод для тестов в постман, потом можно его наверно убрать
         [HttpGet("all-users")]
         public IActionResult GetAllUsers()
         {
-            UserCRUD users = new UserCRUD();
-            List<UserDTO> allUsers = users.SelectAll();
+            List<UserDTO> allUsers = new UserCRUD().SelectAll();
 
             return new OkObjectResult(allUsers);
         }

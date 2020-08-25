@@ -18,7 +18,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private AdminRoleLogic _admin = new AdminRoleLogic();
         [Authorize(Roles = "Admin")]
-        [HttpPost("Course")]
+        [HttpPost("add")]
         public IActionResult AddCourse(CourseDTO course)
         {
             if (course.Name == null)
@@ -27,6 +27,26 @@ namespace DevEduInterviewSystem.API.Controllers
             }
             _admin.AddCourse(course);
             return new OkResult();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete/{courseID}")]
+        public IActionResult DeleteCourse(int courseID)
+        {
+            if (new CourseCRUD().SelectByID(courseID) == null)
+            {
+                return new NotFoundObjectResult("Course not found");
+            }
+            List<Course_CandidateDTO> candidates = new Course_CandidateCRUD().SelectAll();
+            foreach (Course_CandidateDTO c in candidates)
+            {
+                if ((int)c.CourseID == courseID)
+                {
+                    return BadRequest(new { errorText = "Course is used" });
+                }
+            }
+            _admin.DeleteCourse(courseID);
+            return Ok();
         }
     }
 }
