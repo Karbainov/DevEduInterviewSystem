@@ -25,7 +25,8 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
         public List<int> CourseID;
         public List<int> GroupID;
         public List<int> TestStatusID;
-        public List<int> HomeworkStatusID;        
+        public List<int> HomeworkStatusID;
+        public List<int> GroupCandidateID;
 
         public void AddData()
         {
@@ -48,6 +49,7 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
             StageChangedID = new List<int>();
             TestStatusID = new List<int>();
             HomeworkStatusID = new List<int>();
+            GroupCandidateID = new List<int>();
 
             try
             {
