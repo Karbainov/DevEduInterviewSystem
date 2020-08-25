@@ -18,13 +18,13 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public HomeworkDTO(int ID, int? CandidateID, int? HomeworkStatusID, int? TestStatusID, DateTime HomeworkDate)
+        public HomeworkDTO(int ID, int? candidateID, int? homeworkStatusID, int? testStatusID, DateTime homeworkDate)
         {
             this.ID = ID;
-            this.CandidateID = CandidateID;
-            this.HomeworkStatusID = HomeworkStatusID;
-            this.TestStatusID = TestStatusID;
-            this.HomeworkDate = HomeworkDate;
+            this.CandidateID = candidateID;
+            this.HomeworkStatusID = homeworkStatusID;
+            this.TestStatusID = testStatusID;
+            this.HomeworkDate = homeworkDate;
 
         }
     }

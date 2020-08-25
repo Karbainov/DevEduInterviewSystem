@@ -15,11 +15,11 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public GroupCandidateDTO(int ID, int GroupID, int CandidateID)
+        public GroupCandidateDTO(int ID, int groupID, int candidateID)
         {
             this.ID = ID;
-            this.GroupID = GroupID;
-            this.CandidateID = CandidateID;
+            this.GroupID = groupID;
+            this.CandidateID = candidateID;
         }
     }
 }

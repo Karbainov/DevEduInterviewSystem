@@ -18,10 +18,10 @@ namespace DevEduInterviewSystem.DAL.DTO
            
         }
 
-        public StatusDTO(int? ID, string Name)
+        public StatusDTO(int? ID, string name)
         {
             this.ID = ID;
-            this.Name = Name;
+            this.Name = name;
         }
     }
 }

@@ -19,17 +19,17 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public CandidateDTO(int ID, int? StageID, int? StatusID, int? CityID, string Phone, string Email, string FirstName, string LastName, DateTime? BirthDay)
+        public CandidateDTO(int ID, int? stageID, int? statusID, int? cityID, string phone, string email, string firstName, string lastName, DateTime? birthDay)
         {
             this.ID = ID;
-            this.StageID = StageID;
-            this.StatusID = StatusID;
-            this.CityID = CityID;
-            this.Phone = Phone;
-            this.Email = Email;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.BirthDay = BirthDay;                    
+            this.StageID = stageID;
+            this.StatusID = statusID;
+            this.CityID = cityID;
+            this.Phone = phone;
+            this.Email = email;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.BirthDay = birthDay;                    
         }
     }
 }

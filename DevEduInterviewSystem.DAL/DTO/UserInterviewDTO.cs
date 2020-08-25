@@ -16,11 +16,11 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public UserInterviewDTO(int? ID, int? InterviewID, int? UserID)
+        public UserInterviewDTO(int? ID, int? interviewID, int? userID)
         {
             this.ID = ID;
-            this.InterviewID = InterviewID;
-            this.UserID = UserID;
+            this.InterviewID = interviewID;
+            this.UserID = userID;
         }
     }
 }

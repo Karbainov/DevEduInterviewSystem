@@ -12,10 +12,10 @@ namespace DevEduInterviewSystem.DAL.DTO
         public RoleDTO()
         {
         }
-        public RoleDTO(int ID, string TypeOfRole)
+        public RoleDTO(int ID, string typeOfRole)
         {
             this.ID = ID;
-            this.TypeOfRole = TypeOfRole;
+            this.TypeOfRole = typeOfRole;
         }
 
         public override bool Equals(object obj)

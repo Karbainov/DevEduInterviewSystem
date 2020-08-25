@@ -17,21 +17,21 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public TaskDTO(int? ID, int? UserID, int? CandidateID, string Message, bool? IsCompleted)
+        public TaskDTO(int? ID, int? userID, int? candidateID, string message, bool? isCompleted)
         {
             this.ID = ID;
-            this.UserID = UserID;
-            this.CandidateID = CandidateID;
-            this.Message = Message;
-            this.IsCompleted = IsCompleted;
+            this.UserID = userID;
+            this.CandidateID = candidateID;
+            this.Message = message;
+            this.IsCompleted = isCompleted;
 
         }
 
-        public TaskDTO(int? ID, int? UserID, int? CandidateID)
+        public TaskDTO(int? ID, int? userID, int? candidateID)
         {
             this.ID = ID;
-            this.UserID = UserID;
-            this.CandidateID = CandidateID;
+            this.UserID = userID;
+            this.CandidateID = candidateID;
         }
 
     }
