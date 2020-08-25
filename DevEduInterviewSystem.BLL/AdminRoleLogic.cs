@@ -12,10 +12,10 @@ namespace DevEduInterviewSystem.BLL
 {
     public class AdminRoleLogic : IRoleLogic
     {
-        public void ChangeNumberOfInterviewsInOnePeriod(int? number)
+        public void ChangeNumberOfInterviewsInOnePeriod(int number)
         {
             InterviewsNumber interviewsLimit =  InterviewsNumber.GetInstance();
-            interviewsLimit.InterviewsLimit = (int)number;
+            interviewsLimit.InterviewsLimit = number;
         }
 
         #region Methods for adding fields in system tables

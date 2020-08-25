@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
@@ -21,30 +22,26 @@ namespace DevEduInterviewSystem.API.Controllers
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
-        [HttpGet("Interviews")]
-        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, 
-            DateTime? finishDateTime, DateTime? dateTime) 
+        [HttpGet]
+        public IActionResult GetInterviews(InterviewsInputModel interview) 
         {
-            if (new UserCRUD().SelectByID((int)userID) == null && userID != null)
+
+            if (new UserCRUD().SelectByID((int)interview.UserID) == null && interview.UserID != null)
             {
                 return new NotFoundObjectResult("User not found");
             }
 
-            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
+            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(interview.UserID, interview.StartDateTime, 
+                interview.FinishDateTime, interview.DateTimeInterview);
 
-            return new JsonResult(interviews);
+            return Ok(interviews);
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPut("Interviews")]
-        public IActionResult ChangeInterviewsLimit(int? number) 
+        [HttpPut("limit")]
+        public IActionResult ChangeInterviewsLimit(int number) 
         {
-            if (number == null)
-            {
-                return BadRequest();
-            }
-
-            _admin.ChangeNumberOfInterviewsInOnePeriod((int)number);
+            _admin.ChangeNumberOfInterviewsInOnePeriod(number);
 
             return new OkResult();
         }
