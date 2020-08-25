@@ -21,9 +21,8 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpGet]
         public IActionResult GetAllHomework()
         {
-            HomeworkCRUD homework = new HomeworkCRUD();
-            List<HomeworkDTO> h = homework.SelectAll();
-            return Ok(h);
+            List<HomeworkDTO> homework = new HomeworkCRUD().SelectAll();
+            return Ok(homework);
         }
 
         [Authorize(Roles = "Teacher, Manager")]
@@ -38,15 +37,15 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("update-homework-after-done")]
         public IActionResult UpdateHomeworkAfterDoneHomework(HomeworkInputModel homeworkInputModel)
         {
-            if (new HomeworkCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.ID) == null)
+            if (new HomeworkCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.ID).ID == null)
             {
                 return NotFound("This homework not found");
             }
-            if (new HomeworkStatusCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.HomeworkStatusID) == null)
+            if (new HomeworkStatusCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.HomeworkStatusID).ID == null)
             {
                 return NotFound("This status homework not found");
             }
-            if (new TestStatusCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.TestStatusID) == null)
+            if (new TestStatusCRUD().SelectByID((int)homeworkInputModel.HomeworkDTO.TestStatusID).ID == null)
             {
                 return NotFound("This test status not found");
             }

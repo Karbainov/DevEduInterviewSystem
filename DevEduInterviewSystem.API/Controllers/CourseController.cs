@@ -33,7 +33,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpDelete("delete/{courseID}")]
         public IActionResult DeleteCourse(int courseID)
         {
-            if (new CourseCRUD().SelectByID(courseID) == null)
+            if (new CourseCRUD().SelectByID(courseID).ID == null)
             {
                 return NotFound("Course not found");
             }

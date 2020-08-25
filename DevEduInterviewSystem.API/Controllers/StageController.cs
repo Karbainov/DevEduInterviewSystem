@@ -42,7 +42,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpDelete("delete/{stageID}")]
         public IActionResult DeleteStage(int stageID)
         {
-            if (new StageCRUD().SelectByID(stageID).Name == null)
+            if (new StageCRUD().SelectByID(stageID).ID == null)
             {
                 return NotFound("Stage not found");
             }
@@ -52,14 +52,14 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 if ((int)s.StageID == stageID)
                 {
-                    return BadRequest(new { errorText = "Stage is used" });
+                    return BadRequest( "Stage is used" );
                 }
             }
             foreach (CandidateDTO c in candidates)
             {
                 if ((int)c.StageID == stageID)
                 {
-                    return BadRequest(new { errorText = "Stage is used" });
+                    return BadRequest("Stage is used" );
                 }
             }
             _admin.DeleteStage(stageID);

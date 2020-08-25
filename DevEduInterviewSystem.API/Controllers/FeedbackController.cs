@@ -66,7 +66,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut]
         public IActionResult ChangeFeedback(FeedbackInputModel feedbackInputModel)
         {
-            if(new FeedbackCRUD().SelectByID((int)feedbackInputModel.feedbackDTO.ID) == null)
+            if(new FeedbackCRUD().SelectByID((int)feedbackInputModel.feedbackDTO.ID).ID == null)
             {
                 return NotFound("Feedback not found");
             }

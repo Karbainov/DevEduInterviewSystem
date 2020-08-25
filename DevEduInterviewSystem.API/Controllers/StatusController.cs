@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class StatusController : Controller
     {
-        private AdminRoleLogic _admin = new AdminRoleLogic(); //нет update
+        private AdminRoleLogic _admin = new AdminRoleLogic(); 
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -43,7 +43,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpDelete("delete/{statusID}")]
         public IActionResult DeleteStatus(int statusID)
         {
-            if (new StatusCRUD().SelectByID(statusID).Name == null)
+            if (new StatusCRUD().SelectByID(statusID).ID == null)
             {
                 return NotFound("Status not found");
             }
@@ -52,7 +52,7 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 if ((int)c.StatusID == statusID)
                 {
-                    return BadRequest(new { errorText = "Status is used" });
+                    return BadRequest("Status is used" );
                 }
             }
             _admin.DeleteStatus(statusID);
