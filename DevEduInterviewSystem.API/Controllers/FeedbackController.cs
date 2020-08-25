@@ -7,6 +7,7 @@ using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,16 +19,15 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
-        private ManagerRoleLogic _manager = new ManagerRoleLogic();
-
-        [HttpGet("all")]
+        private ManagerRoleLogic _manager = new ManagerRoleLogic();
+
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         public IActionResult GetAllFeedbacks()
         {
             List<FeedbackDTO> listFeedback = new List<FeedbackDTO>();
             listFeedback = _manager.GetAllFeedbacks();
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
             return  Ok(listFeedback);
-        }
-
         [HttpGet("all-by-user/{userID}")]
         public IActionResult GetAllFeedbacksByUser(int userID)
         {
@@ -52,11 +52,10 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(listFeedback);
         }
 
-
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpPost]
         public IActionResult CreateFeedback(FeedbackDTO feedbackDTO)
         {
-
             if (new StageChangedCRUD().SelectByID((int)feedbackDTO.StageChangedID).ID == null)
             {
                 return  NotFound("StageChangedID not found");
@@ -75,8 +74,9 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return BadRequest("Field Message missing");
             }
-        }
-
+        }
+
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpPut]
         public IActionResult ChangeFeedback(FeedbackInputModel feedbackInputModel)
         {

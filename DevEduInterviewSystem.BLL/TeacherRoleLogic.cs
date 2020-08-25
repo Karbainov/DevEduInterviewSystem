@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
+using DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -34,24 +36,8 @@ namespace DevEduInterviewSystem.BLL
             {
                 feedback.Add(feedbackDTO);
             }
-            
-        }
-        public void UpdateHomeworkAfterDoneHomework(HomeworkDTO homeworkDTO, FeedbackDTO feedbackDTO)
-        {
            
-            HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
-            homeworkCRUD.UpdateByID(homeworkDTO);
-            FeedbackCRUD feedback = new FeedbackCRUD();
-            if (new FeedbackCRUD().SelectByID((int)feedbackDTO.ID)==null)
-            {
-                feedback.Add(feedbackDTO);
-            }
-            else
-            {
-                feedback.UpdateByID(feedbackDTO);
-            }
         }
-
 
         public List<InterviewDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
         {
@@ -110,6 +96,28 @@ namespace DevEduInterviewSystem.BLL
             AllFeedbacksByCandidateQuery allFeedbacksByCandidate = new AllFeedbacksByCandidateQuery();
             List<AllFeedbackByCandidateDTO> feedbacks = allFeedbacksByCandidate.AllFeedbacksByCandidate(candidateID);
             return feedbacks;
+        }
+        public List<AllOverdueHomeworksDTO> GetAllOverdueHomework()
+        {
+            DateTime dateTimeNow = DateTime.Now;
+            AllOverdueHomeworks allOverdueHomeworks = new AllOverdueHomeworks();
+            List<AllOverdueHomeworksDTO> overdueHomeworks = allOverdueHomeworks.GetAllOverdueHomeworks(dateTimeNow);
+            return overdueHomeworks;
+        }
+        public void UpdateHomeworkAfterDoneHomework(HomeworkDTO homeworkDTO, FeedbackDTO feedbackDTO)
+        {
+
+            HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
+            homeworkCRUD.UpdateByID(homeworkDTO);
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            if (new FeedbackCRUD().SelectByID((int)feedbackDTO.ID) == null)
+            {
+                feedback.Add(feedbackDTO);
+            }
+            else
+            {
+                feedback.UpdateByID(feedbackDTO);
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
             yield return new RoleDTO(2, "Manager");
             yield return new RoleDTO(3, "Teacher");
             yield return new RoleDTO(4, "Phone Operator");
+            yield return new RoleDTO(5, "CandidateTMP");
         }
     }
 }

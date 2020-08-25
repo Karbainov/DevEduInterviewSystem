@@ -18,6 +18,8 @@ namespace DevEduInterviewSystem.DAL.DTO.QuereDTO
         public DateTime Birthday { get; set; }
         public string CourseName { get; set; }
         public string GroupName { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public bool MaritalStatus { get; set; }
         public string Education { get; set; }
         public string WorkPlace { get; set; }
