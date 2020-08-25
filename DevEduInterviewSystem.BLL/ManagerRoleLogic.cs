@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Text;
-using System.Threading.Tasks.Dataflow;
-using DevEduInterviewSystem.DAL.DTO;
-using DevEduInterviewSystem.DAL.Shared;
+﻿using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QuereDTO;
+using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using DevEduInterviewSystem.DAL.StoredProcedures.Query;
-using DevEduInterviewSystem.DAL.DTO.QueryDTO;
-using DevEduInterviewSystem.DAL.StoredProcedures.Query.AllOverdueHomework;
+using System;
+using System.Collections.Generic;
 
 namespace DevEduInterviewSystem.BLL
 {
@@ -158,11 +153,24 @@ namespace DevEduInterviewSystem.BLL
         }
         #endregion
 
-        public void AddTask(TaskDTO taskDTO)
+        #region Task
+        public void AddTask(TaskDTO task)
         {
-            TaskCRUD task = new TaskCRUD();
-            task.Add(taskDTO);
+          new TaskCRUD().Add(task);
+        } 
+
+        public void UpdateTask(TaskDTO task)
+        {
+            new TaskCRUD().UpdateByID(task);
         }
+
+        public List<AllTasksByUserDTO> SelectAllTasksByUser(int userID)
+        {
+
+           return new AllTasksByUserQuery().SelectAllTasksByUser(userID);
+        }
+        #endregion
+
         public void AddFeedback(FeedbackDTO feedbackDTO)
         {
             FeedbackCRUD feedback = new FeedbackCRUD();

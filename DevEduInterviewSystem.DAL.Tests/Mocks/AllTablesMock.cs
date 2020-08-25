@@ -147,8 +147,8 @@ namespace DevEduInterviewSystem.DAL.Tests.Mocks
                 TaskCRUD taskCRUD = new TaskCRUD();
                 for (int i = 0; i < UserID.Count; i++)
                 {
-                    TaskDTO task1 = new TaskDTO(1, UserID[i], CandidateID[i]);
-                    TaskDTO task2 = new TaskDTO(2, UserID[i], CandidateID[CandidateID.Count - i - 1]);
+                    TaskDTO task1 = new TaskDTO(1, UserID[i], CandidateID[i], "Call", true);
+                    TaskDTO task2 = new TaskDTO(2, UserID[i], CandidateID[CandidateID.Count - i - 1], "Schedule Interview", false);
                     taskCRUD.Add(task1);
                     taskCRUD.Add(task2);
                 }
