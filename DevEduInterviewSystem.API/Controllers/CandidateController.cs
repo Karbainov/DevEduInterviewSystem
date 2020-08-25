@@ -89,11 +89,18 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             int? courseID = course_CandidateDTO.CourseID;
             int? candidateID = course_CandidateDTO.CandidateID;
-            if (new CandidateCRUD().SelectByID((int)candidateID) != null && new CourseCRUD().SelectByID((int)courseID) != null)
+            if (new CandidateCRUD().SelectByID((int)candidateID).ID == null)
             {
-                _manager.UpdateCourseByCandidate(course_CandidateDTO);
+                return new NotFoundObjectResult("candidate not found");
             }
+            if (new CourseCRUD().SelectByID((int)courseID).ID == null)
+            {
+                return new NotFoundObjectResult("group not found");
+            }
+            _manager.UpdateCourseByCandidate(course_CandidateDTO);
+
             return Ok();
+
         }
 
         

@@ -136,6 +136,12 @@ namespace DevEduInterviewSystem.BLL
 
             ChangeStageAddFeedback(candidateID, stageID, feedbackDTO);
         }
+        public void UpdateGroupByCandidate(GroupCandidateDTO groupCandidateDTO)
+        {
+            GroupCandidateCRUD group = new GroupCandidateCRUD();
+            group.UpdateByID(groupCandidateDTO);
+        }            
+        
         private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
         {
             SqlConnection Connection = new SqlConnection(ConnectionSingleTone.GetInstance().ConnectionString);
