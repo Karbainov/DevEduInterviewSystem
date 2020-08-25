@@ -6,6 +6,7 @@ using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,16 +53,17 @@ namespace DevEduInterviewSystem.API.Controllers
 
 
 
-
+        [Authorize(Roles = "Teacher, Manager, PhoneOperator")]
         [HttpGet("Interviews")]
 
         public IActionResult GetInterviews(int? userID, DateTime? startDateTime, 
             DateTime? finishDateTime, DateTime? dateTime) 
         {
-            if (new UserCRUD().SelectByID((int)userID) == null && userID != null)
+            if (userID != null && new UserCRUD().SelectByID((int)userID) == null)
             {
                 return new NotFoundObjectResult("User not found");
             }
+         
 
             List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
 

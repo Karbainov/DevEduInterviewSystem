@@ -79,21 +79,28 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures.CRUD
             command.Parameters.Add(IDParam);
 
             SqlDataReader reader = command.ExecuteReader();
-            UserDTO user = new UserDTO();
 
-            if (reader.HasRows) 
+            if (!reader.HasRows) 
             {
-                while (reader.Read())
-                {
-                    user.ID = (int)reader["id"];
-                    user.Login = (string)reader["Login"];
-                    user.Password = (string)reader["Password"];
-                    user.FirstName = (string)reader["FirstName"];
-                    user.LastName = (string)reader["LastName"];
-                }
+                reader.Close();
+                Connection.Close();
+
+                return null;
             }
+
+            UserDTO user = new UserDTO();
+            while (reader.Read())
+            {
+                user.ID = (int)reader["id"];
+                user.Login = (string)reader["Login"];
+                user.Password = (string)reader["Password"];
+                user.FirstName = (string)reader["FirstName"];
+                user.LastName = (string)reader["LastName"];
+            }
+
             reader.Close();
             Connection.Close();
+
             return user;
         }
         public override int UpdateByID(UserDTO dto)

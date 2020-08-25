@@ -76,7 +76,7 @@ namespace DevEduInterviewSystem.BLL
         //    //To do: try catch in controller (catch - exception=> IActionResult bad request)
         //}
 
-        public void ScheduleInterview(InterviewDTO interviewDTO, int userID) 
+        public void ScheduleInterview(InterviewDTO interviewDTO, int userID, int stageID, FeedbackDTO feedbackDTO = null) 
         {
 
             InterviewCRUD interview = new InterviewCRUD();
@@ -90,12 +90,42 @@ namespace DevEduInterviewSystem.BLL
                 interview.Add(interviewDTO);
                 UserInterviewCRUD userInterview = new UserInterviewCRUD();
                 userInterview.Add(new UserInterviewDTO(null, interviewDTO.ID, userID));
+                ChangeStageAddFeedback((int)interviewDTO.CandidateID, stageID, feedbackDTO);
             }
             else
             {
                 throw new Exception("The interviews limit is exceeded");
             }
             
+        }
+
+        public List<InterviewDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
+        {
+
+            InterviewCRUD interviewCRUD = new InterviewCRUD();
+
+            if (userID != null && startDateTimeInterview != null && finishDateTimeInterview != null)
+            {
+                return interviewCRUD.SelectByDateTimeIntervalAndUser((int)userID, (DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
+            }
+            else if (userID != null && dateTime != null)
+            {
+                return interviewCRUD.SelectByUserAndDateTime((DateTime)dateTime, (int)userID);
+            }
+            else if (userID != null)
+            {
+                return interviewCRUD.SelectByUser((int)userID);
+            }
+            else if (startDateTimeInterview != null && finishDateTimeInterview != null)
+            {
+                return interviewCRUD.SelectByDateTimeInterval((DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
+            }
+            else if (dateTime != null)
+            {
+                return interviewCRUD.SelectByDateTime((DateTime)dateTime);
+            }
+
+            return interviewCRUD.SelectAll();
         }
 
     }

@@ -194,5 +194,36 @@ namespace DevEduInterviewSystem.BLL
                 AddFeedback(feedbackDTO);
             }
         }
+
+        public List<InterviewDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
+        {
+
+            InterviewCRUD interviewCRUD = new InterviewCRUD();
+
+            if (userID != null && startDateTimeInterview != null && finishDateTimeInterview != null)
+            {
+                return interviewCRUD.SelectByDateTimeIntervalAndUser((int)userID, (DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
+            }
+            else if (userID != null && dateTime != null)
+            {
+                return interviewCRUD.SelectByUserAndDateTime((DateTime)dateTime, (int)userID);
+            }
+            else if (userID != null)
+            {
+                return interviewCRUD.SelectByUser((int)userID);
+            }
+            else if (startDateTimeInterview != null && finishDateTimeInterview != null)
+            {
+                return interviewCRUD.SelectByDateTimeInterval((DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
+            }
+            else if (dateTime != null)
+            {
+                return interviewCRUD.SelectByDateTime((DateTime)dateTime);
+            }
+
+            return interviewCRUD.SelectAll();
+        }
+
+
     }
 }
