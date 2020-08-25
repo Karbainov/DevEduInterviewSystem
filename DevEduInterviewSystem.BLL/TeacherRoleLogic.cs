@@ -93,7 +93,7 @@ namespace DevEduInterviewSystem.BLL
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
         }
-        public void UpdateFeedback(FeedbackDTO feedbackDTO) //нужно проверить
+        public void UpdateFeedback(FeedbackDTO feedbackDTO) 
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.UpdateByID(feedbackDTO);

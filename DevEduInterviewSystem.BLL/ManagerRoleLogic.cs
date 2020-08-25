@@ -196,6 +196,11 @@ namespace DevEduInterviewSystem.BLL
             }
         }
 
+        public void UpdateFeedback(FeedbackDTO feedbackDTO)
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            feedback.UpdateByID(feedbackDTO);
+        }
         public List<FeedbackDTO> GetAllFeedbacks()
         {
             FeedbackCRUD feedbackCRUD = new FeedbackCRUD();
