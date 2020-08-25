@@ -56,26 +56,6 @@ namespace DevEduInterviewSystem.BLL
 
         }
 
-        //public void ScheduleInterview(InterviewDTO interviewDTO, int stageID, FeedbackDTO feedbackDTO = null) //Зачем отдельно Stage? Зачем при планировании Feedback? Где User? 
-        //{
-        //    List<AllInterviewsDTO> interviewsList = new List<AllInterviewsDTO>();
-        //    AllInterviewsByDateQuery interviews = new AllInterviewsByDateQuery();
-        //    interviewsList = interviews.SelectAllInterviewsByDate((DateTime)interviewDTO.DateTimeInterview);
-
-        //    InterviewsNumber interviewsLimit = new InterviewsNumber(InterviewsNumber.GetInstance().InterviewsLimit);
-        //    if (interviewsList.Count < interviewsLimit.InterviewsLimit)
-        //    {
-        //        InterviewCRUD interview = new InterviewCRUD();
-        //        interview.Add(interviewDTO);
-        //        ChangeStageAddFeedback((int)interviewDTO.CandidateID, stageID, feedbackDTO);
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("The interviews limit is exceeded");
-        //    }
-        //    //To do: try catch in controller (catch - exception=> IActionResult bad request)
-        //}
-
         public void ScheduleInterview(InterviewDTO interviewDTO, int userID, int stageID, FeedbackDTO feedbackDTO = null) 
         {
 
