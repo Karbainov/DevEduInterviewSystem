@@ -20,7 +20,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
-        [HttpGet("all-feedbacks")]
+        [HttpGet("all")]
         public IActionResult GetAllFeedbacks()
         {
             List<FeedbackDTO> listFeedback = new List<FeedbackDTO>();
@@ -28,11 +28,19 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(listFeedback);
         }
 
-        [HttpGet("all-feedbacks-By-User/{userID}")]
+        [HttpGet("all-by-user/{userID}")]
         public IActionResult GetAllFeedbacksByUser(int userID)
         {
             List<AllFeedbackByUserDTO> listFeedback = new List<AllFeedbackByUserDTO>();
             listFeedback = _manager.GetAllFeedbacksByUser(userID);
+            return new OkObjectResult(listFeedback);
+        }
+
+        [HttpGet("all-by-candidate/{candidateID}")]
+        public IActionResult AllFeedbacksByCandidate(int candidateID)
+        {
+            List<AllFeedbackByCandidateDTO> listFeedback = new List<AllFeedbackByCandidateDTO>();
+            listFeedback = _manager.GetAllFeedbacksByCandidate(candidateID);
             return new OkObjectResult(listFeedback);
         }
 
