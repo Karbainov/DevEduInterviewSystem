@@ -196,6 +196,21 @@ namespace DevEduInterviewSystem.BLL
                 AddFeedback(feedbackDTO);
             }
         }
+        public void UpdateHomeworkAfterDoneHomework(HomeworkDTO homeworkDTO, FeedbackDTO feedbackDTO)
+        {
+
+            HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
+            homeworkCRUD.UpdateByID(homeworkDTO);
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            if (new FeedbackCRUD().SelectByID((int)feedbackDTO.ID) == null)
+            {
+                feedback.Add(feedbackDTO);
+            }
+            else
+            {
+                feedback.UpdateByID(feedbackDTO);
+            }
+        }
 
         public List<FeedbackDTO> GetAllFeedbacks()
         {

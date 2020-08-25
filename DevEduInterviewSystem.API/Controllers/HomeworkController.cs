@@ -17,7 +17,7 @@ namespace DevEduInterviewSystem.API.Controllers
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
 
-        [Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public IActionResult GetAllHomework()
         {
@@ -50,10 +50,10 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return new NotFoundObjectResult("This test status not found");
             }
-            _teacher.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
+            _manager.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
             return new OkResult();
         }
-        [Authorize(Roles = "Manager")]
+      // [Authorize(Roles = "Manager")]
         [HttpGet("get-all-overdue-homework")]
         public IActionResult GetAllOverdueHomework()
         {
