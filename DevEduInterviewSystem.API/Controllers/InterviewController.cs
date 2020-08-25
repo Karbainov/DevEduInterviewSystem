@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,31 +21,27 @@ namespace DevEduInterviewSystem.API.Controllers
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
-        [HttpGet("Interviews")]
-
-        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, 
-            DateTime? finishDateTime, DateTime? dateTime) 
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
+        [HttpGet]
+        public IActionResult GetInterviews(InterviewsInputModel interview) 
         {
-            if (new UserCRUD().SelectByID((int)userID) == null && userID != null)
+
+            if (new UserCRUD().SelectByID((int)interview.UserID) == null && interview.UserID != null)
             {
                 return new NotFoundObjectResult("User not found");
             }
 
-            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
+            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(interview.UserID, interview.StartDateTime, 
+                interview.FinishDateTime, interview.DateTimeInterview);
 
-            return new JsonResult(interviews);
+            return Ok(interviews);
         }
-        //TO DO: Добавить всем кроме Админа 
 
-        [HttpPut("Interviews")]
-        public IActionResult ChangeInterviewsLimit(int? number) 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("limit")]
+        public IActionResult ChangeInterviewsLimit(int number) 
         {
-            if (number == null)
-            {
-                return BadRequest();
-            }
-
-            _admin.ChangeNumberOfInterviewsInOnePeriod((int)number);
+            _admin.ChangeNumberOfInterviewsInOnePeriod(number);
 
             return new OkResult();
         }

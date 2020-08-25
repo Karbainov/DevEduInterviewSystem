@@ -68,10 +68,10 @@ namespace DevEduInterviewSystem.DAL.Tests
         }
 
         [Test, TestCaseSource(typeof(AllStudentsOfGroupProcedureDataSourse))]
-        //public void SelectAllStudentsOfGroupTest(int idnumber, List<AllStudentsOfGroupDTO> expected)
-        //{
-        //    AllStudentsOfGroupProcedure _allstudents = new AllStudentsOfGroupProcedure();
-        //    List<AllStudentsOfGroupDTO> actual = _allstudents.SelectAllStudentsOfGroup(_mockGroupID[idnumber]);
+        public void SelectAllStudentsOfGroupTest(int idnumber, List<AllStudentsOfGroupDTO> expected)
+        {
+            AllStudentsOfGroup _allstudents = new AllStudentsOfGroup();
+            List<AllStudentsOfGroupDTO> actual = _allstudents.SelectAllStudentsOfGroup(_mockGroupID[idnumber]);
 
         //    CollectionAssert.AreEqual(expected, actual);
         //}
