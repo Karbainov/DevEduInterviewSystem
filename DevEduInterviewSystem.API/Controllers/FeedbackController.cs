@@ -20,14 +20,15 @@ namespace DevEduInterviewSystem.API.Controllers
         private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
-
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         public IActionResult GetAllFeedbacks()
         {
             List<FeedbackDTO> listFeedback = new List<FeedbackDTO>();
             listFeedback = _manager.GetAllFeedbacks();
+            return Ok(listFeedback);
+        }
+
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
-            return  Ok(listFeedback);
         [HttpGet("all-by-user/{userID}")]
         public IActionResult GetAllFeedbacksByUser(int userID)
         {
