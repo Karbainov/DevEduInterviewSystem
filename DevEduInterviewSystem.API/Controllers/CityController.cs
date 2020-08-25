@@ -34,7 +34,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpDelete("delete-city/{cityID}")]
         public IActionResult DeleteCity(int cityID)
         {
-            if (new CityCRUD().SelectByID(cityID) == null)
+            if (new CityCRUD().SelectByID(cityID).ID == null)
             {
                 return NotFound("City not found");
             }

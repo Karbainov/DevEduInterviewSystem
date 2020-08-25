@@ -26,11 +26,11 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPost]
         public IActionResult CreateCandidate(CandidateInputModel candidateInputModel)
         {
-            if (new CityCRUD().SelectByID((int)candidateInputModel.CandidateDTO.CityID) == null)
+            if (new CityCRUD().SelectByID((int)candidateInputModel.CandidateDTO.CityID).ID == null)
             {
                 return NotFound("City not found");
             }
-            if (new CourseCRUD().SelectByID((int)candidateInputModel.CourseID) == null)
+            if (new CourseCRUD().SelectByID((int)candidateInputModel.CourseID).ID == null)
             {
                 return NotFound("Course not found");
             }
@@ -70,7 +70,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [HttpPut("{candidateID}")]
         public IActionResult UpdateCandidate(CandidateInputModel candidateInputModel)
         {
-            if(new CandidateCRUD().SelectByID((int)candidateInputModel.CandidateDTO.ID) != null)
+            if(new CandidateCRUD().SelectByID((int)candidateInputModel.CandidateDTO.ID).ID != null)
             {
                 _manager.UpdateCandidate(candidateInputModel.CandidateDTO);
                 return Ok();
@@ -110,7 +110,7 @@ namespace DevEduInterviewSystem.API.Controllers
         [Authorize(Roles = "CandidateTMP")]
         [HttpPut("{candidateID}/fill-the-form")]
         public IActionResult UpdateCandidateUponFormFilling(CandidateFormModel candidate)        {
-            if (new CandidateCRUD().SelectByID((int)candidate.CandidateDTO.ID).FirstName == null)
+            if (new CandidateCRUD().SelectByID((int)candidate.CandidateDTO.ID).ID == null)
             {
                 return NotFound();
             }
