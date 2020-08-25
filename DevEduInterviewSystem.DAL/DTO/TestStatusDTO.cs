@@ -13,10 +13,10 @@ namespace DevEduInterviewSystem.DAL.DTO
         {
         }
 
-        public TestStatusDTO(int? ID, string Name)
+        public TestStatusDTO(int? ID, string name)
         {
             this.ID = ID;
-            this.Name = Name;
+            this.Name = name;
         }
     }
 }

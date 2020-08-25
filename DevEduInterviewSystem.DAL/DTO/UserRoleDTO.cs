@@ -13,16 +13,16 @@ namespace DevEduInterviewSystem.DAL.DTO
         public UserRoleDTO()
         {
         }
-        public UserRoleDTO (int? ID, int? UserID, int? RoleID)
+        public UserRoleDTO (int? ID, int? userID, int? roleID)
         {
             this.ID = ID;
-            this.UserID = UserID;
-            this.RoleID = RoleID;
+            this.UserID = userID;
+            this.RoleID = roleID;
         }
-        public UserRoleDTO(int? UserID, int? RoleID)
+        public UserRoleDTO(int? userID, int? roleID)
         {
-            this.UserID = UserID;
-            this.RoleID = RoleID;
+            this.UserID = userID;
+            this.RoleID = roleID;
         }
     }
 }

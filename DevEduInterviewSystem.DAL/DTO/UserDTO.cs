@@ -16,13 +16,13 @@ namespace DevEduInterviewSystem.DAL.DTO
         public UserDTO()
         {
         }
-        public UserDTO(int? ID, string Login, string Password, string FirstName, string LastName, bool? isDeleted = false)
+        public UserDTO(int? ID, string login, string password, string firstName, string lastName, bool? isDeleted = false)
         {
             this.ID = ID;
-            this.Login = Login;
-            this.Password = Password;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
+            this.Login = login;
+            this.Password = password;
+            this.FirstName = firstName;
+            this.LastName = lastName;
             this.IsDeleted = isDeleted;
         }
     }
