@@ -26,7 +26,7 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest("Name field missing");
             }
             _admin.AddCourse(course);
-            return new OkResult();
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -35,7 +35,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new CourseCRUD().SelectByID(courseID) == null)
             {
-                return new NotFoundObjectResult("Course not found");
+                return NotFound("Course not found");
             }
             List<Course_CandidateDTO> candidates = new Course_CandidateCRUD().SelectAll();
             foreach (Course_CandidateDTO c in candidates)

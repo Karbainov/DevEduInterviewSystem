@@ -7,7 +7,7 @@ using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,14 +17,12 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class FeedbackController : Controller
     {
-        private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacher = new TeacherRoleLogic();
-        private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private ManagerRoleLogic _manager = new ManagerRoleLogic();
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         public IActionResult GetAllFeedbacks()
         {
-            List<FeedbackDTO> listFeedback = new List<FeedbackDTO>();
-            listFeedback = _manager.GetAllFeedbacks();
+            List<FeedbackDTO> listFeedback = _manager.GetAllFeedbacks();
             return Ok(listFeedback);
         }
 
@@ -36,21 +34,8 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return NotFound("User not found");
             }
-            List<AllFeedbackByUserDTO> listFeedback = new List<AllFeedbackByUserDTO>();
-            listFeedback = _manager.GetAllFeedbacksByUser(userID);
+            List<AllFeedbackByUserDTO>listFeedback = _manager.GetAllFeedbacksByUser(userID);
             return Ok(listFeedback);
-        }
-
-        [HttpGet("all-by-candidate/{candidateID}")]
-        public IActionResult AllFeedbacksByCandidate(int candidateID)
-        {
-            if(new CandidateCRUD().SelectByID(candidateID).ID == null )
-            {
-                return NotFound("Candidate not found");
-            }
-            List<AllFeedbackByCandidateDTO> listFeedback = new List<AllFeedbackByCandidateDTO>();
-            listFeedback = _manager.GetAllFeedbacksByCandidate(candidateID);
-            return new OkObjectResult(listFeedback);
         }
 
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
@@ -75,8 +60,8 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return BadRequest("Field Message missing");
             }
-        }
-
+        }
+
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpPut]
         public IActionResult ChangeFeedback(FeedbackInputModel feedbackInputModel)

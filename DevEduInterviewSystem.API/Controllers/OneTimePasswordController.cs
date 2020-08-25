@@ -26,7 +26,7 @@ namespace DevEduInterviewSystem.API.Controllers
             string password = null;
             if (new CandidateCRUD().SelectByID(candidateID) == null)
             {
-                return new NotFoundResult();
+                return NotFound();
             }
             password = _manager.GetOneTimePassword();
 
@@ -48,7 +48,7 @@ namespace DevEduInterviewSystem.API.Controllers
             otp.OneTimePassword = password;
             otp.DateOfPasswordIssue = DateTime.UtcNow;
             _manager.AddOneTimePassword(otp);
-            return new OkResult();
+            return Ok();
         }
     }
 }

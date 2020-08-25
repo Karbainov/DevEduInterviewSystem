@@ -13,16 +13,12 @@ namespace DevEduInterviewSystem.API.Controllers
     [ApiController]
     public class InterviewController : Controller
     {
-        private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
         private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
-        private ManagerRoleLogic _manager = new ManagerRoleLogic();
-        private AdminRoleLogic _admin = new AdminRoleLogic();
-       
-
-
-        [HttpPost("Interviews")]
-
-        public IActionResult CreateInterviews(InterviewsInputModel interviewsInputModel)
+        private AdminRoleLogic _admin = new AdminRoleLogic();
+
+        [Authorize(Roles = "Manager, Teacher, Phone Operator")]
+        [HttpGet]
+        public IActionResult GetInterviews(InterviewsInputModel interview) 
         {
             if( new UserCRUD().SelectByID((int)interviewsInputModel.UserID) == null)
             {
@@ -57,7 +53,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (userID != null && new UserCRUD().SelectByID((int)userID) == null)
             {
-                return new NotFoundObjectResult("User not found");
+                return NotFound("User not found");
             }
          
             List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
@@ -71,7 +67,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             _admin.ChangeNumberOfInterviewsInOnePeriod(number);
 
-            return new OkResult();
+            return Ok();
         }
     }
 }

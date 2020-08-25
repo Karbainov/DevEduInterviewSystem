@@ -27,7 +27,7 @@ namespace DevEduInterviewSystem.API.Controllers
                 return BadRequest("Name field missing");
             }
             _admin.AddStage(stage);
-            return new OkResult();
+            return  Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -35,7 +35,7 @@ namespace DevEduInterviewSystem.API.Controllers
         public IActionResult GetAllStage()
         {
             List<StageDTO> stages = new StageCRUD().SelectAll();
-            return new ObjectResult(stages);
+            return  Ok(stages);
         }
 
         [Authorize(Roles = "Admin")]
@@ -44,7 +44,7 @@ namespace DevEduInterviewSystem.API.Controllers
         {
             if (new StageCRUD().SelectByID(stageID).Name == null)
             {
-                return new NotFoundObjectResult("Stage not found");
+                return NotFound("Stage not found");
             }
             List<CandidateDTO> candidates = new CandidateCRUD().SelectAll();
             List<StageChangedDTO> stages = new StageChangedCRUD().SelectAll();

@@ -96,14 +96,6 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(roles);
         }
 
-        // ДЛЯ ПРОВЕРКИ ТОКЕНА, УДАЛИТЬ ДО ЗАЩИТЫ
-        [Authorize(Roles = "Manager, Phone Operator")]
-        [HttpGet("token/a")]
-
-        public string GetA()
-        {
-            return "AAA";
-        }
 
     }
 }
