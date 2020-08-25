@@ -16,8 +16,10 @@ namespace DevEduInterviewSystem.API.Controllers
     public class HomeworkController : Controller
     {
         private ManagerRoleLogic _manager = new ManagerRoleLogic();
+        private TeacherRoleLogic _teacher = new TeacherRoleLogic();
 
-        [Authorize(Roles = "Manager")]
+
+        [Authorize(Roles = "Teacher, Manager")]
         [HttpGet]
         public IActionResult GetAllHomework()
         {
@@ -26,7 +28,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(h);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher, Manager")]
         [HttpGet("homework-of-candidate/{candidateID}")]
         public IActionResult GetHomeworkOfCandidate(int candidateID)
         {
@@ -34,7 +36,7 @@ namespace DevEduInterviewSystem.API.Controllers
             return new OkObjectResult(homework.SelectByID(candidateID));
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Teacher")]
         [HttpPut("update-homework-after-done")]
         public IActionResult UpdateHomeworkAfterDoneHomework(HomeworkInputModel homeworkInputModel)
         {
@@ -50,14 +52,14 @@ namespace DevEduInterviewSystem.API.Controllers
             {
                 return new NotFoundObjectResult("This test status not found");
             }
-            _manager.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
+            _teacher.UpdateHomeworkAfterDoneHomework(homeworkInputModel.HomeworkDTO, homeworkInputModel.FeedbackDTO);
             return new OkResult();
         }
-      // [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager")]
         [HttpGet("get-all-overdue-homework")]
         public IActionResult GetAllOverdueHomework()
         {
-           return new OkObjectResult(_manager.GetAllOverdueHomework());
+           return new OkObjectResult(_teacher.GetAllOverdueHomework());
         }
     }
 }

@@ -196,21 +196,7 @@ namespace DevEduInterviewSystem.BLL
                 AddFeedback(feedbackDTO);
             }
         }
-        public void UpdateHomeworkAfterDoneHomework(HomeworkDTO homeworkDTO, FeedbackDTO feedbackDTO)
-        {
-
-            HomeworkCRUD homeworkCRUD = new HomeworkCRUD();
-            homeworkCRUD.UpdateByID(homeworkDTO);
-            FeedbackCRUD feedback = new FeedbackCRUD();
-            if (new FeedbackCRUD().SelectByID((int)feedbackDTO.ID) == null)
-            {
-                feedback.Add(feedbackDTO);
-            }
-            else
-            {
-                feedback.UpdateByID(feedbackDTO);
-            }
-        }
+        
 
         public List<FeedbackDTO> GetAllFeedbacks()
         {
@@ -225,14 +211,6 @@ namespace DevEduInterviewSystem.BLL
             List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
             return feedbacks;
         }
-        public List<AllOverdueTestsDTO> GetAllOverdueHomework()
-        {
-            DateTime dateTimeNow = DateTime.Now;
-            AllOverdueHomeworks allOverdueHomeworks = new AllOverdueHomeworks();
-            List<AllOverdueTestsDTO> overdueHomeworks = allOverdueHomeworks.GetAllOverdueHomeworks(dateTimeNow);
-
-
-            return overdueHomeworks;
-        }
+        
     }
 }
