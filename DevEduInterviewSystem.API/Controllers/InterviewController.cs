@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevEduInterviewSystem.API.Controllers
@@ -17,20 +14,49 @@ namespace DevEduInterviewSystem.API.Controllers
     public class InterviewController : Controller
     {
         private TeacherRoleLogic _teacherRoleLogic = new TeacherRoleLogic();
-        private AdminRoleLogic _admin = new AdminRoleLogic();
-
+        private AdminRoleLogic _admin = new AdminRoleLogic();
+
         [Authorize(Roles = "Manager, Teacher, Phone Operator")]
         [HttpGet]
         public IActionResult GetInterviews(InterviewsInputModel interview) 
         {
+            if( new UserCRUD().SelectByID((int)interviewsInputModel.UserID) == null)
+            {
+                return new NotFoundObjectResult("User not found");
+            }
+            if (new CandidateCRUD().SelectByID((int)interviewsInputModel.InterviewDTO.CandidateID) == null)
+            {
+                return new NotFoundObjectResult("Candidate not found");
+            }
+            if (new InterviewStatusCRUD().SelectByID((int)interviewsInputModel.InterviewDTO.InterviewStatusID) == null)
+            {
+                return new NotFoundObjectResult("Interview Status not found");
+            }
+            if ((interviewsInputModel.InterviewDTO.Attempt != null &&
+                interviewsInputModel.InterviewDTO.DateTimeInterview != null))
+            {
+                _phoneOperator.ScheduleInterview(interviewsInputModel.InterviewDTO, (int)interviewsInputModel.UserID, (int)interviewsInputModel.StageID, interviewsInputModel.FeedbackDTO);
+                    return new OkResult();
+            }
+            else
+            {
+                return BadRequest("Fields missing");
+            }
+        }
 
-            if (new UserCRUD().SelectByID((int)interview.UserID) == null && interview.UserID != null)
+
+
+        [Authorize(Roles = "Teacher, Manager, PhoneOperator")]
+        [HttpGet("Interviews")]
+
+        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, DateTime? finishDateTime, DateTime? dateTime) 
+        {
+            if (userID != null && new UserCRUD().SelectByID((int)userID) == null)
             {
                 return NotFound("User not found");
             }
-
-            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(interview.UserID, interview.StartDateTime, 
-                interview.FinishDateTime, interview.DateTimeInterview);
+         
+            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
 
             return Ok(interviews);
         }

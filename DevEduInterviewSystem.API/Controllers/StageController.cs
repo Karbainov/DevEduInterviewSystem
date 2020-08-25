@@ -19,7 +19,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private AdminRoleLogic _admin = new AdminRoleLogic();
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
+        [HttpPost("Stage")]
         public IActionResult AddStage(StageDTO stage)
         {
             if (stage.Name == null)

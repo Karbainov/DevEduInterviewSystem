@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using DevEduInterviewSystem.DAL.DTO;
 using DevEduInterviewSystem.DAL.DTO.QuereDTO;
 using DevEduInterviewSystem.DAL.DTO.QueryDTO;
@@ -79,7 +78,7 @@ namespace DevEduInterviewSystem.BLL
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
         }
-        public void UpdateFeedback(FeedbackDTO feedbackDTO) //нужно проверить
+        public void UpdateFeedback(FeedbackDTO feedbackDTO) 
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.UpdateByID(feedbackDTO);
@@ -87,8 +86,14 @@ namespace DevEduInterviewSystem.BLL
 
         public List<AllFeedbackByUserDTO> GetAllFeedbacksByUser(int userID)
         {
-            AllFeedbackByUserQuery tmp = new AllFeedbackByUserQuery();
-            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbackByUser(userID);
+            AllFeedbacksByUserQuery tmp = new AllFeedbacksByUserQuery();
+            List<AllFeedbackByUserDTO> feedbacks = tmp.AllFeedbacksByUser(userID);
+            return feedbacks;
+        }
+        public List<AllFeedbackByCandidateDTO> GetAllFeedbacksByCandidate(int candidateID)
+        {
+            AllFeedbacksByCandidateQuery allFeedbacksByCandidate = new AllFeedbacksByCandidateQuery();
+            List<AllFeedbackByCandidateDTO> feedbacks = allFeedbacksByCandidate.AllFeedbacksByCandidate(candidateID);
             return feedbacks;
         }
         public List<AllOverdueHomeworksDTO> GetAllOverdueHomework()
