@@ -10,14 +10,14 @@ namespace DevEduInterviewSystem.DAL.DTO
         public int? UserID { get; set; }
         public int? CandidateID { get; set; }
         public string Message { get; set; }
-        public string IsCompleted { get; set; }
+        public bool? IsCompleted { get; set; }
        
         public TaskDTO()
         {
 
         }
 
-        public TaskDTO(int? ID, int? UserID, int? CandidateID, string Message, string IsCompleted)
+        public TaskDTO(int? ID, int? UserID, int? CandidateID, string Message, bool? IsCompleted)
         {
             this.ID = ID;
             this.UserID = UserID;

@@ -64,7 +64,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                         UserID = (int)reader["UserID"],
                         CandidateID = (int)reader["CandidateID"],
                         Message = (string)reader["Message"],
-                        IsCompleted = (string)reader["IsCompleted"]
+                        IsCompleted = (bool)reader["IsCompleted"]
                     };
                     tasks.Add(task);
                 }
@@ -94,7 +94,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                     task.UserID = (int)reader["UserID"];
                     task.CandidateID = (int)reader["CandidateID"];
                     task.Message = (string)reader["Message"];
-                    task.IsCompleted = (string)reader["IsCompleted"];
+                    task.IsCompleted = (bool)reader["IsCompleted"];
 
                 }
             }
@@ -112,7 +112,7 @@ namespace DevEduInterviewSystem.DAL.StoredProcedures
                 dto.CandidateID,
                 dto.UserID,
                 dto.Message,
-                IsComleted = dto.IsCompleted
+                dto.IsCompleted
             };
             IDbConnection.Query(procedure, values, commandType: CommandType.StoredProcedure);
             return (int)dto.ID;           

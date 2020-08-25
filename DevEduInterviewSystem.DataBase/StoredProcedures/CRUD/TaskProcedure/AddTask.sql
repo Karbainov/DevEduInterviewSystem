@@ -2,7 +2,7 @@
 @UserID int,
 @CandidateID int,
 @Message nvarchar (2500),
-@IsCompleted nvarchar (50)
+@IsCompleted bit 
 AS
 INSERT INTO [dbo].[Task]
 VALUES (@UserID, @CandidateID, @Message, @IsCompleted)

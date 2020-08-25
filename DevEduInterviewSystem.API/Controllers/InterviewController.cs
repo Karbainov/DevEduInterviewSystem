@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using DevEduInterviewSystem.API.Models.Input;
 using DevEduInterviewSystem.BLL;
 using DevEduInterviewSystem.DAL.DTO;
+using DevEduInterviewSystem.DAL.DTO.CalendarInterviews;
 using DevEduInterviewSystem.DAL.StoredProcedures.CRUD;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +19,7 @@ namespace DevEduInterviewSystem.API.Controllers
         private AdminRoleLogic _admin = new AdminRoleLogic();        private PhoneOperatorRoleLogic _phoneOperator = new PhoneOperatorRoleLogic();
 
         [Authorize(Roles = "Manager, Phone Operator")]
-        [HttpGet]
+        [HttpGet("add")]
         public IActionResult CreateInterview(InterviewsInputModel interview) 
         {
             if( new UserCRUD().SelectByID((int)interview.UserID).ID == null)
@@ -46,17 +48,18 @@ namespace DevEduInterviewSystem.API.Controllers
 
 
 
-        [Authorize(Roles = "Teacher, Manager, PhoneOperator")]
-        [HttpGet("Interviews")]
+        [Authorize(Roles = "Teacher, Manager, PhoneOperator, Admin")]
+        [HttpGet]
 
-        public IActionResult GetInterviews(int? userID, DateTime? startDateTime, DateTime? finishDateTime, DateTime? dateTime) 
+        public IActionResult GetInterviews(SingleInterviewModel model) 
         {
-            if (userID != null && new UserCRUD().SelectByID((int)userID) == null)
+            if (new UserCRUD().SelectByID((int)model.UserID).ID == null)
             {
                 return NotFound("User not found");
             }
          
-            List<InterviewDTO> interviews = _teacherRoleLogic.GetInterviews(userID, startDateTime, finishDateTime, dateTime);
+            List<AllInterviewsDTO> interviews = _teacherRoleLogic.GetInterviews((int)model.UserID, model.StartDateTime, model.FinishDateTime, 
+                model.InterviewDate);
 
             return Ok(interviews);
         }

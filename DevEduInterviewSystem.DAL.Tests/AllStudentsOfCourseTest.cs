@@ -78,7 +78,8 @@ namespace DevEduInterviewSystem.DAL.Tests
         [TearDown]
         public void TearDown()
         {
-
+            AllTablesMock mock = new AllTablesMock();
+            mock.DeleteData();
 
         }
     }

@@ -10,14 +10,14 @@ namespace DevEduInterviewSystem.DAL.DTO
         public string Name { get; set; }
 
         public CourseDTO() { }
-        public CourseDTO(string Name)
+        public CourseDTO(string name)
         {
-            this.Name = Name;
+            this.Name = name;
         }
-        public CourseDTO(int ID, string Name)
+        public CourseDTO(int ID, string name)
         {
             this.ID = ID;
-            this.Name = Name;
+            this.Name = name;
         }
     }
 }

@@ -21,18 +21,18 @@ namespace DevEduInterviewSystem.DAL.DTO
 
         }
 
-        public CandidatePersonalInfoDTO(int ID, int CandidateID, bool MaritalStatus, string Education, string WorkPlace, 
-            string ITExperience, string Hobbies, string InfoSourse, string Expectations)
+        public CandidatePersonalInfoDTO(int ID, int candidateID, bool maritalStatus, string education, string workPlace, 
+            string ITExperience, string hobbies, string infoSourse, string expectations)
         {
             this.ID = ID;
-            this.CandidateID = CandidateID;
-            this.MaritalStatus = MaritalStatus;
-            this.Education = Education;
-            this.WorkPlace = WorkPlace;
+            this.CandidateID = candidateID;
+            this.MaritalStatus = maritalStatus;
+            this.Education = education;
+            this.WorkPlace = workPlace;
             this.ITExperience = ITExperience;
-            this.Hobbies = Hobbies;
-            this.InfoSourse = InfoSourse;
-            this.Expectations = Expectations;
+            this.Hobbies = hobbies;
+            this.InfoSourse = infoSourse;
+            this.Expectations = expectations;
         }
     }
 }
