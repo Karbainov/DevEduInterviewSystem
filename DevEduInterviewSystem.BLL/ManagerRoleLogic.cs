@@ -140,13 +140,7 @@ namespace DevEduInterviewSystem.BLL
         {
             GroupCandidateCRUD group = new GroupCandidateCRUD();
             group.UpdateByID(groupCandidateDTO);
-        }
-       
-        public void UpdateCourseByCandidate(Course_CandidateDTO course_CandidateDTO)
-        {
-            Course_CandidateCRUD course = new Course_CandidateCRUD();
-            course.UpdateByID(course_CandidateDTO);
-        }
+        }            
         
         private void AddCandidateInGroupCandidate(GroupCandidateDTO groupCandidateDTO)
         {
