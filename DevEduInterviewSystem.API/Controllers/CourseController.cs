@@ -56,5 +56,8 @@ namespace DevEduInterviewSystem.API.Controllers
             _admin.DeleteCourse(courseID);
             return Ok();
         }
+
+
+        
     }
 }
