@@ -139,6 +139,12 @@ namespace DevEduInterviewSystem.BLL
             group.UpdateByID(groupCandidateDTO);
         }            
         
+        public void AddCandidateToCourseCandidate(Course_CandidateDTO course_Candidate)
+        {
+            Course_CandidateCRUD course = new Course_CandidateCRUD();
+            course.Add(course_Candidate);
+        }
+
         // Грант получен, нет вохможности начать с текущей группой
         public void ReturnAwaitingCandidateToCourse(int candidateID, int courseID, int stageID, FeedbackDTO feedbackDTO = null)
         {
