@@ -43,35 +43,28 @@ namespace DevEduInterviewSystem.BLL
         public List<AllInterviewsDTO> GetInterviews(int? userID, DateTime? startDateTimeInterview, DateTime? finishDateTimeInterview, DateTime? dateTime)
         {
 
-            InterviewCRUD interviewCRUD = new InterviewCRUD();
-
-
-            //if (userID != null && startDateTimeInterview != null && finishDateTimeInterview != null)
-            //{
-            //    return interviewCRUD.SelectByDateTimeIntervalAndUser((int)userID, (DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
-            //}
-            //else if (userID != null && dateTime != null)
-            //{
-            //    return interviewCRUD.SelectByUserAndDateTime((DateTime)dateTime, (int)userID);
-            //}
-            //else if (userID != null)
-            //{
-            //    return interviewCRUD.SelectByUser((int)userID);
-            //}
-            //else if (startDateTimeInterview != null && finishDateTimeInterview != null)
-            //{
-            //    return interviewCRUD.SelectByDateTimeInterval((DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
-            //}
-           // else
-            if (dateTime != null)
+            if (userID != null && startDateTimeInterview != null && finishDateTimeInterview != null)
+            {
+                return new AllInterviewsByDateIntervalAndUserQuery().SelectAllInterviewsByDateIntervalAndUser((DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview, (int)userID);
+            }
+            else if (userID != null && dateTime != null)
+            {
+                return new AllInterviewsByUserAndDateQuery().SelectAllInterviewsByUserAndDate((DateTime)dateTime, (int)userID);
+            }
+            else if (userID != null)
+            {
+                return new AllInterviewsByUserQuery().SelectAllInterviewsByUser((int)userID);
+            }
+            if (startDateTimeInterview != null && finishDateTimeInterview != null)
+            {
+                return new AllInterviewsByDateIntervalQuery().SelectAllInterviewsByDateInterval((DateTime)startDateTimeInterview, (DateTime)finishDateTimeInterview);
+            }
+            else if (dateTime != null)
             {
                 return new AllInterviewsByDateQuery().SelectAllInterviewsByDate((DateTime)dateTime);
             }
-            else
-            {
-                return null;
-            }
-            //return interviewCRUD.SelectAll();
+
+            return new AllInterviewsQuery().SelectAllInterviews();
         }
 
         public FeedbackDTO GetFeedback(int id)
