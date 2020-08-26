@@ -43,7 +43,7 @@ namespace DevEduInterviewSystem.API.Controllers
             _manager.AddTask(task);
             return Ok();
         }
-       // [Authorize(Roles = "Manager, Teacher, PhoneOperator")]
+        [Authorize(Roles = "Manager, Teacher, PhoneOperator")]
         [HttpPut]
         public IActionResult UpdateTask(TaskDTO task)
         {
