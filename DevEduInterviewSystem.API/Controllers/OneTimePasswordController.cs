@@ -46,8 +46,8 @@ namespace DevEduInterviewSystem.API.Controllers
             oneTimePassword.CandidateID = candidateID;
             oneTimePassword.OneTimePassword = password;
             oneTimePassword.DateOfPasswordIssue = DateTime.UtcNow;
-            _manager.AddOneTimePassword(oneTimePassword);
-            return Ok();
+            new OneTimePasswordCRUD().Add(oneTimePassword);
+            return Ok(password);
         }
     }
 }

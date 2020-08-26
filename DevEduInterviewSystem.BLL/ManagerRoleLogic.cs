@@ -71,14 +71,6 @@ namespace DevEduInterviewSystem.BLL
         #endregion
 
         #region OneTimePassword
-        public string AddOneTimePassword(OneTimePasswordDTO oneTimePasswordDTO)
-        {
-            string password = GetOneTimePassword();
-            oneTimePasswordDTO.OneTimePassword = password;
-            OneTimePasswordCRUD otp = new OneTimePasswordCRUD();
-            otp.Add(oneTimePasswordDTO);
-            return password;
-        }
 
         public string GetOneTimePassword()
         {
