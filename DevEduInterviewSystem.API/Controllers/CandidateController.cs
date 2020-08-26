@@ -125,6 +125,25 @@ namespace DevEduInterviewSystem.API.Controllers
 
             return Ok();
         }
+
+
+        [Authorize(Roles = "Manager, Teacher")]
+        [HttpPost("{candidateID}/add-to-course-candidate")]
+        public IActionResult AddCandidateInCourseCandidate(Course_CandidateDTO courseCandidate)
+        {
+            if (new CandidateCRUD().SelectByID((int)courseCandidate.CandidateID).FirstName == null)
+            {
+                return NotFound("Candidate not found");
+            }
+
+            if (new CourseCRUD().SelectByID((int)courseCandidate.CourseID).Name == null)
+            {
+                return NotFound("Course not found");
+            }
+
+            _manager.AddCandidateToCourseCandidate(courseCandidate);
+            return Ok();
+        }
     }
 }
 
